@@ -12,6 +12,8 @@
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
 
+[View Projects](projects.html) [View Resume](assets/Jonathan_Nadeau_Resume.pdf)
+
 ## About Me
 
 I’m a data analyst with a strong academic background in mathematics and a passion for using data to solve practical business problems.
@@ -29,9 +31,6 @@ Today, I focus on projects involving profitability analysis, customer behavior, 
 **Spreadsheets:** Excel, Google Sheets  
 **Other:** Git, GitHub, Jupyter Notebook
 
-## Projects
-View my work here → [Projects](projects.html)
-
 ## Education & Certifications
 
 - B.A. in Mathematics – UCSB  
@@ -46,4 +45,3 @@ View my work here → [Projects](projects.html)
 - Email: [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)
 - LinkedIn: [linkedin.com/in/jonathan-nadeau-77616418b](https://www.linkedin.com/in/jonathan-nadeau-77616418b)
 - GitHub: [github.com/nadeaujonny](https://github.com/nadeaujonny)
-- Resume: [Download PDF](assets/Jonathan_Nadeau_Resume.pdf)
