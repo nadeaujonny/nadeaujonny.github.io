@@ -617,12 +617,67 @@ ORDER BY month_num;
 
 ---
 
-## Conclusion
+## Analysis 8 - Customer Lifetime Value (CLV) and Retention Patterns
 
-This analysis evaluated the company’s performance across multiple dimensions, including revenue growth, profitability, product efficiency, brand contribution, customer returns, and time-based trends.
+### Business Question
+- Which customers generate the highest lifetime revenue and profit, and what purchasing patterns distinguish high-value customers from the rest?
 
-The results show that while overall revenue and profit have grown steadily over time, profitability is concentrated among a subset of products and brands, and high-margin items do not always align with top-selling products. Return behavior represents a meaningful operational risk, with certain products exhibiting disproportionately high return rates that materially reduce realized profit. Seasonal patterns further highlight predictable peaks in demand and return volume, particularly in late-year months.
+### SQL Query
+```sql
+WITH completed_orders AS (
+  SELECT
+    o.user_id AS customer_id,
+    o.order_id,
+    o.created_at,
+    oi.sale_price,
+    p.cost
+  FROM `bigquery-public-data.thelook_ecommerce.orders` o
+  JOIN `bigquery-public-data.thelook_ecommerce.order_items` oi
+    ON o.order_id = oi.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+),
 
-Together, these findings emphasize that sustainable growth depends not only on increasing sales volume, but also on optimizing product mix, managing return risk, and maintaining healthy margins. By incorporating profitability, efficiency, and operational metrics alongside revenue, this analysis demonstrates how SQL-driven analytics can support more informed pricing, inventory planning, merchandising, and customer experience decisions.
+customer_aggregates AS (
+  SELECT
+    customer_id,
 
-This project illustrates how structured SQL analysis can transform raw transactional data into actionable business insights that support both short-term optimization and long-term strategic planning.
+    COUNT(DISTINCT order_id) AS total_orders,
+    COUNT(*) AS total_items,
+
+    ROUND(SUM(sale_price), 2) AS lifetime_revenue,
+    ROUND(SUM(sale_price - cost), 2) AS lifetime_profit,
+
+    MIN(created_at) AS first_purchase_date,
+    MAX(created_at) AS last_purchase_date,
+
+    DATE_DIFF(DATE(MAX(created_at)), DATE(MIN(created_at)), DAY) AS customer_tenure_days
+  FROM completed_orders
+  GROUP BY customer_id
+),
+
+final AS (
+  SELECT
+    *,
+
+    ROUND(lifetime_revenue / NULLIF(total_orders, 0), 2) AS avg_order_value,
+    ROUND(lifetime_profit / NULLIF(total_orders, 0), 2) AS avg_profit_per_order,
+
+    RANK() OVER (ORDER BY lifetime_revenue DESC) AS revenue_rank,
+    RANK() OVER (ORDER BY lifetime_profit DESC) AS profit_rank
+  FROM customer_aggregates
+)
+
+SELECT *
+FROM final
+ORDER BY lifetime_profit DESC
+LIMIT 20;
+```
+
+### Result Table
+![Top Customers By Profit](images/top-customers-by-profit.png)
+
+### Insights
+
+### Business Recommendations
