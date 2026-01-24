@@ -81,6 +81,7 @@ Tables used:
   - How many units of them are sold?
 
 ### SQL Query
+```sql
 SELECT 
   p.name AS product_name,
   p.category AS product_category,
@@ -96,6 +97,7 @@ WHERE o.status = 'Complete'
 GROUP BY product_name, product_category
 ORDER BY total_revenue DESC
 LIMIT 10;
+```
 
 ### Result Table
 ![Top products by revenue](images/top_products_by_revenue.png)
