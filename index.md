@@ -73,7 +73,7 @@ Today, I focus on projects involving profitability analysis, customer behavior, 
 - B.A. in Mathematics – UCSB  
 - Minor in Secondary Mathematics & Science Education – UCSB
 - Single Subject Teaching Credential Coursework (Mathematics) – CSULB, 4.0 GPA   
-- Google Data Analytics Professional Certificate
+- Google Data Analytics Professional Certificate – Overall Grade Percentage = 100%
 
 ## Contact
 
