@@ -1,3 +1,4 @@
+<br>
 # Jonathan Nadeau
 
 <img src="assets/la-banner.png"
@@ -7,7 +8,7 @@
             object-position:center 15%;
             border-radius:12px;
             margin-bottom:18px;">
-
+<br>
 ### Data Analyst
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
