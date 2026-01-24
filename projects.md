@@ -12,6 +12,8 @@ Below are selected data analysis projects demonstrating my skills across SQL, Ex
 
 ## SQL
 **E-commerce Revenue & Returns Analysis**  
+Analyzed 1M+ order records in BigQuery to identify top revenue drivers, high-return products, and profit optimization opportunities using advanced SQL.
+
 <a href="/projects/sql-ecommerce-analysis/" class="project-btn">View Project →</a>
 
 ---
