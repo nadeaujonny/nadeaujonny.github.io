@@ -5,7 +5,6 @@
             border-radius:12px;
             margin-bottom:18px;">
 
-# Jonathan Nadeau
 ### Data Analyst
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
