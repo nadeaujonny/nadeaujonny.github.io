@@ -488,20 +488,8 @@ ORDER BY month;
 ![Long Term Trends Returns](images/long-term-trends-returns.png)
 
 ### Insights
-- Revenue and profit exhibit a clear long-term upward trajectory, indicating sustained business growth and increasing customer demand over time.
-- After an initial early-period spike followed by a sharp decline, both revenue and profit stabilize and then grow steadily, suggesting a transition from early volatility to a more mature and predictable growth phase.
-- Profit growth closely tracks revenue growth, implying that cost structures have remained relatively stable and the company has avoided significant margin erosion as it scales.
-- Units purchased and units completed follow a similar upward trend, reinforcing that revenue growth is primarily driven by increased sales volume rather than short-term pricing effects alone.
-- Units returned also increase over time, which is expected as sales volume grows; however, the gap between completed and returned units remains substantial, indicating that returns have not outpaced growth in successful purchases.
-- The proportional increase in returns highlights the importance of managing operational efficiency and customer experience as the business scales, even when overall performance is improving.
 
 ### Business Recommendations
-- Invest in scalable infrastructure and operations. Continued growth in order volume and revenue suggests the need to proactively scale fulfillment, customer support, and logistics capacity to prevent service degradation.
-- Monitor profit margins alongside revenue growth. While profits currently track revenue closely, regular margin analysis should be maintained to detect early signs of cost inflation or pricing pressure.
-- Implement return-rate monitoring as a standard KPI. As total returns increase with scale, tracking return rates (not just raw return volume) will help identify emerging quality or customer expectation issues before they materially impact profitability.
-- Strengthen supplier and inventory management processes. Growing sales volumes increase exposure to supplier delays and quality variation; tighter supplier performance monitoring can reduce downstream return and customer satisfaction risks.
-- Use historical trends to inform forecasting and budgeting. The observed growth trajectory can be incorporated into revenue forecasts, staffing plans, and inventory purchasing models to improve financial planning accuracy.
-- Prepare targeted optimization initiatives for high-growth periods. As the business continues expanding, targeted initiatives such as checkout optimization, customer retention programs, and return-reduction strategies can compound profitability gains.
 
 ---
 
@@ -561,9 +549,14 @@ ORDER BY month_num;
 
 ### Result Tables
 #### Revenue and Profit
+- REVENUE is GREEN
+- PROFIT is BLUE
 ![Seasonal Trends Revenue and Profit](images/seasonal-trends-revenue-and-profit.png)
 
 #### Returns
+- UNITS PURCHASED is GREEN
+- UNITS COMPLETED is BLUE
+- UNITS RETURNED is PURPLE
 ![Seasonal Trends Returns](images/seasonal-trends-returns.png)
 
 ### Insights
