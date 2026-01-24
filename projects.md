@@ -18,9 +18,11 @@ Analyzed 1M+ order records in BigQuery to identify top revenue drivers, high-ret
 
 ---
 
-## Excel
-**Sales Performance Dashboard**  
-Status: Coming soon
+## Excel 
+**Sales Dashboard – Superstore Dataset**
+Interactive Excel dashboard showcasing KPI development, pivot tables, Power Query cleaning, and executive-ready visualizations.
+
+<a href="/projects/excel-superstore-analysis/" class="project-btn">View Project →</a>
 
 ---
 
