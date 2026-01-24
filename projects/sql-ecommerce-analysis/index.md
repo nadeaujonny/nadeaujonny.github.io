@@ -153,10 +153,63 @@ LIMIT 10;
 - Well-known premium brands (e.g., Nike/Jordan, The North Face, Canada Goose) appear frequently in the top results, highlighting the impact of brand positioning and pricing power.
 - Revenue and profit rankings are similar but not identical, reinforcing that revenue alone does not fully capture business performance.
 
-
 ### Business Recommendations
 - Prioritize inventory availability for these high-profit products to avoid stockouts, especially during peak seasonal demand.
 - Increase marketing visibility for these items through homepage placement, targeted email campaigns, and paid advertising to maximize profit contribution.
 - Test modest price increases on top-profit products to evaluate demand sensitivity while potentially improving margins further.
 - Create product bundles or cross-sell complementary items (e.g., accessories or base layers) to increase average order value without relying on heavy discounting.
 - Closely monitor return rates for these products to ensure high profitability is not offset by reverse-logistics and refund costs.
+
+---
+
+## Analysis 3 - Top Brands by Profit
+
+### Business Question
+- Which brands generate the highest profit?
+
+### SQL Query
+```sql
+WITH brand_metrics AS (
+  SELECT
+    p.brand,
+    ROUND(SUM(oi.sale_price), 2) AS revenue,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY p.brand
+),
+
+ranked_brands AS (
+  SELECT *,
+         RANK() OVER (ORDER BY profit DESC) AS profit_rank,
+         RANK() OVER (ORDER BY revenue DESC) AS revenue_rank
+  FROM brand_metrics
+)
+
+SELECT *
+FROM ranked_brands
+ORDER BY profit_rank
+LIMIT 10;
+```
+
+### Result Table
+![Top 10 Products by Profit](images/top-brands-by-profit.png)
+
+### Insights
+- Profit is highly concentrated among a small subset of brands, indicating that overall profitability depends heavily on a limited number of key partners.
+- While high-profit brands also tend to generate strong revenue, the rankings differ, showing that margin structure varies significantly between brands.
+- Some brands achieve high profitability with relatively fewer units sold, suggesting premium pricing power or more efficient cost structures.
+- Brand-level performance is more stable and predictable than individual product performance, making it a stronger signal for long-term strategic planning.
+- The presence of premium brands among the top performers highlights the importance of brand positioning in driving sustainable profit.
+
+### Business Recommendations
+- Strengthen relationships with top-performing brands through exclusive product lines, co-marketing campaigns, or preferred supplier agreements.
+- Allocate a larger share of marketing budget to high-profit brands to maximize return on advertising spend.
+- Expand the product assortment from the most profitable brands to capitalize on demonstrated customer demand.
+- Review pricing and cost structures for lower-performing brands to identify opportunities for margin improvement or renegotiation.
+- Reduce dependency risk by identifying and developing emerging mid-tier brands that show strong growth potential in profit or revenue.
