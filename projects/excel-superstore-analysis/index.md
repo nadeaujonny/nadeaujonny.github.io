@@ -31,7 +31,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Time range:** 2014–2017  
 **Granularity:** One row per order line item  
-**Records:** ~10,000 orders
+**Records:** ~10,000 rows
 
 **Key dimensions:**
 - Customer segment
@@ -79,7 +79,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - **Profit** = SUM(Profit)
 - **Profit Margin** = Profit / Revenue
 - **Units Sold** = SUM(Quantity)
-- **Return Rate** = Returned Orders / Total Orders
+- **Return Rate** = # Returned Orders / # Total Orders
 
 ## Data Preparation
 
@@ -159,6 +159,15 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+
+---
+
+## Workbook Structure
+- Raw Data (original import)
+- Power Query (cleaning steps)
+- Analysis Table (final cleaned table)
+- Pivot Tables (model + calculations)
+- Dashboard (final presentation)
 
 ---
 
