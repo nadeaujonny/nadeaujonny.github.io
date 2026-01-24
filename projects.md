@@ -12,6 +12,7 @@ Below are selected data analysis projects demonstrating my skills across SQL, Ex
 
 ## SQL
 **E-commerce Revenue & Returns Analysis**  
+
 Analyzed 1M+ order records in BigQuery to identify top revenue drivers, high-return products, and profit optimization opportunities using advanced SQL.
 
 <a href="/projects/sql-ecommerce-analysis/" class="project-btn">View Project →</a>
@@ -19,7 +20,8 @@ Analyzed 1M+ order records in BigQuery to identify top revenue drivers, high-ret
 ---
 
 ## Excel 
-**Sales Dashboard – Superstore Dataset**
+**Sales Dashboard – Superstore Dataset** 
+
 Interactive Excel dashboard showcasing KPI development, pivot tables, Power Query cleaning, and executive-ready visualizations.
 
 <a href="/projects/excel-superstore-analysis/" class="project-btn">View Project →</a>
