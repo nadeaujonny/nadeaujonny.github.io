@@ -18,6 +18,19 @@ This project analyzes sales and returns data from the BigQuery **thelook_ecommer
 
 ---
 
+## SQL Techniques Demonstrated
+
+- Multi-table joins
+- Aggregations and GROUP BY
+- Common Table Expressions (CTEs)
+- Window functions (RANK, ROW_NUMBER)
+- CASE statements
+- Date/time analysis
+- Subqueries
+- Filtering and segmentation
+
+---
+
 ## Dataset
 
 Source: BigQuery Public Dataset – `thelook_ecommerce`
@@ -27,6 +40,18 @@ Tables used:
 - order_items
 - products
 - users
+
+---
+
+## Key Metrics (KPIs)
+
+- Total Revenue
+- Total Profit
+- Units Sold
+- Return Rate
+- Average Order Value (AOV)
+- Customer Lifetime Value (CLV)
+- Monthly Revenue Growth
 
 ---
 
