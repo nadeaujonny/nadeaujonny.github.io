@@ -33,15 +33,18 @@ This project analyzes sales and returns data from the BigQuery **thelook_ecommer
 
 ---
 
-## Dataset
+## Dataset Overview
 
-Source: BigQuery Public Dataset – `thelook_ecommerce`
+The `thelook_ecommerce` dataset is a public BigQuery dataset that simulates the operations of an online retail company. It contains detailed transactional data covering customer orders, individual items within each order, product attributes, and user information.
 
-Tables used:
-- orders
-- order_items
-- products
-- users
+The data is structured in a relational format:
+
+- `orders` contains one row per order and includes timestamps, order status (e.g., Complete, Returned), and user identifiers.  
+- `order_items` contains one row per product purchased within an order, allowing revenue, profit, and return behavior to be analyzed at the product level.  
+- `products` provides product metadata such as category, brand, and cost, enabling profitability and margin calculations.  
+- `users` contains customer-level demographic and geographic attributes.
+
+This structure supports analysis across multiple business dimensions including product performance, brand contribution, customer behavior, operational efficiency (returns), and time-based trends. The dataset is well-suited for demonstrating SQL techniques such as joins, aggregations, window functions, and time-series analysis in an e-commerce context.
 
 ---
 
