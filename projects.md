@@ -12,7 +12,7 @@ Below are selected data analysis projects demonstrating my skills across SQL, Ex
 
 ## SQL
 **E-commerce Revenue & Returns Analysis**  
-[View project →](/projects/sql-ecommerce-analysis/)
+<a href="/projects/sql-ecommerce-analysis/" class="project-btn">View Project →</a>
 
 ---
 
