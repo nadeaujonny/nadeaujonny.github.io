@@ -215,3 +215,69 @@ LIMIT 10;
 - Expand the product assortment from the most profitable brands to capitalize on demonstrated customer demand.
 - Review pricing and cost structures for lower-performing brands to identify opportunities for margin improvement or renegotiation.
 - Reduce dependency risk by identifying and developing emerging mid-tier brands that show strong growth potential in profit or revenue.
+
+---
+
+## Analysis 4 - Top Products by Profit Margin
+
+### Business Question
+- Which products generate the highest profit margins? (profit margin being defined as profit/revenue)
+
+### SQL Query
+```sql
+WITH product_totals AS (
+  SELECT
+    p.id AS product_id,
+    p.name AS product_name,
+    p.category AS product_category,
+    SUM(oi.sale_price) AS revenue,
+    SUM(oi.sale_price - p.cost) AS profit,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY 1, 2, 3
+),
+
+metrics AS (
+  SELECT
+    product_id,
+    product_name,
+    product_category,
+    ROUND(revenue, 2) AS revenue,
+    ROUND(profit, 2) AS profit,
+    units_sold,
+
+    ROUND(profit / NULLIF(revenue, 0), 4) AS profit_margin,
+
+    RANK() OVER (ORDER BY profit DESC) AS profit_rank,
+    RANK() OVER (ORDER BY profit / NULLIF(revenue, 0) DESC) AS margin_rank,
+
+    CASE
+      WHEN revenue = 0 THEN 'Undefined'
+      WHEN profit / revenue >= 0.50 THEN 'Very High (>= 50%)'
+      WHEN profit / revenue >= 0.30 THEN 'High (30%–49.9%)'
+      WHEN profit / revenue >= 0.15 THEN 'Medium (15%–29.9%)'
+      WHEN profit / revenue > 0 THEN 'Low (0%–14.9%)'
+      ELSE 'Negative (<= 0%)'
+    END AS margin_tier
+  FROM product_totals
+)
+
+SELECT *
+FROM metrics
+WHERE revenue > 0
+  AND units_sold >= 3     
+  AND revenue >= 50   --takes extremely low volume products out of the picture    
+ORDER BY profit_margin DESC, profit DESC
+LIMIT 10;
+```
+
+### Result Table
+
+### Insights
+
+### Business Recommendations
