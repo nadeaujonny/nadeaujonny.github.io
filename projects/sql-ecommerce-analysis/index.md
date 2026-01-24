@@ -493,8 +493,22 @@ ORDER BY month;
 ![Long Term Trends Returns](images/long-term-trends-returns.png)
 
 ### Insights
+- Revenue (green line) and profit (blue line) both show strong long-term upward growth, indicating sustained expansion of the business over time.
+- Profit closely tracks revenue throughout the company’s lifetime, suggesting that operating costs and pricing strategy have remained relatively stable as sales volume increased.
+- The gap between revenue and profit remains consistent, implying that margins have not materially deteriorated during periods of rapid growth.
+- Units purchased (blue) and units completed (green) rise steadily over time, confirming that revenue growth is primarily driven by increased transaction volume rather than short-term pricing spikes.
+- Units returned (purple) also increase as sales scale, but remain substantially lower than completed purchases, indicating that returns have not outpaced business growth.
+- A noticeable acceleration in all metrics occurs in the later periods, signaling either increased customer acquisition, expanded product offerings, or improved marketing effectiveness.
+- The early years exhibit lower and more volatile performance, consistent with a typical early-stage growth phase before reaching operational maturity.
 
 ### Business Recommendations
+- Continue investing in scalable operations. The rapid growth in order volume suggests that fulfillment, logistics, and customer support infrastructure should be continuously expanded to avoid bottlenecks and service degradation.
+- Protect profit margins during expansion. As revenue grows, closely monitor unit economics to ensure rising costs (shipping, returns, marketing, suppliers) do not erode profitability.
+- Track return rate as a leading risk indicator. Although returns remain proportionally smaller than completed orders, their absolute growth means even small increases in return rate could significantly impact future profit.
+- Use historical growth patterns for forecasting. The consistent upward trajectory can be leveraged to build more accurate revenue, staffing, and inventory forecasts for upcoming quarters.
+- Identify drivers behind recent acceleration. Analyze marketing campaigns, product launches, or channel expansion that coincided with the latest growth phase to replicate successful strategies.
+- Introduce capacity planning for peak growth periods. The steep upward trend in recent months suggests upcoming demand surges should be anticipated with proactive inventory purchasing and supplier coordination.
+- Pair volume growth with customer experience optimization. As scale increases, improving product descriptions, sizing accuracy, and post-purchase support can prevent returns from becoming a larger drag on profitability.
 
 ---
 
@@ -565,5 +579,19 @@ ORDER BY month_num;
 ![Seasonal Trends Returns](images/seasonal-trends-returns.png)
 
 ### Insights
+- Revenue (green) and profit (blue) both exhibit clear seasonality, with performance weakest early in the year and steadily increasing toward year-end, peaking in late Q4.
+- The consistent gap between revenue and profit across months suggests that profit margins remain relatively stable throughout the year, even during high-volume periods.
+- Units purchased and units completed follow the same seasonal pattern as revenue, confirming that sales volume — not price fluctuations — is the primary driver of seasonal performance.
+- Units returned (purple) also increase toward the end of the year, indicating that higher sales volumes are accompanied by higher absolute return volumes during peak seasons.
+- Despite higher return volumes in late months, completed purchases remain substantially higher than returns, suggesting that peak-season growth remains net-positive for profitability.
+- The sharp drop in performance from January to February followed by gradual growth throughout the year highlights a post-holiday slowdown and a steady build-up toward holiday demand.
+- Seasonal alignment across revenue, profit, and operational volume indicates predictable consumer behavior patterns that can be leveraged for planning and forecasting.
 
 ### Business Recommendations
+- Increase inventory levels ahead of peak months. Stock critical and high-demand products earlier in Q3 and Q4 to avoid stockouts during the highest-revenue periods.
+- Scale fulfillment and customer support capacity seasonally. Prepare warehouses, shipping partners, and support teams for higher order and return volumes in late-year months to prevent operational bottlenecks.
+- Launch targeted promotions during low-demand months. Use discounts, bundles, or loyalty incentives in early-year months to smooth demand and reduce seasonal revenue volatility.
+- Proactively manage returns during peak season. Improve product descriptions, sizing guidance, and quality checks ahead of Q4 to limit the financial and operational impact of increased returns.
+- Align marketing spend with seasonal ROI. Concentrate advertising budgets in months with historically higher conversion and profitability to maximize return on marketing investment.
+- Incorporate seasonality into financial forecasting. Budgeting, staffing, and procurement plans should explicitly account for cyclical demand patterns to avoid over- or under-resourcing.
+- Monitor seasonal return rates as a profitability safeguard. Tracking return rates alongside revenue ensures that peak sales periods do not mask rising hidden costs from excessive returns.
