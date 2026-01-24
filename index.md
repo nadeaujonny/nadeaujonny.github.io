@@ -1,9 +1,4 @@
-<img src="assets/la-banner.png"
-     style="width:100%;
-            max-height:300px;
-            object-fit:cover;
-            border-radius:12px;
-            margin-bottom:18px;">
+# Jonathan Nadeau
 
 ### Data Analyst
 
