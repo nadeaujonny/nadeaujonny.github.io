@@ -6,7 +6,7 @@ Below are selected data analysis projects demonstrating my skills across SQL, Ex
 
 ## SQL
 **E-commerce Revenue & Returns Analysis**  
-Status: Coming soon
+[View project →](/projects/sql-ecommerce-analysis/)
 
 ---
 
