@@ -12,7 +12,40 @@
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
 
-[View Projects](projects.html) [View Resume](assets/Jonathan_Nadeau_Resume.pdf)
+<div style="text-align:center; margin: 20px 0 30px 0;">
+
+  <a href="projects.html"
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       margin:0 10px;
+       font-size:16px;
+       font-weight:600;
+       color:white;
+       background:#2563eb;
+       border-radius:8px;
+       text-decoration:none;
+     ">
+    View Projects
+  </a>
+
+  <a href="assets/Jonathan_Nadeau_Resume.pdf"
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       margin:0 10px;
+       font-size:16px;
+       font-weight:600;
+       color:#2563eb;
+       background:#eef2ff;
+       border-radius:8px;
+       text-decoration:none;
+       border:1px solid #2563eb;
+     ">
+    View Resume
+  </a>
+
+</div>
 
 ## About Me
 
