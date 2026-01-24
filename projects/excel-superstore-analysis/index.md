@@ -7,7 +7,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 # Sales Dashboard – Superstore Dataset (Excel)
 
-> An end-to-end Excel analytics project demonstrating data cleaning, KPI development, pivot-table analysis, and executive dashboard design using a real-world retail dataset.
+> An end-to-end Excel analytics project demonstrating data cleaning, KPI development, pivot-table analysis, and executive dashboard design using a widely used public retail sample dataset.
 
 ## Overview
 This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance. The goal is to demonstrate real-world Excel analytics skills used in business environments.
