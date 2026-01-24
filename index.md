@@ -1,7 +1,7 @@
 # Jonathan Nadeau
 ### Data Analyst
 
-I use SQL, Excel, Tableau, Power BI, and Python to turn data into business insights.
+I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
 
 ## Skills
 - SQL
