@@ -209,6 +209,6 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 ---
 
 ## Files
-- Excel workbook
+- Raw dataset
 - Cleaned dataset
-
+- Excel workbook
