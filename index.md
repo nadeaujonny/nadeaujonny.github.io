@@ -31,7 +31,7 @@ I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business in
     View Projects
   </a>
 
-  <a href="/assets/Nadeau_Jonathan_Resume.pdf"
+  <a href="/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf"
      style="
        display:inline-block;
        padding:12px 22px;
