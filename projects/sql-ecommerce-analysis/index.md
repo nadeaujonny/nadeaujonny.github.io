@@ -3,7 +3,7 @@ layout: default
 title: E-commerce Revenue & Returns Analysis (SQL)
 ---
 
-<a href="/projects/" class="back-btn">← Back to Projects</a>
+<a href="/projects.html" class="back-btn">← Back to Projects</a>
 
 # E-commerce Revenue & Returns Analysis (SQL)
 
