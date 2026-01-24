@@ -679,5 +679,18 @@ LIMIT 20;
 ![Top Customers By Profit](images/top-customers-by-profit.png)
 
 ### Insights
+- High lifetime value is driven more by high order value than by high purchase frequency. Several top-profit customers placed only 1–3 orders but generated over $600 in lifetime profit due to very large basket sizes.
+- Customer tenure varies widely among top contributors. Some high-value customers have been active for 2–5 years, while others generated substantial profit in a single day, indicating both long-term loyal customers and high-impact one-time buyers.
+- Average profit per order is consistently high among top customers (often $300–$600+), suggesting that premium-priced products or bundled purchases are a major driver of customer profitability.
+- Revenue rank and profit rank are closely aligned, indicating that cost structures are relatively stable across customers and that higher spending customers also tend to be more profitable customers.
+- Repeat customers do contribute meaningfully to lifetime value, but frequency alone does not guarantee high profitability—order size is a stronger determinant of customer value in this dataset.
+- A small number of customers contribute disproportionately to total profit, reinforcing the presence of a classic “high-value minority” segment.
 
 ### Business Recommendations
+- Identify and segment high-value customers based on lifetime profit and average order value, and prioritize them for retention efforts such as loyalty programs, early access to new products, or personalized promotions.
+- Develop targeted marketing campaigns focused on increasing basket size (cross-selling and bundling), since order value appears to drive profitability more strongly than purchase frequency.
+- Create a “VIP customer” tier using thresholds for lifetime profit or average profit per order to encourage repeat purchases from already high-margin customers.
+- Analyze the product categories and brands most frequently purchased by top-value customers to guide inventory planning, merchandising, and premium product expansion.
+- Use customer tenure metrics to distinguish between long-term loyal customers and high-value one-time buyers, and apply different engagement strategies to each group (retention vs. reactivation vs. acquisition lookalikes).
+- Allocate customer acquisition budget toward channels that historically attract high-order-value customers rather than optimizing solely for customer volume.
+- Track CLV alongside revenue and profit in executive reporting to ensure marketing and product decisions focus on long-term profitability rather than short-term sales growth.
