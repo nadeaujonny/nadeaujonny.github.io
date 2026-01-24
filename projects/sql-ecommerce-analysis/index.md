@@ -50,13 +50,29 @@ This structure supports analysis across multiple business dimensions including p
 
 ## Key Metrics (KPIs)
 
-- Total Revenue
-- Total Profit
-- Units Sold
-- Return Rate
-- Average Order Value (AOV)
-- Customer Lifetime Value (CLV)
-- Monthly Revenue Growth
+The following key performance indicators (KPIs) are used throughout this analysis to evaluate business performance, profitability, and operational risk:
+
+- **Total Revenue**  
+  The total dollar value of completed sales.
+
+- **Total Profit**  
+  Revenue minus product cost for completed orders.
+
+- **Units Sold (Completed Purchases)**  
+  The number of items successfully purchased and not returned.
+
+- **Units Returned**  
+  The number of items returned by customers.
+
+- **Return Rate (%)**  
+  The proportion of purchased items that were returned:  
+  returned units ÷ (completed units + returned units).
+
+- **Profit Margin (%)**  
+  Profit relative to revenue:  
+  profit ÷ revenue.
+
+These metrics collectively provide visibility into sales growth, profitability, product efficiency, and operational risk associated with customer returns.
 
 ---
 
@@ -598,3 +614,15 @@ ORDER BY month_num;
 - Align marketing spend with seasonal ROI. Concentrate advertising budgets in months with historically higher conversion and profitability to maximize return on marketing investment.
 - Incorporate seasonality into financial forecasting. Budgeting, staffing, and procurement plans should explicitly account for cyclical demand patterns to avoid over- or under-resourcing.
 - Monitor seasonal return rates as a profitability safeguard. Tracking return rates alongside revenue ensures that peak sales periods do not mask rising hidden costs from excessive returns.
+
+---
+
+## Conclusion
+
+This analysis evaluated the company’s performance across multiple dimensions, including revenue growth, profitability, product efficiency, brand contribution, customer returns, and time-based trends.
+
+The results show that while overall revenue and profit have grown steadily over time, profitability is concentrated among a subset of products and brands, and high-margin items do not always align with top-selling products. Return behavior represents a meaningful operational risk, with certain products exhibiting disproportionately high return rates that materially reduce realized profit. Seasonal patterns further highlight predictable peaks in demand and return volume, particularly in late-year months.
+
+Together, these findings emphasize that sustainable growth depends not only on increasing sales volume, but also on optimizing product mix, managing return risk, and maintaining healthy margins. By incorporating profitability, efficiency, and operational metrics alongside revenue, this analysis demonstrates how SQL-driven analytics can support more informed pricing, inventory planning, merchandising, and customer experience decisions.
+
+This project illustrates how structured SQL analysis can transform raw transactional data into actionable business insights that support both short-term optimization and long-term strategic planning.
