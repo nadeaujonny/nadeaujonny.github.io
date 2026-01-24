@@ -12,6 +12,9 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ## Overview
 This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance. The goal is to demonstrate real-world Excel analytics skills used in business environments.
 
+## Business Context
+This analysis simulates a retail company evaluating sales performance, profitability, customer behavior, and operational efficiency to support data-driven decision making by executives and category managers.
+
 ## Objectives
 - Build and calculate key business KPIs (revenue, profit, profit margin, units sold, return rate)
 - Clean and transform raw data using Power Query
@@ -22,23 +25,42 @@ This project analyzes retail sales data using Microsoft Excel to uncover trends 
 Superstore sales dataset (public sample dataset commonly used for analytics projects)
 
 ## Tools & Skills Demonstrated
-- Microsoft Excel
+
+**Data Preparation**
 - Power Query
-- Pivot Tables & Pivot Charts
+- Data validation & normalization
+
+**Analysis**
+- Pivot tables
 - Calculated fields
-- XLOOKUP, SUMIFS, COUNTIFS
+- KPI modeling
+
+**Excel Functions**
+- XLOOKUP
+- SUMIFS / COUNTIFS
+- IF / IFERROR
+- Date & text functions
+
+**Visualization**
+- Pivot charts
 - Conditional formatting
 - Slicers & timelines
-- Dashboard design
-
----
+- Dashboard layout design
 
 ## KPI Definitions
-- Revenue  
-- Profit  
-- Profit Margin  
-- Units Sold  
-- Return Rate  
+
+- **Revenue** = SUM(Sales)
+- **Profit** = SUM(Profit)
+- **Profit Margin** = Profit / Revenue
+- **Units Sold** = SUM(Quantity)
+- **Return Rate** = Returned Orders / Total Orders
+
+## Data Preparation
+
+- Removed duplicates and invalid records  
+- Standardized date formats and categories  
+- Created calculated columns for profit margin and return flags  
+- Built a clean analysis table using Power Query  
 
 ---
 
@@ -46,41 +68,94 @@ Superstore sales dataset (public sample dataset commonly used for analytics proj
 
 ### 1. Sales & Profit Trends
 **Business Question:**  
-How do revenue and profit change over time?
 
-**Method:**  
-Pivot tables with calculated fields and time-based grouping.
+**Approach:**  
+(what you built in Excel)
 
-**Insights:**  
-(TBD)
+**Key Findings:**  
+(bullets)
 
 **Business Recommendations:**  
-(TBD)
+(bullets)
 
 ---
 
 ### 2. Product & Category Performance
-(TBD)
+**Business Question:**  
+
+**Approach:**  
+(what you built in Excel)
+
+**Key Findings:**  
+(bullets)
+
+**Business Recommendations:**  
+(bullets)
 
 ---
 
 ### 3. Regional Performance
-(TBD)
+**Business Question:**  
+
+**Approach:**  
+(what you built in Excel)
+
+**Key Findings:**  
+(bullets)
+
+**Business Recommendations:**  
+(bullets)
 
 ---
 
 ### 4. Customer Segment Analysis
-(TBD)
+**Business Question:**  
+
+**Approach:**  
+(what you built in Excel)
+
+**Key Findings:**  
+(bullets)
+
+**Business Recommendations:**  
+(bullets)
 
 ---
 
 ### 5. Returns Analysis
-(TBD)
+**Business Question:**  
+
+**Approach:**  
+(what you built in Excel)
+
+**Key Findings:**  
+(bullets)
+
+**Business Recommendations:**  
+(bullets)
+
+---
+
+## Dashboard Features
+
+- Interactive slicers for region, category, and time
+- KPI summary cards
+- Trend visualizations
+- Top / bottom product rankings
+- Dynamic filtering across all charts
 
 ---
 
 ## Final Dashboard
 (Screenshot will be added here)
+
+---
+
+## Project Deliverables
+
+- Fully interactive Excel dashboard workbook
+- Cleaned analysis-ready dataset
+- SQL-style business question documentation
 
 ---
 
