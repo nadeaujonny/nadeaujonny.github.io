@@ -3,13 +3,12 @@
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
 
-## Skills
-- SQL
-- Excel
-- Tableau
-- Power BI
-- Python
-- R
+## Tools & Technologies
+**Languages:** SQL, Python, R  
+**Databases:** BigQuery, MySQL  
+**Visualization:** Tableau, Power BI  
+**Spreadsheets:** Excel, Google Sheets  
+**Other:** Git, GitHub, Jupyter Notebook
 
 ## Projects
 View my work here → [Projects](projects.html)
