@@ -3,6 +3,8 @@ layout: default
 title: E-commerce Revenue & Returns Analysis (SQL)
 ---
 
+<a href="/projects/" class="back-btn">← Back to Projects</a>
+
 # E-commerce Revenue & Returns Analysis (SQL)
 
 This project analyzes sales and returns data from the BigQuery **thelook_ecommerce** dataset to uncover revenue drivers, product performance, return patterns, and operational insights.
