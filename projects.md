@@ -1,3 +1,9 @@
+---
+layout: default
+title: Projects
+permalink: /projects/
+---
+
 # Projects
 
 Below are selected data analysis projects demonstrating my skills across SQL, Excel, Tableau, Power BI, Python, and R.
