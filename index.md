@@ -78,5 +78,5 @@ Today, I focus on projects involving profitability analysis, customer behavior, 
 ## Contact
 
 - Email: [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)
-- LinkedIn: [linkedin.com/in/jonathan-nadeau-77616418b](https://www.linkedin.com/in/jonathan-nadeau-77616418b)
+- LinkedIn: [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)
 - GitHub: [github.com/nadeaujonny](https://github.com/nadeaujonny)
