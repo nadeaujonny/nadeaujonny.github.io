@@ -12,6 +12,8 @@
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
 
+---
+
 <div style="text-align:center; margin: 20px 0 30px 0;">
 
   <a href="projects.html"
@@ -46,6 +48,8 @@ I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business in
   </a>
 
 </div>
+
+---
 
 ## About Me
 
