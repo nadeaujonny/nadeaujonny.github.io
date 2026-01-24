@@ -100,7 +100,7 @@ LIMIT 10;
 ```
 
 ### Result Table
-![Top products by revenue](images/top_products_by_revenue.png)
+![Top 10 Products by Revenue](images/top_products_by_revenue.png)
 
 ### Insights
 - The highest-revenue products are dominated by premium outerwear brands (North Face, Canada Goose).
@@ -200,7 +200,7 @@ LIMIT 10;
 ```
 
 ### Result Table
-![Top 10 Products by Profit](images/top-brands-by-profit.png)
+![Top 10 Brands by Profit](images/top-brands-by-profit.png)
 
 ### Insights
 - Profit is highly concentrated among a small subset of brands, indicating that overall profitability depends heavily on a limited number of key partners.
@@ -277,7 +277,18 @@ LIMIT 10;
 ```
 
 ### Result Table
+![Top 10 Products by Profit Margin](images/top-products-by-profit-margin.png)
 
 ### Insights
+- The top profit-margin products are high-margin apparel items, with margins clustered around 65–67%, indicating strong pricing power relative to cost.
+- All top-margin products fall within the “Blazers & Jackets” category, suggesting that this category benefits from either premium pricing, efficient sourcing, or both.
+- These products generate moderate revenue but relatively small sales volumes (3–5 units each), which explains why they did not appear in the top products by total profit or revenue analyses.
+- The large gap between profit margin rankings and profit rankings highlights that high margin does not necessarily translate to high total profit without sufficient sales volume.
+- Applying minimum thresholds for units sold and revenue helps eliminate misleading results driven by extremely small denominators, producing a more business-relevant view of product efficiency.
 
 ### Business Recommendations
+- Prioritize marketing tests for high-margin products. Increase visibility of these products through targeted promotions, homepage placement, or paid ads to determine whether demand can be scaled while maintaining strong margins.
+- Evaluate supply chain scalability for high-margin categories. Investigate whether the cost structure that enables these margins (supplier contracts, materials, manufacturing) can be maintained at higher volumes.
+- Use profit margin to guide discount strategy. High-margin products can tolerate deeper discounts while remaining profitable, making them ideal candidates for seasonal promotions or customer acquisition campaigns.
+- Reassess low-margin, high-volume products. Products with strong sales but weak margins should be reviewed for potential price optimization, cost reduction, or bundling strategies.
+- Incorporate margin metrics into assortment planning. Future product selection and inventory decisions should consider profit margin alongside revenue and volume to optimize long-term profitability.
