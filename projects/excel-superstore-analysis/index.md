@@ -21,8 +21,34 @@ This analysis simulates a retail company evaluating sales performance, profitabi
 - Perform analysis using pivot tables and calculated fields
 - Design an interactive executive-style dashboard
 
-## Dataset
-Superstore sales dataset (public sample dataset commonly used for analytics projects)
+## Dataset Overview
+
+The Superstore dataset is a public retail transaction dataset commonly used for analytics and business intelligence practice. It represents order-level sales data for a fictional office supply retailer.
+
+**Key tables / structure:**
+- Orders (order date, ship date, customer, segment, region, product, category, sales, profit, quantity)
+- Returns (returned flag by order ID)
+
+**Time range:** 2014–2017  
+**Granularity:** One row per order line item  
+**Records:** ~10,000 orders
+
+**Key dimensions:**
+- Customer segment
+- Product category & sub-category
+- Region, state, city
+- Order & ship dates
+
+**Key measures:**
+- Sales (revenue)
+- Profit
+- Quantity
+
+**Limitations:**
+- Fictional data (not from a real company)
+- No marketing or acquisition channel data
+- Limited customer demographics
+- Returns data may be incomplete depending on version
 
 ## Tools & Skills Demonstrated
 
