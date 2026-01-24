@@ -8,6 +8,8 @@
             border-radius:12px;
             margin-bottom:18px;">
 
+---
+
 ### Data Analyst
 
 I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
@@ -61,12 +63,16 @@ Before moving fully into data analytics, I spent several years teaching and tuto
 
 Today, I focus on projects involving profitability analysis, customer behavior, and operational performance using tools like SQL, Python, Excel, Tableau, and Power BI. I’m especially interested in applying analytics in business and e-commerce environments, where data-driven decisions can have immediate, measurable impact.
 
+---
+
 ## Tools & Technologies
 **Languages:** SQL, Python, R  
 **Databases:** BigQuery, MySQL  
 **Visualization:** Tableau, Power BI  
 **Spreadsheets:** Excel, Google Sheets  
 **Other:** Git, GitHub, Jupyter Notebook
+
+---
 
 ## Education & Certifications
 
@@ -75,10 +81,12 @@ Today, I focus on projects involving profitability analysis, customer behavior, 
 - Single Subject Teaching Credential Coursework (Mathematics) – CSULB, 4.0 GPA   
 - Google Data Analytics Professional Certificate
 
-## Contact
+---
 
 ## Contact
 
 - Email: [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)
 - LinkedIn: [linkedin.com/in/jonathan-nadeau-77616418b](https://www.linkedin.com/in/jonathan-nadeau-77616418b)
 - GitHub: [github.com/nadeaujonny](https://github.com/nadeaujonny)
+
+---
