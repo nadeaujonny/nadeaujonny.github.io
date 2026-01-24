@@ -96,6 +96,7 @@ LIMIT 10;
    - CTEs
    - window functions
 ========================================================= */
+
 WITH brand_metrics AS (
   SELECT
     p.brand,
