@@ -409,3 +409,147 @@ LIMIT 10;
 - Introduce targeted return-reduction experiments. Test changes such as improved product photography, clearer fabric descriptions, or virtual try-on tools on high-risk products to measure their impact on return rates.
 - Incorporate return-rate thresholds into product lifecycle decisions. Consider redesigning, repricing, renegotiating supplier terms, or discontinuing products that remain in the “Very High” risk tier after remediation efforts.
 - Track return rate alongside revenue and profit in performance reporting. Product success should be evaluated using a balanced scorecard of sales volume, profit margin, and return rate to avoid optimizing for revenue at the expense of profitability.
+
+---
+
+## Analysis 6 - Long-Term Trends in Revenue, Profit, and Returns
+
+### Business Question
+- How have revenue, profit, and return rates evolved over the company’s lifetime, and what long-term trends or structural shifts are observable?
+
+### SQL Query
+```sql
+WITH base AS (
+  SELECT
+    DATE_TRUNC(o.created_at, MONTH) AS month,
+
+    COUNT(*) AS total_units,
+
+    SUM(CASE WHEN o.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+    SUM(CASE WHEN o.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+
+    SUM(CASE WHEN o.status = 'Complete' THEN oi.sale_price ELSE 0 END) AS revenue,
+    SUM(CASE WHEN o.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END) AS profit
+
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` p
+    ON oi.product_id = p.id
+
+  WHERE o.status IN ('Complete', 'Returned')
+  GROUP BY 1
+),
+
+metrics AS (
+  SELECT
+    month,
+    total_units,
+    units_completed,
+    units_returned,
+
+    ROUND(units_returned / NULLIF(total_units, 0) * 100, 2) AS return_rate_pct,
+    ROUND(revenue, 2) AS revenue,
+    ROUND(profit, 2) AS profit,
+
+    -- Month-over-month growth
+    ROUND(
+      (revenue - LAG(revenue) OVER (ORDER BY month))
+      / NULLIF(LAG(revenue) OVER (ORDER BY month), 0) * 100,
+      2
+    ) AS revenue_mom_growth_pct,
+
+    ROUND(
+      (profit - LAG(profit) OVER (ORDER BY month))
+      / NULLIF(LAG(profit) OVER (ORDER BY month), 0) * 100,
+      2
+    ) AS profit_mom_growth_pct,
+
+    -- Rolling 3-month averages (trend smoothing)
+    ROUND(AVG(revenue) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2)
+      AS revenue_3mo_avg,
+
+    ROUND(AVG(profit) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2)
+      AS profit_3mo_avg
+
+  FROM base
+)
+
+SELECT *
+FROM metrics
+ORDER BY month;
+```
+
+### Result Table
+#### Renevue and Profit
+![Long Term Trends Revenue and Profit](images/long-terms-trends-revenue-and-profit.png)
+
+#### Returns
+![Long Term Trends Returns](images/long-terms-trends-returns.png)
+
+### Insights
+
+### Business Recommendations
+
+---
+
+## Analysis 7 - Seasonal Trends in Revenue, Profit, and Returns
+
+### Business Question
+- How do revenue, profit, and return rates vary by month of the year, and which seasons represent peak performance or elevated return risk?
+
+### SQL Query
+```sql
+WITH base AS (
+  SELECT
+    EXTRACT(MONTH FROM o.created_at) AS month_num,
+    FORMAT_DATE('%B', DATE(o.created_at)) AS month_name,
+
+    COUNT(*) AS total_units,
+
+    SUM(CASE WHEN o.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+    SUM(CASE WHEN o.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+
+    SUM(CASE WHEN o.status = 'Complete' THEN oi.sale_price ELSE 0 END) AS revenue,
+    SUM(CASE WHEN o.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END) AS profit
+
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` p
+    ON oi.product_id = p.id
+
+  WHERE o.status IN ('Complete', 'Returned')
+  GROUP BY 1, 2
+),
+
+metrics AS (
+  SELECT
+    month_num,
+    month_name,
+
+    total_units AS units_purchased,
+    units_completed,
+    units_returned,
+
+    ROUND(units_returned / NULLIF(total_units, 0) * 100, 2) AS return_rate_pct,
+
+    ROUND(revenue, 2) AS revenue,
+    ROUND(profit, 2) AS profit,
+
+    ROUND(profit / NULLIF(units_completed, 0), 2) AS avg_profit_per_completed_unit
+
+  FROM base
+)
+
+SELECT *
+FROM metrics
+ORDER BY month_num;
+```
+
+### Result Table
+![Seasonal Trends](images/seasonal-trends.png)
+
+### Insights
+
+### Business Recommendations
