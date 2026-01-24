@@ -482,10 +482,10 @@ ORDER BY month;
 
 ### Result Table
 #### Renevue and Profit
-![Long Term Trends Revenue and Profit](images/long-terms-trends-revenue-and-profit.png)
+![Long Term Trends Revenue and Profit](images/long-term-trends-revenue-and-profit.png)
 
 #### Returns
-![Long Term Trends Returns](images/long-terms-trends-returns.png)
+![Long Term Trends Returns](images/long-term-trends-returns.png)
 
 ### Insights
 
