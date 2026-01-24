@@ -22,3 +22,16 @@ Today, I focus on projects involving profitability analysis, customer behavior, 
 
 ## Projects
 View my work here → [Projects](projects.html)
+
+## Education & Certifications
+
+- B.A. in Mathematics – UCSB  
+- Minor in Secondary Mathematics & Science Education  
+- Google Data Analytics Professional Certificate
+
+## Contact
+
+- Email: your@email.com
+- LinkedIn: https://linkedin.com/in/yourprofile
+- GitHub: https://github.com/nadeaujonny
+- Resume: [Download PDF](assets/Jonathan_Nadeau_Resume.pdf)
