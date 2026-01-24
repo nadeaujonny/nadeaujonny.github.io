@@ -35,7 +35,8 @@ View my work here → [Projects](projects.html)
 ## Education & Certifications
 
 - B.A. in Mathematics – UCSB  
-- Minor in Secondary Mathematics & Science Education  
+- Minor in Secondary Mathematics & Science Education – UCSB
+- Single Subject Teaching Credential Coursework (Mathematics) – CSULB, 4.0 GPA   
 - Google Data Analytics Professional Certificate
 
 ## Contact
