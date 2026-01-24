@@ -31,7 +31,9 @@ View my work here → [Projects](projects.html)
 
 ## Contact
 
-- Email: your@email.com
-- LinkedIn: https://linkedin.com/in/yourprofile
-- GitHub: https://github.com/nadeaujonny
+## Contact
+
+- Email: [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)
+- LinkedIn: [linkedin.com/in/jonathan-nadeau-77616418b](https://www.linkedin.com/in/jonathan-nadeau-77616418b)
+- GitHub: [github.com/nadeaujonny](https://github.com/nadeaujonny)
 - Resume: [Download PDF](assets/Jonathan_Nadeau_Resume.pdf)
