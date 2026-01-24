@@ -394,5 +394,18 @@ LIMIT 10;
 ![Top 10 Products by Return Rate](images/top-products-by-return-rate.png)
 
 ### Insights
+- The top return-rate products exhibit extremely high return rates (80%–83%), meaning that only 1 out of every 5–6 purchases is ultimately kept by the customer.
+- These high-return products span multiple apparel categories (leggings, shorts, jeans, outerwear, suits, skirts, swimwear) as well as accessories, indicating that the issue is not isolated to a single product type but is broader across fit- and style-sensitive items.
+- Despite relatively low sales volumes, these products generate meaningful revenue and profit on completed purchases, but the estimated profit lost to returns is substantial relative to their realized profit, significantly reducing net contribution.
+- Several products fall into the “Very High (≥ 30%)” return-risk tier by a wide margin, suggesting systematic problems such as sizing inconsistencies, misleading product images/descriptions, or quality issues.
+- The presence of both high return rates and high estimated profit loss highlights returns as a critical operational risk, not just a customer-experience issue.
+- Using total purchased units (completed + returned) as the denominator produces realistic return rates and avoids misleading values above 100%, strengthening the reliability of the analysis.
 
 ### Business Recommendations
+- Audit high-return products individually. Review product pages, size charts, material descriptions, and customer feedback for these SKUs to identify common reasons for dissatisfaction or mismatch with customer expectations.
+- Improve sizing and fit guidance for apparel. Introduce enhanced sizing charts, customer fit reviews, model measurements, and fit-prediction tools to reduce uncertainty before purchase.
+- Prioritize quality control for repeat offenders. Products with consistently high return rates should undergo supplier and manufacturing reviews to detect defects or inconsistencies.
+- Adjust merchandising and promotion strategy. Avoid aggressively promoting high-return products until root causes are addressed, as scaling sales would likely amplify profit losses.
+- Introduce targeted return-reduction experiments. Test changes such as improved product photography, clearer fabric descriptions, or virtual try-on tools on high-risk products to measure their impact on return rates.
+- Incorporate return-rate thresholds into product lifecycle decisions. Consider redesigning, repricing, renegotiating supplier terms, or discontinuing products that remain in the “Very High” risk tier after remediation efforts.
+- Track return rate alongside revenue and profit in performance reporting. Product success should be evaluated using a balanced scorecard of sales volume, profit margin, and return rate to avoid optimizing for revenue at the expense of profitability.
