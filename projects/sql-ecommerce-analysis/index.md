@@ -482,9 +482,14 @@ ORDER BY month;
 
 ### Result Tables
 #### Renevue and Profit
+- REVENUE is GREEN
+- PROFIT is BLUE
 ![Long Term Trends Revenue and Profit](images/long-term-trends-revenue-and-profit.png)
 
 #### Returns
+- UNITS PURCHASED is BLUE
+- UNITS COMPLETED is GREEN
+- UNITS RETURNED is PURPLE
 ![Long Term Trends Returns](images/long-term-trends-returns.png)
 
 ### Insights
