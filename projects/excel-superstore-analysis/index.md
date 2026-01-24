@@ -1,6 +1,11 @@
+---
+layout: default
+title: Sales Dashboard – Superstore Dataset (Excel)
+---
+
 <a href="/projects" class="back-btn">← Back to Projects</a>
 
-# Excel Sales Analysis – Superstore Dataset
+# Sales Dashboard – Superstore Dataset (Excel)
 
 ## Overview
 This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance. The goal is to demonstrate real-world Excel analytics skills used in business environments.
