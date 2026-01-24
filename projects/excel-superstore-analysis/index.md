@@ -9,17 +9,25 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 > An end-to-end Excel analytics project demonstrating data cleaning, KPI development, pivot-table analysis, and executive dashboard design using a widely used public retail sample dataset.
 
+---
+
 ## Overview
 This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance. The goal is to demonstrate real-world Excel analytics skills used in business environments.
 
+---
+
 ## Business Context
 This analysis simulates a retail company evaluating sales performance, profitability, customer behavior, and operational efficiency to support data-driven decision making by executives and category managers.
+
+---
 
 ## Objectives
 - Build and calculate key business KPIs (revenue, profit, profit margin, units sold, return rate)
 - Clean and transform raw data using Power Query
 - Perform analysis using pivot tables and calculated fields
 - Design an interactive executive-style dashboard
+
+---
 
 ## Dataset Overview
 
@@ -50,6 +58,8 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - Limited customer demographics
 - Returns data may be incomplete depending on version
 
+---
+
 ## Tools & Skills Demonstrated
 
 **Data Preparation**
@@ -73,6 +83,8 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - Slicers & timelines
 - Dashboard layout design
 
+---
+
 ## KPI Definitions
 
 - **Revenue** = SUM(Sales)
@@ -80,6 +92,8 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - **Profit Margin** = Profit / Revenue
 - **Units Sold** = SUM(Quantity)
 - **Return Rate** = # Returned Orders / # Total Orders
+
+---
 
 ## Data Preparation
 
