@@ -76,7 +76,7 @@ Tables used:
 ## Analysis 1 - Top Products by Revenue
 
 ### Business Question
-- Which Products generate the highest revenue?
+- Which products generate the highest revenue?
 
 ### SQL Query
 ```sql
@@ -111,3 +111,36 @@ LIMIT 10;
 - Bundle or cross-sell accessories with premium jackets to increase AOV.
 - Analyze return rates for these top products to ensure high revenue is not offset by returns.
 - Negotiate supplier costs for high-volume premium brands to improve margins further.
+
+---
+
+## Analysis 2 - Top Products by Profit
+
+### Business Question
+- Which products generate the highest profit?
+
+### SQL Query
+```sql
+WITH product_profit AS (
+  SELECT
+    p.id AS product_id,
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price), 2) AS revenue,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY p.id, p.name
+)
+
+SELECT *
+FROM product_profit
+ORDER BY profit DESC
+LIMIT 10;
+```
+
+### Result Table
