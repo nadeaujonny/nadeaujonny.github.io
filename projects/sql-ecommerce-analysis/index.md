@@ -144,3 +144,19 @@ LIMIT 10;
 ```
 
 ### Result Table
+![Top 10 Products by Profit](images/top-products-by-profit.png)
+
+### Insights
+- Profit is highly concentrated among a small number of products, indicating that a limited subset of the catalog drives a disproportionate share of total profit.
+- Most top-profit products are premium outerwear and apparel items (jackets, hoodies, ski pants), suggesting higher margins compared to lower-priced categories.
+- Several products achieve high profit despite relatively low unit sales, indicating that per-unit margin is a more important driver of profitability than sales volume for these items.
+- Well-known premium brands (e.g., Nike/Jordan, The North Face, Canada Goose) appear frequently in the top results, highlighting the impact of brand positioning and pricing power.
+- Revenue and profit rankings are similar but not identical, reinforcing that revenue alone does not fully capture business performance.
+
+
+### Business Recommendations
+- Prioritize inventory availability for these high-profit products to avoid stockouts, especially during peak seasonal demand.
+- Increase marketing visibility for these items through homepage placement, targeted email campaigns, and paid advertising to maximize profit contribution.
+- Test modest price increases on top-profit products to evaluate demand sensitivity while potentially improving margins further.
+- Create product bundles or cross-sell complementary items (e.g., accessories or base layers) to increase average order value without relying on heavy discounting.
+- Closely monitor return rates for these products to ensure high profitability is not offset by reverse-logistics and refund costs.
