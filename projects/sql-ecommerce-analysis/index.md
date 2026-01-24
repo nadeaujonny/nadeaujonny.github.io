@@ -77,8 +77,6 @@ Tables used:
 
 ### Business Question
 - Which Products generate the highest revenue?
-  - How much profit do they generate?
-  - How many units of them are sold?
 
 ### SQL Query
 ```sql
