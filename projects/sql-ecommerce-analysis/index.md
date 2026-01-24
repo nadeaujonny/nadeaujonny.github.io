@@ -73,14 +73,41 @@ Tables used:
 
 ---
 
-## Project Status
+## Analysis 1 - Top Products by Revenue
 
-🚧 In progress — queries and results coming soon.
+### Business Question
+- Which Products generate the highest revenue?
+  - How much profit do they generate?
+  - How many units of them are sold?
 
----
+### SQL Query
+SELECT 
+  p.name AS product_name,
+  p.category AS product_category,
+  ROUND(SUM(oi.sale_price), 2) AS total_revenue,
+  ROUND(SUM(oi.sale_price - p.cost), 2) AS total_profit,
+  COUNT(*) AS units_sold
+FROM `bigquery-public-data.thelook_ecommerce.products` p
+JOIN `bigquery-public-data.thelook_ecommerce.order_items` oi
+  ON p.id = oi.product_id
+JOIN `bigquery-public-data.thelook_ecommerce.orders` o
+  ON o.order_id = oi.order_id
+WHERE o.status = 'Complete'
+GROUP BY product_name, product_category
+ORDER BY total_revenue DESC
+LIMIT 10;
 
-## Repository Contents (coming)
+### Result Table
+![Top products by revenue](images/top_products_by_revenue.png)
 
-- `queries.sql` – full SQL analysis
-- `images/` – screenshots of query results
-- KPI summary tables
+### Insights
+- The highest-revenue products are dominated by premium outerwear brands (North Face, Canada Goose).
+- Outerwear & Coats appears multiple times in the top 10, indicating category concentration.
+- Top products generate both high revenue and strong profit margins, suggesting pricing power.
+- Unit sales are relatively balanced among top products, implying revenue is driven more by price than volume.
+
+### Business Recommendations
+- Prioritize inventory and marketing spend on top-performing outerwear products.
+- Bundle or cross-sell accessories with premium jackets to increase AOV.
+- Analyze return rates for these top products to ensure high revenue is not offset by returns.
+- Negotiate supplier costs for high-volume premium brands to improve margins further.
