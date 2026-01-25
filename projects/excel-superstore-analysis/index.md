@@ -11,7 +11,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Project Overview</strong></summary>
 
   <h2>Overview</h2>
@@ -139,7 +139,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Analysis 1 — Sales & Profit Trends Over Time</strong></summary>
 
 **Business Question:**  
@@ -156,7 +156,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Analysis 2 — Product & Category Performance</strong></summary>
 
 **Business Question:**  
@@ -173,7 +173,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Analysis 3 — Regional Performance & Market Efficiency</strong></summary>
 
 **Business Question:**  
@@ -190,7 +190,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
 
 **Business Question:**  
@@ -207,7 +207,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Analysis 5 — Returns Analysis & Revenue Impact</strong></summary>
 
 **Business Question:**  
@@ -224,7 +224,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details open>
+<details>
   <summary><strong>Project Implementation & Deliverables</strong></summary>
 
 ## Workbook Structure
