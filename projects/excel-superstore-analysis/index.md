@@ -102,6 +102,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - Standardized date formats and categories  
 - Created calculated columns for profit margin and return flags  
 - Built a clean analysis table using Power Query
+
 </details>
 
 ---
