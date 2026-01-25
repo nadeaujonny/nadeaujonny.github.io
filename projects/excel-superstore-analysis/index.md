@@ -140,52 +140,79 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 1 — Sales & Profit Trends Over Time</strong></summary>
+  <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
 
-**Business Question:**  
+<p><strong>Business Question:</strong></p>
+  <p>(write your question here)</p>
 
-**Data & Method:**  
-(what you built in Excel)
+  <p><strong>Data &amp; Method:</strong></p>
+  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
 
-**Key Findings:**  
-(bullets)
+  <p><strong>Key Findings:</strong></p>
+  <ul>
+    <li>(finding 1)</li>
+    <li>(finding 2)</li>
+    <li>(finding 3)</li>
+  </ul>
 
-**Business Recommendations:**  
-(bullets)
+  <p><strong>Business Recommendations:</strong></p>
+  <ul>
+    <li>(recommendation 1)</li>
+    <li>(recommendation 2)</li>
+    <li>(recommendation 3)</li>
+  </ul>
 </details>
 
 ---
 
 <details>
-  <summary><strong>Analysis 2 — Product & Category Performance</strong></summary>
+  <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
 
-**Business Question:**  
+<p><strong>Business Question:</strong></p>
+  <p>(write your question here)</p>
 
-**Data & Method:**  
-(what you built in Excel)
+  <p><strong>Data &amp; Method:</strong></p>
+  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
 
-**Key Findings:**  
-(bullets)
+  <p><strong>Key Findings:</strong></p>
+  <ul>
+    <li>(finding 1)</li>
+    <li>(finding 2)</li>
+    <li>(finding 3)</li>
+  </ul>
 
-**Business Recommendations:**  
-(bullets)
+  <p><strong>Business Recommendations:</strong></p>
+  <ul>
+    <li>(recommendation 1)</li>
+    <li>(recommendation 2)</li>
+    <li>(recommendation 3)</li>
+  </ul>
 </details>
 
 ---
 
 <details>
-  <summary><strong>Analysis 3 — Regional Performance & Market Efficiency</strong></summary>
+  <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
 
-**Business Question:**  
+<p><strong>Business Question:</strong></p>
+  <p>(write your question here)</p>
 
-**Data & Method:**  
-(what you built in Excel)
+  <p><strong>Data &amp; Method:</strong></p>
+  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
 
-**Key Findings:**  
-(bullets)
+  <p><strong>Key Findings:</strong></p>
+  <ul>
+    <li>(finding 1)</li>
+    <li>(finding 2)</li>
+    <li>(finding 3)</li>
+  </ul>
 
-**Business Recommendations:**  
-(bullets)
+  <p><strong>Business Recommendations:</strong></p>
+  <ul>
+    <li>(recommendation 1)</li>
+    <li>(recommendation 2)</li>
+    <li>(recommendation 3)</li>
+  </ul>
 </details>
 
 ---
@@ -193,79 +220,104 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 <details>
   <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
 
-**Business Question:**  
+<p><strong>Business Question:</strong></p>
+  <p>(write your question here)</p>
 
-**Data & Method:**  
-(what you built in Excel)
+  <p><strong>Data &amp; Method:</strong></p>
+  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
 
-**Key Findings:**  
-(bullets)
+  <p><strong>Key Findings:</strong></p>
+  <ul>
+    <li>(finding 1)</li>
+    <li>(finding 2)</li>
+    <li>(finding 3)</li>
+  </ul>
 
-**Business Recommendations:**  
-(bullets)
+  <p><strong>Business Recommendations:</strong></p>
+  <ul>
+    <li>(recommendation 1)</li>
+    <li>(recommendation 2)</li>
+    <li>(recommendation 3)</li>
+  </ul>
 </details>
 
 ---
 
 <details>
-  <summary><strong>Analysis 5 — Returns Analysis & Revenue Impact</strong></summary>
+  <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
 
-**Business Question:**  
+<p><strong>Business Question:</strong></p>
+  <p>(write your question here)</p>
 
-**Data & Method:**  
-(what you built in Excel)
+  <p><strong>Data &amp; Method:</strong></p>
+  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
 
-**Key Findings:**  
-(bullets)
+  <p><strong>Key Findings:</strong></p>
+  <ul>
+    <li>(finding 1)</li>
+    <li>(finding 2)</li>
+    <li>(finding 3)</li>
+  </ul>
 
-**Business Recommendations:**  
-(bullets)
+  <p><strong>Business Recommendations:</strong></p>
+  <ul>
+    <li>(recommendation 1)</li>
+    <li>(recommendation 2)</li>
+    <li>(recommendation 3)</li>
+  </ul>
 </details>
 
 ---
 
 <details>
-  <summary><strong>Project Implementation & Deliverables</strong></summary>
+  <summary><strong>Project Implementation &amp; Deliverables</strong></summary>
 
-## Workbook Structure
-- Raw Data (original import)
-- Power Query (cleaning steps)
-- Analysis Table (final cleaned table)
-- Pivot Tables (model + calculations)
-- Dashboard (final presentation)
+  <h2>Workbook Structure</h2>
+  <ul>
+    <li>Raw Data (original import)</li>
+    <li>Power Query (cleaning steps)</li>
+    <li>Analysis Table (final cleaned table)</li>
+    <li>Pivot Tables (model + calculations)</li>
+    <li>Dashboard (final presentation)</li>
+  </ul>
 
----
+  <hr>
 
-## Dashboard Features
+  <h2>Dashboard Features</h2>
+  <ul>
+    <li>Interactive slicers for region, category, and time</li>
+    <li>KPI summary cards</li>
+    <li>Trend visualizations</li>
+    <li>Top / bottom product rankings</li>
+    <li>Dynamic filtering across all charts</li>
+  </ul>
 
-- Interactive slicers for region, category, and time
-- KPI summary cards
-- Trend visualizations
-- Top / bottom product rankings
-- Dynamic filtering across all charts
+  <hr>
 
----
+  <h2>Final Dashboard</h2>
+  <p>(Screenshot will be added here)</p>
 
-## Final Dashboard
-(Screenshot will be added here)
+  <hr>
 
----
+  <h2>Project Deliverables</h2>
+  <ul>
+    <li>Fully interactive Excel dashboard workbook</li>
+    <li>Cleaned analysis-ready dataset</li>
+    <li>SQL-style business question documentation</li>
+  </ul>
 
-## Project Deliverables
+  <hr>
 
-- Fully interactive Excel dashboard workbook
-- Cleaned analysis-ready dataset
-- SQL-style business question documentation
+  <h2>Files</h2>
+  <ul>
+    <li>Raw dataset</li>
+    <li>Cleaned dataset</li>
+    <li>Excel workbook</li>
+  </ul>
 
----
+  <hr>
 
-## Files
-- Raw dataset
-- Cleaned dataset
-- Excel workbook
+  <h2>Conclusion</h2>
+  <p>(Concluding statements)</p>
 
----
-
-## Conclusion
-(concluding statements)
 </details>
