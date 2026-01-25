@@ -111,7 +111,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Question:**  
 
-**Approach:**  
+**Data & Method:**  
 (what you built in Excel)
 
 **Key Findings:**  
@@ -128,7 +128,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Question:**  
 
-**Approach:**  
+**Data & Method:**  
 (what you built in Excel)
 
 **Key Findings:**  
@@ -145,7 +145,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Question:**  
 
-**Approach:**  
+**Data & Method:**  
 (what you built in Excel)
 
 **Key Findings:**  
@@ -162,7 +162,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Question:**  
 
-**Approach:**  
+**Data & Method:**  
 (what you built in Excel)
 
 **Key Findings:**  
@@ -179,7 +179,7 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Question:**  
 
-**Approach:**  
+**Data & Method:**  
 (what you built in Excel)
 
 **Key Findings:**  
