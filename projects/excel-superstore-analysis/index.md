@@ -9,8 +9,9 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 > An end-to-end Excel analytics project demonstrating data cleaning, KPI development, pivot-table analysis, and executive dashboard design using a widely used public retail sample dataset.
 
----
-
+<details open>
+  <summary><strong>Project Overview</strong></summary>
+  
 ## Overview
 This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance. The goal is to demonstrate real-world Excel analytics skills used in business environments.
 
@@ -100,13 +101,14 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - Removed duplicates and invalid records  
 - Standardized date formats and categories  
 - Created calculated columns for profit margin and return flags  
-- Built a clean analysis table using Power Query  
+- Built a clean analysis table using Power Query
+</details>
 
 ---
 
-## Analysis Sections
+<details open>
+  <summary><strong>Analysis 1 — Sales & Profit Trends Over Time</strong></summary>
 
-### 1. Sales & Profit Trends
 **Business Question:**  
 
 **Approach:**  
@@ -117,10 +119,13 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+</details>
 
 ---
 
-### 2. Product & Category Performance
+<details open>
+  <summary><strong>Analysis 2 — Product & Category Performance</strong></summary>
+
 **Business Question:**  
 
 **Approach:**  
@@ -131,10 +136,13 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+</details>
 
 ---
 
-### 3. Regional Performance
+<details open>
+  <summary><strong>Analysis 3 — Regional Performance & Market Efficiency</strong></summary>
+
 **Business Question:**  
 
 **Approach:**  
@@ -145,10 +153,13 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+</details>
 
 ---
 
-### 4. Customer Segment Analysis
+<details open>
+  <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
+
 **Business Question:**  
 
 **Approach:**  
@@ -159,10 +170,13 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+</details>
 
 ---
 
-### 5. Returns Analysis
+<details open>
+  <summary><strong>Analysis 5 — Returns Analysis & Revenue Impact</strong></summary>
+
 **Business Question:**  
 
 **Approach:**  
@@ -173,8 +187,12 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 
 **Business Recommendations:**  
 (bullets)
+</details>
 
 ---
+
+<details open>
+  <summary><strong>Project Implementation & Deliverables</strong></summary>
 
 ## Workbook Structure
 - Raw Data (original import)
@@ -212,3 +230,9 @@ The Superstore dataset is a public retail transaction dataset commonly used for 
 - Raw dataset
 - Cleaned dataset
 - Excel workbook
+
+---
+
+## Conclusion
+(concluding statements)
+</details>
