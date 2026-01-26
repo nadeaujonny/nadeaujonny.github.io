@@ -532,27 +532,135 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
+  <summary><strong>Analysis 4 – Customer Segment Analysis</strong></summary>
 
-<p><strong>Business Question:</strong></p>
-  <p>(write your question here)</p>
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><strong>Data &amp; Method:</strong></p>
-  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
+  <h3>Business Question</h3>
+  <p>
+    Which customer segments drive the most revenue and profit, and which segments are the most efficient
+    (highest profit margin)? How should the business prioritize growth, pricing, and retention strategies
+    across <strong>Consumer</strong>, <strong>Corporate</strong>, and <strong>Home Office</strong>?
+  </p>
 
-  <p><strong>Key Findings:</strong></p>
+  <h3>Method</h3>
   <ul>
-    <li>(finding 1)</li>
-    <li>(finding 2)</li>
-    <li>(finding 3)</li>
+    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
+    <li>Built a pivot table grouped by <strong>Segment</strong> to calculate:
+      <ul>
+        <li><strong>Total Sales (Revenue)</strong> = Sum of Sales</li>
+        <li><strong>Total Profit</strong> = Sum of Profit</li>
+        <li><strong>Profit Margin (%)</strong> = Profit / Sales (calculated field)</li>
+      </ul>
+    </li>
+    <li>Created separate column charts for Sales, Profit, and Profit Margin to make segment comparisons clear.</li>
   </ul>
 
-  <p><strong>Business Recommendations:</strong></p>
+  <hr>
+
+  <h3>Segment KPI Summary</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-4-segment-summary.png"
+      alt="Customer segment KPI summary table (Sales, Profit, Profit Margin)"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Summary pivot by Segment: Sales, Profit, and Profit Margin (%).
+    </figcaption>
+  </figure>
+
+  <h3>Sales Revenue by Segment</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-4-sales-by-segment.png"
+      alt="Sales revenue by customer segment"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Revenue contribution by segment: Consumer leads total revenue.
+    </figcaption>
+  </figure>
+
+  <h3>Profit by Segment</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-4-profit-by-segment.png"
+      alt="Profit by customer segment"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Profit contribution by segment: Consumer generates the most total profit.
+    </figcaption>
+  </figure>
+
+  <h3>Profit Margin by Segment</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-4-profit-margin-by-segment.png"
+      alt="Profit margin percentage by customer segment"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Profit margin efficiency by segment: Home Office has the highest margin.
+    </figcaption>
+  </figure>
+
+  <hr>
+
+  <h3>Insights</h3>
   <ul>
-    <li>(recommendation 1)</li>
-    <li>(recommendation 2)</li>
-    <li>(recommendation 3)</li>
+    <li>
+      <strong>Consumer</strong> is the primary growth engine, generating the highest <strong>Sales</strong>
+      (<strong>$1,161,012.63</strong>) and the highest <strong>Profit</strong> (<strong>$134,022.09</strong>).
+      However, it has the <strong>lowest profit margin</strong> at <strong>11.5%</strong>, suggesting heavier discounting,
+      higher fulfillment costs, or a greater mix of low-margin products.
+    </li>
+    <li>
+      <strong>Corporate</strong> produces solid performance with <strong>$705,601.99</strong> in sales and
+      <strong>$91,821.26</strong> in profit, while maintaining a stronger <strong>13.0% margin</strong>.
+      This segment appears more efficient than Consumer and may be less price-sensitive or have more repeatable order patterns.
+    </li>
+    <li>
+      <strong>Home Office</strong> is the most efficient segment with the <strong>highest profit margin</strong>
+      (<strong>14.0%</strong>) but contributes the smallest totals (<strong>$428,894.96</strong> sales; <strong>$60,170.47</strong> profit).
+      This indicates an opportunity to grow this segment without sacrificing profitability.
+    </li>
+    <li>
+      Overall performance across all segments totals <strong>$2,295,509.57</strong> in revenue and <strong>$286,013.82</strong> in profit,
+      yielding an overall <strong>12.5% profit margin</strong>. The mix of segments suggests the business relies on Consumer for scale,
+      while Corporate and Home Office support stronger margins.
+    </li>
   </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>
+      <strong>Protect Consumer volume while improving margin:</strong> audit discounting and shipping costs within the Consumer segment.
+      Identify sub-categories or products that drive sales but dilute profitability, and test small pricing/discount adjustments
+      (or shipping threshold incentives) to lift margins without materially reducing demand.
+    </li>
+    <li>
+      <strong>Scale Home Office efficiently:</strong> because Home Office has the highest margin (14.0%) but the smallest revenue base,
+      invest in targeted campaigns (email offers, bundles, or subscriptions for frequently purchased items) to increase share
+      while preserving its strong profitability.
+    </li>
+    <li>
+      <strong>Expand Corporate through repeatable contracts:</strong> Corporate has a healthy 13.0% margin and sizable revenue.
+      Prioritize retention and upsell through account-based offers (bulk pricing tiers, office replenishment programs, and faster shipping options)
+      to grow revenue in a predictable, high-efficiency way.
+    </li>
+    <li>
+      <strong>Implement segment-level KPI monitoring:</strong> track Sales, Profit, and Profit Margin by segment monthly.
+      Set margin guardrails (e.g., “Consumer margin should not fall below X%”) to prevent revenue growth that erodes profitability.
+    </li>
+    <li>
+      <strong>Use segment strategy in planning:</strong> allocate inventory and promotions differently by segment—Consumer for volume-driven campaigns,
+      Corporate for recurring/bulk orders, and Home Office for high-margin growth initiatives.
+    </li>
+  </ul>
+
 </details>
 
 ---
