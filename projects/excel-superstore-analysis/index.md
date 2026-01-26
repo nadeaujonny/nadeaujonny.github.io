@@ -301,70 +301,89 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <br>
 
-### Business Question
+<h3>Business Question</h3>
 
-Which product categories and individual products contribute the most to revenue and profit? Are there meaningful differences in profitability across categories that could inform pricing, inventory, and product strategy?
+<p>
+Which product categories and individual products contribute the most to revenue and profit? 
+Are there meaningful differences in profitability across categories that could inform pricing, 
+inventory, and product strategy?
+</p>
 
----
+<hr>
 
-### Method
+<h3>Method</h3>
 
-- Used the cleaned `Clean_Orders` table as the data source.
-- Built pivot tables grouped by **Category** to calculate:
-  - Total Sales (Revenue)
-  - Total Profit
-  - Profit Margin (calculated field = Profit / Sales)
-- Built a pivot table grouped by **Product Name** and sorted by **Sum of Profit (descending)** to identify the top 10 most profitable products.
-- Created column and bar charts to visualize category-level and product-level performance.
+<ul>
+  <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
+  <li>Built pivot tables grouped by <strong>Category</strong> to calculate:
+    <ul>
+      <li>Total Sales (Revenue)</li>
+      <li>Total Profit</li>
+      <li>Profit Margin (calculated field = Profit / Sales)</li>
+    </ul>
+  </li>
+  <li>Built a pivot table grouped by <strong>Product Name</strong> and sorted by <strong>Sum of Profit (descending)</strong> to identify the top 10 most profitable products.</li>
+  <li>Created column and bar charts to visualize category-level and product-level performance.</li>
+</ul>
 
----
+<hr>
 
-### Sales Revenue by Category
+<h3>Sales Revenue by Category</h3>
 
-![Sales Revenue by Category](images/excel-analysis-2-sales-revenue-by-category.png)
+<img src="images/excel-analysis-2-sales-revenue-by-category.png" alt="Sales Revenue by Category" style="max-width:100%;">
 
----
+<hr>
 
-### Profit by Category
+<h3>Profit by Category</h3>
 
-![Profit by Category](images/excel-analysis-2-profit-by-category.png)
+<img src="images/excel-analysis-2-profit-by-category.png" alt="Profit by Category" style="max-width:100%;">
 
----
+<hr>
 
-### Profit Margin by Category
+<h3>Profit Margin by Category</h3>
 
-![Profit Margin by Category](images/excel-analysis-2-profit-margin-by-category.png)
+<img src="images/excel-analysis-2-profit-margin-by-category.png" alt="Profit Margin by Category" style="max-width:100%;">
 
----
+<hr>
 
-### Top 10 Products by Total Profit
+<h3>Top 10 Products by Total Profit</h3>
 
-![Top 10 Products by Profit](images/excel-analysis-2-top-10-products-by-profit.png)
+<img src="images/excel-analysis-2-top-10-products-by-profit.png" alt="Top 10 Products by Profit" style="max-width:100%;">
 
----
+<hr>
 
-### Insights
+<h3>Insights</h3>
 
-- **Technology** generates the highest revenue and profit among all categories, making it the strongest overall performer.
-- **Office Supplies** generates substantial revenue and maintains a strong profit margin comparable to Technology.
-- **Furniture** produces high revenue but significantly lower profit and profit margin, indicating weaker efficiency.
-- Profit margins vary substantially by category:
-  - Technology and Office Supplies operate near ~17% margins.
-  - Furniture operates near ~2–3%, signaling potential pricing or cost issues.
-- A small number of products account for a disproportionately large share of total profit, indicating a strong **long-tail distribution** of product performance.
+<ul>
+  <li><strong>Technology</strong> generates the highest revenue and profit among all categories, making it the strongest overall performer.</li>
+  <li><strong>Office Supplies</strong> generates substantial revenue and maintains a strong profit margin comparable to Technology.</li>
+  <li><strong>Furniture</strong> produces high revenue but significantly lower profit and profit margin, indicating weaker efficiency.</li>
+  <li>Profit margins vary substantially by category:
+    <ul>
+      <li>Technology and Office Supplies operate near ~17% margins.</li>
+      <li>Furniture operates near ~2–3%, signaling potential pricing or cost issues.</li>
+    </ul>
+  </li>
+  <li>A small number of products account for a disproportionately large share of total profit, indicating a strong long-tail distribution of product performance.</li>
+</ul>
 
----
+<hr>
 
-### Business Recommendations
+<h3>Business Recommendations</h3>
 
-- Prioritize inventory availability and marketing investment for **Technology and Office Supplies**, as they deliver both high revenue and strong margins.
-- Conduct a pricing, discounting, and cost analysis for **Furniture** to improve profitability or reconsider product assortment.
-- Protect and monitor the **top-profit products** closely to avoid stockouts or supplier disruptions.
-- Use product-level profit rankings to guide:
-  - Promotional strategy
-  - Product bundling
-  - Discontinuation of consistently low-margin items
-- Introduce margin-based KPIs alongside revenue targets to avoid growth that erodes profitability.
+<ul>
+  <li>Prioritize inventory availability and marketing investment for <strong>Technology</strong> and <strong>Office Supplies</strong>, as they deliver both high revenue and strong margins.</li>
+  <li>Conduct a pricing, discounting, and cost analysis for <strong>Furniture</strong> to improve profitability or reconsider product assortment.</li>
+  <li>Protect and monitor the <strong>top-profit products</strong> closely to avoid stockouts or supplier disruptions.</li>
+  <li>Use product-level profit rankings to guide:
+    <ul>
+      <li>Promotional strategy</li>
+      <li>Product bundling</li>
+      <li>Discontinuation of consistently low-margin items</li>
+    </ul>
+  </li>
+  <li>Introduce margin-based KPIs alongside revenue targets to avoid growth that erodes profitability.</li>
+</ul>
 
 </details>
 
