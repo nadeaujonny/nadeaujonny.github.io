@@ -219,27 +219,79 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
+  <summary><strong>Analysis 1 – Sales & Profit Trends Over Time</strong></summary>
 
-<p><strong>Business Question:</strong></p>
-  <p>(write your question here)</p>
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><strong>Data &amp; Method:</strong></p>
-  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
+  <h3>Business Question</h3>
+  <p>
+    How have sales and profitability evolved over time from 2014 to 2017? Are there observable trends, seasonality,
+    or periods of financial volatility that could inform forecasting, inventory planning, and cost control strategies?
+  </p>
 
-  <p><strong>Key Findings:</strong></p>
+  <h3>Method</h3>
   <ul>
-    <li>(finding 1)</li>
-    <li>(finding 2)</li>
-    <li>(finding 3)</li>
+    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
+    <li>Built pivot tables grouped by <code>Order Year-Month</code>.</li>
+    <li>Created line charts to visualize monthly revenue and monthly profit.</li>
+    <li>Calculated key performance indicators (KPIs) to contextualize trends.</li>
   </ul>
 
-  <p><strong>Business Recommendations:</strong></p>
+  <h3>Key Performance Indicators (Overall)</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-1-kpi-summary.png"
+      alt="Superstore KPI summary"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Overall revenue, profit, profit margin, total orders, units sold, and average order value.
+    </figcaption>
+  </figure>
+
+  <h3>Monthly Sales Trend</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-1-monthly-sales.png"
+      alt="Monthly sales trend from 2014 to 2017"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Monthly revenue trend grouped by year and month.
+    </figcaption>
+  </figure>
+
+  <h3>Monthly Profit Trend</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img
+      src="images/excel-analysis-1-monthly-profit.png"
+      alt="Monthly profit trend from 2014 to 2017"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Monthly profit trend highlighting volatility and negative-profit periods.
+    </figcaption>
+  </figure>
+
+  <h3>Insights</h3>
   <ul>
-    <li>(recommendation 1)</li>
-    <li>(recommendation 2)</li>
-    <li>(recommendation 3)</li>
+    <li>Revenue shows a clear upward long-term trend, indicating overall business growth.</li>
+    <li>Sales exhibit strong seasonality, with recurring spikes toward the end of each year.</li>
+    <li>Profit is significantly more volatile than revenue, with several months operating at a loss.</li>
+    <li>Early years show more frequent negative-profit periods, while later years appear more stable.</li>
+    <li>Revenue growth does not always translate proportionally to profit growth, suggesting cost or discount pressure.</li>
   </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Increase inventory and staffing ahead of Q4 to capitalize on predictable seasonal demand.</li>
+    <li>Investigate negative-profit months to identify unprofitable products, excessive discounting, or high shipping costs.</li>
+    <li>Introduce profit-based performance monitoring in addition to revenue targets.</li>
+    <li>Develop short-term sales and profit forecasts using historical seasonality patterns.</li>
+    <li>Evaluate pricing and logistics strategies to stabilize margins during high-growth periods.</li>
+  </ul>
+
 </details>
 
 ---
