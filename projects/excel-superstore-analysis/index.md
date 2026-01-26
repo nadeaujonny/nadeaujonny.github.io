@@ -289,93 +289,129 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-<summary><strong>Analysis 2 – Product & Category Performance</strong></summary>
+  <summary><strong>Analysis 2 – Product &amp; Category Performance</strong></summary>
 
-<br>
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-<h3>Business Question</h3>
+  <h3>Business Question</h3>
+  <p>
+    Which product categories and individual products contribute the most to revenue and profit?
+    Are there meaningful differences in profitability across categories that should inform pricing,
+    discounting, inventory, and product strategy?
+  </p>
 
-<p>
-Which product categories and individual products contribute the most to revenue and profit? 
-Are there meaningful differences in profitability across categories that could inform pricing, 
-inventory, and product strategy?
-</p>
+  <h3>Method</h3>
+  <ul>
+    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
+    <li>Built category-level pivots for <strong>Total Sales (Revenue)</strong>, <strong>Total Profit</strong>, and <strong>Profit Margin</strong> (Profit / Sales).</li>
+    <li>Built a product-level pivot and sorted by <strong>Sum of Profit (descending)</strong> to identify the top 10 most profitable products.</li>
+    <li>Created column and horizontal bar charts with data labels for fast comparison.</li>
+  </ul>
 
-<hr>
+  <h3>Category KPI Summary</h3>
+  <p style="margin-top: 0;">
+    Summary of category performance (values from pivots). This table highlights the revenue–profit tradeoff and where margin efficiency differs.
+  </p>
 
-<h3>Method</h3>
+  <table style="border-collapse: collapse; width: 100%; max-width: 760px; margin-bottom: 14px;">
+    <thead>
+      <tr>
+        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Category</th>
+        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Revenue</th>
+        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Profit</th>
+        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Profit Margin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Technology</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$835,759.74</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$145,386.13</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">17.4%</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Office Supplies</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$718,317.79</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$122,247.40</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">17.0%</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Furniture</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$741,432.04</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">$18,380.28</td>
+        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.5%</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 6px; font-weight:700;">Total</td>
+        <td style="padding: 8px 6px; text-align:right; font-weight:700;">$2,295,509.57</td>
+        <td style="padding: 8px 6px; text-align:right; font-weight:700;">$286,013.82</td>
+        <td style="padding: 8px 6px; text-align:right; font-weight:700;">12.5%</td>
+      </tr>
+    </tbody>
+  </table>
 
-<ul>
-  <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
-  <li>Built pivot tables grouped by <strong>Category</strong> to calculate:
-    <ul>
-      <li>Total Sales (Revenue)</li>
-      <li>Total Profit</li>
-      <li>Profit Margin (calculated field = Profit / Sales)</li>
-    </ul>
-  </li>
-  <li>Built a pivot table grouped by <strong>Product Name</strong> and sorted by <strong>Sum of Profit (descending)</strong> to identify the top 10 most profitable products.</li>
-  <li>Created column and bar charts to visualize category-level and product-level performance.</li>
-</ul>
+  <h3>Sales Revenue by Category</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img src="images/excel-analysis-2-sales-revenue-by-category.png"
+         alt="Sales Revenue by Category"
+         loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Technology leads revenue, with Furniture and Office Supplies close behind.
+    </figcaption>
+  </figure>
 
-<hr>
+  <h3>Profit by Category</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img src="images/excel-analysis-2-profit-by-category.png"
+         alt="Profit by Category"
+         loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Profit is concentrated in Technology and Office Supplies; Furniture contributes comparatively little profit.
+    </figcaption>
+  </figure>
 
-<h3>Sales Revenue by Category</h3>
+  <h3>Profit Margin by Category</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img src="images/excel-analysis-2-profit-margin-by-category.png"
+         alt="Profit Margin by Category"
+         loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Technology (~17.4%) and Office Supplies (~17.0%) are high-efficiency categories; Furniture (~2.5%) is a margin outlier.
+    </figcaption>
+  </figure>
 
-<img src="images/excel-analysis-2-sales-revenue-by-category.png" alt="Sales Revenue by Category" style="max-width:100%;">
+  <h3>Top 10 Products by Total Profit</h3>
+  <figure style="margin: 0 0 16px 0;">
+    <img src="images/excel-analysis-2-top-10-products-by-profit.png"
+         alt="Top 10 Products by Profit"
+         loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Profit is “top-heavy”: the #1 product (Canon imageCLASS 2200 Advanced Copier) contributes $25,199.93 profit alone.
+    </figcaption>
+  </figure>
 
-<hr>
+  <h3>Insights</h3>
+  <ul>
+    <li><strong>Technology is the best overall performer:</strong> highest revenue ($835.8K) and highest profit ($145.4K) with a strong margin (17.4%).</li>
+    <li><strong>Office Supplies is nearly as efficient as Technology:</strong> margin is also ~17.0% while contributing $122.2K profit.</li>
+    <li><strong>Furniture is the efficiency problem:</strong> despite high revenue ($741.4K), profit is only $18.4K and margin is ~2.5%, far below the overall 12.5% margin.</li>
+    <li><strong>Profit is highly concentrated:</strong> Technology + Office Supplies account for ~94% of total profit, making these categories “must-protect” from margin erosion.</li>
+    <li><strong>Product profits are top-heavy:</strong> the top 10 products generate $66.5K profit (~23% of total profit), and the top product alone contributes ~$25.2K (~9% of total profit), creating both opportunity and concentration risk.</li>
+  </ul>
 
-<h3>Profit by Category</h3>
-
-<img src="images/excel-analysis-2-profit-by-category.png" alt="Profit by Category" style="max-width:100%;">
-
-<hr>
-
-<h3>Profit Margin by Category</h3>
-
-<img src="images/excel-analysis-2-profit-margin-by-category.png" alt="Profit Margin by Category" style="max-width:100%;">
-
-<hr>
-
-<h3>Top 10 Products by Total Profit</h3>
-
-<img src="images/excel-analysis-2-top-10-products-by-profit.png" alt="Top 10 Products by Profit" style="max-width:100%;">
-
-<hr>
-
-<h3>Insights</h3>
-
-<ul>
-  <li><strong>Technology</strong> generates the highest revenue and profit among all categories, making it the strongest overall performer.</li>
-  <li><strong>Office Supplies</strong> generates substantial revenue and maintains a strong profit margin comparable to Technology.</li>
-  <li><strong>Furniture</strong> produces high revenue but significantly lower profit and profit margin, indicating weaker efficiency.</li>
-  <li>Profit margins vary substantially by category:
-    <ul>
-      <li>Technology and Office Supplies operate near ~17% margins.</li>
-      <li>Furniture operates near ~2–3%, signaling potential pricing or cost issues.</li>
-    </ul>
-  </li>
-  <li>A small number of products account for a disproportionately large share of total profit, indicating a strong long-tail distribution of product performance.</li>
-</ul>
-
-<hr>
-
-<h3>Business Recommendations</h3>
-
-<ul>
-  <li>Prioritize inventory availability and marketing investment for <strong>Technology</strong> and <strong>Office Supplies</strong>, as they deliver both high revenue and strong margins.</li>
-  <li>Conduct a pricing, discounting, and cost analysis for <strong>Furniture</strong> to improve profitability or reconsider product assortment.</li>
-  <li>Protect and monitor the <strong>top-profit products</strong> closely to avoid stockouts or supplier disruptions.</li>
-  <li>Use product-level profit rankings to guide:
-    <ul>
-      <li>Promotional strategy</li>
-      <li>Product bundling</li>
-      <li>Discontinuation of consistently low-margin items</li>
-    </ul>
-  </li>
-  <li>Introduce margin-based KPIs alongside revenue targets to avoid growth that erodes profitability.</li>
-</ul>
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li><strong>Scale what works:</strong> prioritize in-stock rates, merchandising, and targeted promotions for Technology and Office Supplies to protect the majority of profit contribution.</li>
+    <li><strong>Fix Furniture margin with a drilldown:</strong> create pivots for Furniture by <em>Sub-Category</em> × <em>Discount band</em> × <em>Ship Mode</em> to identify whether losses come from discounting, freight, or mix.</li>
+    <li><strong>Introduce discount guardrails:</strong> set category/sub-category discount limits and require approval if projected margin drops below a threshold (especially in Furniture).</li>
+    <li><strong>Protect top-profit products:</strong> set reorder points and monitor supplier lead times for the top products; these drive a large share of profit and stockouts would be expensive.</li>
+    <li><strong>Use profit-based KPIs:</strong> track profit margin by category monthly so revenue growth doesn’t mask margin deterioration.</li>
+  </ul>
 
 </details>
 
