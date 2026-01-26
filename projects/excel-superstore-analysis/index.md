@@ -392,45 +392,68 @@ inventory, and product strategy?
 <details>
   <summary><strong>Analysis 3 — Regional Performance & Market Efficiency</strong></summary>
 
-### Business Question
-Which regions are driving the most revenue and profit, and where are we seeing efficiency gaps (low profit margin)? Which states and cities are the biggest profit contributors—and which locations are consistently unprofitable and may require corrective action?
+  <h3>Business Question</h3>
+  <p>
+    Which regions are driving the most revenue and profit, and where are we seeing efficiency gaps (low profit margin)?
+    Which states and cities are the biggest profit contributors—and which locations are consistently unprofitable and may require corrective action?
+  </p>
 
-### Method
-- Used the cleaned `Clean_Orders` table as the source for all pivots.
-- Built region-level pivots for **Total Sales**, **Total Profit**, and **Profit Margin** (calculated field = Profit / Sales).
-- Created ranked pivots for **Top 10** and **Bottom 10** **States** and **Cities** by **Sum of Profit**.
-- Visualized results with column and horizontal bar charts and added data labels for readability.
+  <h3>Method</h3>
+  <ul>
+    <li>Used the cleaned <code>Clean_Orders</code> table as the source for all pivots.</li>
+    <li>Built region-level pivots for <strong>Total Sales</strong>, <strong>Total Profit</strong>, and <strong>Profit Margin</strong> (calculated field = Profit / Sales).</li>
+    <li>Created ranked pivots for <strong>Top 10</strong> and <strong>Bottom 10</strong> <strong>States</strong> and <strong>Cities</strong> by <strong>Sum of Profit</strong>.</li>
+    <li>Visualized results with column and horizontal bar charts and added data labels for readability.</li>
+  </ul>
 
-### Sales Revenue by Region
-![Sales Revenue by Region](/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png)
+  <h3>Sales Revenue by Region</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png"
+       alt="Sales Revenue by Region"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Profit by Region
-![Profit by Region](/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png)
+  <h3>Profit by Region</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png"
+       alt="Profit by Region"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Profit Margin by Region
-![Profit Margin by Region](/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png)
+  <h3>Profit Margin by Region</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png"
+       alt="Profit Margin by Region"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Top 10 States by Profit
-![Top 10 States by Profit](/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png)
+  <h3>Top 10 States by Profit</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png"
+       alt="Top 10 States by Profit"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Top 10 Cities by Profit
-![Top 10 Cities by Profit](/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png)
+  <h3>Top 10 Cities by Profit</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png"
+       alt="Top 10 Cities by Profit"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Bottom 10 States by Profit
-![Bottom 10 States by Profit](/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png)
+  <h3>Bottom 10 States by Profit</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png"
+       alt="Bottom 10 States by Profit"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Bottom 10 Cities by Profit
-![Bottom 10 Cities by Profit](/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png)
+  <h3>Bottom 10 Cities by Profit</h3>
+  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png"
+       alt="Bottom 10 Cities by Profit"
+       style="max-width:100%; margin-bottom:20px;">
 
-### Insights
-- **Revenue concentration vs. profitability:** High-sales regions are not always the highest-margin regions, so revenue alone can hide efficiency issues.
-- **Profit leaders:** A small number of states/cities contribute a disproportionate share of total profit—these locations are critical to protect and grow.
-- **Consistent loss areas:** The bottom-ranked states/cities indicate persistent unprofitable pockets that may be driven by discounting, shipping costs, product mix, or operational inefficiencies.
+  <h3>Insights</h3>
+  <ul>
+    <li>High sales regions do not always correspond to high profit margins, indicating efficiency differences.</li>
+    <li>A small group of states and cities contribute a disproportionate share of total profit.</li>
+    <li>Several locations consistently generate losses, likely due to discounting, shipping costs, or unfavorable product mix.</li>
+  </ul>
 
-### Recommendations
-- **Protect & expand high-profit markets:** Prioritize inventory availability, faster fulfillment, and targeted campaigns in top-profit states/cities.
-- **Diagnose low-margin regions:** Break down margin by **category/sub-category**, **discount bands**, and **shipping mode** to pinpoint what’s driving margin erosion.
-- **Fix or exit chronic loss locations:** Tighten discounting rules, adjust product assortment, review shipping/fulfillment costs, and consider market-specific pricing or minimum order thresholds.
+  <h3>Recommendations</h3>
+  <ul>
+    <li>Prioritize inventory availability and marketing in top-profit states and cities.</li>
+    <li>Analyze margin drivers by category, discount level, and shipping mode in low-margin regions.</li>
+    <li>Revisit pricing strategy, discount policies, and fulfillment costs in chronically unprofitable locations.</li>
+  </ul>
 
 </details>
 
