@@ -139,6 +139,98 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
+<section id="data-preparation">
+  <details>
+    <summary><strong>Data Preparation</strong></summary>
+
+    <p>
+      Before building KPIs, pivot tables, and charts, I cleaned and standardized the Superstore Orders dataset using
+      <strong>Excel Power Query</strong>. The goal was to create a reliable, refreshable table (<code>Clean_Orders</code>)
+      that serves as the single source of truth for all downstream analysis and dashboarding.
+    </p>
+
+    <h3>Overview</h3>
+    <ul>
+      <li><strong>Input:</strong> Raw Superstore Orders data (<code>.xls</code>) preserved as <code>Raw_Orders</code> (no manual edits).</li>
+      <li><strong>Tool:</strong> Excel Power Query (Get &amp; Transform).</li>
+      <li><strong>Output:</strong> Cleaned dataset loaded into <code>Clean_Orders</code>.</li>
+      <li><strong>Why Power Query:</strong> Transformations are documented, repeatable, and can be refreshed as the dataset changes.</li>
+    </ul>
+
+    <h3>Power Query Applied Steps (Evidence)</h3>
+    <p>
+      The screenshot below shows the Power Query Editor with the <em>Applied Steps</em> panel, documenting the full
+      cleaning pipeline from raw input to cleaned output.
+    </p>
+    <figure style="margin: 0;">
+      <img
+        src="images/excel-data-prep-power-query.png"
+        alt="Power Query Applied Steps for Superstore data preparation"
+        style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+      >
+      <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+        Power Query: applied transformations used to produce <code>Clean_Orders</code>.
+      </figcaption>
+    </figure>
+
+    <h3>Cleaning &amp; Transformation Steps</h3>
+
+    <h4>1) Import &amp; Preserve Raw Data</h4>
+    <ul>
+      <li>Imported the raw Orders dataset into Power Query Editor.</li>
+      <li>Kept the original table (<code>Raw_Orders</code>) untouched to preserve a clean baseline and ensure traceability.</li>
+    </ul>
+
+    <h4>2) Standardize Column Data Types</h4>
+    <ul>
+      <li>Validated column types to prevent incorrect aggregations and grouping issues in pivot tables.</li>
+      <li>Converted <code>Order Date</code> and <code>Ship Date</code> from DateTime to <strong>Date</strong> (date-only values) for consistent time-based analysis.</li>
+      <li>Set <code>Postal Code</code> to <strong>Text</strong> to preserve leading zeros and avoid formatting issues.</li>
+      <li>Ensured numeric fields (e.g., <code>Sales</code>, <code>Profit</code>, <code>Discount</code>, <code>Quantity</code>) were stored as appropriate numeric types.</li>
+      <li>Ensured IDs and dimension fields (Order/Customer/Product IDs and categorical columns) were treated as text for stable filtering and grouping.</li>
+    </ul>
+
+    <h4>3) Clean Text Fields</h4>
+    <ul>
+      <li>Trimmed whitespace and removed non-printing characters across key text columns.</li>
+      <li>Improved consistency for customer/product names and category/geographic fields to reduce duplicate-looking labels in pivots.</li>
+    </ul>
+
+    <h4>4) Remove Blank / Invalid Rows</h4>
+    <ul>
+      <li>Removed blank rows and incomplete records that could create noise or inaccuracies in summaries and visualizations.</li>
+    </ul>
+
+    <h4>5) Remove Duplicate Records</h4>
+    <ul>
+      <li>De-duplicated records using a composite key:</li>
+      <ul>
+        <li><code>Order ID + Product ID</code></li>
+      </ul>
+      <li>This ensured each row in <code>Clean_Orders</code> represents a unique product line within an order.</li>
+    </ul>
+
+    <h4>6) Create Derived Time Fields</h4>
+    <ul>
+      <li>Created additional time fields to support consistent monthly trending and pivot grouping:</li>
+      <ul>
+        <li><code>Order Year</code></li>
+        <li><code>Order Month</code></li>
+        <li><code>Order Year-Month</code> (formatted as <code>YYYY-MM</code>)</li>
+      </ul>
+    </ul>
+
+    <h4>7) Load Clean Output to <code>Clean_Orders</code></h4>
+    <ul>
+      <li>Loaded the transformed dataset into the workbook as <code>Clean_Orders</code>.</li>
+      <li>Used <code>Clean_Orders</code> as the source for all KPI calculations, pivot tables, charts, and the dashboard.</li>
+    </ul>
+
+  </details>
+</section>
+
+---
+
 <details>
   <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
 
