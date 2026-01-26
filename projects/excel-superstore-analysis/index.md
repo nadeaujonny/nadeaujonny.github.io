@@ -390,7 +390,7 @@ inventory, and product strategy?
 ---
 
 <details>
-  <summary><strong>Analysis 3 — Regional Performance & Market Efficiency</strong></summary>
+  <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
 
   <h3>Business Question</h3>
   <p>
@@ -407,52 +407,96 @@ inventory, and product strategy?
   </ul>
 
   <h3>Sales Revenue by Region</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png"
-       alt="Sales Revenue by Region"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png"
+         alt="Sales Revenue by Region"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Profit by Region</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png"
-       alt="Profit by Region"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png"
+         alt="Profit by Region"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Profit Margin by Region</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png"
-       alt="Profit Margin by Region"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png"
+         alt="Profit Margin by Region"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Top 10 States by Profit</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png"
-       alt="Top 10 States by Profit"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png"
+         alt="Top 10 States by Profit"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Top 10 Cities by Profit</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png"
-       alt="Top 10 Cities by Profit"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png"
+         alt="Top 10 Cities by Profit"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Bottom 10 States by Profit</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png"
-       alt="Bottom 10 States by Profit"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png"
+         alt="Bottom 10 States by Profit"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Bottom 10 Cities by Profit</h3>
-  <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png"
-       alt="Bottom 10 Cities by Profit"
-       style="max-width:100%; margin-bottom:20px;">
+  <p>
+    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png"
+         alt="Bottom 10 Cities by Profit"
+         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
+  </p>
 
   <h3>Insights</h3>
   <ul>
-    <li>High sales regions do not always correspond to high profit margins, indicating efficiency differences.</li>
-    <li>A small group of states and cities contribute a disproportionate share of total profit.</li>
-    <li>Several locations consistently generate losses, likely due to discounting, shipping costs, or unfavorable product mix.</li>
+    <li>
+      <strong>West and East are the growth engines.</strong> West leads both revenue (~$725K) and profit (~$108K), with East close behind (~$678K revenue; ~$91K profit). :contentReference[oaicite:1]{index=1}
+    </li>
+    <li>
+      <strong>Efficiency gap: Central is the margin problem.</strong> Central’s profit margin is ~<strong>7.9%</strong>, roughly half of West’s ~<strong>14.9%</strong>, despite Central producing meaningful revenue (~$501K). This is a classic sign of discount/shipping/product-mix pressure. :contentReference[oaicite:2]{index=2}
+    </li>
+    <li>
+      <strong>Profit is highly concentrated in a few states.</strong> California (~$76K) and New York (~$74K) together generate about <strong>$150K</strong> profit—roughly <strong>half of total profit</strong> in this dataset (~$286K). This makes these markets “must-protect” from stockouts, service issues, or margin erosion. :contentReference[oaicite:3]{index=3}
+    </li>
+    <li>
+      <strong>A few cities drive outsized profitability.</strong> New York City alone contributes ~<strong>$62K</strong> profit (about <strong>one-fifth</strong> of total profit), with Los Angeles and Seattle also major contributors. These metros are strong candidates for targeted campaigns and assortment expansion. :contentReference[oaicite:4]{index=4}
+    </li>
+    <li>
+      <strong>Losses are localized—but material.</strong> The bottom 10 states total ~<strong>-$98K</strong> profit (Texas is the biggest drag at ~<strong>-$26K</strong>). These losses partially offset gains from the top-performing states. :contentReference[oaicite:5]{index=5}
+    </li>
+    <li>
+      <strong>City-level loss pockets point to fixable operational issues.</strong> Philadelphia (~-$14K), Houston (~-$10K), and San Antonio (~-$7K) suggest recurring patterns such as heavy discounting, high freight costs, or a low-margin category mix in specific markets. :contentReference[oaicite:6]{index=6}
+    </li>
   </ul>
 
-  <h3>Recommendations</h3>
+  <h3>Business Recommendations</h3>
   <ul>
-    <li>Prioritize inventory availability and marketing in top-profit states and cities.</li>
-    <li>Analyze margin drivers by category, discount level, and shipping mode in low-margin regions.</li>
-    <li>Revisit pricing strategy, discount policies, and fulfillment costs in chronically unprofitable locations.</li>
+    <li>
+      <strong>Defend and scale the profit core (West/East + top metros).</strong> Prioritize in-stock rates, faster fulfillment, and targeted promotions in top-profit states/cities (CA, NY; NYC, LA, Seattle) to protect the largest profit pools. :contentReference[oaicite:7]{index=7}
+    </li>
+    <li>
+      <strong>Fix Central margin with a structured root-cause drilldown.</strong> For Central, build pivots by <em>Category → Sub-Category → Ship Mode</em> and add <em>Discount bands</em> (e.g., 0%, 1–10%, 11–20%, 21%+). Identify which combinations collapse margin and adjust pricing/discount rules accordingly. :contentReference[oaicite:8]{index=8}
+    </li>
+    <li>
+      <strong>Implement discount guardrails tied to margin.</strong> Replace blanket discounting with rules like: “No discounts above X% on low-margin sub-categories” and “Require manager approval if projected line margin falls below a threshold.” This directly targets the gap between high revenue and low profitability. :contentReference[oaicite:9]{index=9}
+    </li>
+    <li>
+      <strong>Create a “loss-market watchlist” and intervene systematically.</strong> Start with Texas, Ohio, Pennsylvania, Illinois, and the bottom-profit cities. For each, isolate the top 3 drivers of loss (sub-category, ship mode, discount band) and define a corrective action (pricing update, assortment change, shipping policy change). :contentReference[oaicite:10]{index=10}
+    </li>
+    <li>
+      <strong>Reduce freight-driven losses with shipping policy tests.</strong> Test changes like: raising free-shipping thresholds, incentivizing lower-cost ship modes, or bundling orders to reduce per-order shipping cost—especially in chronic loss cities/states. :contentReference[oaicite:11]{index=11}
+    </li>
+    <li>
+      <strong>Operationalize this into the dashboard.</strong> Add regional KPI cards (Revenue, Profit, Margin) plus a “Bottom Locations” table that updates with slicers. Track month-over-month movement so losses don’t persist unnoticed. :contentReference[oaicite:12]{index=12}
+    </li>
   </ul>
 
 </details>
