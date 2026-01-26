@@ -267,20 +267,21 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <h3>Insights</h3>
   <ul>
-    <li>Revenue shows a clear upward long-term trend, indicating overall business growth.</li>
-    <li>Sales exhibit strong seasonality, with recurring spikes toward the end of each year.</li>
-    <li>Profit is significantly more volatile than revenue, with several months operating at a loss.</li>
-    <li>Early years show more frequent negative-profit periods, while later years appear more stable.</li>
-    <li>Revenue growth does not always translate proportionally to profit growth, suggesting cost or discount pressure.</li>
+    <li><strong>Growth is clear over time:</strong> the revenue line shows a sustained upward trend from 2014 through 2017, indicating expanding sales volume and/or higher order values.</li>
+    <li><strong>Seasonality is consistent:</strong> revenue spikes recur late each year (Q4), suggesting predictable holiday/EOY purchasing behavior that can be planned for.</li>
+    <li><strong>Profit is more volatile than revenue:</strong> the profit line shows sharper swings than sales and includes several negative months, meaning some periods are generating revenue but destroying margin.</li>
+    <li><strong>Margin pressure appears during certain periods:</strong> revenue growth does not always translate proportionally into profit growth, pointing to discounting, shipping costs, or product-mix shifts as likely drivers.</li>
+    <li><strong>Stability improves later:</strong> later years look less frequently negative, suggesting operational improvements or a healthier mix—worth understanding so those drivers can be replicated.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Increase inventory and staffing ahead of Q4 to capitalize on predictable seasonal demand.</li>
-    <li>Investigate negative-profit months to identify unprofitable products, excessive discounting, or high shipping costs.</li>
-    <li>Introduce profit-based performance monitoring in addition to revenue targets.</li>
-    <li>Develop short-term sales and profit forecasts using historical seasonality patterns.</li>
-    <li>Evaluate pricing and logistics strategies to stabilize margins during high-growth periods.</li>
+    <li><strong>Plan for Q4 demand:</strong> increase inventory coverage and fulfillment capacity ahead of seasonal spikes to reduce stockouts and expedite costs while capturing predictable demand.</li>
+    <li><strong>Build a “loss month drilldown”:</strong> create a pivot that filters to negative-profit months and breaks results down by <em>Sub-Category</em>, <em>Discount band</em>, and <em>Ship Mode</em> to identify the primary margin killers.</li>
+    <li><strong>Set discount guardrails:</strong> implement rules such as “no discounts above X% for low-margin sub-categories” and require approval if projected line margin falls below a threshold.</li>
+    <li><strong>Reduce shipping-driven margin erosion:</strong> analyze loss months by shipping mode and test policies like higher free-shipping thresholds, bundling incentives, or prioritizing cost-efficient ship modes.</li>
+    <li><strong>Track profit alongside revenue:</strong> add profit margin as a first-class KPI on the dashboard and monitor it monthly so revenue growth doesn’t hide profitability deterioration.</li>
+    <li><strong>Forecast using seasonality:</strong> use historical Year–Month patterns to build a simple revenue/profit forecast (baseline + seasonal uplift) to improve budgeting and inventory planning.</li>
   </ul>
 
 </details>
