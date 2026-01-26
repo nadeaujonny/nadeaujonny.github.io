@@ -102,72 +102,109 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     that serves as the single source of truth for all downstream analysis and dashboarding.
   </p>
 
-  <h3>Overview</h3>
+  <h3>ETL Overview (At a Glance)</h3>
   <ul>
     <li><strong>Input:</strong> Raw Superstore Orders data (<code>.xls</code>) preserved as <code>Raw_Orders</code> (no manual edits).</li>
     <li><strong>Tool:</strong> Excel Power Query (Get &amp; Transform).</li>
-    <li><strong>Output:</strong> Cleaned dataset loaded into <code>Clean_Orders</code>.</li>
-    <li><strong>Why Power Query:</strong> Transformations are documented, repeatable, and refreshable.</li>
+    <li><strong>Query:</strong> Power Query pipeline documented in the Applied Steps panel (repeatable transformations).</li>
+    <li><strong>Output:</strong> Cleaned dataset loaded into <code>Clean_Orders</code> (used by all pivots, charts, and KPIs).</li>
+    <li><strong>Refreshability:</strong> Updates can be applied via <em>Data → Refresh All</em> without redoing manual steps.</li>
   </ul>
 
   <h3>Power Query Applied Steps (Evidence)</h3>
   <p>
-    The screenshot below shows the Power Query Editor with the <em>Applied Steps</em> panel, documenting the full
-    cleaning pipeline from raw input to cleaned output.
+    The screenshot below shows the Power Query Editor with the <em>Applied Steps</em> panel, documenting the cleaning pipeline
+    (e.g., Source → Changed Type → Trim/Clean Text → Remove blanks/duplicates → Add derived columns). This provides traceable
+    evidence of the transformation workflow.
   </p>
 
   <figure style="margin: 0;">
     <img
       src="images/excel-data-prep-power-query.png"
       alt="Power Query Applied Steps for Superstore data preparation"
+      loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Power Query: applied transformations used to produce <code>Clean_Orders</code>.
+      Power Query Editor showing Applied Steps used to produce <code>Clean_Orders</code>.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-data-prep-power-query.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
   <h3>Cleaning &amp; Transformation Steps</h3>
+  <ol>
+    <li>
+      <strong>Import &amp; Preserve Raw Data (Source)</strong>
+      <ul>
+        <li>Imported the dataset into Power Query and preserved the original <code>Raw_Orders</code> table unchanged.</li>
+      </ul>
+    </li>
 
-  <h4>1) Import &amp; Preserve Raw Data</h4>
+    <li>
+      <strong>Standardize Data Types (Changed Type)</strong>
+      <ul>
+        <li>Converted <code>Order Date</code> and <code>Ship Date</code> from DateTime to Date-only values for consistent time grouping.</li>
+        <li>Set <code>Postal Code</code> to Text to preserve leading zeros.</li>
+        <li>Validated numeric fields (<code>Sales</code>, <code>Profit</code>, <code>Discount</code>, <code>Quantity</code>) as numeric types.</li>
+        <li>Ensured IDs and categorical fields were treated as text for stable grouping/filtering in pivots.</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Clean Text Columns (Trimmed Text / Cleaned Text)</strong>
+      <ul>
+        <li>Trimmed whitespace and removed non-printable characters across key text columns.</li>
+        <li>Standardized customer/product and category/geographic fields to prevent “duplicate label” issues in pivots.</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Remove Blank / Invalid Records (Removed Blank Rows)</strong>
+      <ul>
+        <li>Removed blank rows and incomplete records that could distort KPI totals and chart trends.</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Remove Duplicate Records (Removed Duplicates)</strong>
+      <ul>
+        <li>Removed duplicates using a composite key: <code>Order ID + Product ID</code>.</li>
+        <li>Ensured each row represents a unique product line within an order (avoids double-counting revenue/profit).</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Create Derived Time Fields (Added Custom Columns)</strong>
+      <ul>
+        <li>Created <code>Order Year</code>, <code>Order Month</code>, and <code>Order Year-Month</code> (YYYY-MM) for time-series analysis.</li>
+        <li>These fields support consistent monthly trend pivots and timeline/slicer-friendly reporting.</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Load Output to <code>Clean_Orders</code></strong>
+      <ul>
+        <li>Loaded the transformed result into <code>Clean_Orders</code>, which serves as the source for all pivots, charts, and KPIs.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h3>Data Quality Checks (Validation)</h3>
   <ul>
-    <li>Imported the dataset into Power Query Editor and preserved the original <code>Raw_Orders</code> table unchanged.</li>
+    <li>Verified key fields required for analysis (dates, location, category, sales, profit) were populated and correctly typed.</li>
+    <li>Confirmed Postal Codes remain stable as text (prevents grouping errors from dropped leading zeros).</li>
+    <li>Reviewed that duplicates were removed to prevent inflated revenue/profit totals.</li>
   </ul>
 
-  <h4>2) Standardize Column Data Types</h4>
+  <h3>Why This Matters</h3>
   <ul>
-    <li>Converted <code>Order Date</code> and <code>Ship Date</code> from DateTime to Date-only values.</li>
-    <li>Set <code>Postal Code</code> to Text to preserve leading zeros.</li>
-    <li>Validated numeric fields (<code>Sales</code>, <code>Profit</code>, <code>Discount</code>, <code>Quantity</code>) as numeric types.</li>
-    <li>Ensured IDs and categorical fields were treated as text for stable grouping and filtering.</li>
+    <li><strong>Accuracy:</strong> Removing duplicates and invalid rows prevents inflated KPIs and misleading rankings.</li>
+    <li><strong>Consistency:</strong> Cleaned text + standardized types eliminate pivot inconsistencies (e.g., “NY” vs “NY ”).</li>
+    <li><strong>Repeatability:</strong> Power Query steps are documented and refreshable, enabling a maintainable analytics workflow.</li>
   </ul>
 
-  <h4>3) Clean Text Fields</h4>
-  <ul>
-    <li>Trimmed whitespace and removed non-printable characters across key text columns.</li>
-    <li>Standardized customer/product and category/geographic fields to improve pivot consistency.</li>
-  </ul>
-
-  <h4>4) Remove Blank / Invalid Rows</h4>
-  <ul>
-    <li>Removed blank rows and incomplete records that could distort summaries and charts.</li>
-  </ul>
-
-  <h4>5) Remove Duplicate Records</h4>
-  <ul>
-    <li>Removed duplicates using a composite key: <code>Order ID + Product ID</code>.</li>
-    <li>Ensured each row represents a unique product line within an order.</li>
-  </ul>
-
-  <h4>6) Create Derived Time Fields</h4>
-  <ul>
-    <li>Created <code>Order Year</code>, <code>Order Month</code>, and <code>Order Year-Month</code> (YYYY-MM) for time-series analysis.</li>
-  </ul>
-
-  <h4>7) Load Output to <code>Clean_Orders</code></h4>
-  <ul>
-    <li>Loaded the transformed result into <code>Clean_Orders</code>, which serves as the source for all pivots, charts, and KPIs.</li>
-  </ul>
 </details>
 
 ---
