@@ -392,25 +392,90 @@ inventory, and product strategy?
 <details>
   <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
 
-<p><strong>Business Question:</strong></p>
-  <p>(write your question here)</p>
+  <div style="margin-top: 12px;">
 
-  <p><strong>Data &amp; Method:</strong></p>
-  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
+    <h3>Business Question</h3>
+    <p>
+      Which regions are driving the most revenue and profit, and where are we seeing efficiency gaps (low profit margin)?
+      Which states and cities are the biggest profit contributors—and which locations are consistently unprofitable and may require corrective action?
+    </p>
 
-  <p><strong>Key Findings:</strong></p>
-  <ul>
-    <li>(finding 1)</li>
-    <li>(finding 2)</li>
-    <li>(finding 3)</li>
-  </ul>
+    <h3>Method</h3>
+    <ul>
+      <li>Used the cleaned <code>Clean_Orders</code> table as the source for all pivots.</li>
+      <li>Built region-level pivots for <strong>Total Sales</strong>, <strong>Total Profit</strong>, and <strong>Profit Margin</strong> (calculated field = Profit / Sales).</li>
+      <li>Created ranked pivots for <strong>Top 10</strong> and <strong>Bottom 10</strong> <strong>States</strong> and <strong>Cities</strong> by <strong>Sum of Profit</strong>.</li>
+      <li>Visualized results with column and horizontal bar charts and added data labels for readability.</li>
+    </ul>
 
-  <p><strong>Business Recommendations:</strong></p>
-  <ul>
-    <li>(recommendation 1)</li>
-    <li>(recommendation 2)</li>
-    <li>(recommendation 3)</li>
-  </ul>
+    <h3>Sales Revenue by Region</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png" alt="Sales Revenue by Region" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Profit by Region</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png" alt="Profit by Region" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Profit Margin by Region</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png" alt="Profit Margin by Region" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Top 10 States by Profit</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png" alt="Top 10 States by Profit" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Top 10 Cities by Profit</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png" alt="Top 10 Cities by Profit" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Bottom 10 States by Profit</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png" alt="Bottom 10 States by Profit" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Bottom 10 Cities by Profit</h3>
+    <p><img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png" alt="Bottom 10 Cities by Profit" style="max-width: 100%; height: auto;"></p>
+
+    <h3>Insights</h3>
+    <ul>
+      <li>
+        <strong>West</strong> is the strongest overall region: <strong>$725,355</strong> in sales, <strong>$108,404</strong> in profit, and the highest profit margin at <strong>14.9%</strong>.
+      </li>
+      <li>
+        <strong>East</strong> is also a top performer with <strong>$677,906</strong> in sales and <strong>$91,354</strong> profit, with a strong margin of <strong>13.5%</strong>.
+      </li>
+      <li>
+        <strong>Central</strong> shows a clear efficiency gap: despite <strong>$501,240</strong> in sales, profit is only <strong>$39,706</strong> and margin is the lowest at <strong>7.9%</strong>.
+      </li>
+      <li>
+        Profit is concentrated in a small set of locations:
+        <strong>California ($76,381)</strong> and <strong>New York ($74,015)</strong> lead state profit by a wide margin.
+        At the city level, <strong>New York City ($62,014)</strong> is the top contributor, followed by <strong>Los Angeles ($30,441)</strong> and <strong>Seattle ($29,156)</strong>.
+      </li>
+      <li>
+        A handful of states and cities are driving significant losses.
+        The largest loss states include <strong>Texas (-$25,729)</strong>, <strong>Ohio (-$16,959)</strong>, and <strong>Pennsylvania (-$15,560)</strong>.
+        The largest loss cities include <strong>Philadelphia (-$13,838)</strong> and <strong>Houston (-$10,154)</strong>.
+      </li>
+    </ul>
+
+    <h3>Business Recommendations</h3>
+    <ul>
+      <li>
+        <strong>Double down on West &amp; East</strong>: prioritize inventory availability, faster fulfillment, and targeted marketing in top-profit states/cities (e.g., CA/NY, NYC/LA/Seattle).
+      </li>
+      <li>
+        <strong>Diagnose Central’s low margin (7.9%)</strong> by breaking it down by category/sub-category and discounting:
+        check if losses are driven by heavy discounts, shipping costs, or a specific product mix.
+      </li>
+      <li>
+        <strong>Create a “loss-location” action plan</strong> for bottom states/cities:
+        review discount policy, shipping/fulfillment cost, and returns; identify whether losses come from a few products or broad underperformance.
+      </li>
+      <li>
+        <strong>Use location-based guardrails</strong>:
+        set margin targets (or discount limits) by region/state for vulnerable markets to prevent revenue growth that erodes profitability.
+      </li>
+      <li>
+        <strong>Replicate winning playbooks</strong>:
+        compare pricing, product mix, and discount behavior in high-profit cities (NYC/LA/Seattle) vs. loss cities (Philadelphia/Houston) to identify operational or promotional differences.
+      </li>
+    </ul>
+
+  </div>
 </details>
 
 ---
