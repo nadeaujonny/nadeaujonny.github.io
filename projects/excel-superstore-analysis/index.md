@@ -14,125 +14,79 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 <details>
   <summary><strong>Project Overview</strong></summary>
 
-  <h2>Overview</h2>
+  <h3>Overview</h3>
   <p>
-    This project analyzes retail sales data using Microsoft Excel to uncover trends in revenue, profit, customer segments, and regional performance.
-    The goal is to demonstrate real-world Excel analytics skills used in business environments.
+    This project analyzes Superstore retail sales data in Microsoft Excel to uncover trends in revenue, profit,
+    customer segments, and regional performance. The goal is to demonstrate practical Excel analytics skills
+    used in business environments—data cleaning (Power Query), pivot-based analysis, KPI modeling, and dashboard design.
   </p>
 
-  <hr>
-
-  <h2>Business Context</h2>
+  <h3>Business Context</h3>
   <p>
-    This analysis simulates a retail company evaluating sales performance, profitability, customer behavior, and operational efficiency
-    to support data-driven decision making by executives and category managers.
+    This analysis simulates a retail company evaluating sales performance, profitability, customer behavior,
+    and operational efficiency to support data-driven decision making by executives and category managers.
   </p>
 
-  <hr>
-
-  <h2>Objectives</h2>
+  <h3>Objectives</h3>
   <ul>
-    <li>Build and calculate key business KPIs (revenue, profit, profit margin, units sold, return rate)</li>
-    <li>Clean and transform raw data using Power Query</li>
-    <li>Perform analysis using pivot tables and calculated fields</li>
-    <li>Design an interactive executive-style dashboard</li>
+    <li>Define and calculate core KPIs: revenue, profit, profit margin, units sold, and return rate</li>
+    <li>Clean and standardize raw orders using Power Query (types, trimming/cleaning text fields, deduping)</li>
+    <li>Analyze performance using pivot tables and calculated fields (time trends, product mix, regional efficiency)</li>
+    <li>Build an executive-style dashboard with slicers/timelines for interactive exploration</li>
   </ul>
 
-  <hr>
-
-  <h2>Dataset Overview</h2>
+  <h3>Dataset Overview</h3>
   <p>
-    The Superstore dataset is a public retail transaction dataset commonly used for analytics and business intelligence practice.
-    It represents order-level sales data for a fictional office supply retailer.
+    The Superstore dataset is a public retail transaction dataset commonly used for analytics and BI practice.
+    It contains order-level sales data for a fictional office supply retailer.
   </p>
 
-  <p><strong>Key tables / structure:</strong></p>
+  <p><strong>At a glance</strong></p>
   <ul>
-    <li>Orders (order date, ship date, customer, segment, region, product, category, sales, profit, quantity)</li>
-    <li>Returns (returned flag by order ID)</li>
+    <li><strong>Time range:</strong> 2014–2017</li>
+    <li><strong>Granularity:</strong> one row per order line item</li>
+    <li><strong>Size:</strong> ~10,000 rows</li>
+    <li><strong>Core tables:</strong> Orders, Returns</li>
   </ul>
 
-  <p>
-    <strong>Time range:</strong> 2014–2017<br>
-    <strong>Granularity:</strong> One row per order line item<br>
-    <strong>Records:</strong> ~10,000 rows
-  </p>
-
-  <p><strong>Key dimensions:</strong></p>
+  <p><strong>Key fields</strong></p>
   <ul>
-    <li>Customer segment</li>
-    <li>Product category & sub-category</li>
-    <li>Region, state, city</li>
-    <li>Order & ship dates</li>
+    <li><strong>Dimensions:</strong> segment, category/sub-category, region/state/city, order/ship dates</li>
+    <li><strong>Measures:</strong> sales (revenue), profit, quantity</li>
   </ul>
 
-  <p><strong>Key measures:</strong></p>
-  <ul>
-    <li>Sales (revenue)</li>
-    <li>Profit</li>
-    <li>Quantity</li>
-  </ul>
-
-  <p><strong>Limitations:</strong></p>
+  <p><strong>Limitations</strong></p>
   <ul>
     <li>Fictional data (not from a real company)</li>
-    <li>No marketing or acquisition channel data</li>
+    <li>No marketing/acquisition channel data</li>
     <li>Limited customer demographics</li>
-    <li>Returns data may be incomplete depending on version</li>
+    <li>Returns coverage depends on dataset version</li>
   </ul>
 
-  <hr>
-
-  <h2>Tools & Skills Demonstrated</h2>
-
-  <p><strong>Data Preparation</strong></p>
+  <h3>Tools &amp; Skills Demonstrated</h3>
   <ul>
-    <li>Power Query</li>
-    <li>Data validation & normalization</li>
+    <li><strong>Power Query:</strong> ETL, data types, text cleanup, de-duplication, derived date fields</li>
+    <li><strong>Pivot Tables:</strong> grouping, sorting, filters, calculated fields</li>
+    <li><strong>KPI Modeling:</strong> profit margin, return rate, performance comparisons</li>
+    <li><strong>Excel Functions:</strong> XLOOKUP, SUMIFS/COUNTIFS, IF/IFERROR, date &amp; text functions</li>
+    <li><strong>Visualization:</strong> pivot charts, conditional formatting, slicers/timelines, dashboard layout</li>
   </ul>
 
-  <p><strong>Analysis</strong></p>
+  <h3>KPI Definitions</h3>
   <ul>
-    <li>Pivot tables</li>
-    <li>Calculated fields</li>
-    <li>KPI modeling</li>
+    <li><strong>Revenue:</strong> SUM(Sales)</li>
+    <li><strong>Profit:</strong> SUM(Profit)</li>
+    <li><strong>Profit Margin:</strong> Profit / Revenue</li>
+    <li><strong>Units Sold:</strong> SUM(Quantity)</li>
+    <li><strong>Return Rate:</strong> # Returned Orders / # Total Orders</li>
   </ul>
 
-  <p><strong>Excel Functions</strong></p>
-  <ul>
-    <li>XLOOKUP</li>
-    <li>SUMIFS / COUNTIFS</li>
-    <li>IF / IFERROR</li>
-    <li>Date & text functions</li>
-  </ul>
-
-  <p><strong>Visualization</strong></p>
-  <ul>
-    <li>Pivot charts</li>
-    <li>Conditional formatting</li>
-    <li>Slicers & timelines</li>
-    <li>Dashboard layout design</li>
-  </ul>
-
-  <hr>
-
-  <h2>KPI Definitions</h2>
-  <ul>
-    <li><strong>Revenue</strong> = SUM(Sales)</li>
-    <li><strong>Profit</strong> = SUM(Profit)</li>
-    <li><strong>Profit Margin</strong> = Profit / Revenue</li>
-    <li><strong>Units Sold</strong> = SUM(Quantity)</li>
-    <li><strong>Return Rate</strong> = # Returned Orders / # Total Orders</li>
-  </ul>
-
-  <hr>
-
-  <h2>Data Preparation</h2>
+  <h3>Data Preparation</h3>
   <ul>
     <li>Removed duplicates and invalid records</li>
-    <li>Standardized date formats and categories</li>
-    <li>Created calculated columns for profit margin and return flags</li>
-    <li>Built a clean analysis table using Power Query</li>
+    <li>Standardized date formats and category/location text fields</li>
+    <li>Created derived columns (e.g., Year, Month, Year-Month; optional Profit Margin)</li>
+    <li>Loaded a clean analysis table for pivots and dashboarding</li>
   </ul>
 
 </details>
