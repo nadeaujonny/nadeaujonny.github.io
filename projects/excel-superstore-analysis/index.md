@@ -767,50 +767,69 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <h2>Workbook Structure</h2>
   <ul>
-    <li>Raw Data (original import)</li>
-    <li>Power Query (cleaning steps)</li>
-    <li>Analysis Table (final cleaned table)</li>
-    <li>Pivot Tables (model + calculations)</li>
-    <li>Dashboard (final presentation)</li>
+    <li><strong>Raw_Orders</strong> — Original imported dataset (kept as a table)</li>
+    <li><strong>Clean_Orders</strong> — Power Query cleaned, analysis-ready table</li>
+    <li><strong>Returns</strong> — Returned orders reference table</li>
+    <li><strong>People</strong> — Region/manager reference table</li>
+    <li><strong>Pivots</strong> — Pivot tables + pivot charts used for analysis and the dashboard</li>
+    <li><strong>Dashboard</strong> — Final profit-oriented, single-screen interactive dashboard</li>
   </ul>
 
   <hr>
 
   <h2>Dashboard Features</h2>
   <ul>
-    <li>Interactive slicers for region, category, and time</li>
-    <li>KPI summary cards</li>
-    <li>Trend visualizations</li>
-    <li>Top / bottom product rankings</li>
-    <li>Dynamic filtering across all charts</li>
+    <li><strong>Profit-focused, single-screen layout</strong> designed for clean screenshots and presentation</li>
+    <li><strong>Interactive slicers</strong> for <em>Order Year</em> and <em>Order Month</em> (connected to every visual)</li>
+    <li><strong>Dynamic filtering</strong> across all charts via the slicers</li>
+    <li><strong>Core visuals included:</strong>
+      <ul>
+        <li>Monthly Profit Trend (2014–2017)</li>
+        <li>Top 5 Products by Return Profit</li>
+        <li>Top 5 Sub-Categories by Profit</li>
+        <li>Top 5 States by Profit</li>
+        <li>Profit by Customer Segment</li>
+      </ul>
+    </li>
   </ul>
 
   <hr>
 
   <h2>Final Dashboard</h2>
-  <p>(Screenshot will be added here)</p>
+  <p>
+    <img
+      src="images/excel-project-profit-oriented-dashboard.png"
+      alt="Excel Superstore Profit-Oriented Dashboard (single-screen layout with slicers)"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+  </p>
 
   <hr>
 
   <h2>Project Deliverables</h2>
   <ul>
-    <li>Fully interactive Excel dashboard workbook</li>
-    <li>Cleaned analysis-ready dataset</li>
-    <li>SQL-style business question documentation</li>
+    <li><strong>Fully interactive Excel dashboard workbook</strong> (slicers + dynamic charts)</li>
+    <li><strong>Cleaned, analysis-ready dataset</strong> produced via Power Query</li>
+    <li><strong>Business-question documentation</strong> with pivots/charts, insights, and recommendations across 5 analyses</li>
   </ul>
 
   <hr>
 
   <h2>Files</h2>
   <ul>
-    <li>Raw dataset</li>
-    <li>Cleaned dataset</li>
-    <li>Excel workbook</li>
+    <li><strong>Raw dataset:</strong> <code>data/superstore_raw.xls</code></li>
+    <li><strong>Dashboard screenshot:</strong> <code>images/excel-project-profit-oriented-dashboard.png</code></li>
+    <li><strong>Excel workbook:</strong> <code>Superstore_Portfolio_Excel_Project.xlsx</code> (update filename here if different)</li>
   </ul>
 
   <hr>
 
   <h2>Conclusion</h2>
-  <p>(Concluding statements)</p>
-
+  <p>
+    This project demonstrates an end-to-end Excel analytics workflow: importing raw sales data, cleaning and transforming it
+    with Power Query, building pivot-based analysis, and delivering a polished, interactive dashboard optimized for
+    stakeholder reporting. The final dashboard enables quick profit-focused exploration by time (year/month) and surfaces
+    key performance drivers such as high-profit sub-categories, top-performing states, segment profitability, and the
+    products most impacted by returns.
+  </p>
 </details>
