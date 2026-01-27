@@ -779,10 +779,10 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <h2>Dashboard Features</h2>
   <ul>
-    <li><strong>Profit-focused, single-screen layout</strong> designed for clean screenshots and presentation</li>
-    <li><strong>Interactive slicers</strong> for <em>Order Year</em> and <em>Order Month</em> (connected to every visual)</li>
-    <li><strong>Dynamic filtering</strong> across all charts via the slicers</li>
-    <li><strong>Core visuals included:</strong>
+    <li><strong>Profit-oriented, single-screen layout</strong> designed specifically for clean portfolio screenshots</li>
+    <li><strong>Interactive slicers</strong> for <em>Order Year</em> and <em>Order Month</em>, connected to every chart</li>
+    <li><strong>Dynamic filtering</strong> across all visuals for quick exploration and drill-down</li>
+    <li><strong>Dashboard visuals:</strong>
       <ul>
         <li>Monthly Profit Trend (2014–2017)</li>
         <li>Top 5 Products by Return Profit</li>
@@ -799,7 +799,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
   <p>
     <img
       src="images/excel-project-profit-oriented-dashboard.png"
-      alt="Excel Superstore Profit-Oriented Dashboard (single-screen layout with slicers)"
+      alt="Excel Superstore profit-oriented dashboard (single-screen layout with slicers)"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
   </p>
@@ -808,28 +808,39 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <h2>Project Deliverables</h2>
   <ul>
-    <li><strong>Fully interactive Excel dashboard workbook</strong> (slicers + dynamic charts)</li>
-    <li><strong>Cleaned, analysis-ready dataset</strong> produced via Power Query</li>
-    <li><strong>Business-question documentation</strong> with pivots/charts, insights, and recommendations across 5 analyses</li>
+    <li><strong>Interactive Excel workbook</strong> with a profit-focused dashboard and fully connected slicers</li>
+    <li><strong>Cleaned, analysis-ready dataset</strong> generated via Power Query (types standardized, text cleaned, duplicates removed, derived date fields created)</li>
+    <li><strong>Five structured analysis sections</strong> using pivots + charts, with insights and business recommendations</li>
   </ul>
 
   <hr>
 
-  <h2>Files</h2>
+  <h2>Downloads</h2>
   <ul>
-    <li><strong>Raw dataset:</strong> <code>data/superstore_raw.xls</code></li>
-    <li><strong>Dashboard screenshot:</strong> <code>images/excel-project-profit-oriented-dashboard.png</code></li>
-    <li><strong>Excel workbook:</strong> <code>Superstore_Portfolio_Excel_Project.xlsx</code> (update filename here if different)</li>
+    <li>
+      <strong>Excel Workbook:</strong>
+      <a href="workbook/Superstore_Portfolio_Excel_Project.xlsx" target="_blank" rel="noopener">
+        Download Superstore_Portfolio_Excel_Project.xlsx
+      </a>
+      <br>
+      <em>Best viewed in Microsoft Excel (desktop) to use slicers and full interactivity.</em>
+    </li>
+    <li>
+      <strong>Raw Dataset:</strong>
+      <a href="data/superstore_raw.xls" target="_blank" rel="noopener">
+        Download superstore_raw.xls
+      </a>
+    </li>
   </ul>
 
   <hr>
 
   <h2>Conclusion</h2>
   <p>
-    This project demonstrates an end-to-end Excel analytics workflow: importing raw sales data, cleaning and transforming it
-    with Power Query, building pivot-based analysis, and delivering a polished, interactive dashboard optimized for
-    stakeholder reporting. The final dashboard enables quick profit-focused exploration by time (year/month) and surfaces
-    key performance drivers such as high-profit sub-categories, top-performing states, segment profitability, and the
-    products most impacted by returns.
+    This Excel project demonstrates an end-to-end analytics workflow: importing raw retail data, transforming it with
+    Power Query, building pivot-driven analysis, and delivering a polished, interactive dashboard optimized for
+    stakeholder reporting. The final dashboard enables fast profit-based exploration by time (year/month) and highlights
+    key performance drivers such as the most profitable sub-categories, top-performing states, segment profitability,
+    and the products most impacted by returns.
   </p>
 </details>
