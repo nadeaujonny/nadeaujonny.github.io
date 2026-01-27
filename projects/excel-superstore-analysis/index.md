@@ -667,26 +667,113 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <details>
   <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
+  <br>
 
-<p><strong>Business Question:</strong></p>
-  <p>(write your question here)</p>
-
-  <p><strong>Data &amp; Method:</strong></p>
-  <p>(describe what you built in Excel: pivots, KPIs, calculated fields, slicers, charts)</p>
-
-  <p><strong>Key Findings:</strong></p>
+  <h3>Business Question</h3>
   <ul>
-    <li>(finding 1)</li>
-    <li>(finding 2)</li>
-    <li>(finding 3)</li>
+    <li>How much revenue and profit is impacted by returns?</li>
+    <li>Which product areas (sub-categories) have the highest return rates?</li>
+    <li>Which specific products drive the highest returned sales and returned profit impact?</li>
   </ul>
 
-  <p><strong>Business Recommendations:</strong></p>
+  <h3>Method / Pivot Table(s)</h3>
   <ul>
-    <li>(recommendation 1)</li>
-    <li>(recommendation 2)</li>
-    <li>(recommendation 3)</li>
+    <li>Created a <strong>Return Flag</strong> (Yes/No) by matching <strong>Order ID</strong> from the Orders table to the Returns table.</li>
+    <li>Summarized <strong>Total Sales</strong> and <strong>Total Profit</strong> for returned vs non-returned orders.</li>
+    <li>Calculated:
+      <ul>
+        <li><strong>Returned Sales %</strong> = Returned Sales / Total Sales</li>
+        <li><strong>Returned Profit %</strong> = Returned Profit / Total Profit</li>
+        <li><strong>Net Sales / Net Profit (after returns)</strong> by excluding returned orders</li>
+      </ul>
+    </li>
+    <li>Built additional pivots to analyze:
+      <ul>
+        <li><strong>Monthly Return Rate (Sales %)</strong> over time</li>
+        <li><strong>Return Rate (Sales %)</strong> by <strong>Sub-Category</strong></li>
+        <li><strong>Top 10 Products</strong> by <strong>Returned Sales</strong> and by <strong>Returned Profit</strong></li>
+      </ul>
+    </li>
   </ul>
+
+  <h3>Results (Screenshots)</h3>
+
+  <p><strong>Returns KPI Summary (Returned vs Not Returned)</strong></p>
+  <img src="images/excel-analysis-5-returns-kpi-summary.png" alt="Returns KPI summary showing sales and profit for returned vs non-returned orders" style="max-width: 100%; height: auto;">
+  <p><em>Figure 5.1 — KPI summary of sales/profit impact from returns.</em></p>
+
+  <p><strong>Monthly Return Rate (Sales %)</strong></p>
+  <img src="images/excel-analysis-5-returns-sales-rate-by-month-year.png" alt="Line chart showing monthly return rate as a percentage of sales over time" style="max-width: 100%; height: auto;">
+  <p><em>Figure 5.2 — Monthly return rate trend (sales-based).</em></p>
+
+  <p><strong>Return Rate (Sales %) by Sub-Category</strong></p>
+  <img src="images/excel-analysis-5-returns-sales-rate-by-sub-category.png" alt="Bar chart showing return rate as a percentage of sales by sub-category" style="max-width: 100%; height: auto;">
+  <p><em>Figure 5.3 — Sub-category return rate comparison.</em></p>
+
+  <p><strong>Top 10 Products by Returned Sales ($)</strong></p>
+  <img src="images/excel-analysis-5-top-10-products-by-return-sales.png" alt="Bar chart showing top 10 products by returned sales" style="max-width: 100%; height: auto;">
+  <p><em>Figure 5.4 — Highest returned sales products.</em></p>
+
+  <p><strong>Top 10 Products by Returned Profit ($)</strong></p>
+  <img src="images/excel-analysis-5-top-10-products-by-return-profit.png" alt="Bar chart showing top 10 products by returned profit" style="max-width: 100%; height: auto;">
+  <p><em>Figure 5.5 — Highest returned profit impact products.</em></p>
+
+  <h3>Insights</h3>
+  <ul>
+    <li><strong>Returns represent a meaningful revenue and profit headwind:</strong>
+      <ul>
+        <li><strong>Total Sales:</strong> $2,295,509.57</li>
+        <li><strong>Total Profit:</strong> $286,013.82</li>
+        <li><strong>Returned Sales:</strong> $180,504.28 (<strong>7.86%</strong> of total sales)</li>
+        <li><strong>Returned Profit:</strong> $23,232.36 (<strong>8.12%</strong> of total profit)</li>
+        <li><strong>Net after excluding returns:</strong> $2,115,005.29 sales and $262,781.46 profit</li>
+      </ul>
+    </li>
+
+    <li><strong>Returns impact profit slightly more than revenue:</strong> Returned Profit % (8.12%) is higher than Returned Sales % (7.86%), suggesting returns are somewhat concentrated in higher-profit items.</li>
+
+    <li><strong>Returns vary significantly over time:</strong> the monthly return rate is volatile with notable spikes, indicating returns are influenced by period-specific factors (promotions, shipping conditions, product mix, etc.).</li>
+
+    <li><strong>Highest return-rate sub-categories (sales-based):</strong>
+      <ul>
+        <li>Copiers — <strong>12.84%</strong></li>
+        <li>Furnishings — <strong>10.48%</strong></li>
+        <li>Appliances — <strong>9.42%</strong></li>
+        <li>Paper — <strong>9.11%</strong></li>
+        <li>Phones — <strong>8.37%</strong></li>
+      </ul>
+      Lowest observed: Binders — <strong>4.91%</strong>.
+    </li>
+
+    <li><strong>Return impact is concentrated in a few high-dollar products:</strong> The <em>Canon imageCLASS 2200 Advanced Copier</em> is the largest driver, with <strong>$13,999.96</strong> in returned sales and <strong>$6,719.98</strong> in returned profit impact.</li>
+
+    <li><strong>Interpreting “returned profit” values:</strong> Profit values represent the profit on the original sale line.
+      <ul>
+        <li><strong>Positive</strong> returned profit indicates profitable sales that were later returned (profit at risk).</li>
+        <li><strong>Negative</strong> profit on returned items indicates products that were unprofitable even before the return (often discounting/shipping/cost issues).</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li><strong>Prioritize return reduction in high-return sub-categories (especially Copiers):</strong> improve product expectation-setting (descriptions/specs), packaging, and post-purchase support to reduce “mismatch” and damage returns.</li>
+
+    <li><strong>Investigate the biggest return spikes by month:</strong> drill down by discount levels, ship mode, region, and product mix during spike periods to identify operational or promotional drivers.</li>
+
+    <li><strong>Target the highest-impact SKUs with focused interventions:</strong>
+      <ul>
+        <li>Implement stricter QC and packaging for high-dollar items (e.g., the Canon copier).</li>
+        <li>Consider exchange/repair workflows for high-ticket products to reduce full-refund returns.</li>
+      </ul>
+    </li>
+
+    <li><strong>Review loss-making items that also get returned:</strong> if a product is frequently discounted into negative profit and also returns often, tighten discount guardrails and reassess pricing/cost structure.</li>
+
+    <li><strong>Dashboard KPI suggestion:</strong> include “Returned Sales ($)”, “Returned Profit ($)”, and “Return Rate (Sales %)” with slicers for Year, Category, Sub-Category, and Region to monitor return health.</li>
+  </ul>
+
+  <br>
 </details>
 
 ---
