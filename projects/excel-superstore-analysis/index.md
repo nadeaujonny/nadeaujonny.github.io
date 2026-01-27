@@ -7,60 +7,43 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 # Sales Dashboard – Superstore Dataset (Excel)
 
-> An end-to-end Excel analytics project demonstrating data cleaning, KPI development, pivot-table analysis, and executive dashboard design using a widely used public retail sample dataset.
+> An end-to-end Excel analytics project demonstrating Power Query data cleaning, KPI development, pivot-table analysis, and executive dashboard design using the Superstore retail dataset.
 
 ---
 
 <details>
   <summary><strong>Project Overview</strong></summary>
 
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
   <h3>Overview</h3>
   <p>
     This project analyzes Superstore retail sales data in Microsoft Excel to uncover trends in revenue, profit,
-    customer segments, and regional performance. The goal is to demonstrate practical Excel analytics skills
-    used in business environments—data cleaning (Power Query), pivot-based analysis, KPI modeling, and dashboard design.
+    customer segments, regional performance, and return impact. The goal is to demonstrate practical Excel analytics
+    skills used in business environments: Power Query (ETL), pivot-driven analysis, KPI modeling, and dashboard design.
   </p>
 
   <h3>Business Context</h3>
   <p>
-    This analysis simulates a retail company evaluating sales performance, profitability, customer behavior,
-    and operational efficiency to support data-driven decision making by executives and category managers.
+    This analysis simulates a retail company evaluating sales performance, profitability, customer behavior, and
+    operational efficiency to support data-driven decision making by executives and category managers.
   </p>
 
   <h3>Objectives</h3>
   <ul>
     <li>Define and calculate core KPIs: revenue, profit, profit margin, units sold, and return rate</li>
-    <li>Clean and standardize raw orders using Power Query (types, trimming/cleaning text fields, deduping)</li>
-    <li>Analyze performance using pivot tables and calculated fields (time trends, product mix, regional efficiency)</li>
-    <li>Build an executive-style dashboard with slicers/timelines for interactive exploration</li>
+    <li>Clean and standardize raw orders using Power Query (data types, text cleanup, de-duplication, derived date fields)</li>
+    <li>Analyze performance using pivot tables and calculated fields (time trends, product mix, regional efficiency, segments, returns)</li>
+    <li>Build an executive-style dashboard with connected slicers for interactive exploration</li>
   </ul>
 
   <h3>Dataset Overview</h3>
-  <p>
-    The Superstore dataset is a public retail transaction dataset commonly used for analytics and BI practice.
-    It contains order-level sales data for a fictional office supply retailer.
-  </p>
-
-  <p><strong>At a glance</strong></p>
   <ul>
+    <li><strong>Dataset:</strong> Superstore (public retail sample dataset)</li>
     <li><strong>Time range:</strong> 2014–2017</li>
-    <li><strong>Granularity:</strong> one row per order line item</li>
-    <li><strong>Size:</strong> ~10,000 rows</li>
+    <li><strong>Granularity:</strong> One row per order line item</li>
     <li><strong>Core tables:</strong> Orders, Returns</li>
-  </ul>
-
-  <p><strong>Key fields</strong></p>
-  <ul>
-    <li><strong>Dimensions:</strong> segment, category/sub-category, region/state/city, order/ship dates</li>
-    <li><strong>Measures:</strong> sales (revenue), profit, quantity</li>
-  </ul>
-
-  <p><strong>Limitations</strong></p>
-  <ul>
-    <li>Fictional data (not from a real company)</li>
-    <li>No marketing/acquisition channel data</li>
-    <li>Limited customer demographics</li>
-    <li>Returns coverage depends on dataset version</li>
   </ul>
 
   <h3>Tools &amp; Skills Demonstrated</h3>
@@ -69,7 +52,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     <li><strong>Pivot Tables:</strong> grouping, sorting, filters, calculated fields</li>
     <li><strong>KPI Modeling:</strong> profit margin, return rate, performance comparisons</li>
     <li><strong>Excel Functions:</strong> XLOOKUP, SUMIFS/COUNTIFS, IF/IFERROR, date &amp; text functions</li>
-    <li><strong>Visualization:</strong> pivot charts, conditional formatting, slicers/timelines, dashboard layout</li>
+    <li><strong>Visualization:</strong> pivot charts, conditional formatting, slicers, dashboard layout</li>
   </ul>
 
   <h3>KPI Definitions</h3>
@@ -78,15 +61,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     <li><strong>Profit:</strong> SUM(Profit)</li>
     <li><strong>Profit Margin:</strong> Profit / Revenue</li>
     <li><strong>Units Sold:</strong> SUM(Quantity)</li>
-    <li><strong>Return Rate:</strong> # Returned Orders / # Total Orders</li>
-  </ul>
-
-  <h3>Data Preparation</h3>
-  <ul>
-    <li>Removed duplicates and invalid records</li>
-    <li>Standardized date formats and category/location text fields</li>
-    <li>Created derived columns (e.g., Year, Month, Year-Month; optional Profit Margin)</li>
-    <li>Loaded a clean analysis table for pivots and dashboarding</li>
+    <li><strong>Return Rate:</strong> Returned Sales / Total Sales (sales-based return rate)</li>
   </ul>
 
 </details>
@@ -94,7 +69,10 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Data Preparation</strong></summary>
+  <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     Before building KPIs, pivot tables, and charts, I cleaned and standardized the Superstore Orders dataset using
@@ -102,26 +80,19 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     that serves as the single source of truth for all downstream analysis and dashboarding.
   </p>
 
-  <h3>ETL Overview (At a Glance)</h3>
+  <h3>ETL Summary</h3>
   <ul>
-    <li><strong>Input:</strong> Raw Superstore Orders data (<code>.xls</code>) preserved as <code>Raw_Orders</code> (no manual edits).</li>
-    <li><strong>Tool:</strong> Excel Power Query (Get &amp; Transform).</li>
-    <li><strong>Query:</strong> Power Query pipeline documented in the Applied Steps panel (repeatable transformations).</li>
-    <li><strong>Output:</strong> Cleaned dataset loaded into <code>Clean_Orders</code> (used by all pivots, charts, and KPIs).</li>
-    <li><strong>Refreshability:</strong> Updates can be applied via <em>Data → Refresh All</em> without redoing manual steps.</li>
+    <li><strong>Input:</strong> Raw Orders data (<code>.xls</code>) preserved as <code>Raw_Orders</code> (no manual edits)</li>
+    <li><strong>Tool:</strong> Excel Power Query (Get &amp; Transform)</li>
+    <li><strong>Output:</strong> Cleaned dataset loaded to <code>Clean_Orders</code> (used by all pivots, charts, and KPIs)</li>
+    <li><strong>Refreshable:</strong> Can update via <em>Data → Refresh All</em> without redoing manual steps</li>
   </ul>
 
   <h3>Power Query Applied Steps (Evidence)</h3>
-  <p>
-    The screenshot below shows the Power Query Editor with the <em>Applied Steps</em> panel, documenting the cleaning pipeline
-    (e.g., Source → Changed Type → Trim/Clean Text → Remove blanks/duplicates → Add derived columns). This provides traceable
-    evidence of the transformation workflow.
-  </p>
-
-  <figure style="margin: 0;">
+  <figure style="margin: 0 0 18px 0;">
     <img
       src="images/excel-data-prep-power-query.png"
-      alt="Power Query Applied Steps for Superstore data preparation"
+      alt="Power Query Editor showing Applied Steps for Superstore data preparation"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
@@ -136,73 +107,58 @@ title: Sales Dashboard – Superstore Dataset (Excel)
   <h3>Cleaning &amp; Transformation Steps</h3>
   <ol>
     <li>
-      <strong>Import &amp; Preserve Raw Data (Source)</strong>
+      <strong>Import &amp; preserve raw data</strong>
       <ul>
-        <li>Imported the dataset into Power Query and preserved the original <code>Raw_Orders</code> table unchanged.</li>
+        <li>Imported raw Superstore Orders and preserved the original table unchanged.</li>
       </ul>
     </li>
-
     <li>
-      <strong>Standardize Data Types (Changed Type)</strong>
+      <strong>Standardize data types</strong>
       <ul>
-        <li>Converted <code>Order Date</code> and <code>Ship Date</code> from DateTime to Date-only values for consistent time grouping.</li>
+        <li>Converted <code>Order Date</code> and <code>Ship Date</code> to Date-only values.</li>
         <li>Set <code>Postal Code</code> to Text to preserve leading zeros.</li>
         <li>Validated numeric fields (<code>Sales</code>, <code>Profit</code>, <code>Discount</code>, <code>Quantity</code>) as numeric types.</li>
-        <li>Ensured IDs and categorical fields were treated as text for stable grouping/filtering in pivots.</li>
       </ul>
     </li>
-
     <li>
-      <strong>Clean Text Columns (Trimmed Text / Cleaned Text)</strong>
+      <strong>Clean text columns</strong>
       <ul>
-        <li>Trimmed whitespace and removed non-printable characters across key text columns.</li>
-        <li>Standardized customer/product and category/geographic fields to prevent “duplicate label” issues in pivots.</li>
+        <li>Trimmed whitespace and removed non-printable characters across key text fields.</li>
+        <li>Improved pivot grouping stability (e.g., prevents “duplicate labels” caused by trailing spaces).</li>
       </ul>
     </li>
-
     <li>
-      <strong>Remove Blank / Invalid Records (Removed Blank Rows)</strong>
+      <strong>Remove invalid / blank records</strong>
       <ul>
-        <li>Removed blank rows and incomplete records that could distort KPI totals and chart trends.</li>
+        <li>Removed blank rows and incomplete records that could distort totals and trends.</li>
       </ul>
     </li>
-
     <li>
-      <strong>Remove Duplicate Records (Removed Duplicates)</strong>
+      <strong>Remove duplicates</strong>
       <ul>
         <li>Removed duplicates using a composite key: <code>Order ID + Product ID</code>.</li>
-        <li>Ensured each row represents a unique product line within an order (avoids double-counting revenue/profit).</li>
+        <li>Ensured each row represents a unique order line item (avoids double counting).</li>
       </ul>
     </li>
-
     <li>
-      <strong>Create Derived Time Fields (Added Custom Columns)</strong>
+      <strong>Create derived time fields</strong>
       <ul>
-        <li>Created <code>Order Year</code>, <code>Order Month</code>, and <code>Order Year-Month</code> (YYYY-MM) for time-series analysis.</li>
-        <li>These fields support consistent monthly trend pivots and timeline/slicer-friendly reporting.</li>
+        <li>Created <code>Order Year</code>, <code>Order Month</code>, and <code>Order Year-Month</code> (YYYY-MM) for consistent time-series reporting.</li>
       </ul>
     </li>
-
     <li>
-      <strong>Load Output to <code>Clean_Orders</code></strong>
+      <strong>Load to <code>Clean_Orders</code></strong>
       <ul>
-        <li>Loaded the transformed result into <code>Clean_Orders</code>, which serves as the source for all pivots, charts, and KPIs.</li>
+        <li>Loaded the final cleaned table to Excel for analysis, pivots, and dashboarding.</li>
       </ul>
     </li>
   </ol>
 
-  <h3>Data Quality Checks (Validation)</h3>
-  <ul>
-    <li>Verified key fields required for analysis (dates, location, category, sales, profit) were populated and correctly typed.</li>
-    <li>Confirmed Postal Codes remain stable as text (prevents grouping errors from dropped leading zeros).</li>
-    <li>Reviewed that duplicates were removed to prevent inflated revenue/profit totals.</li>
-  </ul>
-
   <h3>Why This Matters</h3>
   <ul>
-    <li><strong>Accuracy:</strong> Removing duplicates and invalid rows prevents inflated KPIs and misleading rankings.</li>
-    <li><strong>Consistency:</strong> Cleaned text + standardized types eliminate pivot inconsistencies (e.g., “NY” vs “NY ”).</li>
-    <li><strong>Repeatability:</strong> Power Query steps are documented and refreshable, enabling a maintainable analytics workflow.</li>
+    <li><strong>Accuracy:</strong> prevents inflated KPIs due to duplicates and invalid records</li>
+    <li><strong>Consistency:</strong> stable grouping and filtering in pivots (clean types + clean text)</li>
+    <li><strong>Repeatability:</strong> refreshable pipeline for maintainable analytics workflows</li>
   </ul>
 
 </details>
@@ -210,78 +166,86 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 1 – Sales & Profit Trends Over Time</strong></summary>
+  <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
-    How have sales and profitability evolved over time from 2014 to 2017? Are there observable trends, seasonality,
-    or periods of financial volatility that could inform forecasting, inventory planning, and cost control strategies?
+    How have sales and profitability evolved over time from 2014 to 2017? Are there trends, seasonality,
+    or periods of volatility that could inform forecasting, inventory planning, and cost control?
   </p>
 
   <h3>Method</h3>
   <ul>
-    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
+    <li>Used <code>Clean_Orders</code> as the data source.</li>
     <li>Built pivot tables grouped by <code>Order Year-Month</code>.</li>
-    <li>Created line charts to visualize monthly revenue and monthly profit.</li>
-    <li>Calculated key performance indicators (KPIs) to contextualize trends.</li>
+    <li>Created line charts for monthly revenue and monthly profit.</li>
+    <li>Reviewed overall KPIs to contextualize the trends.</li>
   </ul>
 
-  <h3>Key Performance Indicators (Overall)</h3>
-  <figure style="margin: 0 0 16px 0;">
+  <h3>Results</h3>
+
+  <figure style="margin: 0 0 18px 0;">
     <img
       src="images/excel-analysis-1-kpi-summary.png"
-      alt="Superstore KPI summary"
+      alt="KPI summary for Superstore (revenue, profit, profit margin, orders, units sold, average order value)"
+      loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Overall revenue, profit, profit margin, total orders, units sold, and average order value.
+      Overall KPI summary used to contextualize trend performance.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-1-kpi-summary.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
-  <h3>Monthly Sales Trend</h3>
-  <figure style="margin: 0 0 16px 0;">
+  <figure style="margin: 0 0 18px 0;">
     <img
       src="images/excel-analysis-1-monthly-sales.png"
-      alt="Monthly sales trend from 2014 to 2017"
+      alt="Monthly sales (revenue) trend from 2014 to 2017"
+      loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Monthly revenue trend grouped by year and month.
+      Monthly revenue trend grouped by Year–Month.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-1-monthly-sales.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
-  <h3>Monthly Profit Trend</h3>
-  <figure style="margin: 0 0 16px 0;">
+  <figure style="margin: 0 0 18px 0;">
     <img
       src="images/excel-analysis-1-monthly-profit.png"
       alt="Monthly profit trend from 2014 to 2017"
+      loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Monthly profit trend highlighting volatility and negative-profit periods.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-1-monthly-profit.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li><strong>Growth is clear over time:</strong> the revenue line shows a sustained upward trend from 2014 through 2017, indicating expanding sales volume and/or higher order values.</li>
-    <li><strong>Seasonality is consistent:</strong> revenue spikes recur late each year (Q4), suggesting predictable holiday/EOY purchasing behavior that can be planned for.</li>
-    <li><strong>Profit is more volatile than revenue:</strong> the profit line shows sharper swings than sales and includes several negative months, meaning some periods are generating revenue but destroying margin.</li>
-    <li><strong>Margin pressure appears during certain periods:</strong> revenue growth does not always translate proportionally into profit growth, pointing to discounting, shipping costs, or product-mix shifts as likely drivers.</li>
-    <li><strong>Stability improves later:</strong> later years look less frequently negative, suggesting operational improvements or a healthier mix—worth understanding so those drivers can be replicated.</li>
+    <li><strong>Revenue grows over time:</strong> sales show a clear upward trajectory across the 2014–2017 period.</li>
+    <li><strong>Seasonality appears consistent:</strong> recurring peaks suggest predictable high-demand periods that can be planned for.</li>
+    <li><strong>Profit is more volatile than revenue:</strong> there are sharper swings in profit, including negative months.</li>
+    <li><strong>Margin pressure exists in specific periods:</strong> revenue growth does not always translate proportionally into profit growth.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Plan for Q4 demand:</strong> increase inventory coverage and fulfillment capacity ahead of seasonal spikes to reduce stockouts and expedite costs while capturing predictable demand.</li>
-    <li><strong>Build a “loss month drilldown”:</strong> create a pivot that filters to negative-profit months and breaks results down by <em>Sub-Category</em>, <em>Discount band</em>, and <em>Ship Mode</em> to identify the primary margin killers.</li>
-    <li><strong>Set discount guardrails:</strong> implement rules such as “no discounts above X% for low-margin sub-categories” and require approval if projected line margin falls below a threshold.</li>
-    <li><strong>Reduce shipping-driven margin erosion:</strong> analyze loss months by shipping mode and test policies like higher free-shipping thresholds, bundling incentives, or prioritizing cost-efficient ship modes.</li>
-    <li><strong>Track profit alongside revenue:</strong> add profit margin as a first-class KPI on the dashboard and monitor it monthly so revenue growth doesn’t hide profitability deterioration.</li>
-    <li><strong>Forecast using seasonality:</strong> use historical Year–Month patterns to build a simple revenue/profit forecast (baseline + seasonal uplift) to improve budgeting and inventory planning.</li>
+    <li><strong>Plan for seasonal demand:</strong> improve inventory coverage and fulfillment capacity ahead of predictable peaks.</li>
+    <li><strong>Drill into negative-profit months:</strong> break down by Sub-Category, Discount band, and Ship Mode to identify the primary margin drivers.</li>
+    <li><strong>Set discount guardrails:</strong> implement policies that prevent heavy discounting on low-margin items without approvals.</li>
+    <li><strong>Monitor profit margin monthly:</strong> track margin alongside revenue so growth doesn’t hide profitability deterioration.</li>
   </ul>
 
 </details>
@@ -289,32 +253,27 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 2 – Product &amp; Category Performance</strong></summary>
+  <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
-    Which product categories and individual products contribute the most to revenue and profit?
-    Are there meaningful differences in profitability across categories that should inform pricing,
-    discounting, inventory, and product strategy?
+    Which categories and products contribute the most to revenue and profit? Where do profitability differences
+    suggest pricing, discounting, inventory, or product strategy changes?
   </p>
 
   <h3>Method</h3>
   <ul>
-    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
-    <li>Built category-level pivots for <strong>Total Sales (Revenue)</strong>, <strong>Total Profit</strong>, and <strong>Profit Margin</strong> (Profit / Sales).</li>
-    <li>Built a product-level pivot and sorted by <strong>Sum of Profit (descending)</strong> to identify the top 10 most profitable products.</li>
-    <li>Created column and horizontal bar charts with data labels for fast comparison.</li>
+    <li>Used <code>Clean_Orders</code> as the data source.</li>
+    <li>Built category pivots for Revenue, Profit, and Profit Margin (Profit / Sales).</li>
+    <li>Built a product pivot sorted by Profit (descending) to identify top profit contributors.</li>
+    <li>Created pivot charts with labels for fast comparison.</li>
   </ul>
 
   <h3>Category KPI Summary</h3>
-  <p style="margin-top: 0;">
-    Summary of category performance (values from pivots). This table highlights the revenue–profit tradeoff and where margin efficiency differs.
-  </p>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 760px; margin-bottom: 14px;">
+  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin-bottom: 18px;">
     <thead>
       <tr>
         <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Category</th>
@@ -351,66 +310,81 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     </tbody>
   </table>
 
-  <h3>Sales Revenue by Category</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img src="images/excel-analysis-2-sales-revenue-by-category.png"
-         alt="Sales Revenue by Category"
-         loading="lazy"
-         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+  <h3>Results (Charts)</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/excel-analysis-2-sales-revenue-by-category.png"
+      alt="Sales revenue by category"
+      loading="lazy"
+      style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;"
+    >
     <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
-      Technology leads revenue, with Furniture and Office Supplies close behind.
+      Revenue by category.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-2-sales-revenue-by-category.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
-  <h3>Profit by Category</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img src="images/excel-analysis-2-profit-by-category.png"
-         alt="Profit by Category"
-         loading="lazy"
-         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/excel-analysis-2-profit-by-category.png"
+      alt="Profit by category"
+      loading="lazy"
+      style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;"
+    >
     <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
-      Profit is concentrated in Technology and Office Supplies; Furniture contributes comparatively little profit.
+      Profit by category (profit is concentrated in Technology and Office Supplies).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-2-profit-by-category.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
-  <h3>Profit Margin by Category</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img src="images/excel-analysis-2-profit-margin-by-category.png"
-         alt="Profit Margin by Category"
-         loading="lazy"
-         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/excel-analysis-2-profit-margin-by-category.png"
+      alt="Profit margin by category"
+      loading="lazy"
+      style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;"
+    >
     <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
-      Technology (~17.4%) and Office Supplies (~17.0%) are high-efficiency categories; Furniture (~2.5%) is a margin outlier.
+      Profit margin by category (Furniture is a low-margin outlier).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-2-profit-margin-by-category.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
-  <h3>Top 10 Products by Total Profit</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img src="images/excel-analysis-2-top-10-products-by-profit.png"
-         alt="Top 10 Products by Profit"
-         loading="lazy"
-         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/excel-analysis-2-top-10-products-by-profit.png"
+      alt="Top 10 products by profit"
+      loading="lazy"
+      style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;"
+    >
     <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
-      Profit is “top-heavy”: the #1 product (Canon imageCLASS 2200 Advanced Copier) contributes $25,199.93 profit alone.
+      Top 10 products by total profit.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-analysis-2-top-10-products-by-profit.png">Open full-size</a>
+      </span>
     </figcaption>
   </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li><strong>Technology is the best overall performer:</strong> highest revenue ($835.8K) and highest profit ($145.4K) with a strong margin (17.4%).</li>
-    <li><strong>Office Supplies is nearly as efficient as Technology:</strong> margin is also ~17.0% while contributing $122.2K profit.</li>
-    <li><strong>Furniture is the efficiency problem:</strong> despite high revenue ($741.4K), profit is only $18.4K and margin is ~2.5%, far below the overall 12.5% margin.</li>
-    <li><strong>Profit is highly concentrated:</strong> Technology + Office Supplies account for ~94% of total profit, making these categories “must-protect” from margin erosion.</li>
-    <li><strong>Product profits are top-heavy:</strong> the top 10 products generate $66.5K profit (~23% of total profit), and the top product alone contributes ~$25.2K (~9% of total profit), creating both opportunity and concentration risk.</li>
+    <li><strong>Technology and Office Supplies drive most profit:</strong> both categories have strong margins (~17%) and dominate total profit contribution.</li>
+    <li><strong>Furniture is the efficiency problem:</strong> high revenue but very low profit margin (~2.5%), suggesting discounting, shipping, or product mix issues.</li>
+    <li><strong>Profit is concentrated:</strong> the business is dependent on a small set of high-profit products and categories—great for focus, but a concentration risk.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Scale what works:</strong> prioritize in-stock rates, merchandising, and targeted promotions for Technology and Office Supplies to protect the majority of profit contribution.</li>
-    <li><strong>Fix Furniture margin with a drilldown:</strong> create pivots for Furniture by <em>Sub-Category</em> × <em>Discount band</em> × <em>Ship Mode</em> to identify whether losses come from discounting, freight, or mix.</li>
-    <li><strong>Introduce discount guardrails:</strong> set category/sub-category discount limits and require approval if projected margin drops below a threshold (especially in Furniture).</li>
-    <li><strong>Protect top-profit products:</strong> set reorder points and monitor supplier lead times for the top products; these drive a large share of profit and stockouts would be expensive.</li>
-    <li><strong>Use profit-based KPIs:</strong> track profit margin by category monthly so revenue growth doesn’t mask margin deterioration.</li>
+    <li><strong>Scale and protect the profit core:</strong> prioritize in-stock rates and margin discipline in Technology and Office Supplies.</li>
+    <li><strong>Fix Furniture with a drilldown:</strong> analyze Furniture by Sub-Category × Discount band × Ship Mode to identify margin killers.</li>
+    <li><strong>Implement discount guardrails:</strong> tie discounting to expected margin thresholds, especially in low-margin categories.</li>
+    <li><strong>Protect top-profit SKUs:</strong> monitor stockouts and lead times for the highest-profit products.</li>
   </ul>
 
 </details>
@@ -420,111 +394,102 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 <details>
   <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
 
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
   <h3>Business Question</h3>
   <p>
-    Which regions are driving the most revenue and profit, and where are we seeing efficiency gaps (low profit margin)?
-    Which states and cities are the biggest profit contributors—and which locations are consistently unprofitable and may require corrective action?
+    Which regions are driving the most profit and where are we seeing efficiency gaps (low profit margin)?
+    Which states and cities are the largest profit contributors—and which locations are consistently unprofitable?
   </p>
 
   <h3>Method</h3>
   <ul>
-    <li>Used the cleaned <code>Clean_Orders</code> table as the source for all pivots.</li>
-    <li>Built region-level pivots for <strong>Total Sales</strong>, <strong>Total Profit</strong>, and <strong>Profit Margin</strong> (calculated field = Profit / Sales).</li>
-    <li>Created ranked pivots for <strong>Top 10</strong> and <strong>Bottom 10</strong> <strong>States</strong> and <strong>Cities</strong> by <strong>Sum of Profit</strong>.</li>
-    <li>Visualized results with column and horizontal bar charts and added data labels for readability.</li>
+    <li>Used <code>Clean_Orders</code> as the source for all pivots.</li>
+    <li>Built region pivots for Revenue, Profit, and Profit Margin (Profit / Sales).</li>
+    <li>Ranked Top 10 and Bottom 10 States and Cities by Profit.</li>
+    <li>Visualized results using pivot charts with labels for readability.</li>
   </ul>
 
-  <h3>Sales Revenue by Region</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-sales-by-region.png"
-         alt="Sales Revenue by Region"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <h3>Results (Charts)</h3>
 
-  <h3>Profit by Region</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-by-region.png"
-         alt="Profit by Region"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-sales-by-region.png" alt="Sales revenue by region" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Revenue by region.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-sales-by-region.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h3>Profit Margin by Region</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-profit-margin-by-region.png"
-         alt="Profit Margin by Region"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-profit-by-region.png" alt="Profit by region" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Profit by region.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-profit-by-region.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h3>Top 10 States by Profit</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-states-by-profit.png"
-         alt="Top 10 States by Profit"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-profit-margin-by-region.png" alt="Profit margin by region" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Profit margin (efficiency) by region.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-profit-margin-by-region.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h3>Top 10 Cities by Profit</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-top-10-cities-by-profit.png"
-         alt="Top 10 Cities by Profit"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-top-10-states-by-profit.png" alt="Top 10 states by profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top 10 states by profit.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-top-10-states-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h3>Bottom 10 States by Profit</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-states-by-profit.png"
-         alt="Bottom 10 States by Profit"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-top-10-cities-by-profit.png" alt="Top 10 cities by profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top 10 cities by profit.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-top-10-cities-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h3>Bottom 10 Cities by Profit</h3>
-  <p>
-    <img src="/projects/excel-superstore-analysis/images/excel-analysis-3-bottom-10-cities-by-profit.png"
-         alt="Bottom 10 Cities by Profit"
-         style="max-width:100%; height:auto; margin: 0 0 18px 0;">
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-bottom-10-states-by-profit.png" alt="Bottom 10 states by profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Bottom 10 states by profit (loss markets).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-bottom-10-states-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-3-bottom-10-cities-by-profit.png" alt="Bottom 10 cities by profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Bottom 10 cities by profit (loss pockets).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-3-bottom-10-cities-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>
-      <strong>West and East are the growth engines.</strong> West leads both revenue (~$725K) and profit (~$108K), with East close behind (~$678K revenue; ~$91K profit). :contentReference[oaicite:1]{index=1}
-    </li>
-    <li>
-      <strong>Efficiency gap: Central is the margin problem.</strong> Central’s profit margin is ~<strong>7.9%</strong>, roughly half of West’s ~<strong>14.9%</strong>, despite Central producing meaningful revenue (~$501K). This is a classic sign of discount/shipping/product-mix pressure. :contentReference[oaicite:2]{index=2}
-    </li>
-    <li>
-      <strong>Profit is highly concentrated in a few states.</strong> California (~$76K) and New York (~$74K) together generate about <strong>$150K</strong> profit—roughly <strong>half of total profit</strong> in this dataset (~$286K). This makes these markets “must-protect” from stockouts, service issues, or margin erosion. :contentReference[oaicite:3]{index=3}
-    </li>
-    <li>
-      <strong>A few cities drive outsized profitability.</strong> New York City alone contributes ~<strong>$62K</strong> profit (about <strong>one-fifth</strong> of total profit), with Los Angeles and Seattle also major contributors. These metros are strong candidates for targeted campaigns and assortment expansion. :contentReference[oaicite:4]{index=4}
-    </li>
-    <li>
-      <strong>Losses are localized—but material.</strong> The bottom 10 states total ~<strong>-$98K</strong> profit (Texas is the biggest drag at ~<strong>-$26K</strong>). These losses partially offset gains from the top-performing states. :contentReference[oaicite:5]{index=5}
-    </li>
-    <li>
-      <strong>City-level loss pockets point to fixable operational issues.</strong> Philadelphia (~-$14K), Houston (~-$10K), and San Antonio (~-$7K) suggest recurring patterns such as heavy discounting, high freight costs, or a low-margin category mix in specific markets. :contentReference[oaicite:6]{index=6}
-    </li>
+    <li><strong>Profit and efficiency vary by region:</strong> some regions combine strong revenue with strong profitability, while others show margin pressure.</li>
+    <li><strong>Profit concentration is real:</strong> a small number of states and cities account for a large share of profit.</li>
+    <li><strong>Losses are localized but meaningful:</strong> bottom states/cities can offset gains if the drivers aren’t addressed.</li>
+    <li><strong>Regional inefficiency is often fixable:</strong> discounting, shipping mode, and product mix are common controllable drivers.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>
-      <strong>Defend and scale the profit core (West/East + top metros).</strong> Prioritize in-stock rates, faster fulfillment, and targeted promotions in top-profit states/cities (CA, NY; NYC, LA, Seattle) to protect the largest profit pools. :contentReference[oaicite:7]{index=7}
-    </li>
-    <li>
-      <strong>Fix Central margin with a structured root-cause drilldown.</strong> For Central, build pivots by <em>Category → Sub-Category → Ship Mode</em> and add <em>Discount bands</em> (e.g., 0%, 1–10%, 11–20%, 21%+). Identify which combinations collapse margin and adjust pricing/discount rules accordingly. :contentReference[oaicite:8]{index=8}
-    </li>
-    <li>
-      <strong>Implement discount guardrails tied to margin.</strong> Replace blanket discounting with rules like: “No discounts above X% on low-margin sub-categories” and “Require manager approval if projected line margin falls below a threshold.” This directly targets the gap between high revenue and low profitability. :contentReference[oaicite:9]{index=9}
-    </li>
-    <li>
-      <strong>Create a “loss-market watchlist” and intervene systematically.</strong> Start with Texas, Ohio, Pennsylvania, Illinois, and the bottom-profit cities. For each, isolate the top 3 drivers of loss (sub-category, ship mode, discount band) and define a corrective action (pricing update, assortment change, shipping policy change). :contentReference[oaicite:10]{index=10}
-    </li>
-    <li>
-      <strong>Reduce freight-driven losses with shipping policy tests.</strong> Test changes like: raising free-shipping thresholds, incentivizing lower-cost ship modes, or bundling orders to reduce per-order shipping cost—especially in chronic loss cities/states. :contentReference[oaicite:11]{index=11}
-    </li>
-    <li>
-      <strong>Operationalize this into the dashboard.</strong> Add regional KPI cards (Revenue, Profit, Margin) plus a “Bottom Locations” table that updates with slicers. Track month-over-month movement so losses don’t persist unnoticed. :contentReference[oaicite:12]{index=12}
-    </li>
+    <li><strong>Defend the profit core:</strong> prioritize service levels and margin discipline in top-profit states/cities to protect the biggest profit pools.</li>
+    <li><strong>Run a margin root-cause drilldown in weaker regions:</strong> analyze by Category → Sub-Category → Ship Mode and add Discount bands to isolate margin killers.</li>
+    <li><strong>Create a “loss-market watchlist”:</strong> for bottom locations, identify the top 3 loss drivers and apply targeted corrective actions (pricing, discount rules, shipping policy, assortment changes).</li>
+    <li><strong>Operationalize location KPIs:</strong> add regional margin monitoring to the dashboard to prevent persistent losses from being overlooked.</li>
   </ul>
 
 </details>
@@ -532,133 +497,76 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
 <details>
-  <summary><strong>Analysis 4 – Customer Segment Analysis</strong></summary>
+  <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
-    Which customer segments drive the most revenue and profit, and which segments are the most efficient
-    (highest profit margin)? How should the business prioritize growth, pricing, and retention strategies
-    across <strong>Consumer</strong>, <strong>Corporate</strong>, and <strong>Home Office</strong>?
+    Which customer segments drive the most revenue and profit, and which segments are the most efficient (highest profit margin)?
+    How should the business prioritize growth, pricing, and retention across Consumer, Corporate, and Home Office?
   </p>
 
   <h3>Method</h3>
   <ul>
-    <li>Used the cleaned <code>Clean_Orders</code> table as the data source.</li>
-    <li>Built a pivot table grouped by <strong>Segment</strong> to calculate:
-      <ul>
-        <li><strong>Total Sales (Revenue)</strong> = Sum of Sales</li>
-        <li><strong>Total Profit</strong> = Sum of Profit</li>
-        <li><strong>Profit Margin (%)</strong> = Profit / Sales (calculated field)</li>
-      </ul>
-    </li>
-    <li>Created separate column charts for Sales, Profit, and Profit Margin to make segment comparisons clear.</li>
+    <li>Used <code>Clean_Orders</code> as the data source.</li>
+    <li>Built a pivot grouped by <strong>Segment</strong> for Sales, Profit, and Profit Margin.</li>
+    <li>Created charts for Sales, Profit, and Profit Margin to compare segment performance.</li>
   </ul>
 
-  <hr>
+  <h3>Results (Charts)</h3>
 
-  <h3>Segment KPI Summary</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img
-      src="images/excel-analysis-4-segment-summary.png"
-      alt="Customer segment KPI summary table (Sales, Profit, Profit Margin)"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-4-segment-summary.png" alt="Segment summary table (Sales, Profit, Profit Margin)" loading="lazy"
+         style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;">
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Summary pivot by Segment: Sales, Profit, and Profit Margin (%).
+      Segment summary KPI table.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-4-segment-summary.png">Open full-size</a></span>
     </figcaption>
   </figure>
 
-  <h3>Sales Revenue by Segment</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img
-      src="images/excel-analysis-4-sales-by-segment.png"
-      alt="Sales revenue by customer segment"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-4-sales-by-segment.png" alt="Sales revenue by customer segment" loading="lazy"
+         style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;">
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Revenue contribution by segment: Consumer leads total revenue.
+      Sales by segment.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-4-sales-by-segment.png">Open full-size</a></span>
     </figcaption>
   </figure>
 
-  <h3>Profit by Segment</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img
-      src="images/excel-analysis-4-profit-by-segment.png"
-      alt="Profit by customer segment"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-4-profit-by-segment.png" alt="Profit by customer segment" loading="lazy"
+         style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;">
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Profit contribution by segment: Consumer generates the most total profit.
+      Profit by segment.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-4-profit-by-segment.png">Open full-size</a></span>
     </figcaption>
   </figure>
 
-  <h3>Profit Margin by Segment</h3>
-  <figure style="margin: 0 0 16px 0;">
-    <img
-      src="images/excel-analysis-4-profit-margin-by-segment.png"
-      alt="Profit margin percentage by customer segment"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-4-profit-margin-by-segment.png" alt="Profit margin by customer segment" loading="lazy"
+         style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;">
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Profit margin efficiency by segment: Home Office has the highest margin.
+      Profit margin (efficiency) by segment.
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-4-profit-margin-by-segment.png">Open full-size</a></span>
     </figcaption>
   </figure>
-
-  <hr>
 
   <h3>Insights</h3>
   <ul>
-    <li>
-      <strong>Consumer</strong> is the primary growth engine, generating the highest <strong>Sales</strong>
-      (<strong>$1,161,012.63</strong>) and the highest <strong>Profit</strong> (<strong>$134,022.09</strong>).
-      However, it has the <strong>lowest profit margin</strong> at <strong>11.5%</strong>, suggesting heavier discounting,
-      higher fulfillment costs, or a greater mix of low-margin products.
-    </li>
-    <li>
-      <strong>Corporate</strong> produces solid performance with <strong>$705,601.99</strong> in sales and
-      <strong>$91,821.26</strong> in profit, while maintaining a stronger <strong>13.0% margin</strong>.
-      This segment appears more efficient than Consumer and may be less price-sensitive or have more repeatable order patterns.
-    </li>
-    <li>
-      <strong>Home Office</strong> is the most efficient segment with the <strong>highest profit margin</strong>
-      (<strong>14.0%</strong>) but contributes the smallest totals (<strong>$428,894.96</strong> sales; <strong>$60,170.47</strong> profit).
-      This indicates an opportunity to grow this segment without sacrificing profitability.
-    </li>
-    <li>
-      Overall performance across all segments totals <strong>$2,295,509.57</strong> in revenue and <strong>$286,013.82</strong> in profit,
-      yielding an overall <strong>12.5% profit margin</strong>. The mix of segments suggests the business relies on Consumer for scale,
-      while Corporate and Home Office support stronger margins.
-    </li>
+    <li><strong>Consumer drives scale:</strong> Sales <strong>$1,161,012.63</strong>, Profit <strong>$134,022.09</strong>, Margin <strong>11.5%</strong>.</li>
+    <li><strong>Corporate is strong and efficient:</strong> Sales <strong>$705,601.99</strong>, Profit <strong>$91,821.26</strong>, Margin <strong>13.0%</strong>.</li>
+    <li><strong>Home Office is most efficient:</strong> Sales <strong>$428,894.96</strong>, Profit <strong>$60,170.47</strong>, Margin <strong>14.0%</strong>.</li>
+    <li><strong>Overall:</strong> Total Sales <strong>$2,295,509.57</strong>, Total Profit <strong>$286,013.82</strong>, Margin <strong>12.5%</strong>.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>
-      <strong>Protect Consumer volume while improving margin:</strong> audit discounting and shipping costs within the Consumer segment.
-      Identify sub-categories or products that drive sales but dilute profitability, and test small pricing/discount adjustments
-      (or shipping threshold incentives) to lift margins without materially reducing demand.
-    </li>
-    <li>
-      <strong>Scale Home Office efficiently:</strong> because Home Office has the highest margin (14.0%) but the smallest revenue base,
-      invest in targeted campaigns (email offers, bundles, or subscriptions for frequently purchased items) to increase share
-      while preserving its strong profitability.
-    </li>
-    <li>
-      <strong>Expand Corporate through repeatable contracts:</strong> Corporate has a healthy 13.0% margin and sizable revenue.
-      Prioritize retention and upsell through account-based offers (bulk pricing tiers, office replenishment programs, and faster shipping options)
-      to grow revenue in a predictable, high-efficiency way.
-    </li>
-    <li>
-      <strong>Implement segment-level KPI monitoring:</strong> track Sales, Profit, and Profit Margin by segment monthly.
-      Set margin guardrails (e.g., “Consumer margin should not fall below X%”) to prevent revenue growth that erodes profitability.
-    </li>
-    <li>
-      <strong>Use segment strategy in planning:</strong> allocate inventory and promotions differently by segment—Consumer for volume-driven campaigns,
-      Corporate for recurring/bulk orders, and Home Office for high-margin growth initiatives.
-    </li>
+    <li><strong>Improve Consumer margin without sacrificing volume:</strong> analyze Consumer by Discount band and Ship Mode to identify margin erosion and set guardrails.</li>
+    <li><strong>Scale Home Office profitably:</strong> invest in targeted campaigns and bundles to grow the highest-margin segment.</li>
+    <li><strong>Expand Corporate through repeatable programs:</strong> focus on retention and upsell with contract-style offers (bulk tiers, replenishment programs).</li>
+    <li><strong>Monitor segment KPIs monthly:</strong> track Sales, Profit, and Margin by segment so efficiency doesn’t deteriorate unnoticed.</li>
   </ul>
 
 </details>
@@ -668,94 +576,89 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 <details>
   <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
 
-  <br>
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>How much revenue and profit is impacted by returns?</li>
-    <li>Which sub-categories have the highest return rates (by sales %)?</li>
-    <li>Which products drive the highest returned sales and returned profit impact?</li>
+    <li>How much revenue and profit are impacted by returns?</li>
+    <li>Which sub-categories have the highest return rates (sales-based)?</li>
+    <li>Which products drive the greatest return impact by sales and profit?</li>
   </ul>
 
-  <h3>Pivot Table(s) / Method</h3>
+  <h3>Method</h3>
   <ul>
-    <li>Created a <strong>Return Flag (Yes/No)</strong> by joining Orders to Returns using <strong>Order ID</strong>.</li>
-    <li>Built pivots to summarize:
-      <ul>
-        <li><strong>Returned vs Not Returned</strong>: Sales, Profit, Returned Sales, Returned Profit, plus return percentages.</li>
-        <li><strong>Monthly Return Rate (Sales %)</strong> by Order Month-Year.</li>
-        <li><strong>Return Rate (Sales %)</strong> by Sub-Category.</li>
-        <li><strong>Top 10 Products</strong> by Returned Sales ($) and by Returned Profit ($).</li>
-      </ul>
-    </li>
+    <li>Created a return flag by joining Orders to Returns using <strong>Order ID</strong>.</li>
+    <li>Built pivots for Returned vs Not Returned (Sales, Profit, return %).</li>
+    <li>Built return-rate pivots by Month and Sub-Category.</li>
+    <li>Ranked products by Returned Sales and Returned Profit impact.</li>
   </ul>
 
-  <h3>Results (Screenshots)</h3>
+  <h3>Results (Charts)</h3>
 
-  <p><strong>Returns KPI Summary (Returned vs Not Returned)</strong><br>
-    <img src="images/excel-analysis-5-returns-kpi-summary.png" alt="Returns KPI summary showing sales and profit for returned vs non-returned orders" style="max-width:100%; height:auto;">
-    <br><em>Figure 5.1 — KPI summary of sales/profit impact from returns.</em>
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-5-returns-kpi-summary.png" alt="Returns KPI summary (returned vs non-returned sales and profit)" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Returns KPI summary (returned vs not returned).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-5-returns-kpi-summary.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <p><strong>Monthly Return Rate (Sales %)</strong><br>
-    <img src="images/excel-analysis-5-returns-sales-rate-by-month-year.png" alt="Line chart showing monthly return rate as a percentage of sales over time" style="max-width:100%; height:auto;">
-    <br><em>Figure 5.2 — Monthly return rate trend (sales-based).</em>
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-5-returns-sales-rate-by-month-year.png" alt="Monthly return rate (sales %) over time" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Monthly return rate trend (sales-based).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-5-returns-sales-rate-by-month-year.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <p><strong>Return Rate (Sales %) by Sub-Category</strong><br>
-    <img src="images/excel-analysis-5-returns-sales-rate-by-sub-category.png" alt="Bar chart showing return rate as a percentage of sales by sub-category" style="max-width:100%; height:auto;">
-    <br><em>Figure 5.3 — Sub-category return rate comparison.</em>
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-5-returns-sales-rate-by-sub-category.png" alt="Return rate (sales %) by sub-category" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Return rate by sub-category (sales-based).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-5-returns-sales-rate-by-sub-category.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <p><strong>Top 10 Products by Returned Sales ($)</strong><br>
-    <img src="images/excel-analysis-5-top-10-products-by-return-sales.png" alt="Bar chart showing top 10 products by returned sales" style="max-width:100%; height:auto;">
-    <br><em>Figure 5.4 — Highest returned sales products.</em>
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-5-top-10-products-by-return-sales.png" alt="Top 10 products by returned sales" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top products by returned sales ($).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-5-top-10-products-by-return-sales.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <p><strong>Top 10 Products by Returned Profit ($)</strong><br>
-    <img src="images/excel-analysis-5-top-10-products-by-return-profit.png" alt="Bar chart showing top 10 products by returned profit impact" style="max-width:100%; height:auto;">
-    <br><em>Figure 5.5 — Highest returned profit impact products.</em>
-  </p>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/excel-analysis-5-top-10-products-by-return-profit.png" alt="Top 10 products by returned profit impact" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top products by returned profit impact ($).
+      <span style="display:block; margin-top:4px;"><a href="images/excel-analysis-5-top-10-products-by-return-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li><strong>Returns represent a meaningful revenue and profit headwind.</strong>
-      <ul>
-        <li>Total Sales: <strong>$2,295,509.57</strong></li>
-        <li>Total Profit: <strong>$286,013.82</strong></li>
-        <li>Returned Sales: <strong>$180,504.28</strong> (<strong>7.86%</strong> of total sales)</li>
-        <li>Returned Profit: <strong>$23,232.36</strong> (<strong>8.12%</strong> of total profit)</li>
-        <li>Net after excluding returns: <strong>$2,115,005.29</strong> sales and <strong>$262,781.46</strong> profit</li>
-      </ul>
-    </li>
-    <li><strong>Returns impact profit slightly more than revenue</strong> (8.12% vs 7.86%), suggesting returns are somewhat concentrated in higher-profit items.</li>
-    <li><strong>Monthly return rates are volatile</strong> with noticeable spikes, likely driven by promotions/discounting, shipping issues, or product mix changes.</li>
-    <li><strong>Highest return-rate sub-categories (sales-based):</strong>
-      <ul>
-        <li>Copiers — <strong>12.84%</strong></li>
-        <li>Furnishings — <strong>10.48%</strong></li>
-        <li>Appliances — <strong>9.42%</strong></li>
-        <li>Paper — <strong>9.11%</strong></li>
-        <li>Phones — <strong>8.37%</strong></li>
-        <li>Lowest observed: Binders — <strong>4.91%</strong></li>
-      </ul>
-    </li>
-    <li><strong>Return impact is concentrated in a few high-dollar products.</strong> The <em>Canon imageCLASS 2200 Advanced Copier</em> is the largest driver with <strong>$13,999.96</strong> returned sales and <strong>$6,719.98</strong> returned profit impact.</li>
-  </ul>
-
-  <p><strong>How to interpret “Returned Profit” values</strong></p>
-  <ul>
-    <li><strong>Positive returned profit</strong> = the original sale was profitable, but it was returned (profit at risk / profit given back).</li>
-    <li><strong>Negative returned profit</strong> = the original sale was already unprofitable (loss-making) even before considering the return (often driven by discounting, shipping, or cost structure).</li>
+    <li><strong>Total Sales:</strong> $2,295,509.57 &nbsp;|&nbsp; <strong>Total Profit:</strong> $286,013.82</li>
+    <li><strong>Returned Sales:</strong> $180,504.28 (<strong>7.86%</strong> of total sales)</li>
+    <li><strong>Returned Profit impact:</strong> $23,232.36 (<strong>8.12%</strong> of total profit)</li>
+    <li><strong>Net after excluding returns:</strong> $2,115,005.29 sales and $262,781.46 profit</li>
+    <li><strong>Highest return-rate sub-categories (sales %):</strong> Copiers (12.84%), Furnishings (10.48%), Appliances (9.42%), Paper (9.11%), Phones (8.37%)</li>
+    <li><strong>Lowest observed return rate:</strong> Binders (4.91%)</li>
+    <li><strong>Return impact is concentrated:</strong> a small number of high-dollar products drive a large share of returned sales and returned profit impact.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Focus on high-return sub-categories (especially Copiers):</strong> improve product specifications/compatibility guidance, strengthen QA, and reduce damage-in-transit through packaging improvements.</li>
-    <li><strong>Investigate monthly spikes:</strong> filter spike months by discount level, ship mode, region, and product mix to identify root causes.</li>
-    <li><strong>Target high-impact SKUs:</strong> create product-level return reduction actions (exchange/repair options, fulfillment checks, clearer descriptions, vendor quality review).</li>
-    <li><strong>Review discount guardrails:</strong> if items are frequently sold at negative profit and also returned, tighten discounting and revisit pricing/cost structure.</li>
-    <li><strong>Dashboard KPI suggestion:</strong> track Returned Sales ($), Returned Profit ($), and Return Rate (Sales %) with slicers for Year, Category, Sub-Category, and Region.</li>
+    <li><strong>Prioritize high-return sub-categories:</strong> start with Copiers and Furnishings—improve product guidance, QA, and packaging to reduce defects/damage.</li>
+    <li><strong>Investigate spike months:</strong> filter high-return periods by Discount band, Ship Mode, Region, and Product to identify root causes.</li>
+    <li><strong>Target high-impact SKUs:</strong> implement product-level actions (vendor review, listing clarity, fulfillment checks, exchange/repair options).</li>
+    <li><strong>Tighten discounting where returns are high:</strong> if high discounts correlate with high returns or negative profitability, apply stricter approval thresholds.</li>
+    <li><strong>Operationalize return KPIs:</strong> track Returned Sales, Returned Profit impact, and Return Rate in the dashboard with slicers for time and category.</li>
   </ul>
 
 </details>
@@ -765,10 +668,13 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 <details>
   <summary><strong>Project Implementation &amp; Deliverables</strong></summary>
 
-  <h2>Workbook Structure</h2>
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Workbook Structure</h3>
   <ul>
-    <li><strong>Raw_Orders</strong> — Original imported dataset (kept as a table)</li>
-    <li><strong>Clean_Orders</strong> — Power Query cleaned, analysis-ready table</li>
+    <li><strong>Raw_Orders</strong> — Original imported dataset (preserved; no manual edits)</li>
+    <li><strong>Clean_Orders</strong> — Power Query cleaned, analysis-ready table (single source of truth)</li>
     <li><strong>Returns</strong> — Returned orders reference table</li>
     <li><strong>People</strong> — Region/manager reference table</li>
     <li><strong>Pivots</strong> — Pivot tables + pivot charts used for analysis and the dashboard</li>
@@ -777,45 +683,32 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <hr>
 
-  <h2>Dashboard Features</h2>
+  <h3>Dashboard Features</h3>
   <ul>
-    <li><strong>Profit-oriented, single-screen layout</strong> designed specifically for clean portfolio screenshots</li>
-    <li><strong>Interactive slicers</strong> for <em>Order Year</em> and <em>Order Month</em>, connected to every chart</li>
-    <li><strong>Dynamic filtering</strong> across all visuals for quick exploration and drill-down</li>
-    <li><strong>Dashboard visuals:</strong>
-      <ul>
-        <li>Monthly Profit Trend (2014–2017)</li>
-        <li>Top 5 Products by Return Profit</li>
-        <li>Top 5 Sub-Categories by Profit</li>
-        <li>Top 5 States by Profit</li>
-        <li>Profit by Customer Segment</li>
-      </ul>
-    </li>
+    <li><strong>Profit-oriented, single-screen layout</strong> designed for clean portfolio screenshots</li>
+    <li><strong>Connected slicers</strong> for <em>Order Year</em> and <em>Order Month</em> that filter every chart</li>
+    <li><strong>Core visuals:</strong> Monthly Profit Trend, Return Profit Impact, Top Profit Sub-Categories, Top Profit States, Segment Profit</li>
   </ul>
 
   <hr>
 
-  <h2>Final Dashboard</h2>
-  <p>
+  <h3>Final Dashboard</h3>
+  <figure style="margin: 0 0 18px 0;">
     <img
       src="images/excel-project-profit-oriented-dashboard.png"
       alt="Excel Superstore profit-oriented dashboard (single-screen layout with slicers)"
+      loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
-  </p>
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Final profit-oriented dashboard with fully connected slicers.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/excel-project-profit-oriented-dashboard.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
 
-  <hr>
-
-  <h2>Project Deliverables</h2>
-  <ul>
-    <li><strong>Interactive Excel workbook</strong> with a profit-focused dashboard and fully connected slicers</li>
-    <li><strong>Cleaned, analysis-ready dataset</strong> generated via Power Query (types standardized, text cleaned, duplicates removed, derived date fields created)</li>
-    <li><strong>Five structured analysis sections</strong> using pivots + charts, with insights and business recommendations</li>
-  </ul>
-
-  <hr>
-
-  <h2>Downloads</h2>
+  <h3>Downloads</h3>
   <ul>
     <li>
       <strong>Excel Workbook:</strong>
@@ -835,12 +728,13 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
   <hr>
 
-  <h2>Conclusion</h2>
+  <h3>Conclusion</h3>
   <p>
-    This Excel project demonstrates an end-to-end analytics workflow: importing raw retail data, transforming it with
+    This project demonstrates an end-to-end Excel analytics workflow: importing raw retail data, transforming it with
     Power Query, building pivot-driven analysis, and delivering a polished, interactive dashboard optimized for
-    stakeholder reporting. The final dashboard enables fast profit-based exploration by time (year/month) and highlights
-    key performance drivers such as the most profitable sub-categories, top-performing states, segment profitability,
-    and the products most impacted by returns.
+    stakeholder reporting. The final dashboard supports fast profit-based exploration by time and surfaces key
+    profitability drivers (category mix, region performance, segment efficiency) along with the revenue/profit impact
+    of returns.
   </p>
+
 </details>
