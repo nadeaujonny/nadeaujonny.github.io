@@ -367,3 +367,9 @@ main .wrapper{
 .card a:hover, .project-card a:hover, .project-tile a:hover{
   color: #1d4ed8 !important;
 }
+
+/* Projects page: make the main "Projects" heading dark on the light wrapper */
+.page-content .wrapper h1:first-of-type,
+main .wrapper h1:first-of-type{
+  color: rgba(15,15,18,0.95) !important;
+}
