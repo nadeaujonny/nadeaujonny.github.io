@@ -1,646 +1,350 @@
 /* =========================================================
-   MINIMAL DARK THEME — clear, modern, minimalist
-   Paste into: /assets/css/style.css
+   MINIMAL DARK THEME — condensed, same aesthetics
    ========================================================= */
 
+/* ---------- Theme tokens ---------- */
 :root{
-  --bg: #0b0f14;
-  --surface: #0f1620;
+  --bg:#0b0f14;
+  --surface:#0f1620;
   --surface2:#121b26;
-  --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.70);
-  --faint: rgba(255,255,255,0.55);
-  --border: rgba(255,255,255,0.12);
-  --shadow: 0 10px 26px rgba(0,0,0,0.45);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.70);
+  --border:rgba(255,255,255,.12);
+  --shadow:0 10px 26px rgba(0,0,0,.45);
 
-  --link: #9ecbff;
-  --linkHover: #c7ddff;
+  --link:#9ecbff;
+  --linkHover:#c7ddff;
 
-  --radius: 14px;
-  --max: 920px;
+  --radius:14px;
+  --max:920px;
 
-  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 }
 
 @media (prefers-color-scheme: light){
   :root{
-    --bg: #f7f8fa;
-    --surface: #ffffff;
+    --bg:#f7f8fa;
+    --surface:#fff;
     --surface2:#f2f4f7;
-    --text: rgba(10,15,20,0.92);
-    --muted: rgba(10,15,20,0.70);
-    --faint: rgba(10,15,20,0.55);
-    --border: rgba(10,15,20,0.12);
-    --shadow: 0 10px 26px rgba(10,15,20,0.10);
-    --link: #2563eb;
-    --linkHover: #1d4ed8;
+    --text:rgba(10,15,20,.92);
+    --muted:rgba(10,15,20,.70);
+    --border:rgba(10,15,20,.12);
+    --shadow:0 10px 26px rgba(10,15,20,.10);
+    --link:#2563eb;
+    --linkHover:#1d4ed8;
   }
 }
 
-*{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
+/* ---------- Base ---------- */
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
 body{
-  margin: 0;
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.65;
+  margin:0;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+
+  /* Space background */
+  background-image:url("../space.png");
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:cover;
+  background-attachment:fixed;
 }
 
-/* Center + readable width across many Jekyll themes */
-.wrapper, .page-content, main, .container, .content{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding-left: 18px;
-  padding-right: 18px;
+/* Center + readable width */
+.wrapper,.page-content,main,.container,.content{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 18px;
 }
 
-/* Typography (clear + minimalist) */
-h1, h2, h3, h4{
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin: 1.1em 0 0.55em;
+/* ---------- Typography ---------- */
+h1,h2,h3,h4{
+  line-height:1.25;
+  letter-spacing:-.01em;
+  margin:1.1em 0 .55em;
 }
-h1{ font-size: clamp(1.9rem, 3.2vw, 2.35rem); }
-h2{ font-size: clamp(1.35rem, 2.3vw, 1.65rem); }
-h3{ font-size: 1.15rem; }
-p{ margin: 0.6em 0 0.95em; color: var(--text); }
-small, .muted{ color: var(--muted); }
+h1{ font-size:clamp(1.9rem,3.2vw,2.35rem); }
+h2{ font-size:clamp(1.35rem,2.3vw,1.65rem); }
+h3{ font-size:1.15rem; }
 
-/* Links */
-a{
-  color: var(--link);
-  text-decoration: none;
-  text-underline-offset: 3px;
-}
-a:hover{
-  color: var(--linkHover);
-  text-decoration: underline;
-}
+p{ margin:.6em 0 .95em; color:var(--text); }
+small,.muted{ color:var(--muted); }
 
-/* Simple “card” container you can opt into */
+a{ color:var(--link); text-decoration:none; text-underline-offset:3px; }
+a:hover{ color:var(--linkHover); text-decoration:underline; }
+
+/* ---------- Card / Buttons ---------- */
 .card{
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
 }
 
-/* Buttons (minimal) */
 .btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-weight: 700;
-  text-decoration: none !important;
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text);
+  font-weight:700;
+  text-decoration:none !important;
+  transition:transform 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 .btn:hover{
-  transform: translateY(-1px);
-  background: var(--surface2);
-  border-color: rgba(255,255,255,0.18);
+  transform:translateY(-1px);
+  background:var(--surface2);
+  border-color:rgba(255,255,255,.18);
 }
-.btn:active{ transform: translateY(0); }
-.btn-primary{
-  border-color: rgba(158,203,255,0.35);
+.btn:active{ transform:translateY(0); }
+.btn-primary{ border-color:rgba(158,203,255,.35); }
+
+/* ---------- Dropdowns (<details>) ---------- */
+details{
+  margin:10px 0;                 /* tighter spacing */
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:var(--surface);
+  overflow:hidden;
 }
 
-/* Dropdowns (your Excel page uses <details>) */
-details{
-  margin: 12px 0;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  overflow: hidden;
-}
 details > summary{
-  list-style: none;
-  cursor: pointer;
-  padding: 12px 14px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  list-style:none;
+  cursor:pointer;
+  padding:18px 18px;             /* bigger bar */
+  font-size:1.05rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 details > summary::-webkit-details-marker{ display:none; }
 details > summary::after{
-  content: "▾";
-  color: var(--muted);
-  transition: transform 160ms ease;
+  content:"▾";
+  color:var(--muted);
+  transition:transform 160ms ease;
 }
-details[open] > summary::after{ transform: rotate(180deg); }
-details > :not(summary){
-  padding: 14px;
+details[open] > summary::after{ transform:rotate(180deg); }
+details[open] > summary{
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
 }
 
-/* Images/screenshots */
-img{
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
+/* content padding (works for both wrapped and unwrapped content) */
+details > :not(summary){ padding:14px; }
+details > div{ padding:16px 18px 18px; }
+
+/* Bullet points stay inside */
+details > div ul,
+details > div ol,
+.page-content ul,
+.page-content ol{
+  margin-left:0;
+  padding-left:1.4rem;
+  list-style-position:outside;
 }
-img, .shot{
-  border: 1px solid var(--border);
-  background: var(--surface);
+
+/* Dropdown internal links/colors remain theme-driven */
+details, details *{ color:var(--text); }
+details small, details .muted{ color:var(--muted); }
+details a{ color:var(--link); }
+details a:hover{ color:var(--linkHover); }
+
+/* ---------- Images ---------- */
+img{
+  max-width:100%;
+  height:auto;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--surface);
 }
 .shot{
   display:block;
-  margin: 14px auto;
+  margin:14px auto;
+  border:1px solid var(--border);
+  background:var(--surface);
+}
+details img{
+  display:block;
+  margin:14px auto;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--shadow);
 }
 
-/* Tables */
+/* ---------- Tables ---------- */
 table{
-  width: 100%;
-  border-collapse: collapse;
-  margin: 14px 0;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--surface);
 }
-th, td{
-  padding: 10px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+th,td{
+  padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 th{
-  text-align: left;
-  font-weight: 800;
-  color: var(--text);
-  background: var(--surface2);
+  text-align:left;
+  font-weight:800;
+  color:var(--text);
+  background:var(--surface2);
 }
-tr:last-child td{ border-bottom: none; }
+tr:last-child td{ border-bottom:none; }
 
-/* Code blocks */
-code, pre{ font-family: var(--mono); }
+/* ---------- Code ---------- */
+code,pre{ font-family:var(--mono); }
 code{
-  padding: 0.12em 0.35em;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.10);
+  padding:.12em .35em;
+  border-radius:8px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.10);
 }
 pre{
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  overflow-x: auto;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  overflow-x:auto;
 }
 
-/* Clean separators */
-hr{
-  border: none;
-  height: 1px;
-  background: rgba(255,255,255,0.10);
-  margin: 22px 0;
+/* ---------- Separators / header/footer muted ---------- */
+hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
+header,footer{ color:var(--muted); }
+
+/* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
+.site-nav,.nav-tabs,.topbar-nav{
+  display:flex;
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--surface);
 }
-
-/* Optional: soften theme headers/footers if your theme injects them */
-header, footer{
-  color: var(--muted);
+.site-nav a,.nav-tab,.topbar-link{
+  flex:1;
+  text-align:center;
+  padding:12px 10px;
+  font-weight:800;
+  text-decoration:none;
+  background:transparent;
 }
-
-details img{
-  display: block;
-  margin: 14px auto;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-}
-
-/* =======================
-   Header nav “block tabs”
-   ======================= */
-
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.header-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 14px 18px 12px;
-}
-
-.site-title{
-  display: inline-block;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  text-decoration: none;
-  margin-bottom: 10px;
-}
-
-.site-title:hover{
-  text-decoration: none;
-  color: var(--text);
-}
-
-.site-nav{
-  display: flex;
-  width: 100%;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden; /* makes the links feel like “blocks” inside one strip */
-  background: var(--surface);
-}
-
-.site-nav a{
-  flex: 1;                 /* makes each link a same-width block */
-  text-align: center;
-  padding: 12px 10px;
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: none;
-  background: transparent;
-}
-
-.site-nav a + a{
-  border-left: 1px solid var(--border);
-}
-
-.site-nav a:hover{
-  background: var(--surface2);
-  text-decoration: none;
-}
-
-.site-nav a[aria-current="page"]{
-  background: var(--surface2);
-}
-
-/* Mobile: stack blocks */
-@media (max-width: 520px){
-  .site-nav{ flex-direction: column; }
-  .site-nav a + a{
-    border-left: none;
-    border-top: 1px solid var(--border);
-  }
-}
-
-/* Footer polish */
-.site-footer{
-  margin-top: 28px;
-  padding: 18px 0 26px;
-  border-top: 1px solid var(--border);
-}
-
-.footer-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 18px;
-  color: var(--muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footer-links a{
-  margin-left: 12px;
-  color: var(--muted);
-}
-
-.footer-links a:hover{
-  color: var(--text);
-  text-decoration: none;
-}
-
-/* ===== Top full-width bar with block tabs ===== */
-
-.topbar{
-  width: 100%;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.topbar-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 14px 18px 12px;
-}
-
-.topbar-title{
-  display: inline-block;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  text-decoration: none;
-  margin-bottom: 10px;
-}
-
-.topbar-title:hover{
-  text-decoration: none;
-  color: var(--text);
-}
-
-.topbar-nav{
-  width: 100%;
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.topbar-link{
-  flex: 1;
-  text-align: center;
-  padding: 12px 10px;
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: none;
-}
-
+.site-nav a + a,
+.nav-tab + .nav-tab,
 .topbar-link + .topbar-link{
-  border-left: 1px solid var(--border);
+  border-left:1px solid var(--border);
 }
-
+.site-nav a:hover,
+.nav-tab:hover,
 .topbar-link:hover{
-  background: var(--surface2);
-  text-decoration: none;
+  background:var(--surface2);
+  text-decoration:none;
 }
-
-/* Mobile: stack blocks */
-@media (max-width: 520px){
-  .topbar-nav{ flex-direction: column; }
-  .topbar-link + .topbar-link{
-    border-left: none;
-    border-top: 1px solid var(--border);
-  }
-}
-
-/* Footer layout */
-.site-footer{
-  margin-top: 28px;
-  padding: 18px 0 26px;
-  border-top: 1px solid var(--border);
-}
-
-.footer-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 18px;
-  color: var(--muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footer-links a{
-  margin-left: 12px;
-  color: var(--muted);
-}
-
-.footer-links a:hover{
-  color: var(--text);
-  text-decoration: none;
-}
-
-/* ===== Header stays centered + nav tabs look like blocks ===== */
-
-.site-header{
-  background: transparent;
-  padding-top: 10px;
-}
-
-.header-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 18px 10px;
-}
-
-.site-title{
-  display: inline-block;
-  margin: 0 0 10px;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.site-title:hover{
-  text-decoration: none;
-  color: var(--text);
-}
-
-/* The “strip” of block links */
-.nav-tabs{
-  display: flex;
-  width: 100%;
-  max-width: var(--max);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.nav-tab{
-  flex: 1;
-  text-align: center;
-  padding: 12px 10px;
-  font-weight: 800;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.nav-tab + .nav-tab{
-  border-left: 1px solid var(--border);
-}
-
-.nav-tab:hover{
-  background: var(--surface2);
-  text-decoration: none;
-}
-
+.site-nav a[aria-current="page"],
 .nav-tab[aria-current="page"]{
-  background: var(--surface2);
+  background:var(--surface2);
 }
 
-/* Mobile: stack */
-@media (max-width: 520px){
-  .nav-tabs{ flex-direction: column; }
-  .nav-tab + .nav-tab{
-    border-left: none;
-    border-top: 1px solid var(--border);
+/* Mobile nav stacking */
+@media (max-width:520px){
+  .site-nav,.nav-tabs,.topbar-nav{ flex-direction:column; }
+  .site-nav a + a,
+  .nav-tab + .nav-tab,
+  .topbar-link + .topbar-link{
+    border-left:none;
+    border-top:1px solid var(--border);
   }
 }
 
-/* ===== Bigger, tighter dropdown bars (SQL + Excel pages) ===== */
-
-details{
-  margin: 10px 0;          /* closer together (was larger) */
+/* ---------- Footer (single definition) ---------- */
+.site-footer{
+  margin-top:28px;
+  padding:18px 0 26px;
+  border-top:1px solid var(--border);
 }
-
-details summary{
-  padding: 18px 18px;      /* taller bar */
-  font-size: 1.05rem;      /* slightly bigger text */
-  font-weight: 900;
-  border-radius: 14px;
+.footer-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 18px;
+  color:var(--muted);
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  align-items:center;
+  justify-content:space-between;
 }
+.footer-links a{ margin-left:12px; color:var(--muted); }
+.footer-links a:hover{ color:var(--text); text-decoration:none; }
 
-details[open] summary{
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-details > div{
-  padding: 16px 18px 18px; /* content padding */
-}
-
-/* Keep list bullets fully inside dropdown/content padding */
-details > div ul,
-details > div ol{
-  margin-left: 0;
-  padding-left: 1.4rem;   /* increase if you want more inset */
-  list-style-position: outside;
-}
-
-/* Safety: also applies to normal page lists (optional but recommended) */
-.page-content ul,
-.page-content ol{
-  margin-left: 0;
-  padding-left: 1.4rem;
-  list-style-position: outside;
-}
-
-/* =========================================
-   Space side-background (assets/space.png)
-   ========================================= */
-
-body {
-  /* style.css is in /assets/css/, so ../space.png points to /assets/space.png */
-  background-image: url("../space.png");
-  background-repeat: no-repeat;
-  background-position: center top;
-  background-size: cover;
-
-  /* keep the space background fixed while you scroll (optional) */
-  background-attachment: fixed;
-}
-
-/* Keep your page content centered and “hide” the background behind it */
-.page-content .wrapper,
-main .wrapper {
-  max-width: 980px;
-  margin: 0 auto;
-
-  /* this is what makes the space mostly visible only on the left/right sides */
-  background: rgba(245, 247, 250, 0.98);
-
-  border-radius: 18px;
-  padding: 32px 28px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-}
-
-/* Mobile: remove the “card” look so it fits cleanly */
-@media (max-width: 980px) {
-  body {
-    background-attachment: scroll; /* optional for smoother mobile scrolling */
-  }
-
-  .page-content .wrapper,
-  main .wrapper {
-    border-radius: 0;
-    box-shadow: none;
-    padding: 22px 16px;
-  }
-}
-
-/* =========================================================
-   Space background readability:
-   - White text for content OUTSIDE dropdowns/cards
-   - Keep dropdowns (details) using normal theme colors
-   ========================================================= */
-
-/* 1) Make top-level content white (outside dropdowns/cards).
-   Covers both layouts: pages that use <main> and ones that use .page-content */
+/* ---------- Space background readability ---------- */
+/* White text for content OUTSIDE dropdowns/cards */
 main > :not(details):not(.card),
-.page-content > :not(details):not(.card) {
-  color: rgba(255, 255, 255, 0.92);
+.page-content > :not(details):not(.card){
+  color:rgba(255,255,255,.92);
 }
-
-/* Links in that top-level content */
 main > :not(details):not(.card) a,
-.page-content > :not(details):not(.card) a {
-  color: #cfe3ff;
-}
+.page-content > :not(details):not(.card) a{ color:#cfe3ff; }
 main > :not(details):not(.card) a:hover,
-.page-content > :not(details):not(.card) a:hover {
-  color: #ffffff;
+.page-content > :not(details):not(.card) a:hover{ color:#fff; }
+
+/* Keep content centered and mostly show space on the sides */
+.page-content .wrapper,
+main .wrapper{
+  max-width:980px;
+  margin:0 auto;
+  background:rgba(245,247,250,.98);
+  border-radius:18px;
+  padding:32px 28px;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+@media (max-width:980px){
+  body{ background-attachment:scroll; }
+  .page-content .wrapper,
+  main .wrapper{
+    border-radius:0;
+    box-shadow:none;
+    padding:22px 16px;
+  }
 }
 
-/* 2) Dropdowns: keep your normal theme text colors (dark in light mode, light in dark mode) */
-details,
-details * {
-  color: var(--text);
-}
-details small,
-details .muted {
-  color: var(--muted);
-}
-details a {
-  color: var(--link);
-}
-details a:hover {
-  color: var(--linkHover);
-}
-
-/* 3) Cards/buttons/nav strips should keep normal theme text colors */
-.card,
-.btn,
-.nav-tabs,
-.site-nav,
-.topbar-nav {
-  color: var(--text);
-}
-
-/* Force site title (top-left "Jonathan Nadeau") to stay visible on space background */
+/* ---------- Fix: site title stays visible on space ---------- */
 .site-title,
 .site-title:visited,
 .site-title:hover,
-.site-title:active {
-  color: rgba(255,255,255,0.95) !important;
-  text-decoration: none !important;
+.site-title:active{
+  color:rgba(255,255,255,.95) !important;
+  text-decoration:none !important;
 }
-
-/* If the theme uses a different selector for the title, cover common ones too */
 .site-header a,
-.site-header a:visited {
-  color: rgba(255,255,255,0.95);
+.site-header a:visited{
+  color:rgba(255,255,255,.95);
 }
 
-/* --- NAV TAB TEXT COLOR FIX (Home / Projects / Resume) --- */
-/* Your header buttons are white, so make the tab text dark */
+/* ---------- Fix: nav text readable on white nav strip ---------- */
 .site-header .site-nav a,
 .site-header .nav-tabs .nav-tab,
 .site-header .topbar-nav .topbar-link,
 .site-header .topbar-link,
-.site-header nav a {
-  color: rgba(15, 15, 18, 0.92) !important;
+.site-header nav a{
+  color:rgba(15,15,18,.92) !important;
 }
-
 .site-header .site-nav a:hover,
 .site-header .nav-tabs .nav-tab:hover,
 .site-header .topbar-nav .topbar-link:hover,
 .site-header .topbar-link:hover,
-.site-header nav a:hover {
-  color: #000 !important;
+.site-header nav a:hover{
+  color:#000 !important;
 }
