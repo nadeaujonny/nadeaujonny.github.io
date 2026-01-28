@@ -5,7 +5,7 @@
      style="width:100%; max-height:300px; object-fit:cover; object-position:center 15%; border-radius:12px; margin: 12px 0 18px 0;">
 
 ### Data Analyst
-I use **SQL, Excel, Tableau, Power BI, Python, and R** to turn data into clear business insights—especially around **profitability, customer behavior, and operational performance**.
+End-to-end analytics: SQL + Excel analysis, Tableau/Power BI dashboards, and Python/R automation.
 
 ---
 
