@@ -482,3 +482,25 @@ details img{
     border-top: 1px solid var(--border);
   }
 }
+
+/* ===== Bigger, tighter dropdown bars (SQL + Excel pages) ===== */
+
+details{
+  margin: 10px 0;          /* closer together (was larger) */
+}
+
+details summary{
+  padding: 18px 18px;      /* taller bar */
+  font-size: 1.05rem;      /* slightly bigger text */
+  font-weight: 900;
+  border-radius: 14px;
+}
+
+details[open] summary{
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+details > div{
+  padding: 16px 18px 18px; /* content padding */
+}
