@@ -9,10 +9,8 @@ I use **SQL, Excel, Tableau, Power BI, Python, and R** to turn data into clear b
 
 ---
 
-<div class="btn-row">
-  <a href="/projects" class="btn btn-primary">View Projects</a>
-  <a href="/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf" class="btn btn-outline">View Resume</a>
-</div>
+<a class="btn btn-primary" href="/projects/">View Projects</a>
+<a class="btn" href="/assets/Nadeau_Jonathan_Resume.pdf">View Resume</a>
 
 ---
 
