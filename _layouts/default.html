@@ -5,15 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>
-      {% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}
+      {% if page.title %}{{ page.title }} | {% endif %}
+      {{ site.title | default: "Jonathan Nadeau" }}
     </title>
 
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   </head>
 
   <body>
-    <main class="page-content">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="site-title" href="{{ '/' | relative_url }}">
+          {{ site.title | default: "Jonathan Nadeau" }}
+        </a>
+
+        <nav class="site-nav">
+          <a href="{{ '/projects/' | relative_url }}">Projects</a>
+          <a href="{{ '/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf' | relative_url }}">Resume</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-content">
       {{ content }}
     </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© {{ site.time | date: '%Y' }} {{ site.title | default: "Jonathan Nadeau" }}</small>
+      </div>
+    </footer>
   </body>
 </html>
