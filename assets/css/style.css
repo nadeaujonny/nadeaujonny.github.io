@@ -1,327 +1,209 @@
 /* =========================================================
-   JONNY PORTFOLIO THEME — modern, bold, executive, crisp
-   Drop this into: /assets/css/style.css
+   MINIMAL DARK THEME — clear, modern, minimalist
+   Paste into: /assets/css/style.css
    ========================================================= */
 
-/* ---------- Design tokens ---------- */
 :root{
-  /* Core */
-  --bg: #0b1020;
-  --bg2:#0a1228;
-  --surface: rgba(255,255,255,0.06);
-  --surface2: rgba(255,255,255,0.10);
-  --border: rgba(255,255,255,0.14);
+  --bg: #0b0f14;
+  --surface: #0f1620;
+  --surface2:#121b26;
   --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.72);
+  --muted: rgba(255,255,255,0.70);
+  --faint: rgba(255,255,255,0.55);
+  --border: rgba(255,255,255,0.12);
+  --shadow: 0 10px 26px rgba(0,0,0,0.45);
 
-  /* Brand accents (colorful but professional) */
-  --a: #7c3aed;  /* violet */
-  --b: #06b6d4;  /* cyan */
-  --c: #f59e0b;  /* amber */
-  --d: #22c55e;  /* green */
+  --link: #9ecbff;
+  --linkHover: #c7ddff;
 
-  --link: #7dd3fc;
-  --linkHover: #a78bfa;
+  --radius: 14px;
+  --max: 920px;
 
-  /* Typography */
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
-  /* Layout */
-  --radius: 16px;
-  --radius2: 22px;
-  --shadow: 0 10px 30px rgba(0,0,0,0.35);
-  --shadow2: 0 14px 40px rgba(0,0,0,0.45);
-
-  --max: 1040px;
-  --pad: 22px;
-  --gap: 16px;
-
-  /* Motion */
-  --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-/* ---------- Light mode (auto) ---------- */
 @media (prefers-color-scheme: light){
   :root{
-    --bg: #f8fafc;
-    --bg2:#eef2ff;
-    --surface: rgba(15,23,42,0.05);
-    --surface2: rgba(15,23,42,0.08);
-    --border: rgba(15,23,42,0.12);
-    --text: rgba(2,6,23,0.92);
-    --muted: rgba(2,6,23,0.68);
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --surface2:#f2f4f7;
+    --text: rgba(10,15,20,0.92);
+    --muted: rgba(10,15,20,0.70);
+    --faint: rgba(10,15,20,0.55);
+    --border: rgba(10,15,20,0.12);
+    --shadow: 0 10px 26px rgba(10,15,20,0.10);
     --link: #2563eb;
-    --linkHover: #7c3aed;
-    --shadow: 0 10px 30px rgba(2,6,23,0.08);
-    --shadow2: 0 14px 40px rgba(2,6,23,0.12);
+    --linkHover: #1d4ed8;
   }
 }
 
-/* ---------- Base ---------- */
 *{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
 body{
   margin: 0;
   font-family: var(--font);
+  background: var(--bg);
   color: var(--text);
   line-height: 1.65;
-  background:
-    radial-gradient(900px 500px at 10% 10%, rgba(124,58,237,.35), transparent 55%),
-    radial-gradient(900px 500px at 90% 20%, rgba(6,182,212,.28), transparent 55%),
-    radial-gradient(900px 500px at 50% 95%, rgba(245,158,11,.18), transparent 55%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
 }
 
-/* Make most Jekyll themes look nicer without rewriting layouts */
-.wrapper, .page-content, main, .container{
+/* Center + readable width across many Jekyll themes */
+.wrapper, .page-content, main, .container, .content{
   max-width: var(--max);
   margin: 0 auto;
   padding-left: 18px;
   padding-right: 18px;
 }
 
-/* ---------- Headings (crisp + engineered) ---------- */
+/* Typography (clear + minimalist) */
 h1, h2, h3, h4{
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-top: 1.1em;
-  margin-bottom: 0.55em;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 1.1em 0 0.55em;
 }
-h1{
-  font-size: clamp(2.0rem, 3.5vw, 2.6rem);
-  margin-top: 0.8em;
-}
-h2{
-  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
-  position: relative;
-  padding-bottom: 0.25em;
-}
-h2::after{
-  content:"";
-  display:block;
-  height: 3px;
-  width: 72px;
-  margin-top: 10px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--a), var(--b), var(--c));
-  opacity: .9;
-}
-h3{ font-size: 1.2rem; opacity: .98; }
-p{ margin: 0.65em 0 0.95em; color: var(--text); }
+h1{ font-size: clamp(1.9rem, 3.2vw, 2.35rem); }
+h2{ font-size: clamp(1.35rem, 2.3vw, 1.65rem); }
+h3{ font-size: 1.15rem; }
+p{ margin: 0.6em 0 0.95em; color: var(--text); }
 small, .muted{ color: var(--muted); }
 
-/* ---------- Links ---------- */
+/* Links */
 a{
   color: var(--link);
   text-decoration: none;
   text-underline-offset: 3px;
 }
-a:hover{ color: var(--linkHover); text-decoration: underline; }
+a:hover{
+  color: var(--linkHover);
+  text-decoration: underline;
+}
 
-/* ---------- “Card” blocks ---------- */
-.card, blockquote, .post, .project-card{
+/* Simple “card” container you can opt into */
+.card{
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius2);
+  border-radius: var(--radius);
+  padding: 18px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
-}
-.card, .post, .project-card{
-  padding: var(--pad);
-  margin: 14px 0;
 }
 
-/* Nice blockquote */
-blockquote{
-  padding: 16px 18px;
-  margin: 16px 0;
-  border-left: 4px solid rgba(124,58,237,.7);
-}
-blockquote p{ margin: 0.6em 0; color: var(--muted); }
-
-/* ---------- Buttons ---------- */
+/* Buttons (minimal) */
 .btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.08);
-  color: var(--text);
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  box-shadow: var(--shadow);
-  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
-  text-decoration: none !important;
-}
-@media (prefers-color-scheme: light){
-  .btn{ border-color: rgba(2,6,23,0.16); background: rgba(2,6,23,0.03); }
-}
-.btn:hover{
-  transform: translateY(-2px);
-  box-shadow: var(--shadow2);
-  border-color: rgba(124,58,237,0.35);
-  background: rgba(124,58,237,0.12);
-}
-.btn:active{ transform: translateY(0px); }
-.btn:focus{
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(6,182,212,.22), var(--shadow2);
-}
-.btn-primary{
-  border-color: rgba(124,58,237,0.45);
-  background: linear-gradient(90deg, rgba(124,58,237,.34), rgba(6,182,212,.22));
-}
-.btn-primary:hover{
-  background: linear-gradient(90deg, rgba(124,58,237,.44), rgba(6,182,212,.28));
-}
-.btn-ghost{
-  background: transparent;
-  border-color: var(--border);
-}
-
-/* If your homepage has “View Projects / View Resume” as regular links,
-   add class="btn btn-primary" etc. to make them pop. */
-
-/* ---------- Details / dropdowns (your Excel page style) ---------- */
-details{
-  margin: 12px 0;
-  border-radius: var(--radius2);
   border: 1px solid var(--border);
   background: var(--surface);
-  box-shadow: var(--shadow);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.btn:hover{
+  transform: translateY(-1px);
+  background: var(--surface2);
+  border-color: rgba(255,255,255,0.18);
+}
+.btn:active{ transform: translateY(0); }
+.btn-primary{
+  border-color: rgba(158,203,255,0.35);
+}
+
+/* Dropdowns (your Excel page uses <details>) */
+details{
+  margin: 12px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
   overflow: hidden;
 }
 details > summary{
   list-style: none;
   cursor: pointer;
-  padding: 14px 16px;
+  padding: 12px 14px;
   font-weight: 800;
-  letter-spacing: 0.01em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background:
-    linear-gradient(90deg, rgba(124,58,237,.22), rgba(6,182,212,.12));
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-}
-@media (prefers-color-scheme: light){
-  details > summary{
-    border-bottom-color: rgba(2,6,23,0.10);
-    background: linear-gradient(90deg, rgba(124,58,237,.12), rgba(6,182,212,.08));
-  }
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 details > summary::-webkit-details-marker{ display:none; }
 details > summary::after{
   content: "▾";
-  opacity: .85;
-  font-size: 1.05rem;
-  transform: translateY(-1px);
-  transition: transform 220ms var(--ease);
+  color: var(--muted);
+  transition: transform 160ms ease;
 }
-details[open] > summary::after{ transform: rotate(180deg) translateY(1px); }
-details .dropdown-body, details > :not(summary){
-  padding: 16px 16px 18px;
+details[open] > summary::after{ transform: rotate(180deg); }
+details > :not(summary){
+  padding: 14px;
 }
 
-/* ---------- Images / screenshots ---------- */
+/* Images/screenshots */
 img{
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius);
+  border-radius: 12px;
 }
 img, .shot{
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  background: var(--surface);
 }
 .shot{
   display:block;
   margin: 14px auto;
 }
 
-/* Optional: uniform caption style if you use <figcaption> */
-figcaption{
-  text-align: center;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-/* ---------- Tables (pivot table screenshots are images, but SQL tables might be markdown) ---------- */
+/* Tables */
 table{
   width: 100%;
   border-collapse: collapse;
   margin: 14px 0;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--surface);
 }
 th, td{
   padding: 10px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-}
-@media (prefers-color-scheme: light){
-  th, td{ border-bottom-color: rgba(2,6,23,0.10); }
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 th{
   text-align: left;
   font-weight: 800;
-  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  background: var(--surface2);
 }
-tr:hover td{ background: rgba(124,58,237,0.08); }
+tr:last-child td{ border-bottom: none; }
 
-/* ---------- Code blocks (engineered look) ---------- */
-code, pre{
-  font-family: var(--mono);
-}
+/* Code blocks */
+code, pre{ font-family: var(--mono); }
 code{
-  padding: 0.14em 0.35em;
+  padding: 0.12em 0.35em;
   border-radius: 8px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-@media (prefers-color-scheme: light){
-  code{
-    background: rgba(2,6,23,0.04);
-    border-color: rgba(2,6,23,0.10);
-  }
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.10);
 }
 pre{
-  padding: 14px 16px;
-  border-radius: var(--radius);
-  background: rgba(0,0,0,0.25);
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
   border: 1px solid var(--border);
   overflow-x: auto;
-  box-shadow: var(--shadow);
-}
-@media (prefers-color-scheme: light){
-  pre{ background: rgba(2,6,23,0.04); }
 }
 
-/* ---------- Horizontal rule ---------- */
+/* Clean separators */
 hr{
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.26), transparent);
+  background: rgba(255,255,255,0.10);
   margin: 22px 0;
 }
-@media (prefers-color-scheme: light){
-  hr{ background: linear-gradient(90deg, transparent, rgba(2,6,23,0.18), transparent); }
-}
 
-/* ---------- “Executive spacing” for lists ---------- */
-ul, ol{ padding-left: 1.2em; }
-li{ margin: 0.25em 0; }
-
-/* ---------- Subtle polish: selection + focus ---------- */
-::selection{ background: rgba(124,58,237,0.35); }
-:focus-visible{
-  outline: 3px solid rgba(6,182,212,.35);
-  outline-offset: 3px;
-  border-radius: 10px;
+/* Optional: soften theme headers/footers if your theme injects them */
+header, footer{
+  color: var(--muted);
 }
