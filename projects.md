@@ -26,10 +26,19 @@ permalink: /projects/
     </div>
   </div>
 
+  <div class="col-6">
+    <div class="card">
+      <h2>Tableau</h2>
+      <h3>Marketplace Ops & Customer Experience (Olist)</h3>
+      <p>Built an interactive multi-dashboard Tableau Public report focused on fulfillment performance, delivery delays, and customer review drivers using a multi-table marketplace dataset.</p>
+      <a class="btn btn-primary" href="/projects/tableau-olist-ops-cx/">View Project →</a>
+    </div>
+  </div>
+
   <div class="col-12">
     <div class="card">
       <h2>Coming Soon</h2>
-      <p>Tableau • Power BI • Python • R (more projects will be added here as I publish them).</p>
+      <p>Power BI • Python • R (more projects will be added here as I publish them).</p>
     </div>
   </div>
 
