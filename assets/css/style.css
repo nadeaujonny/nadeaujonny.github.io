@@ -215,3 +215,105 @@ details img{
   border-radius: 12px;
   box-shadow: var(--shadow);
 }
+
+/* =======================
+   Header nav “block tabs”
+   ======================= */
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 14px 18px 12px;
+}
+
+.site-title{
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.site-title:hover{
+  text-decoration: none;
+  color: var(--text);
+}
+
+.site-nav{
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden; /* makes the links feel like “blocks” inside one strip */
+  background: var(--surface);
+}
+
+.site-nav a{
+  flex: 1;                 /* makes each link a same-width block */
+  text-align: center;
+  padding: 12px 10px;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  background: transparent;
+}
+
+.site-nav a + a{
+  border-left: 1px solid var(--border);
+}
+
+.site-nav a:hover{
+  background: var(--surface2);
+  text-decoration: none;
+}
+
+.site-nav a[aria-current="page"]{
+  background: var(--surface2);
+}
+
+/* Mobile: stack blocks */
+@media (max-width: 520px){
+  .site-nav{ flex-direction: column; }
+  .site-nav a + a{
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* Footer polish */
+.site-footer{
+  margin-top: 28px;
+  padding: 18px 0 26px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 18px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-links a{
+  margin-left: 12px;
+  color: var(--muted);
+}
+
+.footer-links a:hover{
+  color: var(--text);
+  text-decoration: none;
+}
