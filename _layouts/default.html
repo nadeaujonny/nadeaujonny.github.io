@@ -1,40 +1,26 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
 
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}" />
-    {% include head-custom.html %}
-  </head>
+    <nav class="topbar-nav" aria-label="Primary navigation">
+      <a class="topbar-link" href="{{ '/' | relative_url }}">Home</a>
+      <a class="topbar-link" href="{{ '/projects' | relative_url }}">Projects</a>
+      <a class="topbar-link" href="{{ '/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf' | relative_url }}" target="_blank" rel="noopener">Resume</a>
+    </nav>
+  </div>
+</header>
 
-  <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+<main class="page-content">
+  {{ content }}
+</main>
 
-        <nav class="site-nav" aria-label="Primary navigation">
-          <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
-          <a href="{{ '/projects' | relative_url }}" {% if page.url == '/projects/' or page.url == '/projects' %}aria-current="page"{% endif %}>Projects</a>
-          <a href="{{ '/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf' | relative_url }}" target="_blank" rel="noopener">Resume</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="page-content">
-      {{ content }}
-    </main>
-
-    <footer class="site-footer">
-      <div class="footer-inner">
-        © {{ site.time | date: '%Y' }} {{ site.title }}
-        <span class="footer-links">
-          <a href="mailto:nadeau.jonny@gmail.com">Email</a>
-          <a href="https://www.linkedin.com/in/nadeau-jonathan" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/nadeaujonny" target="_blank" rel="noopener">GitHub</a>
-        </span>
-      </div>
-    </footer>
-  </body>
-</html>
+<footer class="site-footer">
+  <div class="footer-inner">
+    © {{ site.time | date: '%Y' }} {{ site.title }}
+    <span class="footer-links">
+      <a href="mailto:nadeau.jonny@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/nadeau-jonathan" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/nadeaujonny" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
