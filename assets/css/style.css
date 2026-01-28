@@ -373,3 +373,45 @@ main .wrapper{
 main .wrapper h1:first-of-type{
   color: rgba(15,15,18,0.95) !important;
 }
+
+/* ===== Fix: make text inside the off-white center wrapper dark ===== */
+.page-content .wrapper,
+main .wrapper{
+  color: rgba(15,15,18,0.92) !important;
+}
+
+/* Make common text elements inherit the wrapper's dark color */
+.page-content .wrapper h1,
+.page-content .wrapper h2,
+.page-content .wrapper h3,
+.page-content .wrapper h4,
+.page-content .wrapper p,
+.page-content .wrapper li,
+.page-content .wrapper span,
+.page-content .wrapper small,
+.page-content .wrapper strong,
+.page-content .wrapper em,
+.page-content .wrapper .muted,
+main .wrapper h1,
+main .wrapper h2,
+main .wrapper h3,
+main .wrapper h4,
+main .wrapper p,
+main .wrapper li,
+main .wrapper span,
+main .wrapper small,
+main .wrapper strong,
+main .wrapper em,
+main .wrapper .muted{
+  color: inherit !important;
+}
+
+/* Links inside the wrapper: keep them readable on the light background */
+.page-content .wrapper a,
+main .wrapper a{
+  color: #1d4ed8 !important;
+}
+.page-content .wrapper a:hover,
+main .wrapper a:hover{
+  color: #0f2f8a !important;
+}
