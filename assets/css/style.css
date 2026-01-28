@@ -1,0 +1,121 @@
+:root{
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#e2e8f0;
+  --card:#f8fafc;
+  --blue:#2563eb;
+  --blueSoft:#eef2ff;
+  --shadow:0 10px 24px rgba(15,23,42,.08);
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  line-height:1.65;
+}
+
+a{ color:var(--blue); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+hr{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:22px 0;
+}
+
+/* Layout width */
+main, .container, .page-content{
+  max-width:980px;
+  margin:0 auto;
+  padding:28px 18px 60px;
+}
+
+/* Headings */
+h1{ font-size:2.05rem; line-height:1.2; margin:0 0 12px; }
+h2{ font-size:1.5rem; margin:26px 0 10px; }
+h3{ font-size:1.15rem; margin:18px 0 10px; }
+p{ margin:10px 0; color:var(--text); }
+blockquote{
+  margin:14px 0;
+  padding:12px 14px;
+  border-left:4px solid var(--border);
+  background:var(--card);
+  color:var(--muted);
+  border-radius:12px;
+}
+
+/* Buttons you already use */
+.project-btn, .back-btn{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid var(--blue);
+  background:var(--blue);
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+}
+.project-btn:hover, .back-btn:hover{ text-decoration:none; filter:brightness(.97); }
+
+.back-btn{
+  background:transparent;
+  color:var(--blue);
+}
+
+/* Dropdown sections (details/summary) */
+details{
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  padding:10px 12px;
+  margin:14px 0;
+}
+details[open]{ box-shadow:var(--shadow); }
+
+summary{
+  cursor:pointer;
+  list-style:none;
+  font-weight:800;
+  padding:10px 12px;
+  border-radius:10px;
+  background:var(--card);
+}
+summary::-webkit-details-marker{ display:none; }
+
+details > *:not(summary){
+  margin-top:14px;
+  padding:0 6px 8px;
+}
+
+/* Images and tables */
+img{
+  max-width:100%;
+  height:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:12px 0 18px;
+}
+th, td{
+  border-bottom:1px solid var(--border);
+  padding:10px 8px;
+}
+th{ text-align:left; }
+
+/* Code blocks */
+pre{
+  padding:12px 14px;
+  background:#0b1020;
+  color:#e5e7eb;
+  border-radius:12px;
+  overflow:auto;
+}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+}
