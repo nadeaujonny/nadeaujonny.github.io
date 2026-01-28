@@ -626,3 +626,21 @@ details a:hover {
 .site-header a:visited {
   color: rgba(255,255,255,0.95);
 }
+
+/* --- NAV TAB TEXT COLOR FIX (Home / Projects / Resume) --- */
+/* Your header buttons are white, so make the tab text dark */
+.site-header .site-nav a,
+.site-header .nav-tabs .nav-tab,
+.site-header .topbar-nav .topbar-link,
+.site-header .topbar-link,
+.site-header nav a {
+  color: rgba(15, 15, 18, 0.92) !important;
+}
+
+.site-header .site-nav a:hover,
+.site-header .nav-tabs .nav-tab:hover,
+.site-header .topbar-nav .topbar-link:hover,
+.site-header .topbar-link:hover,
+.site-header nav a:hover {
+  color: #000 !important;
+}
