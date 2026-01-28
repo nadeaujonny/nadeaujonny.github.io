@@ -520,3 +520,46 @@ details > div ol{
   padding-left: 1.4rem;
   list-style-position: outside;
 }
+
+/* =========================================
+   Space side-background (assets/space.png)
+   ========================================= */
+
+body {
+  /* style.css is in /assets/css/, so ../space.png points to /assets/space.png */
+  background-image: url("../space.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+
+  /* keep the space background fixed while you scroll (optional) */
+  background-attachment: fixed;
+}
+
+/* Keep your page content centered and “hide” the background behind it */
+.page-content .wrapper,
+main .wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+
+  /* this is what makes the space mostly visible only on the left/right sides */
+  background: rgba(245, 247, 250, 0.98);
+
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* Mobile: remove the “card” look so it fits cleanly */
+@media (max-width: 980px) {
+  body {
+    background-attachment: scroll; /* optional for smoother mobile scrolling */
+  }
+
+  .page-content .wrapper,
+  main .wrapper {
+    border-radius: 0;
+    box-shadow: none;
+    padding: 22px 16px;
+  }
+}
