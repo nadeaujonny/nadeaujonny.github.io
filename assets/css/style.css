@@ -504,3 +504,19 @@ details[open] summary{
 details > div{
   padding: 16px 18px 18px; /* content padding */
 }
+
+/* Keep list bullets fully inside dropdown/content padding */
+details > div ul,
+details > div ol{
+  margin-left: 0;
+  padding-left: 1.4rem;   /* increase if you want more inset */
+  list-style-position: outside;
+}
+
+/* Safety: also applies to normal page lists (optional but recommended) */
+.page-content ul,
+.page-content ol{
+  margin-left: 0;
+  padding-left: 1.4rem;
+  list-style-position: outside;
+}
