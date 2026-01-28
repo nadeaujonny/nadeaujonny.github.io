@@ -3,8 +3,6 @@ layout: default
 title: Sales Dashboard – Superstore Dataset (Excel)
 ---
 
-<a href="/projects" class="back-btn">← Back to Projects</a>
-
 # Sales Dashboard – Superstore Dataset (Excel)
 
 > An end-to-end Excel analytics project demonstrating Power Query data cleaning, KPI development, pivot-table analysis, and executive dashboard design using the Superstore retail dataset.
