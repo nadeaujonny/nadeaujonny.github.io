@@ -9,40 +9,9 @@ I use **SQL, Excel, Tableau, Power BI, Python, and R** to turn data into clear b
 
 ---
 
-<div style="text-align:center; margin: 18px 0 26px 0;">
-
-  <a href="/projects"
-     style="
-       display:inline-block;
-       padding:12px 24px;
-       margin:0 10px 10px 10px;
-       font-size:16px;
-       font-weight:600;
-       color:white;
-       background:#2563eb;
-       border-radius:10px;
-       text-decoration:none;
-       border:1px solid #2563eb;
-     ">
-    View Projects
-  </a>
-
-  <a href="/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf"
-     style="
-       display:inline-block;
-       padding:12px 24px;
-       margin:0 10px 10px 10px;
-       font-size:16px;
-       font-weight:600;
-       color:#2563eb;
-       background:#eef2ff;
-       border-radius:10px;
-       text-decoration:none;
-       border:1px solid #2563eb;
-     ">
-    View Resume
-  </a>
-
+<div class="btn-row">
+  <a href="/projects" class="btn btn-primary">View Projects</a>
+  <a href="/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf" class="btn btn-outline">View Resume</a>
 </div>
 
 ---
