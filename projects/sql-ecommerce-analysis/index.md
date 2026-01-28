@@ -7,84 +7,83 @@ title: E-commerce Revenue & Returns Analysis (SQL)
 
 # E-commerce Revenue & Returns Analysis (SQL)
 
-> This project analyzes sales and returns data from the BigQuery **thelook_ecommerce** dataset to uncover revenue drivers, product performance, return patterns, and operational insights.
+> This project analyzes sales and returns activity from the BigQuery **thelook_ecommerce** dataset to identify revenue drivers, profit concentration, return-risk patterns, and actionable operational insights using advanced SQL.
 
 ---
 
 <details>
   <summary><strong>Project Overview</strong></summary>
 
+  <div style="margin-top: 12px;"></div>
+
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
   <h2>Objectives</h2>
   <ul>
-    <li>Identify key revenue and profit drivers</li>
-    <li>Analyze return behavior by product and category</li>
-    <li>Evaluate customer purchasing patterns</li>
-    <li>Demonstrate advanced SQL techniques (CTEs, joins, window functions, aggregations)</li>
+    <li>Identify key revenue and profit drivers across products, categories, and brands</li>
+    <li>Quantify return behavior and evaluate how returns affect profitability</li>
+    <li>Analyze customer value and purchasing patterns (CLV, AOV, tenure)</li>
+    <li>Evaluate long-term and seasonal trends in revenue, profit, and return rates</li>
+    <li>Demonstrate advanced SQL techniques (CTEs, joins, window functions, segmentation, time-series analysis)</li>
   </ul>
 
   <hr>
 
   <h2>SQL Techniques Demonstrated</h2>
   <ul>
-    <li>Multi-table joins</li>
+    <li>Multi-table joins (orders, order_items, products, users)</li>
     <li>Aggregations and GROUP BY</li>
     <li>Common Table Expressions (CTEs)</li>
-    <li>Window functions (RANK, ROW_NUMBER)</li>
-    <li>CASE statements</li>
-    <li>Date/time analysis</li>
-    <li>Subqueries</li>
-    <li>Filtering and segmentation</li>
+    <li>Window functions (RANK, ROW_NUMBER, LAG, rolling averages)</li>
+    <li>CASE statements for tiering/segmentation</li>
+    <li>Date/time analysis (DATE_TRUNC, EXTRACT, time-series grouping)</li>
+    <li>Filtering for business relevance (minimum volume thresholds)</li>
+    <li>Metric engineering (profit, margin, return rate, estimated profit impact)</li>
   </ul>
 
   <hr>
 
   <h2>Dataset Overview</h2>
   <p>
-    The <code>thelook_ecommerce</code> dataset is a public BigQuery dataset that simulates the operations of an online retail company.
-    It contains detailed transactional data covering customer orders, individual items within each order, product attributes, and user information.
+    <code>thelook_ecommerce</code> is a public BigQuery dataset that simulates an online retail business.
+    It contains transactional order data, line-item purchases, product attributes, and customer information.
+    The relational schema supports analysis across product performance, profitability, returns, and customer behavior.
   </p>
 
-  <p>The data is structured in a relational format:</p>
+  <h3>Core Tables</h3>
   <ul>
-    <li><code>orders</code> contains one row per order and includes timestamps, order status (e.g., Complete, Returned), and user identifiers.</li>
-    <li><code>order_items</code> contains one row per product purchased within an order, allowing revenue, profit, and return behavior to be analyzed at the product level.</li>
-    <li><code>products</code> provides product metadata such as category, brand, and cost, enabling profitability and margin calculations.</li>
-    <li><code>users</code> contains customer-level demographic and geographic attributes.</li>
+    <li><code>orders</code>: one row per order (timestamps, status, user_id, etc.)</li>
+    <li><code>order_items</code>: one row per item purchased within an order (sale_price, product_id, order_id)</li>
+    <li><code>products</code>: product metadata (category, brand, cost)</li>
+    <li><code>users</code>: customer attributes (demographics, geography)</li>
   </ul>
-
-  <p>
-    This structure supports analysis across multiple business dimensions including product performance, brand contribution,
-    customer behavior, operational efficiency (returns), and time-based trends. The dataset is well-suited for demonstrating SQL techniques
-    such as joins, aggregations, window functions, and time-series analysis in an e-commerce context.
-  </p>
 
   <hr>
 
-  <h2>Key Metrics (KPIs)</h2>
-  <p>The following key performance indicators (KPIs) are used throughout this analysis:</p>
+  <h2>KPI Definitions</h2>
   <ul>
-    <li><strong>Total Revenue</strong> – The total dollar value of completed sales.</li>
-    <li><strong>Total Profit</strong> – Revenue minus product cost for completed orders.</li>
-    <li><strong>Units Sold (Completed Purchases)</strong> – The number of items successfully purchased and not returned.</li>
-    <li><strong>Units Returned</strong> – The number of items returned by customers.</li>
-    <li><strong>Return Rate (%)</strong> – Returned units ÷ (completed units + returned units).</li>
-    <li><strong>Profit Margin (%)</strong> – Profit ÷ revenue.</li>
+    <li><strong>Total Revenue</strong> — SUM of <code>sale_price</code> for <strong>Completed</strong> order items</li>
+    <li><strong>Total Profit</strong> — SUM of <code>(sale_price - cost)</code> for <strong>Completed</strong> order items</li>
+    <li><strong>Units Sold</strong> — COUNT of order items with status <strong>Complete</strong></li>
+    <li><strong>Units Returned</strong> — COUNT of order items with status <strong>Returned</strong></li>
+    <li><strong>Return Rate (%)</strong> — <code>units_returned / (units_completed + units_returned)</code></li>
+    <li><strong>Profit Margin (%)</strong> — <code>profit / revenue</code></li>
   </ul>
 
-  <p>
-    These metrics collectively provide visibility into sales growth, profitability, product efficiency,
-    and operational risk associated with customer returns.
+  <p style="margin-top: 10px;">
+    <em>Note:</em> Revenue and profit are calculated using completed purchases only. Return rate calculations use
+    <strong>both</strong> completed and returned units to ensure a realistic denominator.
   </p>
 
   <hr>
 
   <h2>Key Business Questions</h2>
   <ul>
-    <li>Which products and categories generate the most revenue and profit?</li>
-    <li>Which products are returned most frequently?</li>
-    <li>How do returns affect overall profitability?</li>
-    <li>Which customers generate the highest lifetime value?</li>
-    <li>How does revenue trend over time?</li>
+    <li>Which products and brands generate the most revenue and profit?</li>
+    <li>Which products are the most margin-efficient (profit margin), and can they be scaled?</li>
+    <li>Which products have the highest return rates, and what is the profit at risk from returns?</li>
+    <li>How have revenue, profit, and returns changed over time (long-term and seasonal)?</li>
+    <li>Which customers generate the highest lifetime profit and what purchasing patterns define them?</li>
   </ul>
 
   <hr>
@@ -92,8 +91,8 @@ title: E-commerce Revenue & Returns Analysis (SQL)
   <h2>Tools Used</h2>
   <ul>
     <li>Google BigQuery (SQL)</li>
-    <li>GitHub Pages (documentation)</li>
     <li>GitHub (version control)</li>
+    <li>GitHub Pages (documentation &amp; portfolio publishing)</li>
   </ul>
 
 </details>
@@ -101,15 +100,17 @@ title: E-commerce Revenue & Returns Analysis (SQL)
 ---
 
 <details>
-  <summary><strong>Analysis 1 – Top Products by Revenue</strong></summary>
+  <summary><strong>Analysis 1 — Top Products by Revenue</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which products generate the highest revenue?</li>
+    <li>Which products generate the highest completed-sales revenue?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">SELECT 
   p.name AS product_name,
   p.category AS product_category,
@@ -124,26 +125,31 @@ JOIN `bigquery-public-data.thelook_ecommerce.orders` o
 WHERE o.status = 'Complete'
 GROUP BY product_name, product_category
 ORDER BY total_revenue DESC
-LIMIT 10;
-</code></pre>
+LIMIT 10;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top_products_by_revenue.png" alt="Top 10 Products by Revenue" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top_products_by_revenue.png" alt="Top 10 Products by Revenue" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top 10 products by completed-sales revenue.
+      <span style="display:block; margin-top:4px;"><a href="images/top_products_by_revenue.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>The highest-revenue products are dominated by premium outerwear brands (North Face, Canada Goose).</li>
-    <li>Outerwear &amp; Coats appears multiple times in the top 10, indicating category concentration.</li>
-    <li>Top products generate both high revenue and strong profit margins, suggesting pricing power.</li>
-    <li>Unit sales are relatively balanced among top products, implying revenue is driven more by price than volume.</li>
+    <li>Top revenue products are concentrated in premium apparel/outerwear, indicating pricing power and strong demand.</li>
+    <li>Category concentration suggests revenue is sensitive to a small subset of high-ticket items.</li>
+    <li>Revenue appears driven more by price per unit than extreme differences in unit volume among the top products.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Prioritize inventory and marketing spend on top-performing outerwear products.</li>
-    <li>Bundle or cross-sell accessories with premium jackets to increase AOV.</li>
-    <li>Analyze return rates for these top products to ensure high revenue is not offset by returns.</li>
-    <li>Negotiate supplier costs for high-volume premium brands to improve margins further.</li>
+    <li><strong>Defend top SKUs:</strong> prioritize inventory availability and paid visibility for the highest-revenue products.</li>
+    <li><strong>Increase AOV:</strong> cross-sell accessories (hats, gloves, base layers) alongside premium outerwear.</li>
+    <li><strong>Validate net value:</strong> review return rates for top-revenue products to ensure revenue isn’t offset by returns.</li>
+    <li><strong>Improve margins:</strong> negotiate supplier cost improvements or shipping terms for consistently high-volume premium items.</li>
   </ul>
 
 </details>
@@ -151,15 +157,17 @@ LIMIT 10;
 ---
 
 <details>
-  <summary><strong>Analysis 2 – Top Products by Profit</strong></summary>
+  <summary><strong>Analysis 2 — Top Products by Profit</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which products generate the highest profit?</li>
+    <li>Which products generate the highest total profit from completed purchases?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH product_profit AS (
   SELECT
     p.id AS product_id,
@@ -175,32 +183,34 @@ LIMIT 10;
   WHERE o.status = 'Complete'
   GROUP BY p.id, p.name
 )
-
 SELECT *
 FROM product_profit
 ORDER BY profit DESC
-LIMIT 10;
-</code></pre>
+LIMIT 10;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top-products-by-profit.png" alt="Top 10 Products by Profit" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top-products-by-profit.png" alt="Top 10 Products by Profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top 10 products by total profit (completed purchases).
+      <span style="display:block; margin-top:4px;"><a href="images/top-products-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>Profit is highly concentrated among a small number of products, indicating that a limited subset of the catalog drives a disproportionate share of total profit.</li>
-    <li>Most top-profit products are premium outerwear and apparel items (jackets, hoodies, ski pants), suggesting higher margins compared to lower-priced categories.</li>
-    <li>Several products achieve high profit despite relatively low unit sales, indicating that per-unit margin is a more important driver of profitability than sales volume for these items.</li>
-    <li>Well-known premium brands (e.g., Nike/Jordan, The North Face, Canada Goose) appear frequently in the top results, highlighting the impact of brand positioning and pricing power.</li>
-    <li>Revenue and profit rankings are similar but not identical, reinforcing that revenue alone does not fully capture business performance.</li>
+    <li>Profit is concentrated in a small subset of products, indicating a “profit core” within the catalog.</li>
+    <li>Premium products can produce outsized profit even without extreme unit volume, reinforcing margin as a key driver.</li>
+    <li>Revenue rank and profit rank overlap but are not identical—product economics differ meaningfully by SKU.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Prioritize inventory availability for these high-profit products to avoid stockouts, especially during peak seasonal demand.</li>
-    <li>Increase marketing visibility for these items through homepage placement, targeted email campaigns, and paid advertising to maximize profit contribution.</li>
-    <li>Test modest price increases on top-profit products to evaluate demand sensitivity while potentially improving margins further.</li>
-    <li>Create product bundles or cross-sell complementary items (e.g., accessories or base layers) to increase average order value without relying on heavy discounting.</li>
-    <li>Closely monitor return rates for these products to ensure high profitability is not offset by reverse-logistics and refund costs.</li>
+    <li><strong>Protect the profit core:</strong> monitor stockouts and supply lead times for top-profit SKUs.</li>
+    <li><strong>Scale profit:</strong> test higher visibility placements (homepage modules, email features, remarketing) for these items.</li>
+    <li><strong>Optimize pricing:</strong> test modest price changes to measure elasticity while preserving margins.</li>
+    <li><strong>Reduce hidden drag:</strong> track return rates for top-profit products to confirm net profitability.</li>
   </ul>
 
 </details>
@@ -208,15 +218,17 @@ LIMIT 10;
 ---
 
 <details>
-  <summary><strong>Analysis 3 – Top Brands by Profit</strong></summary>
+  <summary><strong>Analysis 3 — Top Brands by Profit</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which brands generate the highest profit?</li>
+    <li>Which brands generate the highest total profit from completed purchases?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH brand_metrics AS (
   SELECT
     p.brand,
@@ -231,39 +243,41 @@ LIMIT 10;
   WHERE o.status = 'Complete'
   GROUP BY p.brand
 ),
-
 ranked_brands AS (
-  SELECT *,
-         RANK() OVER (ORDER BY profit DESC) AS profit_rank,
-         RANK() OVER (ORDER BY revenue DESC) AS revenue_rank
+  SELECT
+    *,
+    RANK() OVER (ORDER BY profit DESC) AS profit_rank,
+    RANK() OVER (ORDER BY revenue DESC) AS revenue_rank
   FROM brand_metrics
 )
-
 SELECT *
 FROM ranked_brands
 ORDER BY profit_rank
-LIMIT 10;
-</code></pre>
+LIMIT 10;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top-brands-by-profit.png" alt="Top 10 Brands by Profit" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top-brands-by-profit.png" alt="Top 10 Brands by Profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top 10 brands by total profit (completed purchases).
+      <span style="display:block; margin-top:4px;"><a href="images/top-brands-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>Profit is highly concentrated among a small subset of brands, indicating that overall profitability depends heavily on a limited number of key partners.</li>
-    <li>While high-profit brands also tend to generate strong revenue, the rankings differ, showing that margin structure varies significantly between brands.</li>
-    <li>Some brands achieve high profitability with relatively fewer units sold, suggesting premium pricing power or more efficient cost structures.</li>
-    <li>Brand-level performance is more stable and predictable than individual product performance, making it a stronger signal for long-term strategic planning.</li>
-    <li>The presence of premium brands among the top performers highlights the importance of brand positioning in driving sustainable profit.</li>
+    <li>Profit is dependent on a limited set of key brands, creating partner concentration risk.</li>
+    <li>Brand profit and revenue ranks differ, indicating meaningful differences in brand-level margin structure.</li>
+    <li>Brands are a stable unit of strategy: brand performance is often more predictable than single-SKU performance.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Strengthen relationships with top-performing brands through exclusive product lines, co-marketing campaigns, or preferred supplier agreements.</li>
-    <li>Allocate a larger share of marketing budget to high-profit brands to maximize return on advertising spend.</li>
-    <li>Expand the product assortment from the most profitable brands to capitalize on demonstrated customer demand.</li>
-    <li>Review pricing and cost structures for lower-performing brands to identify opportunities for margin improvement or renegotiation.</li>
-    <li>Reduce dependency risk by identifying and developing emerging mid-tier brands that show strong growth potential in profit or revenue.</li>
+    <li><strong>Deepen key partnerships:</strong> explore exclusive drops, co-marketing, or preferred terms with top-profit brands.</li>
+    <li><strong>Allocate marketing by margin:</strong> bias spend toward brands with strong profit contribution, not just revenue.</li>
+    <li><strong>De-risk concentration:</strong> develop emerging brands with strong growth in profit/revenue to diversify profit sources.</li>
+    <li><strong>Fix low performers:</strong> investigate low-margin brands (pricing, cost, assortment, discount behavior).</li>
   </ul>
 
 </details>
@@ -271,15 +285,17 @@ LIMIT 10;
 ---
 
 <details>
-  <summary><strong>Analysis 4 – Top Products by Profit Margin</strong></summary>
+  <summary><strong>Analysis 4 — Top Products by Profit Margin</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which products generate the highest profit margins? (Profit margin is defined as profit ÷ revenue.)</li>
+    <li>Which products are most margin-efficient (profit ÷ revenue), after filtering out low-volume noise?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH product_totals AS (
   SELECT
     p.id AS product_id,
@@ -296,7 +312,6 @@ LIMIT 10;
   WHERE o.status = 'Complete'
   GROUP BY 1, 2, 3
 ),
-
 metrics AS (
   SELECT
     product_id,
@@ -305,12 +320,9 @@ metrics AS (
     ROUND(revenue, 2) AS revenue,
     ROUND(profit, 2) AS profit,
     units_sold,
-
     ROUND(profit / NULLIF(revenue, 0), 4) AS profit_margin,
-
     RANK() OVER (ORDER BY profit DESC) AS profit_rank,
     RANK() OVER (ORDER BY profit / NULLIF(revenue, 0) DESC) AS margin_rank,
-
     CASE
       WHEN revenue = 0 THEN 'Undefined'
       WHEN profit / revenue >= 0.50 THEN 'Very High (&gt;= 50%)'
@@ -321,35 +333,37 @@ metrics AS (
     END AS margin_tier
   FROM product_totals
 )
-
 SELECT *
 FROM metrics
 WHERE revenue &gt; 0
   AND units_sold &gt;= 3
-  AND revenue &gt;= 50   -- takes extremely low volume products out of the picture
+  AND revenue &gt;= 50
 ORDER BY profit_margin DESC, profit DESC
-LIMIT 10;
-</code></pre>
+LIMIT 10;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top-products-by-profit-margin.png" alt="Top 10 Products by Profit Margin" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top-products-by-profit-margin.png" alt="Top 10 Products by Profit Margin" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top products by profit margin (filtered for business relevance).
+      <span style="display:block; margin-top:4px;"><a href="images/top-products-by-profit-margin.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>The top profit-margin products are high-margin apparel items, with margins clustered around 65–67%, indicating strong pricing power relative to cost.</li>
-    <li>All top-margin products fall within the “Blazers &amp; Jackets” category, suggesting that this category benefits from either premium pricing, efficient sourcing, or both.</li>
-    <li>These products generate moderate revenue but relatively small sales volumes (3–5 units each), which explains why they did not appear in the top products by total profit or revenue analyses.</li>
-    <li>The large gap between profit margin rankings and profit rankings highlights that high margin does not necessarily translate to high total profit without sufficient sales volume.</li>
-    <li>Applying minimum thresholds for units sold and revenue helps eliminate misleading results driven by extremely small denominators, producing a more business-relevant view of product efficiency.</li>
+    <li>High-margin products can differ significantly from top-profit products because margin does not guarantee scale.</li>
+    <li>Applying minimum thresholds (units sold, revenue) produces a more business-relevant view and avoids tiny-denominator artifacts.</li>
+    <li>Margin tiers provide a portfolio-friendly way to communicate product efficiency and pricing power.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Prioritize marketing tests for high-margin products. Increase visibility through targeted promotions, homepage placement, or paid ads to determine whether demand can be scaled while maintaining strong margins.</li>
-    <li>Evaluate supply chain scalability for high-margin categories. Investigate whether the cost structure enabling these margins can be maintained at higher volumes.</li>
-    <li>Use profit margin to guide discount strategy. High-margin products can tolerate deeper discounts while remaining profitable, making them ideal candidates for seasonal promotions or customer acquisition campaigns.</li>
-    <li>Reassess low-margin, high-volume products. Review for potential price optimization, cost reduction, or bundling strategies.</li>
-    <li>Incorporate margin metrics into assortment planning. Consider profit margin alongside revenue and volume to optimize long-term profitability.</li>
+    <li><strong>Scale what’s efficient:</strong> run marketing tests on high-margin SKUs to see if demand can be increased without eroding margins.</li>
+    <li><strong>Use margin for discount strategy:</strong> high-margin products can support promotions while staying profitable.</li>
+    <li><strong>Balance the catalog:</strong> manage assortment using both total profit (scale) and margin (efficiency) to optimize long-term profitability.</li>
+    <li><strong>Investigate low-margin volume items:</strong> identify pricing, shipping, or sourcing changes to improve contribution.</li>
   </ul>
 
 </details>
@@ -357,15 +371,17 @@ LIMIT 10;
 ---
 
 <details>
-  <summary><strong>Analysis 5 – Top Products by Return Rate</strong></summary>
+  <summary><strong>Analysis 5 — Top Products by Return Rate</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which products have the highest return rates?</li>
+    <li>Which products have the highest return rates, and what profit is at risk from those returns?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH product_status_counts AS (
   SELECT
     p.id AS product_id,
@@ -391,7 +407,6 @@ LIMIT 10;
   WHERE o.status IN ('Complete', 'Returned')
   GROUP BY 1, 2, 3
 ),
-
 final AS (
   SELECT
     product_id,
@@ -402,23 +417,18 @@ final AS (
     units_completed,
     units_returned,
 
-    -- Return rate as a percentage
     ROUND(units_returned / NULLIF(total_purchased_units, 0) * 100, 2) AS return_rate_pct,
 
     ROUND(revenue, 2) AS revenue,
     ROUND(profit, 2) AS profit,
 
-    -- Average profit per completed unit (simple proxy used to estimate profit at risk from returns)
     ROUND(profit / NULLIF(units_completed, 0), 2) AS avg_profit_per_completed_unit,
 
-    -- Estimated profit impacted by returns (simple proxy)
     ROUND(units_returned * (profit / NULLIF(units_completed, 0)), 2) AS est_profit_lost_to_returns,
 
-    -- Ranks (portfolio-friendly context)
     RANK() OVER (ORDER BY units_returned / NULLIF(total_purchased_units, 0) DESC) AS return_rate_rank,
     RANK() OVER (ORDER BY units_returned DESC) AS returns_volume_rank,
 
-    -- Risk tiers via CASE
     CASE
       WHEN total_purchased_units = 0 THEN 'Undefined'
       WHEN units_returned / NULLIF(total_purchased_units, 0) &gt;= 0.30 THEN 'Very High (&gt;= 30%)'
@@ -430,7 +440,6 @@ final AS (
 
   FROM product_status_counts
 )
-
 SELECT
   product_id,
   product_name,
@@ -447,35 +456,34 @@ SELECT
   return_rate_rank,
   returns_volume_rank
 FROM final
--- Filters to reduce noise (tune as needed; these align with your earlier low-volume filtering approach)
 WHERE units_purchased &gt;= 5
   AND revenue &gt;= 50
 ORDER BY return_rate_pct DESC, units_returned DESC, revenue DESC
-LIMIT 10;
-</code></pre>
+LIMIT 10;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top-products-by-return-rate.png" alt="Top 10 Products by Return Rate" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top-products-by-return-rate.png" alt="Top 10 Products by Return Rate" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top products by return rate (with estimated profit impact).
+      <span style="display:block; margin-top:4px;"><a href="images/top-products-by-return-rate.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>The top return-rate products exhibit extremely high return rates (80%–83%), meaning that only 1 out of every 5–6 purchases is ultimately kept by the customer.</li>
-    <li>These high-return products span multiple apparel categories (leggings, shorts, jeans, outerwear, suits, skirts, swimwear) as well as accessories, indicating that the issue is not isolated to a single product type but is broader across fit- and style-sensitive items.</li>
-    <li>Despite relatively low sales volumes, these products generate meaningful revenue and profit on completed purchases, but the estimated profit lost to returns is substantial relative to their realized profit, significantly reducing net contribution.</li>
-    <li>Several products fall into the “Very High (≥ 30%)” return-risk tier by a wide margin, suggesting systematic problems such as sizing inconsistencies, misleading product images/descriptions, or quality issues.</li>
-    <li>The presence of both high return rates and high estimated profit loss highlights returns as a critical operational risk, not just a customer-experience issue.</li>
-    <li>Using total purchased units (completed + returned) as the denominator produces realistic return rates and avoids misleading values above 100%, strengthening the reliability of the analysis.</li>
+    <li>Return rate should be evaluated with a realistic denominator (Completed + Returned units) to avoid misleading values.</li>
+    <li>High return rates represent operational and financial risk—profitability can look strong on completed sales but be eroded by returns.</li>
+    <li>Estimated profit-at-risk provides a portfolio-friendly proxy for understanding which return-heavy products matter financially.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Audit high-return products individually. Review product pages, size charts, material descriptions, and customer feedback for these SKUs to identify common reasons for dissatisfaction or mismatch with customer expectations.</li>
-    <li>Improve sizing and fit guidance for apparel. Introduce enhanced sizing charts, customer fit reviews, model measurements, and fit-prediction tools to reduce uncertainty before purchase.</li>
-    <li>Prioritize quality control for repeat offenders. Products with consistently high return rates should undergo supplier and manufacturing reviews to detect defects or inconsistencies.</li>
-    <li>Adjust merchandising and promotion strategy. Avoid aggressively promoting high-return products until root causes are addressed, as scaling sales would likely amplify profit losses.</li>
-    <li>Introduce targeted return-reduction experiments. Test changes such as improved product photography, clearer fabric descriptions, or virtual try-on tools on high-risk products to measure their impact on return rates.</li>
-    <li>Incorporate return-rate thresholds into product lifecycle decisions. Consider redesigning, repricing, renegotiating supplier terms, or discontinuing products that remain in the “Very High” risk tier after remediation efforts.</li>
-    <li>Track return rate alongside revenue and profit in performance reporting. Product success should be evaluated using a balanced scorecard of sales volume, profit margin, and return rate to avoid optimizing for revenue at the expense of profitability.</li>
+    <li><strong>Audit high-risk SKUs:</strong> review sizing guidance, imagery, materials, and customer feedback for top return-rate products.</li>
+    <li><strong>Improve fit confidence:</strong> add better size charts, model measurements, and fit reviews for apparel.</li>
+    <li><strong>Reduce scaling risk:</strong> avoid aggressively promoting high-return products until root causes are addressed.</li>
+    <li><strong>Operationalize returns:</strong> track return rate and profit-at-risk alongside revenue and profit in reporting.</li>
   </ul>
 
 </details>
@@ -483,18 +491,20 @@ LIMIT 10;
 ---
 
 <details>
-  <summary><strong>Analysis 6 – Long-Term Trends in Revenue, Profit, and Returns</strong></summary>
+  <summary><strong>Analysis 6 — Long-Term Trends in Revenue, Profit, and Returns</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>How have revenue, profit, and return rates evolved over the company’s lifetime, and what long-term trends or structural shifts are observable?</li>
+    <li>How have revenue, profit, and return rates evolved over time, and what structural trends are visible?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH base AS (
   SELECT
-    DATE_TRUNC(o.created_at, MONTH) AS month,
+    DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
 
     COUNT(*) AS total_units,
 
@@ -513,7 +523,6 @@ LIMIT 10;
   WHERE o.status IN ('Complete', 'Returned')
   GROUP BY 1
 ),
-
 metrics AS (
   SELECT
     month,
@@ -525,7 +534,6 @@ metrics AS (
     ROUND(revenue, 2) AS revenue,
     ROUND(profit, 2) AS profit,
 
-    -- Month-over-month growth
     ROUND(
       (revenue - LAG(revenue) OVER (ORDER BY month))
       / NULLIF(LAG(revenue) OVER (ORDER BY month), 0) * 100,
@@ -538,58 +546,50 @@ metrics AS (
       2
     ) AS profit_mom_growth_pct,
 
-    -- Rolling 3-month averages (trend smoothing)
-    ROUND(AVG(revenue) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2)
-      AS revenue_3mo_avg,
-
-    ROUND(AVG(profit) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2)
-      AS profit_3mo_avg
+    ROUND(AVG(revenue) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS revenue_3mo_avg,
+    ROUND(AVG(profit)  OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS profit_3mo_avg
 
   FROM base
 )
-
 SELECT *
 FROM metrics
-ORDER BY month;
-</code></pre>
+ORDER BY month;</code></pre>
 
-  <h3>Result Tables</h3>
+  <h3>Results</h3>
 
   <h4>Revenue and Profit</h4>
-  <ul>
-    <li>REVENUE is GREEN</li>
-    <li>PROFIT is BLUE</li>
-  </ul>
-  <img src="images/long-term-trends-revenue-and-profit.png" alt="Long Term Trends: Revenue and Profit" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/long-term-trends-revenue-and-profit.png" alt="Long Term Trends: Revenue and Profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Long-term trends in revenue and profit (completed purchases).
+      <span style="display:block; margin-top:4px;"><a href="images/long-term-trends-revenue-and-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h4>Returns</h4>
-  <ul>
-    <li>UNITS PURCHASED is BLUE</li>
-    <li>UNITS COMPLETED is GREEN</li>
-    <li>UNITS RETURNED is PURPLE</li>
-  </ul>
-  <img src="images/long-term-trends-returns.png" alt="Long Term Trends: Returns" style="max-width:100%; height:auto;">
+  <h4>Units Completed vs Returned</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/long-term-trends-returns.png" alt="Long Term Trends: Returns" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Order-item units over time (completed vs returned).
+      <span style="display:block; margin-top:4px;"><a href="images/long-term-trends-returns.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>Revenue (green line) and profit (blue line) both show strong long-term upward growth, indicating sustained expansion of the business over time.</li>
-    <li>Profit closely tracks revenue throughout the company’s lifetime, suggesting that operating costs and pricing strategy have remained relatively stable as sales volume increased.</li>
-    <li>The gap between revenue and profit remains consistent, implying that margins have not materially deteriorated during periods of rapid growth.</li>
-    <li>Units purchased (blue) and units completed (green) rise steadily over time, confirming that revenue growth is primarily driven by increased transaction volume rather than short-term pricing spikes.</li>
-    <li>Units returned (purple) also increase as sales scale, but remain substantially lower than completed purchases, indicating that returns have not outpaced business growth.</li>
-    <li>A noticeable acceleration in all metrics occurs in the later periods, signaling either increased customer acquisition, expanded product offerings, or improved marketing effectiveness.</li>
-    <li>The early years exhibit lower and more volatile performance, consistent with a typical early-stage growth phase before reaching operational maturity.</li>
+    <li>Revenue and profit rise over time, indicating sustained business growth.</li>
+    <li>Profit generally tracks revenue, suggesting relatively stable unit economics during expansion.</li>
+    <li>Returned units grow in absolute terms as volume grows; monitoring return rate is critical as scale increases.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Continue investing in scalable operations. The rapid growth in order volume suggests that fulfillment, logistics, and customer support infrastructure should be continuously expanded to avoid bottlenecks and service degradation.</li>
-    <li>Protect profit margins during expansion. As revenue grows, closely monitor unit economics to ensure rising costs (shipping, returns, marketing, suppliers) do not erode profitability.</li>
-    <li>Track return rate as a leading risk indicator. Although returns remain proportionally smaller than completed orders, their absolute growth means even small increases in return rate could significantly impact future profit.</li>
-    <li>Use historical growth patterns for forecasting. The consistent upward trajectory can be leveraged to build more accurate revenue, staffing, and inventory forecasts for upcoming quarters.</li>
-    <li>Identify drivers behind recent acceleration. Analyze marketing campaigns, product launches, or channel expansion that coincided with the latest growth phase to replicate successful strategies.</li>
-    <li>Introduce capacity planning for peak growth periods. The steep upward trend in recent months suggests upcoming demand surges should be anticipated with proactive inventory purchasing and supplier coordination.</li>
-    <li>Pair volume growth with customer experience optimization. As scale increases, improving product descriptions, sizing accuracy, and post-purchase support can prevent returns from becoming a larger drag on profitability.</li>
+    <li><strong>Scale operations with volume:</strong> align fulfillment and customer support capacity to rising order throughput.</li>
+    <li><strong>Protect margins:</strong> monitor shipping cost, product cost, and return-related costs as volume increases.</li>
+    <li><strong>Use return rate as a leading indicator:</strong> small return-rate increases at scale can materially reduce profit.</li>
+    <li><strong>Forecast using trend + seasonality:</strong> leverage historical patterns for staffing, procurement, and inventory planning.</li>
   </ul>
 
 </details>
@@ -597,7 +597,10 @@ ORDER BY month;
 ---
 
 <details>
-  <summary><strong>Analysis 7 – Seasonal Trends in Revenue, Profit, and Returns</strong></summary>
+  <summary><strong>Analysis 7 — Seasonal Trends in Revenue, Profit, and Returns</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
@@ -605,14 +608,12 @@ ORDER BY month;
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH base AS (
   SELECT
-    EXTRACT(MONTH FROM o.created_at) AS month_num,
+    EXTRACT(MONTH FROM DATE(o.created_at)) AS month_num,
     FORMAT_DATE('%B', DATE(o.created_at)) AS month_name,
 
     COUNT(*) AS total_units,
-
     SUM(CASE WHEN o.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
     SUM(CASE WHEN o.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
 
@@ -628,7 +629,6 @@ ORDER BY month;
   WHERE o.status IN ('Complete', 'Returned')
   GROUP BY 1, 2
 ),
-
 metrics AS (
   SELECT
     month_num,
@@ -639,57 +639,50 @@ metrics AS (
     units_returned,
 
     ROUND(units_returned / NULLIF(total_units, 0) * 100, 2) AS return_rate_pct,
-
     ROUND(revenue, 2) AS revenue,
-    ROUND(profit, 2) AS profit,
-
-    ROUND(profit / NULLIF(units_completed, 0), 2) AS avg_profit_per_completed_unit
+    ROUND(profit, 2) AS profit
 
   FROM base
 )
-
 SELECT *
 FROM metrics
-ORDER BY month_num;
-</code></pre>
+ORDER BY month_num;</code></pre>
 
-  <h3>Result Tables</h3>
+  <h3>Results</h3>
 
-  <h4>Revenue and Profit</h4>
-  <ul>
-    <li>REVENUE is GREEN</li>
-    <li>PROFIT is BLUE</li>
-  </ul>
-  <img src="images/seasonal-trends-revenue-and-profit.png" alt="Seasonal Trends: Revenue and Profit" style="max-width:100%; height:auto;">
+  <h4>Revenue and Profit (by Month)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/seasonal-trends-revenue-and-profit.png" alt="Seasonal Trends: Revenue and Profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Seasonal pattern in revenue and profit by month of year.
+      <span style="display:block; margin-top:4px;"><a href="images/seasonal-trends-revenue-and-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
-  <h4>Returns</h4>
-  <ul>
-    <li>UNITS PURCHASED is GREEN</li>
-    <li>UNITS COMPLETED is BLUE</li>
-    <li>UNITS RETURNED is PURPLE</li>
-  </ul>
-  <img src="images/seasonal-trends-returns.png" alt="Seasonal Trends: Returns" style="max-width:100%; height:auto;">
+  <h4>Units Completed vs Returned (by Month)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/seasonal-trends-returns.png" alt="Seasonal Trends: Returns" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Seasonal pattern in completed and returned units by month of year.
+      <span style="display:block; margin-top:4px;"><a href="images/seasonal-trends-returns.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>Revenue (green) and profit (blue) both exhibit clear seasonality, with performance weakest early in the year and steadily increasing toward year-end, peaking in late Q4.</li>
-    <li>The consistent gap between revenue and profit across months suggests that profit margins remain relatively stable throughout the year, even during high-volume periods.</li>
-    <li>Units purchased and units completed follow the same seasonal pattern as revenue, confirming that sales volume — not price fluctuations — is the primary driver of seasonal performance.</li>
-    <li>Units returned (purple) also increase toward the end of the year, indicating that higher sales volumes are accompanied by higher absolute return volumes during peak seasons.</li>
-    <li>Despite higher return volumes in late months, completed purchases remain substantially higher than returns, suggesting that peak-season growth remains net-positive for profitability.</li>
-    <li>The sharp drop in performance from January to February followed by gradual growth throughout the year highlights a post-holiday slowdown and a steady build-up toward holiday demand.</li>
-    <li>Seasonal alignment across revenue, profit, and operational volume indicates predictable consumer behavior patterns that can be leveraged for planning and forecasting.</li>
+    <li>Revenue and profit show clear seasonality, with performance building toward late-year peaks.</li>
+    <li>Return volumes rise during peak demand months; operational readiness must scale with both sales and reverse logistics.</li>
+    <li>Seasonality is consistent enough to support forecasting and staffing/inventory planning.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Increase inventory levels ahead of peak months. Stock critical and high-demand products earlier in Q3 and Q4 to avoid stockouts during the highest-revenue periods.</li>
-    <li>Scale fulfillment and customer support capacity seasonally. Prepare warehouses, shipping partners, and support teams for higher order and return volumes in late-year months to prevent operational bottlenecks.</li>
-    <li>Launch targeted promotions during low-demand months. Use discounts, bundles, or loyalty incentives in early-year months to smooth demand and reduce seasonal revenue volatility.</li>
-    <li>Proactively manage returns during peak season. Improve product descriptions, sizing guidance, and quality checks ahead of Q4 to limit the financial and operational impact of increased returns.</li>
-    <li>Align marketing spend with seasonal ROI. Concentrate advertising budgets in months with historically higher conversion and profitability to maximize return on marketing investment.</li>
-    <li>Incorporate seasonality into financial forecasting. Budgeting, staffing, and procurement plans should explicitly account for cyclical demand patterns to avoid over- or under-resourcing.</li>
-    <li>Monitor seasonal return rates as a profitability safeguard. Tracking return rates alongside revenue ensures that peak sales periods do not mask rising hidden costs from excessive returns.</li>
+    <li><strong>Plan inventory early:</strong> increase stock coverage ahead of peak months for high-demand categories.</li>
+    <li><strong>Scale reverse logistics:</strong> allocate seasonal capacity for returns processing, inspections, and refunds.</li>
+    <li><strong>Smooth demand:</strong> run early-year promotions to reduce revenue volatility and better utilize capacity.</li>
+    <li><strong>Reduce peak returns:</strong> improve product pages and sizing guidance prior to peak seasons.</li>
   </ul>
 
 </details>
@@ -697,15 +690,17 @@ ORDER BY month_num;
 ---
 
 <details>
-  <summary><strong>Analysis 8 – Customer Lifetime Value (CLV) and Retention Patterns</strong></summary>
+  <summary><strong>Analysis 8 — Customer Lifetime Value (CLV) and Retention Patterns</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <ul>
-    <li>Which customers generate the highest lifetime revenue and profit, and what purchasing patterns distinguish high-value customers from the rest?</li>
+    <li>Which customers generate the highest lifetime profit, and what purchasing patterns define high-value customers?</li>
   </ul>
 
   <h3>SQL Query</h3>
-
   <pre><code class="language-sql">WITH completed_orders AS (
   SELECT
     o.user_id AS customer_id,
@@ -720,65 +715,57 @@ ORDER BY month_num;
     ON oi.product_id = p.id
   WHERE o.status = 'Complete'
 ),
-
 customer_aggregates AS (
   SELECT
     customer_id,
-
     COUNT(DISTINCT order_id) AS total_orders,
     COUNT(*) AS total_items,
-
     ROUND(SUM(sale_price), 2) AS lifetime_revenue,
     ROUND(SUM(sale_price - cost), 2) AS lifetime_profit,
-
     MIN(created_at) AS first_purchase_date,
     MAX(created_at) AS last_purchase_date,
-
     DATE_DIFF(DATE(MAX(created_at)), DATE(MIN(created_at)), DAY) AS customer_tenure_days
   FROM completed_orders
   GROUP BY customer_id
 ),
-
 final AS (
   SELECT
     *,
-
     ROUND(lifetime_revenue / NULLIF(total_orders, 0), 2) AS avg_order_value,
-    ROUND(lifetime_profit / NULLIF(total_orders, 0), 2) AS avg_profit_per_order,
-
+    ROUND(lifetime_profit  / NULLIF(total_orders, 0), 2) AS avg_profit_per_order,
     RANK() OVER (ORDER BY lifetime_revenue DESC) AS revenue_rank,
     RANK() OVER (ORDER BY lifetime_profit DESC) AS profit_rank
   FROM customer_aggregates
 )
-
 SELECT *
 FROM final
 ORDER BY lifetime_profit DESC
-LIMIT 20;
-</code></pre>
+LIMIT 20;</code></pre>
 
   <h3>Result Table</h3>
-  <img src="images/top-customers-by-profit.png" alt="Top Customers By Profit" style="max-width:100%; height:auto;">
+  <figure style="margin: 0 0 18px 0;">
+    <img src="images/top-customers-by-profit.png" alt="Top Customers by Profit" loading="lazy"
+         style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:6px;">
+    <figcaption style="font-size:0.95em; color:#555; margin-top:6px;">
+      Top customers by lifetime profit (completed purchases).
+      <span style="display:block; margin-top:4px;"><a href="images/top-customers-by-profit.png">Open full-size</a></span>
+    </figcaption>
+  </figure>
 
   <h3>Insights</h3>
   <ul>
-    <li>High lifetime value is driven more by high order value than by high purchase frequency. Several top-profit customers placed only 1–3 orders but generated over $600 in lifetime profit due to very large basket sizes.</li>
-    <li>Customer tenure varies widely among top contributors. Some high-value customers have been active for 2–5 years, while others generated substantial profit in a single day, indicating both long-term loyal customers and high-impact one-time buyers.</li>
-    <li>Average profit per order is consistently high among top customers (often $300–$600+), suggesting that premium-priced products or bundled purchases are a major driver of customer profitability.</li>
-    <li>Revenue rank and profit rank are closely aligned, indicating that cost structures are relatively stable across customers and that higher spending customers also tend to be more profitable customers.</li>
-    <li>Repeat customers do contribute meaningfully to lifetime value, but frequency alone does not guarantee high profitability—order size is a stronger determinant of customer value in this dataset.</li>
-    <li>A small number of customers contribute disproportionately to total profit, reinforcing the presence of a classic “high-value minority” segment.</li>
+    <li>High customer value is often driven by large baskets (high AOV) rather than high purchase frequency.</li>
+    <li>Customer tenure varies: some high-value customers are long-term repeat buyers while others are high-impact one-time purchasers.</li>
+    <li>Revenue and profit ranks are closely aligned, suggesting cost structure is relatively consistent across customers.</li>
+    <li>Top customers represent a meaningful profit segment worth protecting through retention and VIP strategies.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Identify and segment high-value customers based on lifetime profit and average order value, and prioritize them for retention efforts such as loyalty programs, early access to new products, or personalized promotions.</li>
-    <li>Develop targeted marketing campaigns focused on increasing basket size (cross-selling and bundling), since order value appears to drive profitability more strongly than purchase frequency.</li>
-    <li>Create a “VIP customer” tier using thresholds for lifetime profit or average profit per order to encourage repeat purchases from already high-margin customers.</li>
-    <li>Analyze the product categories and brands most frequently purchased by top-value customers to guide inventory planning, merchandising, and premium product expansion.</li>
-    <li>Use customer tenure metrics to distinguish between long-term loyal customers and high-value one-time buyers, and apply different engagement strategies to each group (retention vs. reactivation vs. acquisition lookalikes).</li>
-    <li>Allocate customer acquisition budget toward channels that historically attract high-order-value customers rather than optimizing solely for customer volume.</li>
-    <li>Track CLV alongside revenue and profit in executive reporting to ensure marketing and product decisions focus on long-term profitability rather than short-term sales growth.</li>
+    <li><strong>Build a VIP segment:</strong> create tiers using lifetime profit/AOV and offer early access, perks, or personalized outreach.</li>
+    <li><strong>Increase basket size:</strong> deploy bundling and cross-sell flows since AOV is a major driver of profitability.</li>
+    <li><strong>Differentiate strategies:</strong> retain repeat VIPs (loyalty) vs. re-engage high-impact one-time buyers (win-back).</li>
+    <li><strong>Guide merchandising:</strong> analyze top-customer category/brand mix to inform assortment and premium expansion.</li>
   </ul>
 
 </details>
@@ -788,28 +775,28 @@ LIMIT 20;
 <details>
   <summary><strong>Conclusion</strong></summary>
 
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
   <p>
-    This project provided a comprehensive SQL-driven analysis of transactional e-commerce data using the
-    <code>thelook_ecommerce</code> BigQuery public dataset. Across eight structured analyses, I explored key business
-    performance metrics including revenue, profit, units sold, units returned, return rate, and profit margin.
-    I also examined long-term growth trends, seasonal patterns, and customer lifetime value (CLV) to generate
-    actionable business insights.
+    This project demonstrates an end-to-end SQL analytics workflow using the BigQuery public
+    <code>thelook_ecommerce</code> dataset. Across eight analyses, I engineered business KPIs and used joins, CTEs,
+    window functions, and time-series logic to evaluate product performance, profitability, returns risk,
+    and customer value.
   </p>
 
-  <p><strong>The analysis demonstrated that:</strong></p>
+  <h3>Key Takeaways</h3>
   <ul>
-    <li>Revenue and profit have grown steadily over time, driven largely by increased sales volume.</li>
-    <li>Profitability is concentrated among specific high-margin products and brands, though the highest revenue items do not always align with the most efficient ones.</li>
-    <li>Return behavior represents meaningful operational risk that varies across products, requiring strategy beyond simple revenue optimization.</li>
-    <li>Seasonal patterns indicate predictable cycles in customer demand and returns, which can inform inventory planning and marketing cadence.</li>
-    <li>Customer lifetime value is distributed across a broad base of moderate-value customers rather than a small group of “whales,” highlighting the importance of scalable acquisition and retention strategies.</li>
+    <li><strong>Profit concentration:</strong> a relatively small subset of products and brands drive a disproportionate share of total profit.</li>
+    <li><strong>Margin vs scale:</strong> high-margin products are not always the highest-profit products, reinforcing the need to balance efficiency with volume.</li>
+    <li><strong>Returns risk:</strong> return behavior can materially reduce net profit; return rate should be monitored alongside revenue and profit.</li>
+    <li><strong>Predictable trends:</strong> long-term growth and seasonality support forecasting, inventory planning, and capacity management.</li>
+    <li><strong>Customer value:</strong> the most profitable customers are often defined by high order value; retention and VIP strategies can protect this segment.</li>
   </ul>
 
   <p>
-    Together, these results show how SQL can be used to extract business-relevant insight from raw transactional data,
-    informing decisions in pricing, inventory, product mix, marketing, and customer experience. The analyses illustrate
-    a complete analytical workflow — from data modeling and metric engineering to business interpretation and strategic
-    recommendation — and demonstrate how strong data foundations support measurable commercial impact.
+    Together, these analyses show how SQL can transform raw transactional data into decision-ready insights that support
+    pricing, merchandising, inventory planning, marketing strategy, and operational improvements.
   </p>
 
 </details>
