@@ -1,32 +1,28 @@
 # Jonathan Nadeau
 
 <img src="assets/la-banner.png"
-     style="width:100%;
-            max-height:300px;
-            object-fit:cover;
-            object-position:center 15%;
-            border-radius:12px;
-            margin-bottom:18px;">
+     alt="Los Angeles skyline banner"
+     style="width:100%; max-height:300px; object-fit:cover; object-position:center 15%; border-radius:12px; margin: 12px 0 18px 0;">
 
 ### Data Analyst
-
-I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business insights.
+I use **SQL, Excel, Tableau, Power BI, Python, and R** to turn data into clear business insights—especially around **profitability, customer behavior, and operational performance**.
 
 ---
 
-<div style="text-align:center; margin: 20px 0 30px 0;">
+<div style="text-align:center; margin: 18px 0 26px 0;">
 
   <a href="/projects"
      style="
        display:inline-block;
-       padding:12px 22px;
-       margin:0 10px;
+       padding:12px 24px;
+       margin:0 10px 10px 10px;
        font-size:16px;
        font-weight:600;
        color:white;
        background:#2563eb;
-       border-radius:8px;
+       border-radius:10px;
        text-decoration:none;
+       border:1px solid #2563eb;
      ">
     View Projects
   </a>
@@ -34,13 +30,13 @@ I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business in
   <a href="/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf"
      style="
        display:inline-block;
-       padding:12px 22px;
-       margin:0 10px;
+       padding:12px 24px;
+       margin:0 10px 10px 10px;
        font-size:16px;
        font-weight:600;
        color:#2563eb;
        background:#eef2ff;
-       border-radius:8px;
+       border-radius:10px;
        text-decoration:none;
        border:1px solid #2563eb;
      ">
@@ -51,32 +47,41 @@ I use SQL, Excel, Tableau, Power BI, Python, and R to turn data into business in
 
 ---
 
+## Featured Projects
+- **Excel:** Superstore Sales Dashboard (Power Query → pivots → interactive dashboard)  
+  <a href="/projects/excel-superstore-analysis/">View project →</a>
+- **SQL:** E-commerce Revenue & Returns Analysis (BigQuery + thelook_ecommerce)  
+  <a href="/projects/sql-ecommerce-analysis/">View project →</a>
+
+---
+
 ## About Me
+I’m a data analyst with a strong mathematics background and a practical, business-first approach to analytics.
 
-I’m a data analyst with a strong academic background in mathematics and a passion for using data to solve practical business problems.
+I’m comfortable working end-to-end: cleaning data, building reliable logic in SQL/Excel, validating results, and communicating insights clearly. Before moving fully into analytics, I spent several years teaching and tutoring math—experience that sharpened how I explain complex ideas simply and focus on what matters most to stakeholders.
 
-I enjoy working through complex questions methodically — breaking messy datasets into structured pieces, building clean SQL logic, and translating results into clear insights that non-technical audiences can understand and act on. My approach to analytics is shaped by years of explaining difficult concepts in simple terms, whether in classrooms, tutoring sessions, or one-on-one settings.
+I’m especially interested in analytics work in **business and e-commerce** environments where decisions about **margin, product mix, customer segments, and returns** can create measurable impact.
 
-Before moving fully into data analytics, I spent several years teaching and tutoring mathematics, which strengthened both my analytical thinking and my communication skills. That experience taught me how to tell clear stories with numbers, anticipate questions, and focus on what actually matters to the person on the receiving end of the information.
-
-Today, I focus on projects involving profitability analysis, customer behavior, and operational performance using tools like SQL, Python, Excel, Tableau, and Power BI. I’m especially interested in applying analytics in business and e-commerce environments, where data-driven decisions can have immediate, measurable impact.
+---
 
 ## Tools & Technologies
-**Languages:** SQL, Python, R  
-**Databases:** BigQuery, MySQL  
-**Visualization:** Tableau, Power BI  
-**Spreadsheets:** Excel, Google Sheets  
-**Other:** Git, GitHub, Jupyter Notebook
+- **Languages:** SQL, Python, R  
+- **Databases:** BigQuery, MySQL  
+- **Visualization:** Tableau, Power BI  
+- **Spreadsheets:** Excel, Google Sheets  
+- **Other:** Git, GitHub, Jupyter Notebook  
+
+---
 
 ## Education & Certifications
+- **B.A. in Mathematics** — UCSB  
+- **Minor: Secondary Mathematics & Science Education** — UCSB  
+- **Single Subject Teaching Credential Coursework (Mathematics)** — CSULB (4.0 GPA)  
+- **Google Data Analytics Professional Certificate** — 100% overall grade  
 
-- B.A. in Mathematics – UCSB  
-- Minor in Secondary Mathematics & Science Education – UCSB
-- Single Subject Teaching Credential Coursework (Mathematics) – CSULB, 4.0 GPA   
-- Google Data Analytics Professional Certificate – Overall Grade Percentage = 100%
+---
 
 ## Contact
-
-- **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)
-- **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)
+- **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)  
+- **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)  
 - **GitHub:** [github.com/nadeaujonny](https://github.com/nadeaujonny)
