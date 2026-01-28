@@ -563,3 +563,51 @@ main .wrapper {
     padding: 22px 16px;
   }
 }
+
+/* =========================================================
+   Space background readability:
+   - White text for content OUTSIDE dropdowns/cards
+   - Keep dropdowns (details) using normal theme colors
+   ========================================================= */
+
+/* 1) Make top-level content white (outside dropdowns/cards).
+   Covers both layouts: pages that use <main> and ones that use .page-content */
+main > :not(details):not(.card),
+.page-content > :not(details):not(.card) {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Links in that top-level content */
+main > :not(details):not(.card) a,
+.page-content > :not(details):not(.card) a {
+  color: #cfe3ff;
+}
+main > :not(details):not(.card) a:hover,
+.page-content > :not(details):not(.card) a:hover {
+  color: #ffffff;
+}
+
+/* 2) Dropdowns: keep your normal theme text colors (dark in light mode, light in dark mode) */
+details,
+details * {
+  color: var(--text);
+}
+details small,
+details .muted {
+  color: var(--muted);
+}
+details a {
+  color: var(--link);
+}
+details a:hover {
+  color: var(--linkHover);
+}
+
+/* 3) Cards/buttons/nav strips should keep normal theme text colors */
+.card,
+.btn,
+.nav-tabs,
+.site-nav,
+.topbar-nav {
+  color: var(--text);
+}
