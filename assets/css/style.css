@@ -611,3 +611,18 @@ details a:hover {
 .topbar-nav {
   color: var(--text);
 }
+
+/* Force site title (top-left "Jonathan Nadeau") to stay visible on space background */
+.site-title,
+.site-title:visited,
+.site-title:hover,
+.site-title:active {
+  color: rgba(255,255,255,0.95) !important;
+  text-decoration: none !important;
+}
+
+/* If the theme uses a different selector for the title, cover common ones too */
+.site-header a,
+.site-header a:visited {
+  color: rgba(255,255,255,0.95);
+}
