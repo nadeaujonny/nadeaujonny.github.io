@@ -415,3 +415,58 @@ main .wrapper a{
 main .wrapper a:hover{
   color: #0f2f8a !important;
 }
+
+/* =========================================================
+   HOMEPAGE HERO SECTION — Modern Tech Aesthetic
+   ========================================================= */
+
+/* Center the name on homepage */
+.page-content .wrapper h1:first-child,
+main .wrapper h1:first-child {
+  text-align: center;
+  font-size: clamp(2.8rem, 5vw, 4.2rem) !important;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0.3em 0 0.2em;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Center the subtitle (Data Analyst) */
+.page-content .wrapper h1:first-child + h3,
+main .wrapper h1:first-child + h3 {
+  text-align: center;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: rgba(15, 15, 18, 0.75) !important;
+  margin: 0 0 0.8em;
+  letter-spacing: 0.02em;
+}
+
+/* Center the description paragraph below subtitle */
+.page-content .wrapper h1:first-child + h3 + p,
+main .wrapper h1:first-child + h3 + p {
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(15, 15, 18, 0.80) !important;
+}
+
+/* Modern tech font stack */
+body {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', system-ui, sans-serif;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 
+               'Cascadia Code', Consolas, monospace;
+}
