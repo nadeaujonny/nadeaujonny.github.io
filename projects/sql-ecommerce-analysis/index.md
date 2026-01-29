@@ -9,7 +9,7 @@ title: E-commerce Revenue & Returns Analysis (SQL)
 
 ---
 
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -95,9 +95,7 @@ title: E-commerce Revenue & Returns Analysis (SQL)
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 1 — Top Products by Revenue</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -146,15 +144,13 @@ LIMIT 10;</code></pre>
   <ul>
     <li><strong>Defend top SKUs:</strong> prioritize inventory availability and paid visibility for the highest-revenue products.</li>
     <li><strong>Increase AOV:</strong> cross-sell accessories (hats, gloves, base layers) alongside premium outerwear.</li>
-    <li><strong>Validate net value:</strong> review return rates for top-revenue products to ensure revenue isn’t offset by returns.</li>
+    <li><strong>Validate net value:</strong> review return rates for top-revenue products to ensure revenue isn't offset by returns.</li>
     <li><strong>Improve margins:</strong> negotiate supplier cost improvements or shipping terms for consistently high-volume premium items.</li>
   </ul>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 2 — Top Products by Profit</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -198,7 +194,7 @@ LIMIT 10;</code></pre>
 
   <h3>Insights</h3>
   <ul>
-    <li>Profit is concentrated in a small subset of products, indicating a “profit core” within the catalog.</li>
+    <li>Profit is concentrated in a small subset of products, indicating a "profit core" within the catalog.</li>
     <li>Premium products can produce outsized profit even without extreme unit volume, reinforcing margin as a key driver.</li>
     <li>Revenue rank and profit rank overlap but are not identical—product economics differ meaningfully by SKU.</li>
   </ul>
@@ -213,9 +209,7 @@ LIMIT 10;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 3 — Top Brands by Profit</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -280,9 +274,7 @@ LIMIT 10;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 4 — Top Products by Profit Margin</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -358,7 +350,7 @@ LIMIT 10;</code></pre>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Scale what’s efficient:</strong> run marketing tests on high-margin SKUs to see if demand can be increased without eroding margins.</li>
+    <li><strong>Scale what's efficient:</strong> run marketing tests on high-margin SKUs to see if demand can be increased without eroding margins.</li>
     <li><strong>Use margin for discount strategy:</strong> high-margin products can support promotions while staying profitable.</li>
     <li><strong>Balance the catalog:</strong> manage assortment using both total profit (scale) and margin (efficiency) to optimize long-term profitability.</li>
     <li><strong>Investigate low-margin volume items:</strong> identify pricing, shipping, or sourcing changes to improve contribution.</li>
@@ -366,9 +358,7 @@ LIMIT 10;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 5 — Top Products by Return Rate</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -486,9 +476,7 @@ LIMIT 10;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 6 — Long-Term Trends in Revenue, Profit, and Returns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -592,9 +580,7 @@ ORDER BY month;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 7 — Seasonal Trends in Revenue, Profit, and Returns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -685,9 +671,7 @@ ORDER BY month_num;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 8 — Customer Lifetime Value (CLV) and Retention Patterns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -768,9 +752,7 @@ LIMIT 20;</code></pre>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
