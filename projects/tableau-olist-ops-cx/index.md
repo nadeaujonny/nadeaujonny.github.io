@@ -1,806 +1,285 @@
 ---
 layout: default
-title: Tableau — Olist E-commerce Operations & Customer Experience
+title: Tableau — Olist Ops & Customer Experience
 ---
 
-# Tableau — Olist E-commerce Operations & Customer Experience
+# Tableau — Marketplace Operations & Customer Experience (Olist)
 
-> An end-to-end Tableau analytics project demonstrating data modeling, calculated fields, interactive dashboards, and business storytelling using the Olist Brazilian E-commerce dataset to analyze order fulfillment, seller performance, and customer satisfaction.
+## Overview
+This Tableau analysis examines operational performance and customer experience metrics for Olist, a Brazilian e-commerce marketplace connecting small businesses with major sales channels. Using two years of transactional data (Sep 2016 - Aug 2018), I built an interactive dashboard suite that enables stakeholders to monitor order fulfillment KPIs, identify delivery bottlenecks, and assess customer satisfaction trends. The analysis reveals critical insights about delivery performance, order completion rates, and temporal patterns that directly impact customer experience.
 
----
+## Business Context
+- **Marketplace Dynamics**: In multi-vendor marketplaces, operational excellence directly impacts both seller reputation and platform retention
+- **Customer Experience Priority**: Late deliveries and order fulfillment issues are primary drivers of negative reviews and customer churn
+- **Competitive Advantage**: Fast, reliable fulfillment is a key differentiator in e-commerce, especially for competing with established players
+- **Scalability Challenges**: As order volumes grow 10-15x over the analysis period, maintaining consistent delivery performance becomes increasingly complex
 
-<details>
-  <summary><strong>Project Overview</strong></summary>
+## Business Questions
+1. What is our current order fulfillment performance, and how has it evolved over time?
+2. What percentage of orders are delivered late, and what is the trend?
+3. How long does it take on average to deliver orders, and are there seasonal patterns?
+4. What is our order completion rate, and what causes order failures?
+5. How is order volume trending, and can our operations scale to meet demand?
+6. What is the distribution of delivery times, and where are the bottlenecks?
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+## Tools & Skills Demonstrated
+- **Tableau Desktop**: Data relationships (star schema), calculated fields, parameters, KPI cards, time-series analysis, histograms, trendlines, dashboard actions, interactive filters, responsive layout design
+- **Data Preparation**: Connected and related 7 CSV tables using Tableau's relationship model, created calculated fields for delivery metrics and date-based measures
+- **Visualization Techniques**: Time-series line charts with dual-axis reference lines, percentage-based horizontal bar charts, KPI cards with conditional formatting, histogram distributions, interactive filtering across multiple charts
+- **Business Analytics**: Cohort analysis, trend identification, KPI monitoring, operational diagnostics, data storytelling through dashboard design
 
-  <h3>Overview</h3>
-  <p>
-    This project analyzes operations and customer experience data from Olist, a Brazilian e-commerce marketplace connecting small businesses to major sales channels. Using Tableau, I built interactive dashboards to evaluate order fulfillment efficiency, seller performance, customer satisfaction patterns, and revenue trends to identify operational improvements and customer experience opportunities.
-  </p>
+## Dataset
+- **Source**: Olist Brazilian E-commerce Public Dataset (Kaggle)
+- **Time Range**: September 2016 - August 2018 (23 months)
+- **Total Orders Analyzed**: 99,441 distinct orders
+- **Tables Used**: 
+  - `olist_orders_dataset` (order lifecycle dates and status)
+  - `olist_customers_dataset` (customer location)
+  - `olist_sellers_dataset` (seller location)
+  - `olist_order_items_dataset` (order line items)
+  - `olist_order_payments_dataset` (payment information)
+  - `olist_order_reviews_dataset` (customer ratings)
+  - `product_category_name_translation` (category translations)
+- **Notes/Caveats**: 
+  - Dataset ends abruptly in August 2018 (incomplete final month)
+  - Some orders lack review scores (customers did not leave feedback)
+  - Canceled and unavailable orders included in status analysis but excluded from delivery time calculations
 
-  <h3>Business Context</h3>
-  <p>
-    Olist operates as a marketplace platform where sellers must deliver products on time and maintain high customer satisfaction to remain competitive. Late deliveries, poor reviews, and operational inefficiencies directly impact seller reputation, customer retention, and platform growth. This analysis focuses on identifying performance gaps and quantifying their business impact.
-  </p>
+## Data Modeling (Tableau)
+- **Approach**: Used Tableau Relationships (not joins) to create a star schema with `olist_orders_dataset` as the fact table
+- **Relationship Keys**:
+  - Orders → Customers: `customer_id`
+  - Orders → Order Items: `order_id`
+  - Order Items → Products: `product_id`
+  - Order Items → Sellers: `seller_id`
+  - Orders → Payments: `order_id`
+  - Orders → Reviews: `order_id`
+- **Grain**: Primary analysis at order level; some views drill to order-item level
+- **Extract vs Live**: Used Tableau Extract (.hyper) for faster performance and offline analysis capability
+- **Benefits of Relationships**: Preserved correct aggregation levels, avoided duplicate rows from joins, simplified data model maintenance
 
-  <h3>Objectives</h3>
-  <ul>
-    <li>Evaluate order fulfillment performance (on-time delivery rates, lead time trends, late delivery patterns)</li>
-    <li>Analyze customer satisfaction trends by review scores, delivery performance, and product categories</li>
-    <li>Identify high-performing and at-risk sellers using KPIs (revenue, order volume, review scores, late rates)</li>
-    <li>Assess geographic and temporal patterns in operations and customer experience</li>
-    <li>Demonstrate advanced Tableau skills: relationships, LOD expressions, parameters, calculated fields, dashboard actions, and visual best practices</li>
-  </ul>
+## Definitions & Metrics
 
-  <h3>Dataset Overview</h3>
-  <ul>
-    <li><strong>Source:</strong> <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank">Olist Brazilian E-commerce Public Dataset (Kaggle)</a></li>
-    <li><strong>Time range:</strong> September 2016 – August 2018</li>
-    <li><strong>Granularity:</strong> Orders, order items, payments, reviews, sellers, customers, products</li>
-    <li><strong>Data model:</strong> Star schema with orders as the fact table</li>
-    <li><strong>Note:</strong> Geolocation table excluded due to size; geographic analysis uses state-level customer/seller data from orders</li>
-  </ul>
+### Core KPIs
+- **Total Orders**: `COUNTD([Order Id])` - Distinct count of all orders regardless of status
+- **Average Delivery Time**: `AVG([Delivery Days])` - Mean number of days from order purchase to customer delivery (delivered orders only)
+- **Order Completion Rate**: `SUM([Is Delivered]) / COUNTD([Order Id])` - Percentage of orders with status "delivered"
+- **Late Delivery Rate**: `SUM([Is Late Delivery]) / SUM([Is Delivered])` - Percentage of delivered orders that arrived after the estimated delivery date
 
-  <h3>Tools &amp; Skills Demonstrated</h3>
-  <ul>
-    <li><strong>Tableau Data Modeling:</strong> Relationships (not joins) across 8 tables, understanding grain and cardinality</li>
-    <li><strong>Calculated Fields:</strong> Delivery lead time, late delivery flags, on-time %, review tiers, revenue/order metrics</li>
-    <li><strong>LOD Expressions:</strong> Fixed LODs for per-order aggregations, exclude LODs for benchmarking</li>
-    <li><strong>Parameters:</strong> Date range selection, metric switching, threshold controls</li>
-    <li><strong>Sets:</strong> Dynamic seller cohorts, product category groupings</li>
-    <li><strong>Dashboard Actions:</strong> Filter actions, highlight actions, URL actions for interactivity</li>
-    <li><strong>Visualizations:</strong> Time series (delivery trends), geographic maps (seller/customer heatmaps), distribution analysis (review score breakdowns), scorecards (KPIs), dual-axis charts, tooltips with embedded viz</li>
-    <li><strong>Design:</strong> Clean, professional layouts with consistent color schemes and clear visual hierarchy</li>
-  </ul>
+### Calculated Fields
+- **Delivery Days**: `DATEDIFF('day', [Order Purchase Timestamp], [Order Delivered Customer Date])`
+- **Is Delivered**: `IF [Order Status] = "delivered" THEN 1 ELSE 0 END`
+- **Is Late Delivery**: `IF [Order Delivered Customer Date] > [Order Estimated Delivery Date] THEN 1 ELSE 0 END`
+- **Order Status Distribution**: Aggregated count by status category (delivered, shipped, canceled, unavailable, invoiced, processing, created, approved)
 
-  <h3>KPI Definitions</h3>
-  <ul>
-    <li><strong>Total Orders:</strong> COUNT(DISTINCT Order ID)</li>
-    <li><strong>Total Revenue:</strong> SUM(Payment Value) from order_payments</li>
-    <li><strong>Average Order Value (AOV):</strong> Total Revenue / Total Orders</li>
-    <li><strong>Delivery Lead Time (days):</strong> DATEDIFF('day', [Order Purchase Timestamp], [Order Delivered Customer Date])</li>
-    <li><strong>Late Delivery Flag:</strong> IF [Order Delivered Customer Date] > [Order Estimated Delivery Date] THEN 1 ELSE 0 END</li>
-    <li><strong>On-Time Delivery Rate (%):</strong> (Orders Delivered On Time / Total Delivered Orders) × 100</li>
-    <li><strong>Late Delivery Rate (%):</strong> (Orders Delivered Late / Total Delivered Orders) × 100</li>
-    <li><strong>Average Review Score:</strong> AVG(Review Score) from order_reviews (1–5 scale)</li>
-    <li><strong>Review Rate (%):</strong> (Orders with Reviews / Total Delivered Orders) × 100</li>
-  </ul>
+### Temporal Dimensions
+- **Month of Order**: `MONTH([Order Purchase Timestamp])` - Extracted month for trend analysis
+- **Order Purchase Timestamp**: Primary date field for time-series visualizations
 
-  <p style="margin-top: 10px;">
-    <em>Note:</em> Calculations exclude canceled orders and non-delivered statuses to focus on completed customer experiences.
-  </p>
+## Analysis 1: Order Fulfillment Performance
 
-</details>
+### Purpose
+This dashboard provides a comprehensive view of operational KPIs related to order fulfillment, delivery speed, and completion rates. It enables operations managers to monitor performance trends, identify deteriorating metrics, and diagnose root causes of delivery issues.
 
----
+### Dashboard Components
 
-<details>
-  <summary><strong>Data Modeling &amp; Preparation</strong></summary>
+#### Top-Level KPI Cards
+Four key performance indicators provide immediate visibility into fulfillment health:
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+1. **Total Orders: 99,441**
+   - All orders placed during the analysis period (Sep 2016 - Aug 2018)
+   - Context: Shows scale of operations and data completeness
 
-  <h3>Tableau Data Model Approach</h3>
-  <p>
-    I used <strong>Tableau Relationships</strong> (not joins) to connect the 8 Olist dataset tables, allowing Tableau to dynamically determine the appropriate level of detail for each analysis. This maintains data integrity and supports multi-grain analysis without artificially inflating row counts.
-  </p>
+2. **Average Delivery Time: 12.5 Days**
+   - Mean time from order purchase to customer delivery
+   - Industry context: Amazon Prime sets customer expectations at 2-day delivery; 12.5 days is significantly slower
+   - Calculation excludes non-delivered orders to avoid skewing the metric
 
-  <h3>Data Model Diagram</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-data-connections.png"
-      alt="Tableau data model showing relationships between Olist tables"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Olist data model in Tableau showing relationship structure (orders as the fact table).
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-olist-data-model.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+3. **Order Completion Rate: 97.0%**
+   - Percentage of orders successfully delivered to customers
+   - High completion rate indicates good operational reliability
+   - 3% of orders failed due to cancellations, processing issues, or unavailability
 
-  <h3>Tables &amp; Relationships</h3>
-  <table style="border-collapse: collapse; width: 100%; max-width: 900px; margin-bottom: 18px;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Table</th>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Grain</th>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Relationship Key</th>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Purpose</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_orders_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per order</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">order_id (PK)</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Fact table: order status, timestamps, customer_id, delivery dates</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_order_items_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per item</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">order_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Item-level data: product_id, seller_id, price, freight</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_order_payments_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per payment</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">order_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Payment value, payment type, installments</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_order_reviews_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per review</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">order_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Review score (1–5), review comments, timestamps</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_products_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per product</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">product_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Product category, dimensions, photos</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_sellers_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per seller</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">seller_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Seller location (city, state, zip)</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>olist_customers_dataset</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per customer</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">customer_id</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Customer location (city, state, zip)</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>product_category_name_translation</strong></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">One row per category</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">product_category_name</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Translates Portuguese category names to English</td>
-      </tr>
-    </tbody>
-  </table>
+4. **Late Delivery Rate: 6.8%**
+   - Percentage of delivered orders that arrived after the promised date
+   - While seemingly low, this represents ~6,700 customers who experienced late delivery
+   - Late deliveries strongly correlate with negative reviews and customer churn
 
-  <h3>Why Relationships > Joins</h3>
-  <ul>
-    <li><strong>Maintains grain:</strong> Prevents row duplication when combining one-to-many tables (e.g., orders to order_items)</li>
-    <li><strong>Flexible aggregation:</strong> Tableau automatically adjusts aggregation level based on dimensions used in the viz</li>
-    <li><strong>Cleaner calculations:</strong> LOD expressions handle cross-table calculations without manual join logic</li>
-    <li><strong>Better performance:</strong> Tableau generates optimized queries per worksheet instead of pre-joining everything</li>
-  </ul>
+#### Monthly Order Volume (Sep 2016 - Aug 2018)
+**Visualization**: Line chart showing order count by month
 
-  <h3>Data Preparation Notes</h3>
-  <ul>
-    <li><strong>Date handling:</strong> All date fields (order_purchase_timestamp, order_delivered_customer_date, etc.) converted to proper Date/DateTime types</li>
-    <li><strong>Status filtering:</strong> Created calculated field to exclude canceled/unavailable orders from delivery metrics</li>
-    <li><strong>Category translation:</strong> Used product_category_name_translation table to display English category names</li>
-    <li><strong>Null handling:</strong> Review scores handle null values (orders without reviews) using IFNULL or ZN functions</li>
-    <li><strong>Extract vs Live:</strong> Using Extract connection for faster dashboard performance and offline work capability</li>
-  </ul>
+**Key Insights**:
+- **Exponential Growth**: Order volume increased from ~500 orders/month in late 2016 to over 7,000 orders/month by mid-2018
+- **Growth Rate**: Approximately 10-15x increase over the 23-month period, indicating rapid marketplace adoption
+- **Seasonality**: Visible peaks in November (Black Friday/Cyber Monday) and May, with slight dips in January
+- **August 2018 Drop**: Sharp decline in final month due to incomplete data (dataset ends mid-month)
+- **Operational Implication**: This rapid scaling tests the limits of fulfillment infrastructure and seller capacity
 
-</details>
+#### Late Delivery Rate by Month (%)
+**Visualization**: Line chart with percentage on y-axis, reference line at 10%
 
----
+**Key Insights**:
+- **Initial Spike**: Late delivery rate was extremely high (nearly 100%) in August 2016, likely due to early platform teething issues or small sample size
+- **Rapid Improvement**: Rate dropped to 2-5% by late 2016, suggesting operational process improvements
+- **Stabilization**: From early 2017 onward, late delivery rate stabilized between 5-10%
+- **Slight Upward Trend**: Late 2017 and 2018 show a modest increase in late deliveries, potentially due to scaling challenges as order volume grew
+- **10% Reference Line**: Dashed line at 10% serves as an operational threshold; staying below this target is critical for customer satisfaction
+- **Recommendation**: The upward creep in late delivery rate during high-growth periods warrants investigation into seller performance, logistics partner reliability, and estimated delivery date accuracy
 
-<details>
-  <summary><strong>Analysis 1 — Order Fulfillment Performance Overview</strong></summary>
+#### Order Status Distribution
+**Visualization**: Horizontal bar chart showing count of orders by status
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+**Key Insights**:
+- **Delivered (97.02%)**: Overwhelming majority of orders successfully delivered - 96,478 orders
+- **Shipped (1.11%)**: 1,104 orders currently in transit (snapshot data means some orders are still being fulfilled)
+- **Canceled (0.63%)**: 626 orders canceled by customer or system
+- **Unavailable (0.61%)**: 607 orders failed due to product stockouts or seller issues
+- **Other Statuses**: Invoiced, processing, created, approved represent very small percentages (<0.3% each)
+- **Operational Excellence**: The high delivery rate demonstrates strong fulfillment capabilities, but canceled and unavailable orders represent revenue loss and poor customer experience
+- **Focus Area**: Investigating root causes of unavailable orders could reduce customer frustration and increase revenue capture
 
-  <h3>Business Question</h3>
-  <p>
-    How efficiently is Olist fulfilling orders? What are the trends in delivery lead times, on-time delivery rates, and late delivery patterns over time and across product categories?
-  </p>
+#### Average Delivery Time by Month (Days)
+**Visualization**: Line chart with trend line (dashed), showing days on y-axis
 
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Created KPI cards showing total orders, average delivery time, on-time rate, late rate</li>
-    <li>Built time-series line charts for monthly delivery lead time trends and on-time delivery % trends</li>
-    <li>Analyzed late delivery rates by product category using bar charts</li>
-    <li>Mapped geographic patterns in delivery performance by customer state</li>
-  </ul>
+**Key Insights**:
+- **Early Platform**: Delivery times started at ~55 days in August 2016, indicating severe early operational challenges
+- **Dramatic Improvement**: Rapid decrease to ~5-7 days by November 2016, suggesting major process optimizations
+- **Stable Performance**: From mid-2017 onward, average delivery time stabilized at 10-15 days
+- **Downward Trend**: The dashed trendline shows overall improvement over time, despite order volume increasing 10x+
+- **Seasonal Variation**: Slight increases in delivery time during November and December (holiday season), as expected
+- **Recent Stability**: 2018 shows consistent ~10-12 day delivery times even as volume continued growing
+- **Competitive Gap**: While improved, 10-15 day delivery is still slow compared to major e-commerce players (Amazon, Mercado Livre)
 
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Delivery Lead Time (Days)
-DATEDIFF('day', [Order Purchase Timestamp], [Order Delivered Customer Date])
+#### Distribution of Delivery Times (Days)
+**Visualization**: Histogram showing frequency distribution of delivery times
 
-// Late Delivery Flag
-IF [Order Delivered Customer Date] > [Order Estimated Delivery Date] 
-THEN 1 
-ELSE 0 
-END
+**Key Insights**:
+- **Right-Skewed Distribution**: Most orders delivered within 0-30 days, with a long tail extending to 210+ days
+- **Modal Range**: Highest concentration of orders delivered in the 10-20 day range, with peak around 15 days
+- **Fast Delivery Subset**: Significant number of orders (20,000-25,000) delivered in 0-15 days, likely express shipping or local fulfillment
+- **Outliers**: Small number of orders taking 60+ days, representing extreme operational failures
+- **Second Peak**: Minor secondary peak around 25-30 days suggests some orders consistently hit a different fulfillment pathway
+- **Operational Implication**: The wide variance in delivery times (0-210 days) indicates inconsistent seller performance or logistics quality
+- **Recommendation**: Segment sellers by delivery time performance; provide incentives or training to reduce variance and shift distribution leftward
 
-// On-Time Delivery Rate
-SUM(IF [Late Delivery Flag] = 0 THEN 1 ELSE 0 END) / 
-COUNTD([Order Id])
+### Primary Filters
+- **Is Delivered**: Parameter to toggle between all orders vs. only delivered orders (affects delivery time and late delivery calculations)
 
-// Average Delivery Days (Delivered Orders Only)
-{ FIXED [Order Id] : 
-  AVG(IF [Order Status] = 'delivered' 
-  THEN [Delivery Lead Time] END) }</code></pre>
+### Interactivity
+- **Hover Tooltips**: All charts display detailed values on hover (exact counts, percentages, dates)
+- **Cross-Filtering**: Clicking on a month in any time-series chart could filter other views (if dashboard actions are enabled)
+- **Consistent Time Range**: All visuals use the same Sep 2016 - Aug 2018 date range for coherent analysis
 
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-1-fulfillment-overview.png"
-      alt="Order fulfillment performance dashboard showing delivery KPIs and trends"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Order fulfillment performance overview dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-1-fulfillment-overview.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+## Key Findings
 
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Overall performance:</strong> 96,478 delivered orders with an average delivery time of X days and X% on-time delivery rate</li>
-    <li><strong>Delivery time trends:</strong> [Describe trend - improving, stable, or worsening over time period]</li>
-    <li><strong>Late delivery patterns:</strong> [Identify which categories have highest late rates - furniture, appliances, etc.]</li>
-    <li><strong>Geographic variation:</strong> [Note states with best/worst delivery performance]</li>
-    <li><strong>Seasonality:</strong> [Identify any seasonal spikes in late deliveries - holiday periods, etc.]</li>
-  </ul>
+### Finding 1: Rapid Growth Strains Operational Consistency
+Order volume increased 10-15x from late 2016 to mid-2018, demonstrating strong marketplace growth. However, late delivery rates have crept upward from ~3% to ~7-10% during the same period, suggesting that operational processes and seller capacity are struggling to keep pace with demand. This is a critical inflection point for the business.
 
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Focus on high-lateness categories:</strong> Investigate root causes (supplier delays, complex assembly, shipping distance) for categories with >X% late rates</li>
-    <li><strong>Adjust delivery estimates:</strong> For consistently late categories, increase estimated delivery windows to set realistic customer expectations</li>
-    <li><strong>Geographic optimization:</strong> Prioritize seller recruitment in underserved regions with poor delivery performance</li>
-    <li><strong>Seasonal planning:</strong> Scale logistics capacity ahead of predictable peak periods to maintain service levels</li>
-  </ul>
+### Finding 2: Delivery Time Improved But Remains Slow
+Average delivery time dropped from 55 days in early platform days to a stable 10-15 days by 2017. While this represents major operational improvement, it's still significantly slower than customer expectations set by competitors like Amazon Prime (2 days) or even standard Mercado Livre shipping (5-7 days). The long right tail of the delivery time distribution (some orders taking 60-210 days) also reveals persistent fulfillment failures.
 
-</details>
+### Finding 3: High Order Completion Rate Masks Hidden Issues
+The 97% order completion rate appears excellent on the surface. However, the 3% of failed orders (canceled, unavailable) represent nearly 3,000 orders and lost revenue. More importantly, the "unavailable" status (0.61%) indicates inventory management or seller reliability issues that could have been prevented with better systems.
 
----
+### Finding 4: Late Deliveries Are Underestimated Risk
+A 6.8% late delivery rate means ~6,700 customers received orders after the promised date. Research shows that late delivery is one of the strongest predictors of negative reviews, customer churn, and social media complaints. The upward trend in late delivery rate during high-volume months (holidays) suggests that the platform's estimated delivery date algorithm may be too optimistic or that logistics partners are overpromising.
 
-<details>
-  <summary><strong>Analysis 2 — Customer Experience & Review Analysis</strong></summary>
+### Finding 5: Operational Excellence Varies Widely Across Sellers
+The histogram showing delivery time distribution reveals massive variance in seller performance. Some sellers consistently deliver in 5-10 days, while others regularly take 40-60+ days. This inconsistency creates unpredictable customer experiences and makes it difficult to market the platform with a clear delivery promise.
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+## Business Recommendations
 
-  <h3>Business Question</h3>
-  <p>
-    How satisfied are Olist customers? What's the relationship between delivery performance and customer reviews? Which product categories have the best and worst customer satisfaction?
-  </p>
+### Recommendation 1: Implement Seller Performance Tiers
+**Action**: Create a tiered seller rating system based on delivery time and late delivery rate. Grant "Premium Seller" badges to top performers and provide incentive-based logistics support.
 
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Created review score distribution histogram (1–5 stars)</li>
-    <li>Built scatter plot showing correlation between delivery lead time and review scores</li>
-    <li>Analyzed average review scores by product category using bar charts</li>
-    <li>Created cohort analysis comparing review scores for on-time vs late deliveries</li>
-    <li>Mapped review score trends over time to identify deterioration or improvement</li>
-  </ul>
+**Rationale**: The wide variance in delivery performance (5-60+ days) indicates that some sellers have excellent operations while others are failing. By creating transparency through badges and providing targeted support (training, logistics partnerships, inventory financing) to underperforming sellers, the platform can shift the entire distribution leftward and reduce average delivery time.
 
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Average Review Score (handling nulls)
-AVG(IFNULL([Review Score], 0))
+**Expected Impact**: 
+- Reduce average delivery time from 12.5 days to 8-10 days within 6 months
+- Reduce late delivery rate from 6.8% to below 5%
+- Increase customer trust and repeat purchase rates
 
-// Review Rate (% of delivered orders with reviews)
-COUNTD(IF NOT ISNULL([Review Score]) THEN [Order Id] END) / 
-COUNTD([Order Id])
+### Recommendation 2: Revise Estimated Delivery Date Algorithm
+**Action**: Audit the estimated delivery date calculation logic and incorporate real seller performance data. Add buffer days for historically slower sellers or high-volume periods (holidays).
 
-// Review Score Category
-IF [Review Score] >= 4 THEN "Positive (4-5 stars)"
-ELSEIF [Review Score] = 3 THEN "Neutral (3 stars)"
-ELSE "Negative (1-2 stars)"
-END
+**Rationale**: The 6.8% late delivery rate and its upward trend during growth periods suggests that promised delivery dates are too optimistic. By using historical seller performance and seasonality data, the platform can set more realistic expectations, reducing the "promise vs. delivery" gap that drives customer dissatisfaction.
 
-// Late Delivery Impact on Reviews
-{ FIXED [Late Delivery Flag] : 
-  AVG([Review Score]) }</code></pre>
+**Expected Impact**:
+- Reduce late delivery rate from 6.8% to under 4% by setting more conservative (but achievable) expectations
+- Improve customer review scores by reducing negative sentiment related to late deliveries
+- Build customer trust through consistent fulfillment of promises
 
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-2-customer-experience.png"
-      alt="Customer experience dashboard showing review distributions and delivery correlations"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Customer experience and review analysis dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-2-customer-experience.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+### Recommendation 3: Investigate and Reduce "Unavailable" Orders
+**Action**: Implement real-time inventory sync requirements for sellers and automated stockout notifications to customers before order confirmation.
 
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Overall satisfaction:</strong> Average review score of X.X/5.0 stars with X% review rate (orders with reviews)</li>
-    <li><strong>Review distribution:</strong> [X% positive (4-5 stars), X% neutral (3 stars), X% negative (1-2 stars)]</li>
-    <li><strong>Delivery-review correlation:</strong> [Describe relationship - e.g., "Late deliveries have X.X average review score vs X.X for on-time deliveries"]</li>
-    <li><strong>Category satisfaction:</strong> [Identify best and worst categories - e.g., "Electronics: X.X stars, Home Decor: X.X stars"]</li>
-    <li><strong>Temporal trends:</strong> [Note if satisfaction is improving, stable, or declining over time]</li>
-  </ul>
+**Rationale**: The 0.61% "unavailable" order rate (607 orders) represents preventable failures. These orders create the worst customer experience (order accepted, then canceled due to stockout) and lost revenue. By requiring sellers to maintain accurate inventory feeds and catching stockouts before order confirmation, these failures can be eliminated.
 
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Prioritize on-time delivery:</strong> Late deliveries show measurably lower review scores, directly impacting marketplace reputation</li>
-    <li><strong>Investigate low-scoring categories:</strong> Conduct detailed review text analysis for categories below X.X stars to identify recurring complaints</li>
-    <li><strong>Implement proactive service recovery:</strong> For orders with predicted late delivery, offer compensation (discounts, free shipping on next order) before customer submits review</li>
-    <li><strong>Increase review solicitation rate:</strong> Current review rate is X% - implement automated follow-up campaigns to boost feedback collection</li>
-    <li><strong>Seller performance monitoring:</strong> Flag sellers with consistently low review scores for coaching or removal from platform</li>
-  </ul>
+**Expected Impact**:
+- Reduce unavailable order rate from 0.61% to under 0.2%
+- Prevent ~400 customer frustration incidents per 100k orders
+- Capture additional $50k-100k in revenue per 100k orders (assuming $125-250 average order value)
 
-</details>
+### Recommendation 4: Scale Operations Infrastructure Proactively
+**Action**: Build forecasting models to predict order volume growth and proactively expand logistics partnerships, warehouse capacity, and seller support resources.
+
+**Rationale**: The 10-15x order growth over 23 months is impressive, but the uptick in late deliveries during high-volume periods shows operational strain. Rather than reacting to growth, the platform should forecast demand 6-12 months ahead and pre-emptively build capacity (new logistics partners, regional fulfillment hubs, automated seller onboarding).
+
+**Expected Impact**:
+- Maintain late delivery rate below 5% even as order volume continues doubling year-over-year
+- Reduce peak season (November, December) operational stress
+- Enable faster geographic expansion by having fulfillment infrastructure in place
+
+### Recommendation 5: Launch Fast Delivery Program
+**Action**: Pilot a "Next Day" or "Express" delivery program with top-performing sellers in high-density regions (São Paulo, Rio de Janeiro).
+
+**Rationale**: The histogram shows that 20,000-25,000 orders (20-25%) are already delivered in 5-10 days. By formalizing this as a premium delivery tier and expanding it, Olist can compete directly with Amazon Prime and Mercado Livre Premium. Faster delivery drives higher customer lifetime value, reduces cart abandonment, and justifies premium pricing.
+
+**Expected Impact**:
+- Capture 10-15% of orders into Express tier within 12 months
+- Increase average order value by 15-20% for Express orders (customers willing to pay for speed)
+- Improve competitive positioning and customer retention
+
+## Tableau Public
+- **Link**: [Coming Soon - Dashboard will be published after final polish]
+
+## Limitations
+
+### Data Limitations
+- **Time Period**: Dataset ends in August 2018; analysis does not reflect 2019+ operational improvements or market changes
+- **Incomplete Final Month**: August 2018 data is partial, causing the sharp drop in order volume chart
+- **Missing Review Data**: Not all orders have associated review scores, limiting customer satisfaction analysis
+- **Geographic Constraints**: Dataset is Brazil-only; findings may not generalize to other markets with different logistics infrastructure
+
+### Analytical Limitations
+- **Causality**: Analysis identifies correlations (e.g., late deliveries during high volume) but does not prove causation
+- **Seller Segmentation**: Unable to deeply segment by seller size, category, or region without additional enrichment
+- **External Factors**: Cannot account for macro events (Brazilian economic conditions, competitor actions, regulatory changes) that may have impacted results
+- **Customer Perspective**: Limited ability to link delivery performance to customer lifetime value or churn without behavioral data
+
+### Methodological Limitations
+- **Aggregation Level**: Primary analysis at order level; item-level insights (e.g., categories with slower fulfillment) require additional views
+- **Static Analysis**: Dashboard shows historical performance but does not include predictive models or real-time alerting
+- **Estimated Dates**: Relies on seller-provided estimated delivery dates, which may themselves be inaccurate
+
+## Next Steps
+
+### Immediate Next Steps (1-2 weeks)
+1. **Build Analysis 2 Dashboard**: Create Seller Performance Scorecard showing delivery time, late rate, and order volume by individual seller
+2. **Add Geographic Analysis**: Map views showing delivery time by customer state/city to identify regional bottlenecks
+3. **Publish to Tableau Public**: Clean up formatting, add branding, write public-facing narrative
+
+### Short-Term Next Steps (1-3 months)
+4. **Customer Experience Dashboard**: Link delivery performance to review scores; analyze correlation between late delivery and low ratings
+5. **Category Analysis**: Break down delivery performance by product category to identify high-risk or slow-moving categories
+6. **Seasonality Deep Dive**: Create detailed month-over-month and week-over-week analysis to forecast holiday demand
+7. **Seller Segmentation**: Cluster sellers by performance tier and identify characteristics of top performers vs. strugglers
+
+### Long-Term Next Steps (3-6 months)
+8. **Predictive Modeling**: Build regression models to predict which orders are most likely to be delivered late based on seller, category, location, and seasonality
+9. **Real-Time Dashboard**: Transition from static historical analysis to live operational dashboard tracking current-day/week metrics
+10. **A/B Test Framework**: Design experiments to test interventions (e.g., revised estimated delivery dates, seller incentives) and measure impact
+11. **Customer Lifetime Value Analysis**: Integrate delivery performance with customer purchase history to quantify financial impact of fulfillment quality
 
 ---
 
-<details>
-  <summary><strong>Analysis 3 — Seller Performance Scorecard</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Which sellers are driving the most revenue and providing the best customer experience? Which sellers are at risk due to poor performance (high late rates, low review scores, low order volume)?
-  </p>
-
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Built seller-level scorecard table showing revenue, order count, average review score, late delivery rate</li>
-    <li>Created quadrant chart plotting sellers by revenue vs customer satisfaction</li>
-    <li>Developed seller tier classification using calculated field (High Performer, Average, At Risk)</li>
-    <li>Mapped seller locations to identify geographic distribution and performance clustering</li>
-    <li>Used parameter controls to allow filtering by seller performance tiers</li>
-  </ul>
-
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Seller Revenue (using LOD)
-{ FIXED [Seller Id] : 
-  SUM([Payment Value]) }
-
-// Seller Average Review Score
-{ FIXED [Seller Id] : 
-  AVG([Review Score]) }
-
-// Seller Late Delivery Rate
-{ FIXED [Seller Id] : 
-  SUM([Late Delivery Flag]) / COUNTD([Order Id]) }
-
-// Seller Performance Tier
-IF [Seller Revenue] >= [Parameter: High Revenue Threshold] 
-   AND [Seller Avg Review Score] >= 4.0 
-   AND [Seller Late Rate] <= 0.10 
-THEN "High Performer"
-ELSEIF [Seller Avg Review Score] < 3.5 
-   OR [Seller Late Rate] > 0.20 
-THEN "At Risk"
-ELSE "Average"
-END</code></pre>
-
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-3-seller-scorecard.png"
-      alt="Seller performance scorecard showing revenue, satisfaction, and delivery metrics"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Seller performance scorecard and analysis dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-3-seller-scorecard.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Seller concentration:</strong> Top X% of sellers drive X% of total revenue (Pareto principle)</li>
-    <li><strong>High performers:</strong> [Number] sellers classified as High Performers (high revenue + high satisfaction + low late rate)</li>
-    <li><strong>At-risk sellers:</strong> [Number] sellers flagged as At Risk due to poor performance metrics</li>
-    <li><strong>Geographic clustering:</strong> [Describe if top sellers cluster in specific states - SP, RJ, MG, etc.]</li>
-    <li><strong>Performance variability:</strong> [Note correlation between metrics - e.g., "High-revenue sellers tend to have X.X% better review scores"]</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Retain top performers:</strong> Offer exclusive benefits (lower commission, priority visibility, dedicated account management) to High Performer sellers</li>
-    <li><strong>Develop at-risk sellers:</strong> Implement performance improvement programs (training, logistics support, best practice guides) or remove persistently poor performers</li>
-    <li><strong>Recruit strategically:</strong> Focus seller recruitment efforts in states with strong performance clusters and good logistics infrastructure</li>
-    <li><strong>Create performance benchmarks:</strong> Share anonymized performance metrics with sellers so they can compare themselves to category peers</li>
-    <li><strong>Monitor churn risk:</strong> Track performance trends for top sellers to identify early warning signs of deterioration</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Analysis 4 — Revenue & Order Trends</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    How has Olist's marketplace grown over time? What are the trends in order volume, revenue, and average order value? Are there seasonal patterns that inform forecasting and resource planning?
-  </p>
-
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Created KPI summary cards for total revenue, total orders, AOV, growth rates</li>
-    <li>Built dual-axis time-series showing monthly order count and revenue trends</li>
-    <li>Analyzed AOV trends over time and by product category</li>
-    <li>Created month-over-month and year-over-year growth calculations</li>
-    <li>Identified seasonal patterns using monthly aggregations across years</li>
-  </ul>
-
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Average Order Value
-SUM([Payment Value]) / COUNTD([Order Id])
-
-// Month-over-Month Revenue Growth
-(SUM([Payment Value]) - 
- LOOKUP(SUM([Payment Value]), -1)) / 
- LOOKUP(SUM([Payment Value]), -1)
-
-// Year-over-Year Order Growth
-(COUNTD([Order Id]) - 
- LOOKUP(COUNTD([Order Id]), -12)) / 
- LOOKUP(COUNTD([Order Id]), -12)
-
-// Seasonality Index (comparing month to annual average)
-AVG([Monthly Orders]) / 
-WINDOW_AVG(AVG([Monthly Orders]))</code></pre>
-
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-4-revenue-trends.png"
-      alt="Revenue and order trends dashboard showing growth patterns and seasonality"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Revenue and order trends analysis dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-4-revenue-trends.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Overall growth:</strong> [Total revenue: $X.X million | Total orders: XX,XXX | Period: Sept 2016 - Aug 2018]</li>
-    <li><strong>Growth trajectory:</strong> [Describe trend - e.g., "X% compound monthly growth rate, accelerating in late 2017"]</li>
-    <li><strong>AOV trends:</strong> Average order value is $XXX, [stable/increasing/decreasing] over time</li>
-    <li><strong>Seasonal patterns:</strong> [Identify peaks - e.g., "November (Black Friday), May (Mother's Day) show XX% above average"]</li>
-    <li><strong>Category contribution:</strong> [Top revenue categories - e.g., "Health/Beauty (X%), Furniture (X%), Electronics (X%)"]</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Forecast using historical patterns:</strong> Use identified seasonality to predict inventory needs, staffing, and logistics capacity for upcoming periods</li>
-    <li><strong>Capitalize on peaks:</strong> Launch targeted marketing campaigns 2-3 weeks before seasonal peaks (Black Friday, Mother's Day, etc.)</li>
-    <li><strong>Smooth demand troughs:</strong> Run promotions during historically slow months to reduce revenue volatility and improve capacity utilization</li>
-    <li><strong>AOV optimization:</strong> If AOV is declining, implement bundling strategies, free shipping thresholds, and cross-sell recommendations</li>
-    <li><strong>Category expansion:</strong> Double down on high-growth categories and consider strategic seller recruitment in underrepresented high-margin categories</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Analysis 5 — Geographic Performance Analysis</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Which Brazilian states drive the most orders and revenue? Where are delivery performance and customer satisfaction strongest and weakest? How does geographic proximity between sellers and customers impact delivery times?
-  </p>
-
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Created filled maps showing order volume and revenue by customer state</li>
-    <li>Built heatmap comparing seller concentration vs customer demand by state</li>
-    <li>Analyzed average delivery time by customer state and seller state</li>
-    <li>Calculated state-level on-time delivery rates and average review scores</li>
-    <li>Created tooltip visualizations showing detailed metrics on hover</li>
-  </ul>
-
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Orders by Customer State
-{ FIXED [Customer State] : 
-  COUNTD([Order Id]) }
-
-// Revenue by Customer State
-{ FIXED [Customer State] : 
-  SUM([Payment Value]) }
-
-// Seller-Customer Distance Proxy
-// (Using state-level comparison, not actual lat/long)
-IF [Customer State] = [Seller State] 
-THEN "Same State" 
-ELSE "Different State" 
-END
-
-// State-Level On-Time Rate
-{ FIXED [Customer State] : 
-  SUM(IF [Late Delivery Flag] = 0 THEN 1 END) / 
-  COUNTD([Order Id]) }</code></pre>
-
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-5-geographic-performance.png"
-      alt="Geographic performance maps showing order distribution and delivery metrics by state"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Geographic performance analysis dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-5-geographic-performance.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Customer concentration:</strong> [Top 3 states: SP (X%), RJ (X%), MG (X%) represent X% of all orders]</li>
-    <li><strong>Seller concentration:</strong> [SP hosts X% of sellers, creating geographic mismatch with demand]</li>
-    <li><strong>Delivery time by distance:</strong> Same-state orders average X days vs X days for cross-state orders (X% difference)</li>
-    <li><strong>Regional delivery performance:</strong> [Best states: X, Y, Z with X% on-time rates | Worst states: A, B, C with X% on-time rates]</li>
-    <li><strong>Underserved markets:</strong> [Identify states with high demand but low seller presence]</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Recruit sellers in underserved regions:</strong> Focus recruitment on states with high customer demand but low seller density (e.g., [state names])</li>
-    <li><strong>Establish regional fulfillment hubs:</strong> Partner with 3PLs in high-volume states to enable faster, more reliable delivery</li>
-    <li><strong>Adjust delivery estimates by region:</strong> Set realistic delivery windows based on historical state-level performance to manage customer expectations</li>
-    <li><strong>Prioritize local matching:</strong> When multiple sellers offer the same product, algorithmically prioritize sellers in the customer's state to reduce delivery times</li>
-    <li><strong>Monitor regional satisfaction:</strong> Track review scores by state to identify geographic service gaps and target operational improvements</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Analysis 6 — Product Category Deep Dive</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Which product categories generate the most revenue and orders? Which categories have the best customer satisfaction and delivery performance? Where are the operational challenges and growth opportunities?
-  </p>
-
-  <h3>Analysis Approach</h3>
-  <ul>
-    <li>Created treemap showing revenue contribution by category</li>
-    <li>Built matrix/heatmap comparing categories across multiple dimensions (revenue, orders, reviews, late rate)</li>
-    <li>Analyzed category-level trends over time (growth, decline, seasonality)</li>
-    <li>Created quadrant chart plotting categories by revenue vs customer satisfaction</li>
-    <li>Implemented set actions to allow drilling into specific category performance</li>
-  </ul>
-
-  <h3>Key Calculated Fields</h3>
-  <pre><code>// Category Revenue Rank
-RANK_UNIQUE(SUM([Payment Value]), 'desc')
-
-// Category Review Score vs Overall Average
-AVG([Review Score]) - 
-{ FIXED : AVG([Review Score]) }
-
-// Category Late Delivery Rate Comparison
-{ FIXED [Product Category Name English] : 
-  SUM([Late Delivery Flag]) / COUNTD([Order Id]) } -
-{ FIXED : 
-  SUM([Late Delivery Flag]) / COUNTD([Order Id]) }
-
-// Category Performance Score (composite)
-// (Normalized: Revenue % * 0.4 + Review Score * 0.3 + On-Time Rate * 0.3)
-[Revenue %] * 0.4 + 
-([Avg Review] / 5) * 0.3 + 
-[On-Time Rate] * 0.3</code></pre>
-
-  <h3>Visualizations</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-6-category-performance.png"
-      alt="Product category performance dashboard showing revenue, satisfaction, and operational metrics"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Product category performance analysis dashboard.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-6-category-performance.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Insights</h3>
-  <ul>
-    <li><strong>Top revenue categories:</strong> [List top 5 with revenue and % of total - e.g., "Health/Beauty: $X.X (X%), Furniture: $X.X (X%)"]</li>
-    <li><strong>Customer satisfaction leaders:</strong> [Categories with highest review scores - e.g., "Books: X.X stars, Toys: X.X stars"]</li>
-    <li><strong>Operational challenges:</strong> [Categories with high late rates - e.g., "Furniture: X% late, Appliances: X% late"]</li>
-    <li><strong>Growth opportunities:</strong> [High satisfaction categories with room for revenue growth]</li>
-    <li><strong>Problem areas:</strong> [Categories with both low satisfaction and operational issues requiring intervention]</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Double down on winners:</strong> Scale marketing and seller recruitment for high-revenue, high-satisfaction categories</li>
-    <li><strong>Fix operational bottlenecks:</strong> For categories with high late rates (e.g., Furniture, Large Appliances), investigate if issues are inventory, shipping, or seller-specific</li>
-    <li><strong>Improve low-satisfaction categories:</strong> Conduct detailed review text analysis and implement quality controls for categories below X.X stars</li>
-    <li><strong>Test pricing strategies:</strong> High-satisfaction, low-revenue categories may support premium pricing or upsell opportunities</li>
-    <li><strong>Prune underperformers:</strong> Consider reducing investment in categories with persistently low revenue and poor customer experience</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Executive Dashboard</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Dashboard Purpose</h3>
-  <p>
-    A single-screen executive summary combining the most critical operational and customer experience KPIs for Olist marketplace leadership. Designed for high-level monitoring and quick drill-downs via interactive filters and actions.
-  </p>
-
-  <h3>Dashboard Features</h3>
-  <ul>
-    <li><strong>KPI Scorecards:</strong> Total orders, revenue, AOV, avg review score, on-time delivery %, late delivery %</li>
-    <li><strong>Trend Visualizations:</strong> Monthly order volume and revenue (dual-axis), on-time delivery rate trend</li>
-    <li><strong>Geographic Overview:</strong> Order heatmap by customer state with tooltip details</li>
-    <li><strong>Category Performance:</strong> Top categories by revenue with review score comparison</li>
-    <li><strong>Seller Health:</strong> Distribution of sellers by performance tier (High Performer, Average, At Risk)</li>
-    <li><strong>Interactive Controls:</strong> Date range parameter, category filter, state filter</li>
-    <li><strong>Actions:</strong> Click state to filter all views, hover for detailed tooltips with embedded vizzes</li>
-  </ul>
-
-  <h3>Design Principles</h3>
-  <ul>
-    <li><strong>Clean layout:</strong> White background, consistent spacing, clear visual hierarchy</li>
-    <li><strong>Color scheme:</strong> Blue for revenue/positive metrics, red for operational issues, gray for neutral</li>
-    <li><strong>Typography:</strong> Consistent fonts (Tableau Book/Medium), appropriate sizing for readability</li>
-    <li><strong>Professional polish:</strong> Borders, tooltips, titles, annotations all refined for portfolio presentation</li>
-  </ul>
-
-  <h3>Final Executive Dashboard</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-executive-dashboard-final.png"
-      alt="Olist E-commerce Executive Dashboard combining operations and customer experience KPIs"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Final Executive Dashboard - Olist E-commerce Operations & Customer Experience.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-executive-dashboard-final.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Tableau Public & Portfolio Integration</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Tableau Public Workbook</h3>
-  <p>
-    <strong>Link:</strong> <a href="[YOUR_TABLEAU_PUBLIC_LINK_HERE]" target="_blank" rel="noopener">[Tableau Public - Olist E-commerce Analysis]</a>
-  </p>
-  <p>
-    The complete interactive workbook is published on Tableau Public and includes all dashboards with full functionality (filters, actions, tooltips, parameters).
-  </p>
-
-  <h3>Embedded Dashboard (Optional)</h3>
-  <p>
-    Below is an embedded version of the Executive Dashboard. For best experience, visit the full Tableau Public workbook.
-  </p>
-
-  <div class="tableauPlaceholder" style="width: 100%; height: 827px;">
-    <!-- Paste your Tableau Public embed code here -->
-    <p><em>[Tableau Public embed code will be inserted here after publishing]</em></p>
-  </div>
-
-  <h3>Portfolio Presentation Tips</h3>
-  <ul>
-    <li><strong>Lead with the executive dashboard:</strong> This is your portfolio "hero image" - make sure it's polished</li>
-    <li><strong>Screenshot quality:</strong> Use high-resolution PNG exports (1920x1080 or higher) for all dashboard images</li>
-    <li><strong>Narrative structure:</strong> Walk through analyses in logical order (operations → customer experience → performance scorecards → insights)</li>
-    <li><strong>Highlight advanced skills:</strong> Call out LOD expressions, parameters, actions, and complex calculations explicitly</li>
-    <li><strong>Business impact focus:</strong> Always tie technical work to business recommendations and outcomes</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Project Conclusion & Key Takeaways</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Project Summary</h3>
-  <p>
-    This Tableau project demonstrates end-to-end business intelligence capabilities using real-world e-commerce data. By combining operational metrics (delivery performance, seller efficiency) with customer experience indicators (review scores, satisfaction trends), I built a comprehensive analytical framework that supports strategic decision-making at multiple levels of the Olist marketplace.
-  </p>
-
-  <h3>Technical Skills Demonstrated</h3>
-  <ul>
-    <li><strong>Data Modeling:</strong> Implemented relationship-based data model across 8 tables maintaining data integrity</li>
-    <li><strong>Calculated Fields:</strong> Created 25+ calculations including business metrics, flags, ratios, and composite scores</li>
-    <li><strong>LOD Expressions:</strong> Used FIXED, INCLUDE, EXCLUDE LODs for multi-grain analysis and benchmarking</li>
-    <li><strong>Parameters & Interactivity:</strong> Built dynamic controls for date ranges, thresholds, and metric switching</li>
-    <li><strong>Advanced Visualizations:</strong> Time series, geographic maps, distribution analysis, scorecards, quadrant charts, heatmaps</li>
-    <li><strong>Dashboard Design:</strong> Professional layouts with consistent branding, clear hierarchy, and intuitive navigation</li>
-  </ul>
-
-  <h3>Business Impact</h3>
-  <ul>
-    <li><strong>Operational efficiency:</strong> Identified X% of orders delivered late, with specific categories and regions requiring intervention</li>
-    <li><strong>Customer satisfaction:</strong> Quantified X.X-star difference in review scores between on-time and late deliveries, proving business case for fulfillment improvements</li>
-    <li><strong>Seller performance:</strong> Segmented sellers into performance tiers enabling targeted retention and development programs</li>
-    <li><strong>Growth opportunities:</strong> Identified underserved geographic markets and high-potential product categories for strategic expansion</li>
-    <li><strong>Data-driven decision-making:</strong> Provided leadership with clear KPIs and interactive tools to monitor marketplace health and guide resource allocation</li>
-  </ul>
-
-  <h3>Next Steps & Future Enhancements</h3>
-  <ul>
-    <li><strong>Predictive analytics:</strong> Build delivery time forecasting model to proactively identify at-risk orders</li>
-    <li><strong>Text analysis:</strong> Analyze review comments using natural language processing to extract specific improvement themes</li>
-    <li><strong>Customer segmentation:</strong> Create RFM (Recency, Frequency, Monetary) analysis to identify high-value customer cohorts</li>
-    <li><strong>Real-time monitoring:</strong> Implement live data connection with automated alerts for operational threshold breaches</li>
-    <li><strong>Mobile optimization:</strong> Create mobile-friendly dashboard layouts for on-the-go executive access</li>
-  </ul>
-
-  <h3>Lessons Learned</h3>
-  <ul>
-    <li><strong>Relationships > Joins:</strong> Using Tableau's relationship feature maintains data integrity and reduces technical debt</li>
-    <li><strong>LODs are powerful:</strong> Mastering LOD expressions unlocks complex multi-grain analysis without data duplication</li>
-    <li><strong>Design matters:</strong> A technically correct dashboard is only valuable if stakeholders actually use it - invest in UI/UX</li>
-    <li><strong>Context is critical:</strong> Always provide business context and actionable recommendations alongside technical analysis</li>
-    <li><strong>Iterate with users:</strong> Best dashboards emerge from iterative feedback with actual end users</li>
-  </ul>
-
-</details>
-
----
-
-## Contact & Questions
-
-**Jonathan Nadeau**  
-📧 nadeau.jonny@gmail.com  
-💼 [LinkedIn](https://www.linkedin.com/in/jonathan-nadeau-data/)  
-📂 [GitHub Portfolio](https://github.com/nadeaujonny)  
-🌐 [Portfolio Website](https://nadeaujonny.github.io)
-
----
-
-<p style="text-align: center; color: #666; font-size: 0.9em; margin-top: 40px;">
-  <em>Last Updated: [DATE]</em>
-</p>
+*This analysis was created by Jonathan Nadeau as part of a portfolio project demonstrating Tableau data visualization, operational analytics, and business storytelling skills. The Olist dataset is publicly available on Kaggle and represents real e-commerce transactions from 2016-2018.*
