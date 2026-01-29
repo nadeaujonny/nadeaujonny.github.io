@@ -225,6 +225,18 @@ pre{
 hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
 header,footer{ color:var(--muted); }
 
+/* ---------- Sticky Header ---------- */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--bg);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  background: rgba(11, 15, 20, 0.95);
+}
+
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
   display:flex;
@@ -415,45 +427,6 @@ main .wrapper a{
 .page-content .wrapper a:hover,
 main .wrapper a:hover{
   color: #0f2f8a !important;
-}
-
-/* =========================================================
-   HOMEPAGE HERO SECTION — Modern Tech Aesthetic
-   ========================================================= */
-
-/* Center the name on homepage */
-.page-content .wrapper h1:first-child,
-main .wrapper h1:first-child {
-  text-align: center;
-  font-size: clamp(2.8rem, 5vw, 4.2rem) !important;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  margin: 0.3em 0 0.2em;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Center the subtitle (Data Analyst) */
-.page-content .wrapper h1:first-child + h3,
-main .wrapper h1:first-child + h3 {
-  text-align: center;
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
-  font-weight: 600;
-  color: rgba(15, 15, 18, 0.75) !important;
-  margin: 0 0 0.8em;
-  letter-spacing: 0.02em;
-}
-
-/* Center the description paragraph below subtitle */
-.page-content .wrapper h1:first-child + h3 + p,
-main .wrapper h1:first-child + h3 + p {
-  text-align: center;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  color: rgba(15, 15, 18, 0.80) !important;
 }
 
 /* Modern tech font stack */
