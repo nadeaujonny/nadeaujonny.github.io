@@ -225,6 +225,40 @@ pre{
 hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
 header,footer{ color:var(--muted); }
 
+/* =========================================================
+   STICKY HEADER — Stays at top when scrolling
+   ========================================================= */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(11, 15, 20, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.header-inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Stack header elements vertically on mobile */
+@media (min-width: 640px){
+  .header-inner{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
   display:flex;
@@ -234,6 +268,13 @@ header,footer{ color:var(--muted); }
   overflow:hidden;
   background:var(--surface);
 }
+
+@media (min-width: 640px){
+  .site-nav,.nav-tabs,.topbar-nav{
+    width: auto;
+  }
+}
+
 .site-nav a,.nav-tab,.topbar-link{
   flex:1;
   text-align:center;
@@ -327,6 +368,9 @@ main .wrapper{
 .site-title:active{
   color:rgba(255,255,255,.95) !important;
   text-decoration:none !important;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
 }
 .site-header a,
 .site-header a:visited{
@@ -504,7 +548,8 @@ code, pre {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 
                'Cascadia Code', Consolas, monospace;
 }
-/* Ensure main content doesn't get hidden under header on page load */
+
+/* Ensure main content has proper spacing below sticky header */
 .page-content {
   margin-top: 20px;
 }
