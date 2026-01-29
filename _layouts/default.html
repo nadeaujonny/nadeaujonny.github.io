@@ -20,8 +20,6 @@
   <body>
     <header class="site-header">
       <div class="header-inner">
-        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-
         <nav class="nav-tabs" aria-label="Primary navigation">
           <a class="nav-tab" href="{{ '/' | relative_url }}"
              {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
@@ -49,16 +47,5 @@
         </div>
       </div>
     </footer>
-    <!-- Sticky nav scroll effect -->
-    <script>
-      window.addEventListener('scroll', function() {
-        const header = document.querySelector('.site-header');
-        if (window.scrollY > 50) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
-      });
-    </script>
   </body>
 </html>
