@@ -417,21 +417,22 @@ main .wrapper a:hover{
 }
 
 /* =========================================================
-   HOMEPAGE HERO SECTION — Modern Tech Aesthetic
+   HOMEPAGE HERO SECTION — Clean, Professional Black Text
    ========================================================= */
 
-/* Center the name on homepage */
+/* Center the name on homepage - UPDATED: Smaller and Black */
 .page-content .wrapper h1:first-child,
 main .wrapper h1:first-child {
   text-align: center;
-  font-size: clamp(2.8rem, 5vw, 4.2rem) !important;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  margin: 0.3em 0 0.2em;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: clamp(2.2rem, 4vw, 2.8rem) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0.4em 0 0.3em;
+  color: #000000 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
 }
 
 /* Center the subtitle (Data Analyst) */
@@ -455,93 +456,54 @@ main .wrapper h1:first-child + h3 + p {
   color: rgba(15, 15, 18, 0.80) !important;
 }
 
-/* Modern tech font stack */
+/* =========================================================
+   PAGE TITLES — Smaller and Black for All Pages
+   ========================================================= */
+
+/* Make ALL page titles smaller and black */
+.page-content .wrapper > h1,
+.page-content .wrapper > h2,
+main .wrapper > h1,
+main .wrapper > h2 {
+  color: #000000 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Specific sizing for main page headings */
+.page-content .wrapper > h1,
+main .wrapper > h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.2rem) !important;
+}
+
+.page-content .wrapper > h2,
+main .wrapper > h2 {
+  font-size: clamp(1.4rem, 2.8vw, 1.75rem) !important;
+}
+
+/* Modern tech font stack - Using Inter (already loaded) */
 body {
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
-               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+               Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
-               'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
+               system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code, pre {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 
                'Cascadia Code', Consolas, monospace;
 }
-
-/* =========================================================
-   STICKY NAVIGATION BAR — Stays at top on scroll
-   ========================================================= */
-
-/* Make header sticky */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(11, 15, 20, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 12px 0;
-  transition: all 0.3s ease;
-}
-
-/* Header inner container */
-.header-inner {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
-/* Site title styling */
-.site-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
-/* Navigation tabs container */
-.nav-tabs {
-  flex: 0 0 auto;
-  max-width: 500px;
-  min-width: 300px;
-}
-
-/* Optional: Add subtle shadow when scrolled */
-.site-header.scrolled {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Mobile responsive stacking */
-@media (max-width: 720px) {
-  .header-inner {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px 18px;
-  }
-  
-  .nav-tabs {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  .site-title {
-    font-size: 1.1rem;
-  }
-}
-
-/* Add padding to body to prevent content from jumping under sticky header */
-body {
-  padding-top: 0; /* The sticky header will naturally push content down */
-}
-
 /* Ensure main content doesn't get hidden under header on page load */
 .page-content {
   margin-top: 20px;
