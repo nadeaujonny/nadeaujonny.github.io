@@ -90,7 +90,7 @@ title: Tableau — Olist E-commerce Operations & Customer Experience
   <h3>Data Model Diagram</h3>
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableau-olist-data-model.png"
+      src="images/tableau-data-connections.png"
       alt="Tableau data model showing relationships between Olist tables"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
