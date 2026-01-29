@@ -225,40 +225,6 @@ pre{
 hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
 header,footer{ color:var(--muted); }
 
-/* =========================================================
-   STICKY HEADER — Stays at top when scrolling
-   ========================================================= */
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(11, 15, 20, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.header-inner{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-}
-
-/* Stack header elements vertically on mobile */
-@media (min-width: 640px){
-  .header-inner{
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
   display:flex;
@@ -268,15 +234,9 @@ header,footer{ color:var(--muted); }
   overflow:hidden;
   background:var(--surface);
 }
-
-@media (min-width: 640px){
-  .site-nav,.nav-tabs,.topbar-nav{
-    width: auto;
-  }
-}
-
 .site-nav a,.nav-tab,.topbar-link{
-  flex:1;
+  flex:1 1 0%;
+  min-width:0;
   text-align:center;
   padding:12px 10px;
   font-weight:800;
@@ -368,9 +328,6 @@ main .wrapper{
 .site-title:active{
   color:rgba(255,255,255,.95) !important;
   text-decoration:none !important;
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: -0.01em;
 }
 .site-header a,
 .site-header a:visited{
@@ -461,22 +418,21 @@ main .wrapper a:hover{
 }
 
 /* =========================================================
-   HOMEPAGE HERO SECTION — Clean, Professional Black Text
+   HOMEPAGE HERO SECTION — Modern Tech Aesthetic
    ========================================================= */
 
-/* Center the name on homepage - UPDATED: Smaller and Black */
+/* Center the name on homepage */
 .page-content .wrapper h1:first-child,
 main .wrapper h1:first-child {
   text-align: center;
-  font-size: clamp(2.2rem, 4vw, 2.8rem) !important;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0.4em 0 0.3em;
-  color: #000000 !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: unset !important;
-  background-clip: unset !important;
+  font-size: clamp(2.8rem, 5vw, 4.2rem) !important;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0.3em 0 0.2em;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Center the subtitle (Data Analyst) */
@@ -500,56 +456,18 @@ main .wrapper h1:first-child + h3 + p {
   color: rgba(15, 15, 18, 0.80) !important;
 }
 
-/* =========================================================
-   PAGE TITLES — Smaller and Black for All Pages
-   ========================================================= */
-
-/* Make ALL page titles smaller and black */
-.page-content .wrapper > h1,
-.page-content .wrapper > h2,
-main .wrapper > h1,
-main .wrapper > h2 {
-  color: #000000 !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: unset !important;
-  background-clip: unset !important;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-/* Specific sizing for main page headings */
-.page-content .wrapper > h1,
-main .wrapper > h1 {
-  font-size: clamp(1.8rem, 3.5vw, 2.2rem) !important;
-}
-
-.page-content .wrapper > h2,
-main .wrapper > h2 {
-  font-size: clamp(1.4rem, 2.8vw, 1.75rem) !important;
-}
-
-/* Modern tech font stack - Using Inter (already loaded) */
+/* Modern tech font stack */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
-               Roboto, 'Helvetica Neue', Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 
-               system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
+               'Segoe UI', system-ui, sans-serif;
 }
 
 code, pre {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 
                'Cascadia Code', Consolas, monospace;
-}
-
-/* Ensure main content has proper spacing below sticky header */
-.page-content {
-  margin-top: 20px;
 }
