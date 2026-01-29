@@ -429,6 +429,14 @@ main .wrapper a:hover{
   color: #0f2f8a !important;
 }
 
+/* =========================================================
+   CENTER THE NAME ON HOMEPAGE
+   ========================================================= */
+.page-content .wrapper h1:first-child,
+main .wrapper h1:first-child {
+  text-align: center;
+}
+
 /* Modern tech font stack */
 body {
   font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 
