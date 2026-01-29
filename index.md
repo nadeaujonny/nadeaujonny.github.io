@@ -18,11 +18,9 @@ End-to-end analytics: **SQL + Excel** analysis, **Tableau/Power BI** dashboards,
 ---
 
 ## About Me
-I’m a data analyst with a strong mathematics background and a practical, business-first approach to analytics.
+I have a strong quantitative foundation in mathematics and computer science, combined with extensive experience explaining complex concepts through tutoring and formal teacher training. During my studies and teaching experience, I discovered a stronger interest in analyzing data, uncovering patterns, and communicating insights rather than pursuing a traditional classroom role.
 
-I’m comfortable working end-to-end: cleaning data, building reliable logic in SQL/Excel, validating results, and communicating insights clearly. Before moving fully into analytics, I spent several years teaching and tutoring math—experience that sharpened how I explain complex ideas simply and focus on what matters most to stakeholders.
-
-I’m especially interested in analytics work in **business and e-commerce** environments where decisions about **margin, product mix, customer segments, and returns** can create measurable impact.
+I transitioned into data analytics by completing the Google Data Analytics Professional Certificate and continuing to build practical skills through independent projects. I now focus on applying SQL, Excel, and data visualization tools to analyze business and operational data, with an emphasis on clear, actionable insights.
 
 ---
 
