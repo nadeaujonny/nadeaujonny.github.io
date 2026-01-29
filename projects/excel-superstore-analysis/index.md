@@ -9,7 +9,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 ---
 
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -64,9 +64,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -122,7 +120,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
       <strong>Clean text columns</strong>
       <ul>
         <li>Trimmed whitespace and removed non-printable characters across key text fields.</li>
-        <li>Improved pivot grouping stability (e.g., prevents “duplicate labels” caused by trailing spaces).</li>
+        <li>Improved pivot grouping stability (e.g., prevents "duplicate labels" caused by trailing spaces).</li>
       </ul>
     </li>
     <li>
@@ -161,9 +159,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -243,14 +239,12 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     <li><strong>Plan for seasonal demand:</strong> improve inventory coverage and fulfillment capacity ahead of predictable peaks.</li>
     <li><strong>Drill into negative-profit months:</strong> break down by Sub-Category, Discount band, and Ship Mode to identify the primary margin drivers.</li>
     <li><strong>Set discount guardrails:</strong> implement policies that prevent heavy discounting on low-margin items without approvals.</li>
-    <li><strong>Monitor profit margin monthly:</strong> track margin alongside revenue so growth doesn’t hide profitability deterioration.</li>
+    <li><strong>Monitor profit margin monthly:</strong> track margin alongside revenue so growth doesn't hide profitability deterioration.</li>
   </ul>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -387,9 +381,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -478,7 +470,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
   <ul>
     <li><strong>Profit and efficiency vary by region:</strong> some regions combine strong revenue with strong profitability, while others show margin pressure.</li>
     <li><strong>Profit concentration is real:</strong> a small number of states and cities account for a large share of profit.</li>
-    <li><strong>Losses are localized but meaningful:</strong> bottom states/cities can offset gains if the drivers aren’t addressed.</li>
+    <li><strong>Losses are localized but meaningful:</strong> bottom states/cities can offset gains if the drivers aren't addressed.</li>
     <li><strong>Regional inefficiency is often fixable:</strong> discounting, shipping mode, and product mix are common controllable drivers.</li>
   </ul>
 
@@ -486,15 +478,13 @@ title: Sales Dashboard – Superstore Dataset (Excel)
   <ul>
     <li><strong>Defend the profit core:</strong> prioritize service levels and margin discipline in top-profit states/cities to protect the biggest profit pools.</li>
     <li><strong>Run a margin root-cause drilldown in weaker regions:</strong> analyze by Category → Sub-Category → Ship Mode and add Discount bands to isolate margin killers.</li>
-    <li><strong>Create a “loss-market watchlist”:</strong> for bottom locations, identify the top 3 loss drivers and apply targeted corrective actions (pricing, discount rules, shipping policy, assortment changes).</li>
+    <li><strong>Create a "loss-market watchlist":</strong> for bottom locations, identify the top 3 loss drivers and apply targeted corrective actions (pricing, discount rules, shipping policy, assortment changes).</li>
     <li><strong>Operationalize location KPIs:</strong> add regional margin monitoring to the dashboard to prevent persistent losses from being overlooked.</li>
   </ul>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -564,14 +554,12 @@ title: Sales Dashboard – Superstore Dataset (Excel)
     <li><strong>Improve Consumer margin without sacrificing volume:</strong> analyze Consumer by Discount band and Ship Mode to identify margin erosion and set guardrails.</li>
     <li><strong>Scale Home Office profitably:</strong> invest in targeted campaigns and bundles to grow the highest-margin segment.</li>
     <li><strong>Expand Corporate through repeatable programs:</strong> focus on retention and upsell with contract-style offers (bulk tiers, replenishment programs).</li>
-    <li><strong>Monitor segment KPIs monthly:</strong> track Sales, Profit, and Margin by segment so efficiency doesn’t deteriorate unnoticed.</li>
+    <li><strong>Monitor segment KPIs monthly:</strong> track Sales, Profit, and Margin by segment so efficiency doesn't deteriorate unnoticed.</li>
   </ul>
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -661,9 +649,7 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 </details>
 
----
-
-<details>
+<details style="margin-bottom: 8px;">
   <summary><strong>Project Implementation &amp; Deliverables</strong></summary>
 
   <div style="margin-top: 12px;"></div>
