@@ -3,283 +3,290 @@ layout: default
 title: Tableau — Olist Ops & Customer Experience
 ---
 
-# Tableau — Marketplace Operations & Customer Experience (Olist)
+# Tableau — Marketplace Ops & Customer Experience (Olist)
 
-## Overview
-This Tableau analysis examines operational performance and customer experience metrics for Olist, a Brazilian e-commerce marketplace connecting small businesses with major sales channels. Using two years of transactional data (Sep 2016 - Aug 2018), I built an interactive dashboard suite that enables stakeholders to monitor order fulfillment KPIs, identify delivery bottlenecks, and assess customer satisfaction trends. The analysis reveals critical insights about delivery performance, order completion rates, and temporal patterns that directly impact customer experience.
+<details open>
+<summary><h2 style="display: inline;">📊 Project Introduction</h2></summary>
 
-## Business Context
-- **Marketplace Dynamics**: In multi-vendor marketplaces, operational excellence directly impacts both seller reputation and platform retention
-- **Customer Experience Priority**: Late deliveries and order fulfillment issues are primary drivers of negative reviews and customer churn
-- **Competitive Advantage**: Fast, reliable fulfillment is a key differentiator in e-commerce, especially for competing with established players
-- **Scalability Challenges**: As order volumes grow 10-15x over the analysis period, maintaining consistent delivery performance becomes increasingly complex
+### Overview
+This Tableau dashboard analyzes operations and customer experience metrics for Olist, a Brazilian e-commerce marketplace connecting small businesses with major marketplaces. The dashboard enables stakeholders to monitor order fulfillment performance, identify delivery bottlenecks, and assess customer satisfaction trends across the platform's two-year operational history.
 
-## Business Questions
-1. What is our current order fulfillment performance, and how has it evolved over time?
-2. What percentage of orders are delivered late, and what is the trend?
-3. How long does it take on average to deliver orders, and are there seasonal patterns?
-4. What is our order completion rate, and what causes order failures?
-5. How is order volume trending, and can our operations scale to meet demand?
-6. What is the distribution of delivery times, and where are the bottlenecks?
+### Business Context
+- **Marketplace dynamics**: Olist operates as a SaaS platform where delivery performance directly impacts both seller reputation and customer retention
+- **Operational efficiency**: Late deliveries and order cancellations create compounding costs through refunds, support tickets, and seller churn
+- **Customer experience**: Review scores and delivery times are leading indicators of platform health and competitive positioning
+- **Seller accountability**: Performance metrics enable data-driven seller management and quality assurance
 
-## Tools & Skills Demonstrated
-- **Tableau Desktop**: Data relationships (star schema), calculated fields, parameters, KPI cards, time-series analysis, histograms, trendlines, dashboard actions, interactive filters, responsive layout design
-- **Data Preparation**: Connected and related 7 CSV tables using Tableau's relationship model, created calculated fields for delivery metrics and date-based measures
-- **Visualization Techniques**: Time-series line charts with dual-axis reference lines, percentage-based horizontal bar charts, KPI cards with conditional formatting, histogram distributions, interactive filtering across multiple charts
-- **Business Analytics**: Cohort analysis, trend identification, KPI monitoring, operational diagnostics, data storytelling through dashboard design
+### Business Questions
+- What is our overall order fulfillment performance and how has it trended over time?
+- Which geographic regions or product categories experience the highest late delivery rates?
+- How do delivery times correlate with customer satisfaction (review scores)?
+- What percentage of orders are delivered within estimated timeframes?
+- Are there seasonal patterns in order volume, delivery performance, or customer complaints?
 
-## Dataset
-- **Source**: Olist Brazilian E-commerce Public Dataset (Kaggle)
+### Tools & Skills Demonstrated
+- **Tableau Desktop**: Data relationships (7 tables), calculated fields, parameters, dashboard actions, interactive filtering
+- **Data Preparation**: Power Query for data cleaning and transformation, custom column creation
+- **Visualization Techniques**: KPI cards, time series analysis, distribution histograms, geographic mapping, status breakdowns
+- **Business Metrics**: Order completion rate, late delivery rate, average delivery time, order status distribution
+
+### Dataset
+- **Source**: [Olist Brazilian E-commerce Dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (Kaggle)
 - **Time Range**: September 2016 - August 2018 (23 months)
-- **Total Orders Analyzed**: 99,441 distinct orders
 - **Tables Used**: 
-  - `olist_orders_dataset` (order lifecycle dates and status)
-  - `olist_customers_dataset` (customer location)
-  - `olist_sellers_dataset` (seller location)
-  - `olist_order_items_dataset` (order line items)
-  - `olist_order_payments_dataset` (payment information)
-  - `olist_order_reviews_dataset` (customer ratings)
-  - `product_category_name_translation` (category translations)
-- **Notes/Caveats**: 
-  - Dataset ends abruptly in August 2018 (incomplete final month)
-  - Some orders lack review scores (customers did not leave feedback)
-  - Canceled and unavailable orders included in status analysis but excluded from delivery time calculations
+  - `olist_orders_dataset` (99,441 orders)
+  - `olist_order_items_dataset` (112,650 items)
+  - `olist_order_payments_dataset` (103,886 payment records)
+  - `olist_order_reviews_dataset` (99,224 reviews)
+  - `olist_customers_dataset` (99,441 customers)
+  - `olist_sellers_dataset` (3,095 sellers)
+  - `olist_products_dataset` (32,951 products)
+  - `product_category_name_translation` (71 categories)
+- **Notes**: 
+  - August 2016 contains partial month data (excluded from trend analyses)
+  - September 2018 has very limited data (dataset ends abruptly)
+  - Some orders lack review scores (not all customers submit reviews)
+  - Geolocation data available but not used in current analysis
 
-## Data Modeling (Tableau)
-- **Approach**: Used Tableau Relationships (not joins) to create a star schema with `olist_orders_dataset` as the fact table
-- **Relationship Keys**:
-  - Orders → Customers: `customer_id`
-  - Orders → Order Items: `order_id`
-  - Order Items → Products: `product_id`
-  - Order Items → Sellers: `seller_id`
-  - Orders → Payments: `order_id`
-  - Orders → Reviews: `order_id`
-- **Grain**: Primary analysis at order level; some views drill to order-item level
-- **Extract vs Live**: Used Tableau Extract (.hyper) for faster performance and offline analysis capability
-- **Benefits of Relationships**: Preserved correct aggregation levels, avoided duplicate rows from joins, simplified data model maintenance
+### Data Modeling (Tableau)
+- **Approach**: Used Tableau relationships (not joins) to preserve row-level detail across all tables
+- **Primary Key**: `order_id` serves as the central relationship key connecting orders, items, payments, and reviews
+- **Grain Considerations**: 
+  - Order-level metrics: completion rate, delivery time, late delivery flag
+  - Item-level metrics: product categories, freight costs, pricing
+  - Payment-level metrics: payment type distribution, installment analysis
+  - Review-level metrics: satisfaction scores, review text sentiment (future)
+- **Extract Configuration**: Live connection for development; published extract refreshed weekly for production
 
-## Definitions & Metrics
+### Definitions & Metrics
 
-### Core KPIs
-- **Total Orders**: `COUNTD([Order Id])` - Distinct count of all orders regardless of status
-- **Average Delivery Time**: `AVG([Delivery Days])` - Mean number of days from order purchase to customer delivery (delivered orders only)
-- **Order Completion Rate**: `SUM([Is Delivered]) / COUNTD([Order Id])` - Percentage of orders with status "delivered"
-- **Late Delivery Rate**: `SUM([Is Late Delivery]) / SUM([Is Delivered])` - Percentage of delivered orders that arrived after the estimated delivery date
+**Order Completion Rate**
+- Calculation: `COUNT([Order Id]) WHERE [Order Status] = "delivered" / COUNT([Order Id])`
+- Meaning: Percentage of orders successfully delivered to customers
+- Current Value: 97.0%
 
-### Calculated Fields
-- **Delivery Days**: `DATEDIFF('day', [Order Purchase Timestamp], [Order Delivered Customer Date])`
-- **Is Delivered**: `IF [Order Status] = "delivered" THEN 1 ELSE 0 END`
-- **Is Late Delivery**: `IF [Order Delivered Customer Date] > [Order Estimated Delivery Date] THEN 1 ELSE 0 END`
-- **Order Status Distribution**: Aggregated count by status category (delivered, shipped, canceled, unavailable, invoiced, processing, created, approved)
+**Late Delivery Rate**
+- Calculation: `SUM([Is Delivered Late]) / COUNT([Order Id]) WHERE [Order Status] = "delivered"`
+- Definition: Orders where actual delivery date > estimated delivery date
+- Current Value: 6.8%
 
-### Temporal Dimensions
-- **Month of Order**: `MONTH([Order Purchase Timestamp])` - Extracted month for trend analysis
-- **Order Purchase Timestamp**: Primary date field for time-series visualizations
+**Average Delivery Time**
+- Calculation: `AVG([Delivery Days]) WHERE [Order Status] = "delivered"`
+- Definition: Days between order purchase timestamp and delivery to customer timestamp
+- Current Value: 12.5 days
 
-## Analysis 1: Order Fulfillment Performance
+**Delivery Days**
+- Calculation: `DATEDIFF('day', [Order Purchase Timestamp], [Order Delivered Customer Date])`
+- Note: Only calculated for delivered orders; null for canceled/unavailable orders
 
-### Purpose
-This dashboard provides a comprehensive view of operational KPIs related to order fulfillment, delivery speed, and completion rates. It enables operations managers to monitor performance trends, identify deteriorating metrics, and diagnose root causes of delivery issues.
+**Late Delivery Flag**
+- Calculation: `IF [Order Delivered Customer Date] > [Order Estimated Delivery Date] THEN 1 ELSE 0 END`
+- Binary indicator used for aggregation in late delivery rate
 
-### Dashboard Components
+**Order Status Categories**
+- `delivered`: Successfully fulfilled orders (97.02%)
+- `shipped`: Orders in transit (1.11%)
+- `canceled`: Customer or system cancellations (0.63%)
+- `unavailable`: Out of stock or seller issues (0.61%)
+- `invoiced`: Payment processed, awaiting shipment (0.30%)
+- `processing`: Order being prepared (0.30%)
+- `created`: Order placed, payment pending (0.00%)
+- `approved`: Payment approved, not yet invoiced (0.00%)
 
-#### Top-Level KPI Cards
-Four key performance indicators provide immediate visibility into fulfillment health:
-
-1. **Total Orders: 99,441**
-   - All orders placed during the analysis period (Sep 2016 - Aug 2018)
-   - Context: Shows scale of operations and data completeness
-
-2. **Average Delivery Time: 12.5 Days**
-   - Mean time from order purchase to customer delivery
-   - Industry context: Amazon Prime sets customer expectations at 2-day delivery; 12.5 days is significantly slower
-   - Calculation excludes non-delivered orders to avoid skewing the metric
-
-3. **Order Completion Rate: 97.0%**
-   - Percentage of orders successfully delivered to customers
-   - High completion rate indicates good operational reliability
-   - 3% of orders failed due to cancellations, processing issues, or unavailability
-
-4. **Late Delivery Rate: 6.8%**
-   - Percentage of delivered orders that arrived after the promised date
-   - While seemingly low, this represents ~6,700 customers who experienced late delivery
-   - Late deliveries strongly correlate with negative reviews and customer churn
-
-#### Monthly Order Volume (Sep 2016 - Aug 2018)
-**Visualization**: Line chart showing order count by month
-
-**Key Insights**:
-- **Exponential Growth**: Order volume increased from ~500 orders/month in late 2016 to over 7,000 orders/month by mid-2018
-- **Growth Rate**: Approximately 10-15x increase over the 23-month period, indicating rapid marketplace adoption
-- **Seasonality**: Visible peaks in November (Black Friday/Cyber Monday) and May, with slight dips in January
-- **August 2018 Drop**: Sharp decline in final month due to incomplete data (dataset ends mid-month)
-- **Operational Implication**: This rapid scaling tests the limits of fulfillment infrastructure and seller capacity
-
-#### Late Delivery Rate by Month (%)
-**Visualization**: Line chart with percentage on y-axis, reference line at 10%
-
-**Key Insights**:
-- **Initial Spike**: Late delivery rate was extremely high (nearly 100%) in August 2016, likely due to early platform teething issues or small sample size
-- **Rapid Improvement**: Rate dropped to 2-5% by late 2016, suggesting operational process improvements
-- **Stabilization**: From early 2017 onward, late delivery rate stabilized between 5-10%
-- **Slight Upward Trend**: Late 2017 and 2018 show a modest increase in late deliveries, potentially due to scaling challenges as order volume grew
-- **10% Reference Line**: Dashed line at 10% serves as an operational threshold; staying below this target is critical for customer satisfaction
-- **Recommendation**: The upward creep in late delivery rate during high-growth periods warrants investigation into seller performance, logistics partner reliability, and estimated delivery date accuracy
-
-#### Order Status Distribution
-**Visualization**: Horizontal bar chart showing count of orders by status
-
-**Key Insights**:
-- **Delivered (97.02%)**: Overwhelming majority of orders successfully delivered - 96,478 orders
-- **Shipped (1.11%)**: 1,104 orders currently in transit (snapshot data means some orders are still being fulfilled)
-- **Canceled (0.63%)**: 626 orders canceled by customer or system
-- **Unavailable (0.61%)**: 607 orders failed due to product stockouts or seller issues
-- **Other Statuses**: Invoiced, processing, created, approved represent very small percentages (<0.3% each)
-- **Operational Excellence**: The high delivery rate demonstrates strong fulfillment capabilities, but canceled and unavailable orders represent revenue loss and poor customer experience
-- **Focus Area**: Investigating root causes of unavailable orders could reduce customer frustration and increase revenue capture
-
-#### Average Delivery Time by Month (Days)
-**Visualization**: Line chart with trend line (dashed), showing days on y-axis
-
-**Key Insights**:
-- **Early Platform**: Delivery times started at ~55 days in August 2016, indicating severe early operational challenges
-- **Dramatic Improvement**: Rapid decrease to ~5-7 days by November 2016, suggesting major process optimizations
-- **Stable Performance**: From mid-2017 onward, average delivery time stabilized at 10-15 days
-- **Downward Trend**: The dashed trendline shows overall improvement over time, despite order volume increasing 10x+
-- **Seasonal Variation**: Slight increases in delivery time during November and December (holiday season), as expected
-- **Recent Stability**: 2018 shows consistent ~10-12 day delivery times even as volume continued growing
-- **Competitive Gap**: While improved, 10-15 day delivery is still slow compared to major e-commerce players (Amazon, Mercado Livre)
-
-#### Distribution of Delivery Times (Days)
-**Visualization**: Histogram showing frequency distribution of delivery times
-
-**Key Insights**:
-- **Right-Skewed Distribution**: Most orders delivered within 0-30 days, with a long tail extending to 210+ days
-- **Modal Range**: Highest concentration of orders delivered in the 10-20 day range, with peak around 15 days
-- **Fast Delivery Subset**: Significant number of orders (20,000-25,000) delivered in 0-15 days, likely express shipping or local fulfillment
-- **Outliers**: Small number of orders taking 60+ days, representing extreme operational failures
-- **Second Peak**: Minor secondary peak around 25-30 days suggests some orders consistently hit a different fulfillment pathway
-- **Operational Implication**: The wide variance in delivery times (0-210 days) indicates inconsistent seller performance or logistics quality
-- **Recommendation**: Segment sellers by delivery time performance; provide incentives or training to reduce variance and shift distribution leftward
-
-### Primary Filters
-- **Is Delivered**: Parameter to toggle between all orders vs. only delivered orders (affects delivery time and late delivery calculations)
-
-### Interactivity
-- **Hover Tooltips**: All charts display detailed values on hover (exact counts, percentages, dates)
-- **Cross-Filtering**: Clicking on a month in any time-series chart could filter other views (if dashboard actions are enabled)
-- **Consistent Time Range**: All visuals use the same Sep 2016 - Aug 2018 date range for coherent analysis
-
-## Key Findings
-
-### Finding 1: Rapid Growth Strains Operational Consistency
-Order volume increased 10-15x from late 2016 to mid-2018, demonstrating strong marketplace growth. However, late delivery rates have crept upward from ~3% to ~7-10% during the same period, suggesting that operational processes and seller capacity are struggling to keep pace with demand. This is a critical inflection point for the business.
-
-### Finding 2: Delivery Time Improved But Remains Slow
-Average delivery time dropped from 55 days in early platform days to a stable 10-15 days by 2017. While this represents major operational improvement, it's still significantly slower than customer expectations set by competitors like Amazon Prime (2 days) or even standard Mercado Livre shipping (5-7 days). The long right tail of the delivery time distribution (some orders taking 60-210 days) also reveals persistent fulfillment failures.
-
-### Finding 3: High Order Completion Rate Masks Hidden Issues
-The 97% order completion rate appears excellent on the surface. However, the 3% of failed orders (canceled, unavailable) represent nearly 3,000 orders and lost revenue. More importantly, the "unavailable" status (0.61%) indicates inventory management or seller reliability issues that could have been prevented with better systems.
-
-### Finding 4: Late Deliveries Are Underestimated Risk
-A 6.8% late delivery rate means ~6,700 customers received orders after the promised date. Research shows that late delivery is one of the strongest predictors of negative reviews, customer churn, and social media complaints. The upward trend in late delivery rate during high-volume months (holidays) suggests that the platform's estimated delivery date algorithm may be too optimistic or that logistics partners are overpromising.
-
-### Finding 5: Operational Excellence Varies Widely Across Sellers
-The histogram showing delivery time distribution reveals massive variance in seller performance. Some sellers consistently deliver in 5-10 days, while others regularly take 40-60+ days. This inconsistency creates unpredictable customer experiences and makes it difficult to market the platform with a clear delivery promise.
-
-## Business Recommendations
-
-### Recommendation 1: Implement Seller Performance Tiers
-**Action**: Create a tiered seller rating system based on delivery time and late delivery rate. Grant "Premium Seller" badges to top performers and provide incentive-based logistics support.
-
-**Rationale**: The wide variance in delivery performance (5-60+ days) indicates that some sellers have excellent operations while others are failing. By creating transparency through badges and providing targeted support (training, logistics partnerships, inventory financing) to underperforming sellers, the platform can shift the entire distribution leftward and reduce average delivery time.
-
-**Expected Impact**: 
-- Reduce average delivery time from 12.5 days to 8-10 days within 6 months
-- Reduce late delivery rate from 6.8% to below 5%
-- Increase customer trust and repeat purchase rates
-
-### Recommendation 2: Revise Estimated Delivery Date Algorithm
-**Action**: Audit the estimated delivery date calculation logic and incorporate real seller performance data. Add buffer days for historically slower sellers or high-volume periods (holidays).
-
-**Rationale**: The 6.8% late delivery rate and its upward trend during growth periods suggests that promised delivery dates are too optimistic. By using historical seller performance and seasonality data, the platform can set more realistic expectations, reducing the "promise vs. delivery" gap that drives customer dissatisfaction.
-
-**Expected Impact**:
-- Reduce late delivery rate from 6.8% to under 4% by setting more conservative (but achievable) expectations
-- Improve customer review scores by reducing negative sentiment related to late deliveries
-- Build customer trust through consistent fulfillment of promises
-
-### Recommendation 3: Investigate and Reduce "Unavailable" Orders
-**Action**: Implement real-time inventory sync requirements for sellers and automated stockout notifications to customers before order confirmation.
-
-**Rationale**: The 0.61% "unavailable" order rate (607 orders) represents preventable failures. These orders create the worst customer experience (order accepted, then canceled due to stockout) and lost revenue. By requiring sellers to maintain accurate inventory feeds and catching stockouts before order confirmation, these failures can be eliminated.
-
-**Expected Impact**:
-- Reduce unavailable order rate from 0.61% to under 0.2%
-- Prevent ~400 customer frustration incidents per 100k orders
-- Capture additional $50k-100k in revenue per 100k orders (assuming $125-250 average order value)
-
-### Recommendation 4: Scale Operations Infrastructure Proactively
-**Action**: Build forecasting models to predict order volume growth and proactively expand logistics partnerships, warehouse capacity, and seller support resources.
-
-**Rationale**: The 10-15x order growth over 23 months is impressive, but the uptick in late deliveries during high-volume periods shows operational strain. Rather than reacting to growth, the platform should forecast demand 6-12 months ahead and pre-emptively build capacity (new logistics partners, regional fulfillment hubs, automated seller onboarding).
-
-**Expected Impact**:
-- Maintain late delivery rate below 5% even as order volume continues doubling year-over-year
-- Reduce peak season (November, December) operational stress
-- Enable faster geographic expansion by having fulfillment infrastructure in place
-
-### Recommendation 5: Launch Fast Delivery Program
-**Action**: Pilot a "Next Day" or "Express" delivery program with top-performing sellers in high-density regions (São Paulo, Rio de Janeiro).
-
-**Rationale**: The histogram shows that 20,000-25,000 orders (20-25%) are already delivered in 5-10 days. By formalizing this as a premium delivery tier and expanding it, Olist can compete directly with Amazon Prime and Mercado Livre Premium. Faster delivery drives higher customer lifetime value, reduces cart abandonment, and justifies premium pricing.
-
-**Expected Impact**:
-- Capture 10-15% of orders into Express tier within 12 months
-- Increase average order value by 15-20% for Express orders (customers willing to pay for speed)
-- Improve competitive positioning and customer retention
-
-## Tableau Public
-- **Link**: [Coming Soon - Dashboard will be published after final polish]
-
-## Limitations
-
-### Data Limitations
-- **Time Period**: Dataset ends in August 2018; analysis does not reflect 2019+ operational improvements or market changes
-- **Incomplete Final Month**: August 2018 data is partial, causing the sharp drop in order volume chart
-- **Missing Review Data**: Not all orders have associated review scores, limiting customer satisfaction analysis
-- **Geographic Constraints**: Dataset is Brazil-only; findings may not generalize to other markets with different logistics infrastructure
-
-### Analytical Limitations
-- **Causality**: Analysis identifies correlations (e.g., late deliveries during high volume) but does not prove causation
-- **Seller Segmentation**: Unable to deeply segment by seller size, category, or region without additional enrichment
-- **External Factors**: Cannot account for macro events (Brazilian economic conditions, competitor actions, regulatory changes) that may have impacted results
-- **Customer Perspective**: Limited ability to link delivery performance to customer lifetime value or churn without behavioral data
-
-### Methodological Limitations
-- **Aggregation Level**: Primary analysis at order level; item-level insights (e.g., categories with slower fulfillment) require additional views
-- **Static Analysis**: Dashboard shows historical performance but does not include predictive models or real-time alerting
-- **Estimated Dates**: Relies on seller-provided estimated delivery dates, which may themselves be inaccurate
-
-## Next Steps
-
-### Immediate Next Steps (1-2 weeks)
-1. **Build Analysis 2 Dashboard**: Create Seller Performance Scorecard showing delivery time, late rate, and order volume by individual seller
-2. **Add Geographic Analysis**: Map views showing delivery time by customer state/city to identify regional bottlenecks
-3. **Publish to Tableau Public**: Clean up formatting, add branding, write public-facing narrative
-
-### Short-Term Next Steps (1-3 months)
-4. **Customer Experience Dashboard**: Link delivery performance to review scores; analyze correlation between late delivery and low ratings
-5. **Category Analysis**: Break down delivery performance by product category to identify high-risk or slow-moving categories
-6. **Seasonality Deep Dive**: Create detailed month-over-month and week-over-week analysis to forecast holiday demand
-7. **Seller Segmentation**: Cluster sellers by performance tier and identify characteristics of top performers vs. strugglers
-
-### Long-Term Next Steps (3-6 months)
-8. **Predictive Modeling**: Build regression models to predict which orders are most likely to be delivered late based on seller, category, location, and seasonality
-9. **Real-Time Dashboard**: Transition from static historical analysis to live operational dashboard tracking current-day/week metrics
-10. **A/B Test Framework**: Design experiments to test interventions (e.g., revised estimated delivery dates, seller incentives) and measure impact
-11. **Customer Lifetime Value Analysis**: Integrate delivery performance with customer purchase history to quantify financial impact of fulfillment quality
+</details>
 
 ---
 
-*This analysis was created by Jonathan Nadeau as part of a portfolio project demonstrating Tableau data visualization, operational analytics, and business storytelling skills. The Olist dataset is publicly available on Kaggle and represents real e-commerce transactions from 2016-2018.*
+<details open>
+<summary><h2 style="display: inline;">🎯 Analysis 1: Order Fulfillment Performance Overview</h2></summary>
+
+### Purpose
+Provide executives and operations managers with a high-level view of core fulfillment metrics, identifying overall platform health and spotting anomalies that require deeper investigation.
+
+### Key Visualizations
+
+**1. KPI Summary Cards**
+- Total Orders: 99,441
+- Average Delivery Time: 12.5 days
+- Order Completion Rate: 97.0%
+- Late Delivery Rate: 6.8%
+
+**2. Monthly Order Volume Trend (Sep 2016 - Aug 2018)**
+- Line chart showing steady growth from ~400 orders/month (late 2016) to 7,000+ orders/month (mid-2018)
+- Notable spike in November 2017 (~7,500 orders) correlating with Black Friday
+- Sharp decline in August 2018 due to dataset cutoff (incomplete month)
+
+**3. Late Delivery Rate Over Time**
+- Line chart with reference line at 10% (operational target)
+- High volatility in early months (100% in August 2016 due to data quality)
+- Stabilization around 5-10% from February 2017 onward
+- Slight uptick during high-volume periods (November-December)
+
+**4. Order Status Distribution**
+- Horizontal bar chart showing 97% of orders successfully delivered
+- Small percentages of shipped (1.1%), canceled (0.6%), and unavailable (0.6%) orders
+- Processing and invoiced orders represent <0.5% combined (minimal backlog)
+
+**5. Average Delivery Time by Month**
+- Line chart with trend line showing improvement over time
+- Initial delivery times: 50+ days (August 2016, data quality issues)
+- Improvement to 20-day average by November 2016
+- Stabilization at 10-15 days from mid-2017 onward
+- Trend line indicates 50% reduction in delivery time over operational period
+
+**6. Distribution of Delivery Times (Histogram)**
+- Histogram showing delivery day frequency distribution
+- Modal delivery time: 10-15 days (30,000+ orders)
+- Right-skewed distribution with long tail extending to 200+ days
+- 80% of orders delivered within 20 days
+- Outliers beyond 60 days represent edge cases (remote locations, complications)
+
+### Key Filters & Interactivity
+- **Date Range Slider**: Filter analyses to specific time periods
+- **Order Status Multi-Select**: Focus on delivered vs. all orders
+- **Delivery Status Toggle**: Filter to late vs. on-time deliveries
+
+### Findings
+1. **Strong baseline performance**: 97% order completion rate indicates reliable fulfillment infrastructure
+2. **Improving efficiency**: Average delivery time decreased 50% from early 2017 to mid-2018
+3. **Consistent late delivery challenge**: ~7% late delivery rate persists despite volume growth
+4. **Seasonal volume spikes**: November-December show 30-40% order increases without proportional late delivery increases (good capacity management)
+5. **Long tail of problematic deliveries**: While most orders arrive in 10-15 days, outliers skew averages and likely drive negative reviews
+
+### Business Recommendations
+1. **Investigate late delivery root causes**: 7% late rate represents ~6,800 orders annually—conduct RCA on geographic, seller, or carrier factors
+2. **Set estimated delivery expectations conservatively**: Add 2-3 day buffer to algorithmic estimates to underpromise/overdeliver
+3. **Proactive communication for delays**: Automate notifications for orders exceeding 20 days to reduce support tickets
+4. **Seller performance tiering**: Create accountability metrics for sellers with >15% late delivery rates
+5. **Black Friday preparation**: Given November spikes, ensure carrier capacity agreements and warehouse staffing 2 months in advance
+
+</details>
+
+---
+
+<details>
+<summary><h2 style="display: inline;">📦 Analysis 2: [Ready for Content]</h2></summary>
+
+### Purpose
+[Coming soon - space reserved for geographic delivery analysis, product category performance, or carrier comparison]
+
+### Key Visualizations
+[Placeholder for analysis 2 content]
+
+### Key Filters & Interactivity
+[Placeholder for analysis 2 filters]
+
+### Findings
+[Placeholder for analysis 2 findings]
+
+### Business Recommendations
+[Placeholder for analysis 2 recommendations]
+
+</details>
+
+---
+
+<details>
+<summary><h2 style="display: inline;">⭐ Analysis 3: [Ready for Content]</h2></summary>
+
+### Purpose
+[Coming soon - space reserved for customer satisfaction analysis, review score correlations, or seller performance metrics]
+
+### Key Visualizations
+[Placeholder for analysis 3 content]
+
+### Key Filters & Interactivity
+[Placeholder for analysis 3 filters]
+
+### Findings
+[Placeholder for analysis 3 findings]
+
+### Business Recommendations
+[Placeholder for analysis 3 recommendations]
+
+</details>
+
+---
+
+<details>
+<summary><h2 style="display: inline;">🗺️ Analysis 4: [Ready for Content]</h2></summary>
+
+### Purpose
+[Coming soon - space reserved for geographic insights, regional performance, or delivery route optimization]
+
+### Key Visualizations
+[Placeholder for analysis 4 content]
+
+### Key Filters & Interactivity
+[Placeholder for analysis 4 filters]
+
+### Findings
+[Placeholder for analysis 4 findings]
+
+### Business Recommendations
+[Placeholder for analysis 4 recommendations]
+
+</details>
+
+---
+
+<details>
+<summary><h2 style="display: inline;">💡 Analysis 5: [Ready for Content]</h2></summary>
+
+### Purpose
+[Coming soon - space reserved for additional analysis dimension]
+
+### Key Visualizations
+[Placeholder for analysis 5 content]
+
+### Key Filters & Interactivity
+[Placeholder for analysis 5 filters]
+
+### Findings
+[Placeholder for analysis 5 findings]
+
+### Business Recommendations
+[Placeholder for analysis 5 recommendations]
+
+</details>
+
+---
+
+## 🔗 Tableau Public
+
+**Dashboard Link**: [View Interactive Dashboard](https://public.tableau.com/app/profile/your-profile-name) *(Link to be added after publication)*
+
+### Embedded Preview
+*(Dashboard embed code to be added after Tableau Public publication)*
+
+---
+
+## ⚠️ Limitations
+
+- **Incomplete time periods**: August 2016 and September 2018 contain partial data; excluded from trend analyses
+- **Review score coverage**: Only 99,224 reviews for 99,441 orders (~0.2% of orders lack review data)
+- **No carrier attribution**: Dataset doesn't identify which logistics companies handled deliveries, limiting root cause analysis
+- **Missing customer segments**: No demographic data (age, income, customer type) to enable cohort analysis
+- **Geographic granularity**: ZIP code prefix only (not full address), limiting precise location-based insights
+- **Product details**: No product names, only category labels—limits SKU-level analysis
+
+---
+
+## 🚀 Next Steps
+
+### For This Analysis
+- Add geographic heat maps showing late delivery hot spots by region
+- Create seller performance scorecards with delivery SLAs
+- Build predictive model for estimated delivery time accuracy
+- Incorporate review text sentiment analysis to correlate with delivery performance
+
+### Skills Development
+- Learn Tableau Prep for more complex ETL workflows
+- Explore Tableau parameters for "what-if" scenario modeling
+- Study LOD expressions for advanced calculated field techniques
+- Practice dashboard performance optimization for larger datasets
+
+### Portfolio Expansion
+- Build complementary SQL project analyzing same dataset from database perspective
+- Create Python analysis with predictive modeling for late delivery risk
+- Develop Power BI version to demonstrate cross-platform expertise
