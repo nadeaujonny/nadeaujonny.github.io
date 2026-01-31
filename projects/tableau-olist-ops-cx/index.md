@@ -96,6 +96,21 @@ title: Tableau — Olist Ops & Customer Experience
     </figcaption>
   </figure>
 
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/TableauProjectDataPage.png"
+      alt="Tableau Data Source page showing all connected tables"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Tableau Data Source page with all 8 tables from the Olist dataset.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/TableauProjectDataPage.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
   <h3>Table Relationships</h3>
   <ul>
     <li><strong>olist_orders_dataset:</strong> Central fact table (order_id as primary key)</li>
@@ -156,7 +171,7 @@ title: Tableau — Olist Ops & Customer Experience
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1totalorders.png"
+      src="images/tableau-analysis-1-total-orders.png"
       alt="Total Orders KPI card showing 99,441 orders"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -164,14 +179,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Total Orders KPI (99,441 delivered orders analyzed).
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1totalorders.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-total-orders.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1averagedeliverytimekpicard.png"
+      src="images/tableau-analysis-1-average-delivery-time-kpi-card.png"
       alt="Average Delivery Time KPI card showing 12.5 days"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -179,14 +194,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Average Delivery Time KPI (12.5 days from purchase to customer delivery).
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1averagedeliverytimekpicard.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-average-delivery-time-kpi-card.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1ordercompletionratekpicard.png"
+      src="images/tableau-analysis-1-order-completion-rate-kpi-card.png"
       alt="Order Completion Rate KPI card showing 97.0%"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -194,14 +209,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Order Completion Rate KPI (97.0% of orders successfully delivered).
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1ordercompletionratekpicard.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-order-completion-rate-kpi-card.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1latedeliveryratekpicard.png"
+      src="images/tableau-analysis-1-late-delivery-rate-kpi-card.png"
       alt="Late Delivery Rate KPI card showing 6.8%"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -209,7 +224,7 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Late Delivery Rate KPI (6.8% of delivered orders arrived after estimated delivery date).
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1latedeliveryratekpicard.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-late-delivery-rate-kpi-card.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
@@ -218,7 +233,7 @@ title: Tableau — Olist Ops & Customer Experience
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1monthlyordervolume.png"
+      src="images/tableau-analysis-1-monthly-order-volume.png"
       alt="Monthly order volume trend from Sep 2016 to Aug 2018"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -226,14 +241,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Monthly order volume showing dramatic growth from late 2016 through mid-2018, with a sharp decline in Aug 2018.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1monthlyordervolume.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-monthly-order-volume.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1latedeliveryrate.png"
+      src="images/tableau-analysis-1-late-delivery-rate.png"
       alt="Late delivery rate percentage over time"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -241,14 +256,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Late delivery rate by month showing an initial spike (100% in early 2016 with limited data) stabilizing to ~10% baseline with notable spikes.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1latedeliveryrate.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-late-delivery-rate.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1averagedeliverytime.png"
+      src="images/tableau-analysis-1-average-delivery-time.png"
       alt="Average delivery time by month in days"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -256,14 +271,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Average delivery time by month showing significant improvement from ~55 days in early operations to stabilizing around 10-15 days by 2017-2018.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1averagedeliverytime.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-average-delivery-time.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1orderstatusdistribution.png"
+      src="images/tableau-analysis-1-order-status-distribution.png"
       alt="Order status distribution showing delivered, shipped, canceled, unavailable, etc."
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -271,14 +286,14 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Order status distribution: 97.02% delivered, 1.11% shipped, 0.63% canceled, and small percentages of other statuses.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1orderstatusdistribution.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-order-status-distribution.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1distributionofdeliverytimes.png"
+      src="images/tableau-analysis-1-distribution-of-delivery-times.png"
       alt="Histogram showing distribution of delivery times in days"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -286,7 +301,7 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Distribution of delivery times: heavily concentrated in 0-30 day range with a peak around 10-15 days and long tail extending beyond 60 days.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1distributionofdeliverytimes.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-distribution-of-delivery-times.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
@@ -295,7 +310,7 @@ title: Tableau — Olist Ops & Customer Experience
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/tableauanalysis1dashboard.png"
+      src="images/tableau-analysis-1-dashboard.png"
       alt="Complete dashboard showing all order fulfillment performance metrics"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -303,7 +318,7 @@ title: Tableau — Olist Ops & Customer Experience
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Interactive dashboard combining all order fulfillment KPIs, trends, and distributions.
       <span style="display:block; margin-top:4px;">
-        <a href="images/tableauanalysis1dashboard.png">Open full-size</a>
+        <a href="images/tableau-analysis-1-dashboard.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
