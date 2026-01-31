@@ -128,10 +128,6 @@ details > summary{
   justify-content:space-between;
   gap:12px;
   border-bottom:1px solid rgba(255,255,255,.08);
-  transition:background 160ms ease;
-}
-details > summary:hover{
-  background:var(--surface2);
 }
 details > summary::-webkit-details-marker{ display:none; }
 details > summary::after{
@@ -228,6 +224,17 @@ pre{
 /* ---------- Separators / header/footer muted ---------- */
 hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
 header,footer{ color:var(--muted); }
+
+/* =========================================================
+   STICKY HEADER - Navigation stays at top when scrolling
+   ========================================================= */
+.site-header,
+header{
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: transparent;
+}
 
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
@@ -372,23 +379,59 @@ main .wrapper{
   color: #1d4ed8 !important;
 }
 
-/* Projects page: make the main "Projects" heading dark on the light wrapper */
-.page-content .wrapper h1:first-of-type,
-main .wrapper h1:first-of-type{
-  color: rgba(15,15,18,0.95) !important;
-}
-
 /* ===== Fix: make text inside the off-white center wrapper dark ===== */
 .page-content .wrapper,
 main .wrapper{
   color: rgba(15,15,18,0.92) !important;
 }
 
-/* Make common text elements inherit the wrapper's dark color */
+/* =========================================================
+   ALL HEADINGS - BLACK AND PROPERLY SIZED (not blue/purple)
+   ========================================================= */
+
+/* Force ALL headings inside the wrapper to be BLACK - no gradients */
 .page-content .wrapper h1,
 .page-content .wrapper h2,
 .page-content .wrapper h3,
 .page-content .wrapper h4,
+main .wrapper h1,
+main .wrapper h2,
+main .wrapper h3,
+main .wrapper h4 {
+  color: rgba(15, 15, 18, 0.95) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: rgba(15, 15, 18, 0.95) !important;
+  background-clip: unset !important;
+}
+
+/* Proper heading sizes - smaller, more reasonable */
+.page-content .wrapper h1,
+main .wrapper h1 {
+  font-size: clamp(1.6rem, 2.8vw, 2rem) !important;
+  font-weight: 700;
+  margin: 0.8em 0 0.5em;
+}
+
+.page-content .wrapper h2,
+main .wrapper h2 {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem) !important;
+  font-weight: 600;
+}
+
+.page-content .wrapper h3,
+main .wrapper h3 {
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem) !important;
+  font-weight: 600;
+}
+
+.page-content .wrapper h4,
+main .wrapper h4 {
+  font-size: 1rem !important;
+  font-weight: 600;
+}
+
+/* Make common text elements inherit the wrapper's dark color */
 .page-content .wrapper p,
 .page-content .wrapper li,
 .page-content .wrapper span,
@@ -396,10 +439,6 @@ main .wrapper{
 .page-content .wrapper strong,
 .page-content .wrapper em,
 .page-content .wrapper .muted,
-main .wrapper h1,
-main .wrapper h2,
-main .wrapper h3,
-main .wrapper h4,
 main .wrapper p,
 main .wrapper li,
 main .wrapper span,
@@ -421,32 +460,33 @@ main .wrapper a:hover{
 }
 
 /* =========================================================
-   HOMEPAGE HERO SECTION — Modern Tech Aesthetic
+   HOMEPAGE HERO SECTION — Clean, centered, BLACK titles
    ========================================================= */
 
-/* Center the name on homepage */
+/* Center the name on homepage - BLACK, not gradient */
 .page-content .wrapper h1:first-child,
 main .wrapper h1:first-child {
   text-align: center;
-  font-size: clamp(2.8rem, 5vw, 4.2rem) !important;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  margin: 0.3em 0 0.2em;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0.5em 0 0.3em;
+  color: rgba(15, 15, 18, 0.95) !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: rgba(15, 15, 18, 0.95) !important;
+  background-clip: unset !important;
 }
 
-/* Center the subtitle (Data Analyst) */
+/* Center the subtitle (Data Analyst) - also black */
 .page-content .wrapper h1:first-child + h3,
 main .wrapper h1:first-child + h3 {
   text-align: center;
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem) !important;
   font-weight: 600;
-  color: rgba(15, 15, 18, 0.75) !important;
+  color: rgba(15, 15, 18, 0.80) !important;
   margin: 0 0 0.8em;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* Center the description paragraph below subtitle */
