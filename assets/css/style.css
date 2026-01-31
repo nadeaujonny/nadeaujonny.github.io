@@ -234,6 +234,15 @@ header{
   top: 0;
   z-index: 1000;
   background: transparent;
+  padding: 12px 0;
+}
+
+/* Give the nav-tabs a solid background so content doesn't show through when scrolling */
+.site-header .nav-tabs,
+.site-header .site-nav,
+.site-header .topbar-nav{
+  background: var(--surface);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
