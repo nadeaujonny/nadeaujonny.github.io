@@ -306,7 +306,7 @@ title: Tableau — Olist Ops & Customer Experience
     </figcaption>
   </figure>
 
-  <h3>Results — Interactive Dashboard</h3>
+  <h3>Results — Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
