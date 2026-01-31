@@ -96,21 +96,6 @@ title: Tableau — Olist Ops & Customer Experience
     </figcaption>
   </figure>
 
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/TableauProjectDataPage.png"
-      alt="Tableau Data Source page showing all connected tables"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Tableau Data Source page with all 8 tables from the Olist dataset.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/TableauProjectDataPage.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
   <h3>Table Relationships</h3>
   <ul>
     <li><strong>olist_orders_dataset:</strong> Central fact table (order_id as primary key)</li>
