@@ -3,7 +3,7 @@ layout: default
 title: Tableau — Olist Ops & Customer Experience
 ---
 
-# Tableau — Olist E-commerce Operations & Customer Experience Analysis
+# Olist E-commerce Operations & Customer Experience Analysis (Tableau)
 
 > A comprehensive Tableau analysis of the Olist Brazilian E-commerce dataset, focusing on order fulfillment performance, delivery efficiency, and customer experience metrics across 99,441 orders from September 2016 to August 2018.
 
