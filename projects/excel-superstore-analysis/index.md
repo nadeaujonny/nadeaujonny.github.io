@@ -11,10 +11,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Project Overview</h2>
-
-<details open>
-  <summary><strong>Click to expand/collapse</strong></summary>
+<details>
+  <summary><strong>Project Overview</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -62,10 +60,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Data Preparation (Power Query / ETL)</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -156,10 +152,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Analysis 1 — Sales &amp; Profit Trends Over Time</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -241,10 +235,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Analysis 2 — Product &amp; Category Performance</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -379,10 +371,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Analysis 3 — Regional Performance &amp; Market Efficiency</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -482,10 +472,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Analysis 4 — Customer Segment Analysis</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -557,10 +545,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Analysis 5 — Returns Analysis &amp; Revenue Impact</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -646,10 +632,8 @@ title: Sales Dashboard – Superstore Dataset (Excel)
 
 <hr>
 
-<h2>Project Implementation &amp; Deliverables</h2>
-
 <details>
-  <summary><strong>Click to expand/collapse</strong></summary>
+  <summary><strong>Project Implementation &amp; Deliverables</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
