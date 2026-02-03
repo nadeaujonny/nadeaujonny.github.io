@@ -527,3 +527,73 @@ code, pre {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 
                'Cascadia Code', Consolas, monospace;
 }
+
+/* =========================================================
+   Clickable Project Cards (Projects page)
+   - Entire card is a link
+   - Hover matches header buttons + dropdown summaries
+   ========================================================= */
+
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-top:14px;
+}
+
+.col-6{ flex: 1 1 calc(50% - 16px); }
+.col-12{ flex: 1 1 100%; }
+
+@media (max-width: 760px){
+  .col-6{ flex-basis:100%; }
+}
+
+/* Make the entire card clickable */
+.project-card-link{
+  display:block;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  text-decoration:none !important;
+
+  /* same “lift + highlight” feel as .btn and <summary> hover */
+  transition:transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.project-card-link:hover{
+  transform:translateY(-1px);
+  background:var(--surface2);
+  border-color:rgba(255,255,255,.18);
+  text-decoration:none !important;
+}
+
+.project-card-link:active{
+  transform:translateY(0);
+}
+
+/* Ensure text doesn’t turn link-blue inside the card */
+.project-card-link,
+.project-card-link *{
+  color: inherit !important;
+}
+
+/* Keep headings readable on the light center wrapper */
+.project-card-link h1,
+.project-card-link h2,
+.project-card-link h3,
+.project-card-link h4{
+  color: rgba(15,15,18,0.95) !important;
+}
+
+/* Optional: small “Open project →” cue */
+.project-card-cta{
+  margin-top:12px;
+  font-weight:800;
+  color:#2563eb !important;
+}
+
+.project-card-link:hover .project-card-cta{
+  color:#1d4ed8 !important;
+}
