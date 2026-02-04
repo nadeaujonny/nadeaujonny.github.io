@@ -627,7 +627,7 @@ code, pre {
   background-image: url("../tableau-project-card-image.png") !important;
 }
 
-/* Dark overlay using pseudo-element */
+/* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
 .tableau-card::before {
@@ -637,24 +637,60 @@ code, pre {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.70) 100%
-  );
   border-radius: var(--radius);
   z-index: 1;
   transition: background 160ms ease;
 }
 
-/* Slightly darker overlay on hover for better contrast */
-.sql-card:hover::before,
-.excel-card:hover::before,
+/* SQL card – blue overlay */
+.sql-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 50, 120, 0.58) 0%,
+    rgba(20, 50, 120, 0.73) 100%
+  );
+}
+
+/* Excel card – green overlay */
+.excel-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 75, 35, 0.58) 0%,
+    rgba(15, 75, 35, 0.73) 100%
+  );
+}
+
+/* Tableau card – darker blue overlay */
+.tableau-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 20, 80, 0.58) 0%,
+    rgba(8, 20, 80, 0.73) 100%
+  );
+}
+
+/* Slightly lighter overlay on hover */
+.sql-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 50, 120, 0.50) 0%,
+    rgba(20, 50, 120, 0.65) 100%
+  );
+}
+
+.excel-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 75, 35, 0.50) 0%,
+    rgba(15, 75, 35, 0.65) 100%
+  );
+}
+
 .tableau-card:hover::before {
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.50) 0%,
-    rgba(0, 0, 0, 0.65) 100%
+    rgba(8, 20, 80, 0.50) 0%,
+    rgba(8, 20, 80, 0.65) 100%
   );
 }
 
