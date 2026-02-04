@@ -597,3 +597,125 @@ code, pre {
 .project-card-link:hover .project-card-cta{
   color:#1d4ed8 !important;
 }
+
+/* =========================================================
+   Project Cards with Background Images
+   ========================================================= */
+
+/* Base styles for cards with background images */
+.sql-card,
+.excel-card,
+.tableau-card {
+  position: relative;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+/* Individual card backgrounds */
+.sql-card {
+  background-image: url("../sql-project-card-image.png") !important;
+}
+
+.excel-card {
+  background-image: url("../excel-project-card-image.png") !important;
+}
+
+.tableau-card {
+  background-image: url("../tableau-project-card-image.png") !important;
+}
+
+/* Dark overlay using pseudo-element */
+.sql-card::before,
+.excel-card::before,
+.tableau-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.70) 100%
+  );
+  border-radius: var(--radius);
+  z-index: 1;
+  transition: background 160ms ease;
+}
+
+/* Slightly darker overlay on hover for better contrast */
+.sql-card:hover::before,
+.excel-card:hover::before,
+.tableau-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.50) 0%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* Content positioning above the overlay */
+.project-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* White text for cards with background images */
+.sql-card .project-card-content,
+.excel-card .project-card-content,
+.tableau-card .project-card-content,
+.sql-card .project-card-content *,
+.excel-card .project-card-content *,
+.tableau-card .project-card-content * {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Tool name (h2) styling */
+.sql-card .project-card-content h2,
+.excel-card .project-card-content h2,
+.tableau-card .project-card-content h2 {
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 0.3em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Project title (h3) styling */
+.sql-card .project-card-content h3,
+.excel-card .project-card-content h3,
+.tableau-card .project-card-content h3 {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 0 0.5em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Description paragraph */
+.sql-card .project-card-content p,
+.excel-card .project-card-content p,
+.tableau-card .project-card-content p {
+  color: rgba(255, 255, 255, 0.90) !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* CTA link styling for image cards */
+.sql-card .project-card-cta,
+.excel-card .project-card-cta,
+.tableau-card .project-card-cta {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.sql-card:hover .project-card-cta,
+.excel-card:hover .project-card-cta,
+.tableau-card:hover .project-card-cta {
+  color: #fff !important;
+}
