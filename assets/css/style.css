@@ -679,6 +679,10 @@ code, pre {
 .project-card-link.excel-card .project-card-content h2,
 .project-card-link.tableau-card .project-card-content h2 {
   color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
   font-weight: 800;
   font-size: 1.1rem;
   margin: 0 0 0.3em;
@@ -690,6 +694,10 @@ code, pre {
 .project-card-link.excel-card .project-card-content h3,
 .project-card-link.tableau-card .project-card-content h3 {
   color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0 0 0.5em;
