@@ -334,6 +334,194 @@ title: Tableau — Olist Ops & Customer Experience
 ---
 
 <details>
+  <summary><strong>Analysis 2 — Revenue & Sales Performance (Sep 2016 – Aug 2018)</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Business Question</h3>
+  <p>
+    What is the revenue performance of the Olist marketplace? How has revenue grown over time, which product categories
+    and payment methods drive the most revenue, and how is revenue distributed geographically across Brazilian states?
+  </p>
+
+  <h3>Method</h3>
+  <ul>
+    <li>Built KPI summary cards for Total Revenue, Total Items Sold, Average Order Value (AOV), and Revenue Growth Rate</li>
+    <li>Created a monthly revenue trend visualization to track revenue growth over time</li>
+    <li>Analyzed revenue breakdown by product category to identify top-performing categories</li>
+    <li>Examined revenue distribution by payment method to understand customer payment preferences</li>
+    <li>Built a geographic map visualization showing revenue by Brazilian state</li>
+  </ul>
+
+  <h3>Results — KPI Summary Cards</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-total-revenue-kpi.png"
+      alt="Total Revenue KPI card showing $15,843,553.24"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Total Revenue KPI ($15,843,553.24 in total revenue across the analysis period).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-total-revenue-kpi.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-items-sold-kpi.png"
+      alt="Total Items Sold KPI card showing 112,650"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Total Items Sold KPI (112,650 items sold across all orders).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-items-sold-kpi.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-aov-kpi.png"
+      alt="Average Order Value KPI card showing $159.33"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Average Order Value KPI ($159.33 average revenue per order).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-aov-kpi.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-growth-rate-kpi.png"
+      alt="Revenue Growth Rate KPI card showing 21.01%"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Overall Revenue Growth Rate KPI (21.01% year-over-year growth from 2017 to 2018).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-growth-rate-kpi.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Results — Revenue Trends & Distributions</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-monthly-revenue.png"
+      alt="Monthly revenue trend from Sep 2016 to Aug 2018"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Monthly revenue trend showing dramatic growth from near zero in late 2016 to peaks exceeding $1.2M in early 2018.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-monthly-revenue.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-revenue-by-product-category.png"
+      alt="Revenue by product category showing top 10 categories"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Revenue by product category: Health & Beauty leads at $1,441K, followed by Watches & Gifts ($1,306K), Bed Bath & Table ($1,157K), and Sports & Leisure ($1,157K).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-revenue-by-product-category.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-revenue-by-payment-method.png"
+      alt="Revenue by payment method showing credit card dominance"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Revenue by payment type: Credit card dominates at 79.68%, followed by boleto (17.94%), voucher (3.13%), and debit card (1.36%).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-revenue-by-payment-method.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-revenue-by-state.png"
+      alt="Geographic map showing revenue distribution by Brazilian state"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Revenue by state: São Paulo leads with $5,922K (37% of total), followed by Rio de Janeiro ($2,130K) and Minas Gerais ($1,856K).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-revenue-by-state.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Results — Dashboard</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-2-dashboard.png"
+      alt="Complete dashboard showing all revenue and sales performance metrics"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Interactive dashboard combining all revenue KPIs, trends, and distributions for comprehensive sales analysis.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-2-dashboard.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li><strong>Strong revenue growth:</strong> 21.01% year-over-year growth rate from 2017 to 2018 indicates healthy marketplace expansion</li>
+    <li><strong>Dramatic scaling:</strong> Monthly revenue grew from near zero in late 2016 to exceeding $1.2M by early 2018, demonstrating successful market penetration</li>
+    <li><strong>Diversified product mix:</strong> Top 10 categories are relatively balanced, with Health & Beauty leading but no single category dominating (top category represents ~9% of revenue)</li>
+    <li><strong>Credit card preference:</strong> Nearly 80% of revenue comes from credit card payments, reflecting Brazilian consumer preferences and installment payment culture</li>
+    <li><strong>Geographic concentration:</strong> São Paulo alone accounts for 37% of total revenue, with the Southeast region (SP, RJ, MG) driving over 60% of sales</li>
+    <li><strong>Healthy AOV:</strong> $159.33 average order value suggests customers are making meaningful purchases rather than low-value transactions</li>
+    <li><strong>Boleto adoption:</strong> 17.94% of revenue from boleto (bank slip) indicates successful inclusion of unbanked/underbanked customers</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li><strong>Expand geographic reach:</strong> Invest in marketing and logistics infrastructure in underserved northern and central-western states to reduce São Paulo dependency</li>
+    <li><strong>Optimize category strategy:</strong> Double down on top-performing categories (Health & Beauty, Watches & Gifts) while investigating growth potential in underperforming categories</li>
+    <li><strong>Leverage credit card partnerships:</strong> Given 80% credit card usage, explore co-branded cards or installment partnerships to increase AOV and customer loyalty</li>
+    <li><strong>Grow boleto and debit adoption:</strong> Expand payment options and incentives for boleto users to capture more of the underbanked market segment</li>
+    <li><strong>Monitor AOV trends:</strong> Track AOV by category and region to identify opportunities for cross-selling and upselling</li>
+    <li><strong>Regional pricing analysis:</strong> Investigate if pricing optimization in high-volume states could increase margins without impacting volume</li>
+    <li><strong>Sustain growth momentum:</strong> With 21% YoY growth, focus on customer retention and repeat purchase programs to maintain trajectory</li>
+  </ul>
+
+</details>
+
+---
+
+<details>
   <summary><strong>Tableau Public & Downloads</strong></summary>
 
   <div style="margin-top: 12px;"></div>
