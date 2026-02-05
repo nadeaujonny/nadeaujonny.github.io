@@ -522,6 +522,242 @@ title: Tableau — Olist Ops & Customer Experience
 ---
 
 <details>
+  <summary><strong>Analysis 3 — Customer Experience & Review Quality (Sep 2016 – Aug 2018)</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Business Question</h3>
+  <p>
+    How satisfied are Olist customers overall, and how do review scores vary by time, product category, 
+    and delivery performance? What insights can guide actions to increase 5-star outcomes while reducing 
+    low-rated experiences?
+  </p>
+
+  <h3>Method</h3>
+  <ul>
+    <li>Built KPI cards for Average Review Score, Total Reviews, 5-Star Review Rate, and 1-Star Review Rate</li>
+    <li>Analyzed review score distribution to quantify sentiment skew</li>
+    <li>Tracked review score trends over time to identify stabilization or shifts in customer sentiment</li>
+    <li>Evaluated review score vs delivery days and delivery status to test operational impact on satisfaction</li>
+    <li>Ranked top and bottom product categories by average review score to isolate category-level opportunities</li>
+    <li>Created a category performance scatterplot to compare review score vs review volume</li>
+  </ul>
+
+  <h3>Results — KPI Summary Cards</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-average-review-score.png"
+      alt="Average Review Score KPI card showing 4.086"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Average Review Score KPI (overall average score of 4.086 across all reviews).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-average-review-score.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-total-reviews.png"
+      alt="Total Reviews KPI card showing 98,410"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Total Reviews KPI (98,410 total customer reviews captured).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-total-reviews.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-5-star-review-rate.png"
+      alt="5-Star Review Rate KPI card showing 58.25%"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      5-Star Review Rate KPI (58.25% of reviews are perfect scores).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-5-star-review-rate.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-1-star-review-rate.png"
+      alt="1-Star Review Rate KPI card showing 11.61%"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      1-Star Review Rate KPI (11.61% of reviews indicate severe dissatisfaction).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-1-star-review-rate.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Results — Review Score Distribution & Trends</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-review-score-distribution.png"
+      alt="Review score distribution line chart by rating from 1 to 5"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Review score distribution highlighting a strong skew toward 5-star ratings and a comparatively smaller 2-star segment.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-review-score-distribution.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-review-score-trend-ovetime.png"
+      alt="Average review score trend over time from late 2016 through 2018"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Review score trend over time showing early volatility in late 2016 followed by a stable ~4.0-4.3 range through 2018.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-review-score-trend-ovetime.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Results — Delivery Impact & Category Performance</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-review-score-vs-delivery-days.png"
+      alt="Average review score by delivery days bins"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Review score vs delivery days correlation showing higher ratings for faster deliveries and lower scores as delivery time grows.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-review-score-vs-delivery-days.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-review-score-by-delivery-status.png"
+      alt="Average review score by delivery status"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Review score by delivery status highlighting higher satisfaction for on-time deliveries versus late deliveries.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-review-score-by-delivery-status.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-top-10-product-categories-by-review-scores.png"
+      alt="Top 10 product categories by average review score"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Top 10 product categories by review score showing multiple categories performing well above the overall average.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-top-10-product-categories-by-review-scores.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-bottom-10-product-categories-by-review-scores.png"
+      alt="Bottom 10 product categories by average review score"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Bottom 10 product categories by review score ranging from ~3.62 to ~3.86 average scores.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-bottom-10-product-categories-by-review-scores.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-category-performance-scatterplot.png"
+      alt="Category performance scatterplot showing review score versus review volume"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Category performance scatterplot comparing review score against review volume to identify high-impact categories.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-category-performance-scatterplot.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Results — Dashboard</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-3-dashboard.png"
+      alt="Customer Experience and Reviews dashboard"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Customer Experience & Reviews dashboard consolidating KPIs, distributions, trends, and category insights.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-3-dashboard.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li><strong>High overall satisfaction:</strong> Average review score is 4.086 with a strong 58.25% 5-star rate</li>
+    <li><strong>Meaningful dissatisfaction segment:</strong> 11.61% 1-star rate suggests a sizable group of poor experiences to address</li>
+    <li><strong>Sentiment skewed positive:</strong> Distribution is heavily weighted toward 4- and 5-star reviews, with 2-star ratings the smallest slice</li>
+    <li><strong>Stabilized sentiment after early volatility:</strong> Review scores dipped in late 2016 but stabilized around 4.0–4.3 through 2018</li>
+    <li><strong>Delivery speed drives satisfaction:</strong> Faster delivery windows align with higher review scores, while long delivery times correlate with lower ratings</li>
+    <li><strong>Category gaps are real:</strong> Bottom categories trail the average by ~0.2–0.5 points, indicating product or fulfillment issues within specific verticals</li>
+    <li><strong>High-impact category targets:</strong> The category performance scatterplot highlights categories with high review volume where small score lifts could yield meaningful impact</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li><strong>Prioritize delivery-time reductions:</strong> Target delivery-day bins with the sharpest review drops (30–80 days) through carrier optimization and inventory placement</li>
+    <li><strong>Fix low-performing categories:</strong> Run category deep-dives on the bottom 10 list to diagnose issues (product quality, packaging, seller reliability, or returns)</li>
+    <li><strong>Scale best-in-class practices:</strong> Replicate fulfillment and seller standards from top-rated categories into mid-performing categories</li>
+    <li><strong>Prevent 1-star experiences:</strong> Add proactive customer notifications for long deliveries and expedite support for delayed orders</li>
+    <li><strong>Balance volume and quality:</strong> Use the category scatterplot to focus on high-volume categories where incremental review gains translate to large reputation benefits</li>
+    <li><strong>Improve post-purchase touchpoints:</strong> Capture more detailed feedback (delivery, product quality, seller comms) to isolate specific drivers of low scores</li>
+  </ul>
+
+</details>
+
+---
+
+<details>
   <summary><strong>Tableau Public & Downloads</strong></summary>
 
   <div style="margin-top: 12px;"></div>
