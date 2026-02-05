@@ -765,6 +765,241 @@ breadcrumbs:
 ---
 
 <details>
+  <summary><strong>Analysis 4 — Marketplace Ecosystem: Products & Sellers (Sep 2016 – Aug 2018)</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Business Question</h3>
+  <p>
+    How does the Olist marketplace ecosystem perform across product categories and seller dynamics? What patterns
+    emerge in product performance, seller distribution, and the integrated marketplace structure that reveal
+    opportunities for growth, quality improvement, and strategic optimization?
+  </p>
+
+  <h3>Method</h3>
+  <ul>
+    <li>Built comprehensive KPIs tracking total products sold, unique categories, average items per order, seller counts, and marketplace concentration metrics</li>
+    <li>Analyzed product category performance using treemaps, Pareto charts, and monthly trend analysis to identify revenue concentration and seasonality</li>
+    <li>Created category performance matrix scatter plots to correlate revenue with customer satisfaction (review scores)</li>
+    <li>Examined seller ecosystem health through geographic distribution maps, revenue concentration analysis, and seller performance quadrants</li>
+    <li>Tracked seller growth over time to understand marketplace expansion patterns</li>
+    <li>Built integrated analysis visualizations including category-seller matrix heatmaps and product weight vs price relationships</li>
+  </ul>
+
+  <h3>Results — Section A: Product Performance</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-4-dashboard-shot-1.png"
+      alt="Product Performance dashboard showing KPIs, treemap, revenue charts, and category trends"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Section A - Product Performance: Overview of 32,216 products sold across 71 categories, featuring treemap visualization, top 15 categories, Pareto analysis, and monthly trends.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-4-dashboard-shot-1.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Product Performance Key Metrics</h4>
+  <ul>
+    <li><strong>32,216 Total Products Sold</strong> across the marketplace during the analysis period</li>
+    <li><strong>71 Unique Product Categories</strong> available to customers</li>
+    <li><strong>1.142 Average Items per Order</strong> — suggests most orders are single-item purchases</li>
+    <li><strong>39.25% Revenue Concentration</strong> in Top 5 Categories — moderate concentration indicating diversified marketplace</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-4-dashboard-shot-2.png"
+      alt="Product Performance continued showing Pareto chart, monthly trends, and category performance matrix"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Product Performance Analysis: Pareto chart demonstrating 80/20 rule, monthly category trends with seasonal peaks, and Category Performance Matrix correlating revenue with review scores.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-4-dashboard-shot-2.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Category Revenue Leaders</h4>
+  <ul>
+    <li><strong>Health & Beauty:</strong> $1.41M revenue — top-performing category</li>
+    <li><strong>Watches & Gifts:</strong> $1.26M revenue — second highest performer</li>
+    <li><strong>Bed Bath Table:</strong> $1.23M revenue — strong home goods category</li>
+    <li><strong>Sports Leisure:</strong> $1.12M revenue — active lifestyle category</li>
+    <li><strong>Computers Accessories:</strong> $1.03M revenue — technology segment</li>
+  </ul>
+
+  <h4>Product Performance Insights</h4>
+  <ul>
+    <li><strong>Treemap reveals category dominance:</strong> Health & Beauty, Sports Leisure, Housewares, Toys, and Baby categories are major revenue drivers with clear visual presence</li>
+    <li><strong>Pareto principle validated:</strong> Roughly 20% of categories drive 80% of revenue, following the classic 80/20 distribution</li>
+    <li><strong>Seasonal patterns identified:</strong> Monthly trends show peaks around May and August-September, followed by year-end decline</li>
+    <li><strong>Category Performance Matrix reveals quality leaders:</strong> Health & Beauty achieves highest revenue (~$1.4M) with above-average review scores (~4.2)</li>
+    <li><strong>High-quality, high-revenue categories:</strong> Bed Bath Table and Sports Leisure demonstrate strong revenue with excellent customer satisfaction</li>
+    <li><strong>Consistent high performers:</strong> Categories like Home Comfort, Stationery, and Perfumery maintain high review scores (4.0+) across varying revenue levels</li>
+    <li><strong>Improvement opportunity identified:</strong> Office Furniture shows lower review scores despite moderate revenue</li>
+  </ul>
+
+  <h3>Results — Section B: Seller Performance</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-4-dashboard-shot-3.png"
+      alt="Seller Performance dashboard showing seller metrics, geographic distribution, top sellers, and growth trends"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Section B - Seller Performance: Analysis of 2,970 active sellers with $5,323 average revenue per seller, featuring geographic distribution across Brazil, top 10 sellers, performance quadrant, and seller growth timeline.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-4-dashboard-shot-3.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Seller Ecosystem Metrics</h4>
+  <ul>
+    <li><strong>2,970 Active Sellers</strong> on the platform</li>
+    <li><strong>$5,323 Average Revenue per Seller</strong> — indicates a healthy mid-sized seller base</li>
+    <li><strong>12.93% Top 10 Seller Concentration</strong> — relatively low, suggesting a well-distributed marketplace not dominated by mega-sellers</li>
+    <li><strong>22 States</strong> with seller representation across Brazil</li>
+  </ul>
+
+  <h4>Geographic Distribution</h4>
+  <ul>
+    <li><strong>São Paulo (SP) state dominates</strong> with the largest concentration of sellers (shown by the prominent green circle on the map)</li>
+    <li><strong>Notable secondary states:</strong> RJ (Rio de Janeiro), MG (Minas Gerais), and RS (Rio Grande do Sul)</li>
+    <li><strong>Regional concentration:</strong> Sellers are primarily concentrated in Brazil's southeast region</li>
+  </ul>
+
+  <h4>Top Seller Performance</h4>
+  <ul>
+    <li><strong>Top seller generates $247K</strong> in revenue during the period</li>
+    <li><strong>Progressive decline through top 10:</strong> 10th seller at approximately $160K</li>
+    <li><strong>Gradual distribution:</strong> The gradual decline (vs. steep drop-off) indicates a healthy competitive marketplace</li>
+  </ul>
+
+  <h4>Seller Performance Quadrant Analysis</h4>
+  <ul>
+    <li><strong>Clustering around average:</strong> Most sellers cluster around average revenue ($5K) and average reviews (4.0)</li>
+    <li><strong>High performers identified:</strong> Top right quadrant shows sellers achieving $150K-$250K revenue with 4.0-4.5 review scores</li>
+    <li><strong>Quality maintenance:</strong> Very few sellers operate in the "high revenue, low satisfaction" zone</li>
+    <li><strong>Niche excellence:</strong> Some sellers achieve very high satisfaction (4.5+) even at lower revenue levels</li>
+  </ul>
+
+  <h4>Seller Growth Trends</h4>
+  <ul>
+    <li><strong>Peak onboarding:</strong> January 2017 saw 213 new sellers join the platform</li>
+    <li><strong>Steady growth:</strong> 100-200 new sellers per month throughout 2017-2018</li>
+    <li><strong>Notable dips:</strong> Mid-2017 and early 2018 showed temporary decreases in new seller acquisition</li>
+    <li><strong>Overall trajectory:</strong> The marketplace demonstrates healthy expansion with sustained new seller acquisition</li>
+  </ul>
+
+  <h3>Results — Section C: Integrated Analysis</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-4-dashboard-shot-4.png"
+      alt="Integrated Analysis dashboard showing category-seller matrix heatmap and product weight vs price scatter plot"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Section C - Integrated Analysis: Category-Seller Matrix heatmap revealing seller presence across states and categories, plus Product Weight vs Price scatter plot showing marketplace structure and logistics patterns.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-4-dashboard-shot-4.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Category-Seller Matrix (Heatmap) Insights</h4>
+  <ul>
+    <li><strong>SP (São Paulo) dominance:</strong> Shows the darkest intensity across most categories — it's the undisputed seller hub</li>
+    <li><strong>Broad geographic coverage:</strong> Categories like Auto, Health & Beauty, Housewares, and Sports Leisure have seller presence across multiple states</li>
+    <li><strong>Concentrated categories:</strong> Bed Bath Table, Computers Accessories, and Garden Tools show focused seller presence in specific states</li>
+    <li><strong>White space opportunities:</strong> Gaps indicate categories lacking seller representation in certain states — potential expansion targets</li>
+  </ul>
+
+  <h4>Product Weight vs Price Scatter Plot Insights</h4>
+  <ul>
+    <li><strong>Product clustering:</strong> Most products fall in the 0-10K gram range with prices under $2,000</li>
+    <li><strong>Heavy outliers exist:</strong> Products at 30K-40K grams are rare but present</li>
+    <li><strong>Marketplace optimization:</strong> Light, low-cost items dominate — likely easier to ship and more impulse-buy friendly</li>
+    <li><strong>No strong weight-price correlation:</strong> Some heavy items are cheap, some light items are expensive — diverse product mix</li>
+    <li><strong>Premium segment:</strong> A few premium products exist at $6-7K price points regardless of weight</li>
+  </ul>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li><strong>Healthy marketplace structure:</strong> Low seller concentration (12.93%) and broad seller base (2,970) indicate a competitive, democratized platform rather than oligopoly</li>
+    <li><strong>Geographic advantage matters:</strong> São Paulo's dominance across the heatmap suggests logistics advantages and market proximity drive seller location decisions</li>
+    <li><strong>E-commerce-optimized product mix:</strong> The platform favors lightweight, affordable products — optimized for e-commerce shipping economics and lower barriers to purchase</li>
+    <li><strong>Quality standards effective:</strong> The seller quadrant shows most sellers maintain good reviews (4.0+) regardless of revenue level — platform quality standards appear to be working</li>
+    <li><strong>Category-quality correlation:</strong> High-revenue categories like Health & Beauty and Sports Leisure also maintain above-average review scores, proving quality and scale can coexist</li>
+    <li><strong>Improvement targets identified:</strong> Categories with high revenue but lower reviews (like Office Furniture) present clear improvement opportunities</li>
+    <li><strong>Consistent marketplace expansion:</strong> Growth pattern shows 100-200 new sellers per month with strong Q1 2017 spike, suggesting successful marketplace expansion strategy</li>
+    <li><strong>Revenue diversification:</strong> While top 5 categories represent 39.25% of revenue, the remaining 60%+ is distributed across 66 other categories — good diversification</li>
+    <li><strong>Seasonal demand patterns:</strong> May and August-September peaks suggest back-to-school and mid-year shopping events drive category performance</li>
+    <li><strong>Single-item order behavior:</strong> Average of 1.142 items per order indicates targeted shopping rather than basket-building — potential opportunity for cross-selling</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+
+  <h4>Product Strategy</h4>
+  <ul>
+    <li><strong>Double down on proven winners:</strong> Invest in expanding Health & Beauty, Watches & Gifts, and Bed Bath Table categories through seller recruitment and marketing spend</li>
+    <li><strong>Fix Office Furniture quality issues:</strong> Investigate why this category shows lower review scores despite moderate revenue — likely product quality, delivery damage, or fulfillment issues</li>
+    <li><strong>Leverage seasonal patterns:</strong> Build promotional campaigns around May and August-September peaks to amplify natural demand cycles</li>
+    <li><strong>Increase basket size:</strong> With only 1.142 items per order, implement "Frequently Bought Together" recommendations and cross-category bundles to increase AOV</li>
+    <li><strong>Replicate quality practices:</strong> Document and share best practices from high-satisfaction categories (Home Comfort, Stationery, Perfumery) with lower-performing categories</li>
+  </ul>
+
+  <h4>Seller Development</h4>
+  <ul>
+    <li><strong>Expand beyond São Paulo:</strong> Create incentive programs for high-quality sellers to establish operations in underserved states (RO, AC, AM, PA in the North region)</li>
+    <li><strong>Maintain healthy competition:</strong> Continue strategies that keep the top 10 concentration low (12.93%) to prevent marketplace monopolization</li>
+    <li><strong>Celebrate and promote high performers:</strong> Feature sellers in the top-right quadrant (high revenue, high satisfaction) as "Featured Sellers" to incentivize quality</li>
+    <li><strong>Support mid-tier sellers:</strong> Build growth programs for sellers clustered around $5K revenue to help them scale to $50K-100K levels</li>
+    <li><strong>Sustain onboarding momentum:</strong> Target 150-200 new quality sellers per month, focusing on filling white-space categories and regions</li>
+  </ul>
+
+  <h4>Integrated Ecosystem Optimization</h4>
+  <ul>
+    <li><strong>Fill category-state gaps:</strong> Use the heatmap to target specific category expansions in states with no seller presence — prioritize high-demand categories first</li>
+    <li><strong>Optimize logistics for lightweight products:</strong> Since the platform naturally favors light items, negotiate volume shipping rates for 0-10K gram products to improve margins</li>
+    <li><strong>Premium product strategy:</strong> Develop dedicated fulfillment and marketing for the $6K+ price segment to capture high-margin sales</li>
+    <li><strong>Weight-based fee structure:</strong> Consider tiered shipping or commission structures that account for product weight to ensure heavy items remain profitable</li>
+    <li><strong>Cross-state seller expansion:</strong> Encourage top São Paulo sellers to establish secondary warehouses in RJ, MG, or RS to improve delivery times nationwide</li>
+  </ul>
+
+  <h4>Strategic Initiatives</h4>
+  <ul>
+    <li><strong>Category diversification targets:</strong> While the top 5 represent 39.25%, push this down to 35% by growing mid-tier categories to reduce revenue concentration risk</li>
+    <li><strong>Seller quality gates:</strong> Implement pre-onboarding quality checks and training to maintain the 4.0+ average review standard across new sellers</li>
+    <li><strong>Geographic expansion roadmap:</strong> Create a 12-month plan to establish seller presence in all 27 Brazilian states, prioritizing population centers first</li>
+    <li><strong>Data-driven seller recruitment:</strong> Use white-space analysis to recruit sellers specifically in underserved category-state combinations</li>
+    <li><strong>Monitor marketplace health metrics:</strong> Track seller concentration, new seller velocity, and category Herfindahl index quarterly to catch concentration risks early</li>
+  </ul>
+
+  <button
+    onclick="this.closest('details').removeAttribute('open')"
+    style="position: sticky; bottom: 20px; left: 50%; transform: translateX(-50%); margin: 24px auto 0; display: block; padding: 8px 20px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+  >
+    Close Section
+  </button>
+
+</details>
+
+---
+
+<details>
   <summary><strong>Tableau Public & Downloads</strong></summary>
 
   <div style="margin-top: 12px;"></div>
