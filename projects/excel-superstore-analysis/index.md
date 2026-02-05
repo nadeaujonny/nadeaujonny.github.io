@@ -1,7 +1,14 @@
 ---
 layout: default
 title: Sales Dashboard – Superstore Dataset (Excel)
+description: "End-to-end Excel analytics project with Power Query ETL, KPI development, pivot-table analysis, and an interactive profit-oriented dashboard using the Superstore retail dataset."
+breadcrumbs:
+  - title: Projects
+    url: /projects/
+  - title: Sales Dashboard – Superstore Dataset (Excel)
 ---
+
+<a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
 <h1>Sales Dashboard – Superstore Dataset (Excel)</h1>
 

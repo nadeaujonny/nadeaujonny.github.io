@@ -1,0 +1,17 @@
+title: Jonathan Nadeau - Data Analyst
+description: "Data analyst portfolio showcasing end-to-end projects in SQL, Excel, Tableau, Power BI, Python, and R."
+author: Jonathan Nadeau
+url: "https://nadeaujonny.github.io"
+baseurl: ""
+theme: minima
+
+# GitHub Pages whitelisted plugins (no Gemfile needed)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

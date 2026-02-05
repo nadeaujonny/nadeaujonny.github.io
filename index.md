@@ -1,3 +1,8 @@
+---
+layout: default
+description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Tableau, and Power BI. Portfolio of end-to-end data analysis projects with actionable business insights."
+---
+
 # Jonathan Nadeau
 
 <img src="assets/la-banner.png"

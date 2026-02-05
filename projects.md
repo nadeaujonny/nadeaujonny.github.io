@@ -2,6 +2,7 @@
 layout: default
 title: Projects
 permalink: /projects/
+description: "Portfolio of data analysis projects including SQL query analysis, Excel dashboards, and Tableau visualizations with detailed methodologies and insights."
 ---
 
 # Projects
