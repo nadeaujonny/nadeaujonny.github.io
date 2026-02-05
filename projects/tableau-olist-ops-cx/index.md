@@ -988,13 +988,6 @@ breadcrumbs:
     <li><strong>Monitor marketplace health metrics:</strong> Track seller concentration, new seller velocity, and category Herfindahl index quarterly to catch concentration risks early</li>
   </ul>
 
-  <button
-    onclick="this.closest('details').removeAttribute('open')"
-    style="position: sticky; bottom: 20px; left: 50%; transform: translateX(-50%); margin: 24px auto 0; display: block; padding: 8px 20px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-  >
-    Close Section
-  </button>
-
 </details>
 
 ---
