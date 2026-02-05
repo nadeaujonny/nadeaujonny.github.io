@@ -41,7 +41,7 @@ I transitioned into data analytics by completing the Google Data Analytics Profe
 
 ---
 
-## Contact
+<h2 id="contact">Contact</h2>
 - **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)  
 - **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)  
 - **GitHub:** [github.com/nadeaujonny](https://github.com/nadeaujonny)
