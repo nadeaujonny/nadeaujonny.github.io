@@ -16,6 +16,9 @@ breadcrumbs:
 
 ---
 
+<details>
+<summary><strong>Dropdown Section 1: Project overview, dataset info, objectives</strong></summary>
+
 ## Project Overview
 
 This portfolio project is designed to highlight end-to-end Power BI capabilities: data ingestion, Power Query transformations, data modeling, advanced DAX measures, and interactive dashboards for healthcare stakeholders.
@@ -49,11 +52,12 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Show domain versatility beyond e-commerce/retail analytics
 - Prove multi-source data integration skills and complex relationships handling
 
----
+</details>
 
-## Analysis Structure
+<details>
+<summary><strong>Dropdown Section 2: Analysis 1</strong></summary>
 
-### Analysis 1 — Population Health Overview Dashboard
+## Analysis 1 — Population Health Overview Dashboard
 
 **Focus:** High-level health metrics and population trends
 
@@ -78,7 +82,12 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Bookmarks for view states
 - Drill-through to regional details
 
-### Analysis 2 — Healthcare Disparities & Demographics
+</details>
+
+<details>
+<summary><strong>Dropdown Section 3: Analysis 2</strong></summary>
+
+## Analysis 2 — Healthcare Disparities & Demographics
 
 **Focus:** Health equity across demographic groups
 
@@ -102,7 +111,12 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Field parameters for dynamic metrics
 - What-if parameters
 
-### Analysis 3 — Resource Utilization & Efficiency
+</details>
+
+<details>
+<summary><strong>Dropdown Section 4: Analysis 3</strong></summary>
+
+## Analysis 3 — Resource Utilization & Efficiency
 
 **Focus:** Facility performance and resource allocation
 
@@ -127,7 +141,12 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Key influencers visual
 - Mobile-optimized layout
 
-### Analysis 4 — Disease/Condition Deep Dive
+</details>
+
+<details>
+<summary><strong>Dropdown Section 5: Analysis 4</strong></summary>
+
+## Analysis 4 — Disease/Condition Deep Dive
 
 **Focus:** Targeted condition analysis (e.g., diabetes, heart disease)
 
@@ -152,7 +171,12 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Hierarchies for drill-down
 - Cross-filter direction management
 
-### Analysis 5 — Executive Summary Dashboard
+</details>
+
+<details>
+<summary><strong>Dropdown Section 6: Analysis 5</strong></summary>
+
+## Analysis 5 — Executive Summary Dashboard
 
 **Focus:** C-suite level overview and navigation
 
@@ -171,7 +195,10 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Publishing to Power BI Service (if available)
 - Scheduled refresh setup demonstration
 
----
+</details>
+
+<details>
+<summary><strong>Dropdown Section 7: Technical implementation</strong></summary>
 
 ## Technical Implementation Checklist
 
@@ -225,7 +252,10 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Sync slicers across pages
 - Clear visual hierarchy
 
----
+</details>
+
+<details>
+<summary><strong>Dropdown Section 8: Key insights, deliverables, skills demonstrated, limitations, conclusion</strong></summary>
 
 ## Key Business Insights to Highlight
 
@@ -283,6 +313,16 @@ This portfolio project is designed to highlight end-to-end Power BI capabilities
 - Trend identification
 - Comparative analysis
 
+## Limitations
+
+- Public health datasets may have reporting lags or inconsistent definitions across sources.
+- Multi-source integration can introduce coverage gaps that need explicit documentation.
+- Real-world stakeholder access constraints may limit validation of operational impact.
+
+## Conclusion
+
+This project highlights the ability to synthesize complex healthcare data into actionable, executive-ready insights while demonstrating advanced Power BI modeling, DAX, and dashboard design skills.
+
 ## Differentiation from Other Portfolio Projects
 
 | Aspect | SQL/Excel/Tableau Projects | Power BI Project |
@@ -319,10 +359,10 @@ When presenting this project to potential employers, emphasize:
 - Self-service BI enablement for stakeholders
 - Scalability through performance optimization
 
----
-
 ## Project Assets (to be added)
 
 - Power BI report screenshots: `images/`
 - Source datasets and data dictionary: `data/`
 - Power BI workbook: `workbook/`
+
+</details>
