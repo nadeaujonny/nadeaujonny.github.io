@@ -993,6 +993,154 @@ breadcrumbs:
 ---
 
 <details>
+  <summary><strong>Analysis 5 — Executive Summary Dashboard (Sep 2016 – Aug 2018)</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Business Question</h3>
+  <p>
+    What is the overall health of the Olist marketplace across financial performance, operational efficiency,
+    customer satisfaction, and marketplace dynamics — and how can executives quickly assess business status
+    and identify areas requiring immediate attention?
+  </p>
+
+  <h3>Method</h3>
+  <ul>
+    <li>Synthesized insights from all four previous analyses into a single executive-level dashboard</li>
+    <li>Built 4 KPI cards with month-over-month percentage changes using FIXED LOD expressions and conditional color-coded trend indicators (red for declining, green for improving)</li>
+    <li>Implemented revenue trend with Tableau's native 3-month forecasting engine, 95% confidence intervals, and linear trend line</li>
+    <li>Created core analytics row with order status distribution, Top 5 product categories by revenue (using Top N sets), and a geographic revenue choropleth map of Brazilian states</li>
+    <li>Added performance indicator row with late delivery gauge (color-coded against 5% threshold), review score sparkline, payment methods breakdown, and a parameter-driven dynamic Key Insight box</li>
+    <li>Configured interactive filters (Date Range parameter, Selected Metric parameter, Product Category multi-select, Customer State multi-select) in a right sidebar applied globally across all worksheets</li>
+    <li>Implemented dashboard actions: Highlight on Hover across all sheets and Filter from State Map for click-to-filter geographic drill-down</li>
+    <li>Created 17 calculated fields and 8 FIXED LOD expressions for period-over-period comparisons, trend indicators, and conditional formatting logic</li>
+  </ul>
+
+  <h3>Results — Executive Summary Dashboard</h3>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/tableau-analysis-5-dashboard.png"
+      alt="Executive Summary Dashboard showing KPI cards, revenue forecast, order status, top categories, geographic map, delivery gauge, review sparkline, payment methods, and key insight panel"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Executive Summary Dashboard consolidating KPIs, revenue forecasting, operational metrics, and interactive filters into a single one-page executive overview.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/tableau-analysis-5-dashboard.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>KPI Cards (Top Row)</h4>
+  <p>
+    Four executive KPI cards display critical business metrics with month-over-month percentage changes and
+    color-coded trend indicators. Each card uses FIXED LOD expressions to calculate accurate period-over-period
+    comparisons across different temporal aggregations.
+  </p>
+  <ul>
+    <li><strong>Total Revenue — $15.8M:</strong> MoM change of -5.2% (red downward arrow) — indicates a short-term revenue decline requiring monitoring</li>
+    <li><strong>Total Orders — 99,441:</strong> MoM change of +3.5% (green upward arrow) — order volume continues to grow despite revenue softness</li>
+    <li><strong>Average Review Score — 4.09:</strong> Trend indicator shows "Declining" — customer satisfaction is trending downward and warrants attention</li>
+    <li><strong>Average Delivery Time — 12.5 days:</strong> Trend indicator shows "Improving" — logistics performance is getting better over time</li>
+  </ul>
+
+  <h4>Revenue Trend with Forecast (Middle Row)</h4>
+  <p>
+    Full-width revenue trend visualization incorporating Tableau's native forecasting engine to project 3-month
+    forward revenue with 95% confidence intervals. The chart includes historical data (solid line), forecast
+    predictions (dashed line), a linear trend line showing the overall growth trajectory, and shaded confidence
+    bands indicating prediction uncertainty.
+  </p>
+  <ul>
+    <li><strong>Growth trajectory confirmed:</strong> Linear trend line shows sustained upward revenue growth from near zero in late 2016 to peaks exceeding $1.2M</li>
+    <li><strong>Forecast predicts recovery:</strong> Despite the recent -5.2% MoM decline, the 3-month forecast projects upward recovery, suggesting seasonal fluctuation rather than a systemic issue</li>
+    <li><strong>Confidence bands widen:</strong> The 95% confidence intervals show increasing uncertainty further into the forecast period, as expected</li>
+  </ul>
+
+  <h4>Core Analytics Row</h4>
+  <ul>
+    <li><strong>Order Status Distribution:</strong> Horizontal bar chart showing 97.02% delivery completion rate, with shipped (0.63%), canceled (0.32%), and other statuses making up the remainder</li>
+    <li><strong>Top 5 Categories by Revenue:</strong> Health Beauty ($1.4M), Watches Gifts ($1.3M), Bed Bath Table ($1.2M), Sports Leisure ($1.2M), and Computers Accessories ($1.1M) — filtered dynamically using Top N sets</li>
+    <li><strong>Revenue by State Map:</strong> Filled choropleth map of Brazilian states revealing strong concentration in the Southeast region (São Paulo dominant), with click-to-filter interactivity enabling geographic drill-down across all dashboard components</li>
+  </ul>
+
+  <h4>Performance Indicators Row</h4>
+  <ul>
+    <li><strong>Late Delivery Gauge — 6.8%:</strong> Color-coded KPI exceeding the 5% target threshold (yellow zone: 5-10%), signaling logistics improvements are needed to protect customer satisfaction</li>
+    <li><strong>Review Score Sparkline:</strong> Compact trend line (no axes) showing satisfaction trends over time — confirms the declining trajectory flagged in the KPI card</li>
+    <li><strong>Payment Methods:</strong> Credit Card dominates at 78.34%, followed by Boleto (17.92%), Voucher (2.37%), and Debit Card (1.36%) — reflecting Brazilian consumer payment preferences</li>
+    <li><strong>Key Insight Box:</strong> Parameter-driven dynamic text display that changes content based on user-selected metric focus area (Revenue, Orders, Satisfaction, Delivery)</li>
+  </ul>
+
+  <h4>Interactive Features</h4>
+  <ul>
+    <li><strong>Date Range Parameter:</strong> Dropdown selector offering predefined time periods (Last 30 Days, Last 90 Days, Last 6 Months, Last Year, All Time) applied consistently across all worksheets via a calculated Date Filter field</li>
+    <li><strong>Selected Metric Parameter:</strong> Dropdown control that dynamically updates the Key Insight text box to highlight different business metrics with context-specific insights</li>
+    <li><strong>Product Category Filter:</strong> Multi-select dropdown allowing users to isolate specific product categories across all dashboard visualizations</li>
+    <li><strong>Customer State Filter:</strong> Multi-select dropdown enabling geographic filtering by Brazilian state, connected globally across all metrics</li>
+    <li><strong>Highlight on Hover:</strong> Cross-visualization highlighting when users hover over any data point, creating visual connections across related metrics</li>
+    <li><strong>Filter from State Map:</strong> Click any state on the geographic map to dynamically filter all other dashboard components to that region's data</li>
+  </ul>
+
+  <h3>Advanced Tableau Techniques</h3>
+
+  <h4>LOD Expressions (8 FIXED Calculations)</h4>
+  <ul>
+    <li><strong>Previous Month Revenue:</strong> { FIXED : SUM(IF MONTH/YEAR = previous month THEN price + freight END) }</li>
+    <li><strong>Previous Month Orders:</strong> { FIXED : COUNTD(IF MONTH/YEAR = previous month THEN order_id END) }</li>
+    <li><strong>Previous Month Avg Review:</strong> { FIXED : AVG(IF MONTH/YEAR = previous month THEN review_score END) }</li>
+    <li><strong>Previous Month Delivery Time:</strong> { FIXED : AVG(IF MONTH/YEAR = previous month THEN Delivery Days END) }</li>
+    <li>MoM percentage change calculations derived from each metric pair</li>
+  </ul>
+
+  <h4>Calculated Fields (17 New Fields)</h4>
+  <ul>
+    <li>Month-over-month change percentages for revenue, orders, reviews, and delivery time</li>
+    <li>Display text helpers with conditional arrows (▲/▼) and formatting</li>
+    <li>Trend indicators (Improving/Declining/Stable) based on directional thresholds</li>
+    <li>Color coding helpers for conditional formatting on KPI cards</li>
+    <li>Date filter logic driven by the Date Range parameter selection</li>
+  </ul>
+
+  <h4>Parameters & Forecasting</h4>
+  <ul>
+    <li><strong>Date Range Parameter:</strong> String parameter with 5 predefined temporal options controlling global date filtering</li>
+    <li><strong>Selected Metric Parameter:</strong> String parameter with 4 metric focus options driving the dynamic Key Insight box</li>
+    <li><strong>3-Month Revenue Forecast:</strong> Tableau's native forecasting engine with automatic seasonal adjustment and 95% confidence interval bands</li>
+    <li><strong>Linear Trend Line:</strong> Overlaid on historical data to show the overall business growth trajectory</li>
+  </ul>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li><strong>Delivery performance alert:</strong> 6.8% late delivery rate exceeds the 5% target threshold, indicating logistics improvements are needed to protect customer satisfaction — previous analysis showed a strong negative correlation (-0.65) between delivery time and review scores</li>
+    <li><strong>Revenue trajectory suggests seasonal fluctuation:</strong> Despite -5.2% month-over-month decline, the 3-month forecast predicts recovery with an upward trend line, suggesting seasonal variation rather than a systemic downturn</li>
+    <li><strong>Divergence between orders and revenue:</strong> Orders grew +3.5% MoM while revenue declined -5.2%, indicating average order value compression — customers are ordering more but spending less per order</li>
+    <li><strong>Declining customer satisfaction:</strong> Average review score of 4.09 with a declining trend requires proactive intervention before it impacts repeat purchases and marketplace reputation</li>
+    <li><strong>Category concentration risk:</strong> Top 5 categories represent significant revenue share, indicating opportunity for portfolio diversification to reduce dependency</li>
+    <li><strong>Geographic concentration:</strong> Revenue map reveals strong concentration in southeastern states (São Paulo), suggesting expansion opportunities in underserved regions</li>
+    <li><strong>Payment behavior insight:</strong> 78% credit card usage indicates customer preference for convenience and installment options, while 18% boleto usage represents Brazil-specific payment infrastructure serving underbanked populations</li>
+    <li><strong>Strong operational foundation:</strong> 97% order completion rate and improving delivery times demonstrate reliable core operations despite the late delivery rate exceeding target</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li><strong>Logistics optimization priority:</strong> Invest in delivery infrastructure to reduce late delivery rate from 6.8% to below the 5% target — this is the single highest-leverage improvement given the strong correlation between delivery performance and customer satisfaction</li>
+    <li><strong>Address AOV compression:</strong> Investigate the divergence between growing order volume and declining revenue per order — consider cross-selling strategies, bundle promotions, and minimum order incentives to stabilize average order value</li>
+    <li><strong>Customer retention focus:</strong> Address the declining review score trend through improved delivery performance, proactive communication for delayed orders, and product quality initiatives before it impacts repeat purchase rates</li>
+    <li><strong>Category diversification:</strong> Develop growth strategies for mid-tier categories while maintaining strength in top performers (Health Beauty, Watches Gifts) to reduce revenue concentration risk</li>
+    <li><strong>Geographic expansion:</strong> Prioritize marketing and seller recruitment in high-potential, underserved states identified through the revenue density map — target northern and central-western regions</li>
+    <li><strong>Leverage payment infrastructure:</strong> Expand boleto accessibility and consider debit card incentives to capture more of the underbanked market segment while maintaining credit card partnership benefits</li>
+    <li><strong>Implement executive monitoring cadence:</strong> Use this dashboard as the basis for weekly executive reviews, with drill-down to detailed analyses (1-4) when KPI thresholds are breached</li>
+  </ul>
+
+</details>
+
+---
+
+<details>
   <summary><strong>Tableau Public & Downloads</strong></summary>
 
   <div style="margin-top: 12px;"></div>
