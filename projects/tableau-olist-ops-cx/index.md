@@ -1141,22 +1141,32 @@ breadcrumbs:
 ---
 
 <details>
-  <summary><strong>Tableau Public & Downloads</strong></summary>
+  <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Interactive Dashboard</h3>
   <p>
-    <strong>Tableau Public Link:</strong> [Coming soon - dashboard will be published to Tableau Public]
+    This analysis examined 99,441 Olist e-commerce orders across five interconnected dashboards to evaluate the marketplace from four perspectives: operational performance, financial health, customer satisfaction, and ecosystem dynamics. The goal was to move beyond surface-level metrics and uncover the relationships between them — where delivery performance impacts satisfaction, where geographic concentration creates both revenue strength and strategic risk, and where marketplace growth introduces new operational pressure.
   </p>
 
-  <h3>Project Files</h3>
+  <h3>What the Data Revealed</h3>
   <p>
-    The Olist dataset is publicly available on Kaggle: 
-    <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank" rel="noopener">
-      Brazilian E-commerce Public Dataset by Olist
-    </a>
+    Olist's core operations are strong. A 97% order completion rate, average delivery times that improved from 50+ days during early operations down to 12.5 days, and $15.8M in total revenue with 21% year-over-year growth all point to a marketplace that scaled effectively during this period. The seller base grew to 2,970 with low concentration (top 10 sellers account for just 12.93% of revenue), indicating a competitive and democratized platform.
+  </p>
+  <p>
+    However, the analysis also surfaced clear pressure points. The 6.8% late delivery rate exceeds the 5% operational target, and the data shows a direct relationship between delivery delays and declining review scores — on-time orders average significantly higher satisfaction than late ones. With an 11.6% 1-star review rate and a declining satisfaction trend, the connection between logistics performance and customer experience is the most actionable finding across all five analyses.
+  </p>
+  <p>
+    Revenue and order concentration in São Paulo (37% of total revenue) and the Southeast region (60%+) represent both Olist's current strength and its most significant growth constraint. The category-seller heatmap revealed clear white-space opportunities in underserved states and product verticals, while the seller quadrant analysis confirmed that quality and scale can coexist — most sellers maintain 4.0+ review scores regardless of revenue level.
+  </p>
+
+  <h3>Connecting the Analyses</h3>
+  <p>
+    Each dashboard was designed to answer a distinct business question, but the findings compound when viewed together. The fulfillment analysis (Analysis 1) identified delivery performance issues that the customer experience analysis (Analysis 3) directly linked to review score deterioration. The revenue analysis (Analysis 2) highlighted geographic concentration that the marketplace analysis (Analysis 4) explained through seller distribution patterns. The executive summary (Analysis 5) synthesized these threads into a single monitoring surface with KPI cards, forecasting, and interactive filters designed for ongoing operational use.
+  </p>
+  <p>
+    The technical implementation progressed from foundational calculated fields and KPI cards through advanced LOD expressions, parameter-driven interactivity, Top N sets, and Tableau's native forecasting engine — demonstrating how increasing analytical complexity can be layered into a cohesive, executive-facing deliverable.
   </p>
 
 </details>
@@ -1164,28 +1174,45 @@ breadcrumbs:
 ---
 
 <details>
-  <summary><strong>Limitations & Future Analysis</strong></summary>
+  <summary><strong>Limitations</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Limitations</h3>
   <ul>
-    <li><strong>August 2018 data completeness:</strong> The sharp drop in order volume in August 2018 suggests incomplete data for that month</li>
-    <li><strong>Early period sample size:</strong> August-November 2016 had very limited orders, making trend analysis less reliable for that period</li>
-    <li><strong>Missing contextual data:</strong> No information on carrier performance, warehouse locations, or external factors (holidays, promotions) that may impact delivery times</li>
-    <li><strong>Geographic detail:</strong> Customer and seller location data limited to city/state level without distance calculations</li>
-    <li><strong>No customer satisfaction scores tied to delivery:</strong> Review scores exist but aren't directly linked to delivery performance in this analysis</li>
+    <li><strong>Truncated boundary periods:</strong> August 2018 shows a sharp drop in order volume consistent with incomplete data collection, and August–November 2016 contains too few orders for reliable trend analysis. Insights drawn from these boundary months should be treated as directional rather than definitive.</li>
+    <li><strong>No logistics provenance data:</strong> The dataset lacks carrier identity, warehouse locations, regional distribution infrastructure, and external event context (holidays, promotional campaigns, weather disruptions). This limits the ability to attribute delivery performance variation to specific operational causes.</li>
+    <li><strong>Geographic granularity ceiling:</strong> Customer and seller locations are available at the city and state level, but without postal code coordinates or distance calculations, the analysis cannot measure delivery distance as a variable — a likely confound in delivery time and late delivery rate patterns.</li>
+    <li><strong>Review-delivery linkage is correlational:</strong> While the analysis demonstrates a clear relationship between delivery time and review scores, the dataset does not isolate delivery experience from product quality, seller communication, or other factors that influence customer ratings. The observed correlation is strong but not causal attribution.</li>
+    <li><strong>Single marketplace, single country:</strong> All findings are specific to Olist's Brazilian marketplace during 2016–2018. Consumer behavior, payment infrastructure (boleto prevalence), and logistics realities are particular to this market and time period.</li>
   </ul>
 
-  <h3>Next Steps</h3>
-  <ul>
-    <li><strong>Customer experience deep-dive:</strong> Analyze correlation between delivery performance and review scores/ratings</li>
-    <li><strong>Seller performance analysis:</strong> Identify top and bottom performers by delivery time and late delivery rate</li>
-    <li><strong>Geographic analysis:</strong> Map customer and seller locations to identify high-performing and problem regions</li>
-    <li><strong>Product category analysis:</strong> Examine delivery performance by product category to identify category-specific patterns</li>
-    <li><strong>Payment and delivery correlation:</strong> Analyze if payment method impacts delivery speed or completion rates</li>
-    <li><strong>Cohort analysis:</strong> Track delivery performance improvements or deterioration for customers over time</li>
-  </ul>
+</details>
+
+---
+
+<details>
+  <summary><strong>Explore the Dashboard</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Interactive Dashboard on Tableau Public</h3>
+  <p>
+    The full interactive dashboard is published on Tableau Public. Explore the Executive Summary and all supporting analyses with live filters, hover highlights, and geographic drill-downs:
+  </p>
+  <p>
+    <a href="https://public.tableau.com/views/tableau_olist_ops_cx_v1_raw_load/Dashboard5-ExecutiveSummary?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener">
+      View on Tableau Public →
+    </a>
+  </p>
+
+  <h3>Dataset</h3>
+  <p>
+    The Olist dataset is publicly available on Kaggle:
+    <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" target="_blank" rel="noopener">
+      Brazilian E-commerce Public Dataset by Olist
+    </a>
+  </p>
 
 </details>
