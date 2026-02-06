@@ -124,6 +124,10 @@ GROUP BY product_name, product_category
 ORDER BY total_revenue DESC
 LIMIT 10;</code></pre>
 
+  <p style="font-size:0.9em; color:#555; margin-top:8px;">
+    <strong>Note:</strong> We group by both <code>product_name</code> and <code>product_category</code> to avoid improper grouping or overcounting in the case where two different products across different categories share the same name.
+  </p>
+
   <h3>Result Table</h3>
   <figure style="margin: 0 0 18px 0;">
     <img src="images/top_products_by_revenue.png" alt="Top 10 Products by Revenue" loading="lazy"
