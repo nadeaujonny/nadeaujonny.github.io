@@ -568,9 +568,13 @@ code, pre {
   flex-wrap:wrap;
   gap:16px;
   margin-top:14px;
+  align-items: stretch;
 }
 
-.col-6{ flex: 1 1 calc(50% - 16px); }
+.col-6{
+  flex: 1 1 calc(50% - 16px);
+  display:flex;
+}
 .col-12{ flex: 1 1 100%; }
 
 @media (max-width: 760px){
@@ -586,6 +590,8 @@ code, pre {
   padding:18px;
   box-shadow:var(--shadow);
   text-decoration:none !important;
+  height:100%;
+  min-height:240px;
 
   /* same “lift + highlight” feel as .btn and <summary> hover */
   transition:transform 160ms ease, background 160ms ease, border-color 160ms ease;
@@ -634,7 +640,10 @@ code, pre {
 /* Base styles for cards with background images */
 .sql-card,
 .excel-card,
-.tableau-card {
+.tableau-card,
+.powerbi-card,
+.python-card,
+.r-card {
   position: relative;
   background-size: cover !important;
   background-position: center !important;
@@ -656,10 +665,25 @@ code, pre {
   background-image: url("../tableau-project-card-image.png") !important;
 }
 
+.powerbi-card {
+  background-image: linear-gradient(135deg, #f2c811 0%, #f59e0b 100%) !important;
+}
+
+.python-card {
+  background-image: linear-gradient(135deg, #306998 0%, #ffd43b 100%) !important;
+}
+
+.r-card {
+  background-image: linear-gradient(135deg, #276dc3 0%, #c9c9c9 100%) !important;
+}
+
 /* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
-.tableau-card::before {
+.tableau-card::before,
+.powerbi-card::before,
+.python-card::before,
+.r-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -698,6 +722,33 @@ code, pre {
   );
 }
 
+/* Power BI card – yellow/orange overlay */
+.powerbi-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(242, 200, 17, 0.55) 0%,
+    rgba(245, 158, 11, 0.75) 100%
+  );
+}
+
+/* Python card – blue/yellow overlay */
+.python-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(48, 105, 152, 0.60) 0%,
+    rgba(255, 212, 59, 0.75) 100%
+  );
+}
+
+/* R card – blue/grey overlay */
+.r-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(39, 109, 195, 0.60) 0%,
+    rgba(201, 201, 201, 0.78) 100%
+  );
+}
+
 /* Slightly lighter overlay on hover */
 .sql-card:hover::before {
   background: linear-gradient(
@@ -723,6 +774,30 @@ code, pre {
   );
 }
 
+.powerbi-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(242, 200, 17, 0.48) 0%,
+    rgba(245, 158, 11, 0.68) 100%
+  );
+}
+
+.python-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(48, 105, 152, 0.52) 0%,
+    rgba(255, 212, 59, 0.68) 100%
+  );
+}
+
+.r-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(39, 109, 195, 0.52) 0%,
+    rgba(201, 201, 201, 0.70) 100%
+  );
+}
+
 /* Content positioning above the overlay */
 .project-card-content {
   position: relative;
@@ -733,16 +808,25 @@ code, pre {
 .sql-card .project-card-content,
 .excel-card .project-card-content,
 .tableau-card .project-card-content,
+.powerbi-card .project-card-content,
+.python-card .project-card-content,
+.r-card .project-card-content,
 .sql-card .project-card-content *,
 .excel-card .project-card-content *,
-.tableau-card .project-card-content * {
+.tableau-card .project-card-content *,
+.powerbi-card .project-card-content *,
+.python-card .project-card-content *,
+.r-card .project-card-content * {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
 /* Tool name (h2) styling - high specificity to override earlier rules */
 .project-card-link.sql-card .project-card-content h2,
 .project-card-link.excel-card .project-card-content h2,
-.project-card-link.tableau-card .project-card-content h2 {
+.project-card-link.tableau-card .project-card-content h2,
+.project-card-link.powerbi-card .project-card-content h2,
+.project-card-link.python-card .project-card-content h2,
+.project-card-link.r-card .project-card-content h2 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -757,7 +841,10 @@ code, pre {
 /* Project title (h3) styling - high specificity to override earlier rules */
 .project-card-link.sql-card .project-card-content h3,
 .project-card-link.excel-card .project-card-content h3,
-.project-card-link.tableau-card .project-card-content h3 {
+.project-card-link.tableau-card .project-card-content h3,
+.project-card-link.powerbi-card .project-card-content h3,
+.project-card-link.python-card .project-card-content h3,
+.project-card-link.r-card .project-card-content h3 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -772,7 +859,10 @@ code, pre {
 /* Description paragraph */
 .sql-card .project-card-content p,
 .excel-card .project-card-content p,
-.tableau-card .project-card-content p {
+.tableau-card .project-card-content p,
+.powerbi-card .project-card-content p,
+.python-card .project-card-content p,
+.r-card .project-card-content p {
   color: rgba(255, 255, 255, 0.90) !important;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -782,14 +872,20 @@ code, pre {
 /* CTA link styling for image cards */
 .sql-card .project-card-cta,
 .excel-card .project-card-cta,
-.tableau-card .project-card-cta {
+.tableau-card .project-card-cta,
+.powerbi-card .project-card-cta,
+.python-card .project-card-cta,
+.r-card .project-card-cta {
   color: rgba(255, 255, 255, 0.95) !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .sql-card:hover .project-card-cta,
 .excel-card:hover .project-card-cta,
-.tableau-card:hover .project-card-cta {
+.tableau-card:hover .project-card-cta,
+.powerbi-card:hover .project-card-cta,
+.python-card:hover .project-card-cta,
+.r-card:hover .project-card-cta {
   color: #fff !important;
 }
 

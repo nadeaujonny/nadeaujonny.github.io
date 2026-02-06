@@ -42,11 +42,37 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
-  <div class="col-12">
-    <div class="card">
-      <h2>Coming Soon</h2>
-      <p>Power BI • Python • R (more projects will be added here as I publish them).</p>
-    </div>
+  <div class="col-6">
+    <a class="project-card-link powerbi-card" href="/projects/power-bi-healthcare-analytics/" aria-label="Open Power BI project: Healthcare Analytics Dashboard">
+      <div class="project-card-content">
+        <h2>Power BI</h2>
+        <h3>Healthcare Analytics Dashboard</h3>
+        <p>Multi-dashboard healthcare BI portfolio project featuring advanced DAX, Power Query, and executive-ready insights.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6">
+    <a class="project-card-link python-card" href="/projects/python-placeholder/" aria-label="Open Python project: Coming Soon">
+      <div class="project-card-content">
+        <h2>Python</h2>
+        <h3>Portfolio Project (Coming Soon)</h3>
+        <p>Placeholder project card for an upcoming Python analytics portfolio build.</p>
+        <div class="project-card-cta">Details soon →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6">
+    <a class="project-card-link r-card" href="/projects/r-placeholder/" aria-label="Open R project: Coming Soon">
+      <div class="project-card-content">
+        <h2>R</h2>
+        <h3>Portfolio Project (Coming Soon)</h3>
+        <p>Placeholder project card for an upcoming R analytics portfolio build.</p>
+        <div class="project-card-cta">Details soon →</div>
+      </div>
+    </a>
   </div>
 
 </div>
