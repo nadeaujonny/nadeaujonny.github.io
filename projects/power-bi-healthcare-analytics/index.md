@@ -17,352 +17,463 @@ breadcrumbs:
 ---
 
 <details>
-<summary><strong>Dropdown Section 1: Project overview, dataset info, objectives</strong></summary>
+  <summary><strong>Project Overview, Dataset &amp; Objectives</strong></summary>
 
-## Project Overview
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-This portfolio project is designed to highlight end-to-end Power BI capabilities: data ingestion, Power Query transformations, data modeling, advanced DAX measures, and interactive dashboards for healthcare stakeholders.
+  <h3>Project Overview</h3>
+  <p>
+    This portfolio project is designed to highlight end-to-end Power BI capabilities: data ingestion, Power Query
+    transformations, data modeling, advanced DAX measures, and interactive dashboards for healthcare stakeholders.
+  </p>
 
-## Dataset Information
+  <h3>Dataset Information</h3>
+  <p><strong>Source (public health databases):</strong> CDC, WHO, or U.S. Department of Health &amp; Human Services.</p>
 
-**Source (public health databases):**
-- CDC, WHO, or U.S. Department of Health & Human Services public health databases
+  <p><strong>Primary sources:</strong></p>
+  <ul>
+    <li>data.gov (healthcare datasets)</li>
+    <li>healthdata.gov</li>
+    <li>CDC Wonder database</li>
+    <li>data.cms.gov (Medicare/Medicaid data)</li>
+  </ul>
 
-**Primary Sources:**
-- data.gov (healthcare datasets)
-- healthdata.gov
-- CDC Wonder database
-- data.cms.gov (Medicare/Medicaid data)
+  <p><strong>Potential datasets:</strong></p>
+  <ul>
+    <li>Hospital readmission rates</li>
+    <li>Chronic disease prevalence by demographics</li>
+    <li>Vaccination coverage rates</li>
+    <li>Healthcare quality metrics</li>
+    <li>Patient outcome indicators</li>
+  </ul>
 
-**Potential datasets:**
-- Hospital readmission rates
-- Chronic disease prevalence by demographics
-- Vaccination coverage rates
-- Healthcare quality metrics
-- Patient outcome indicators
+  <p><strong>Data volume:</strong> 50,000+ records across multiple related tables.</p>
+  <p><strong>Time period:</strong> Multi-year trend analysis (2018–2023 recommended).</p>
 
-**Data volume:** 50,000+ records across multiple related tables
-
-**Time period:** Multi-year trend analysis (2018–2023 recommended)
-
-## Project Objectives
-
-- Demonstrate Power BI technical proficiency (DAX, Power Query M, data modeling, advanced visualization)
-- Deliver healthcare business intelligence on outcomes, disparities, and resource optimization
-- Show domain versatility beyond e-commerce/retail analytics
-- Prove multi-source data integration skills and complex relationships handling
-
+  <h3>Project Objectives</h3>
+  <ul>
+    <li>Demonstrate Power BI technical proficiency (DAX, Power Query M, data modeling, advanced visualization).</li>
+    <li>Deliver healthcare business intelligence on outcomes, disparities, and resource optimization.</li>
+    <li>Show domain versatility beyond e-commerce/retail analytics.</li>
+    <li>Prove multi-source data integration skills and complex relationship handling.</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 2: Analysis 1</strong></summary>
+  <summary><strong>Analysis 1 — Population Health Overview Dashboard</strong></summary>
 
-## Analysis 1 — Population Health Overview Dashboard
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-**Focus:** High-level health metrics and population trends
+  <h3>Focus</h3>
+  <p>High-level health metrics and population trends.</p>
 
-**KPIs:**
-- Total population covered
-- Overall health outcome score
-- Year-over-year health improvement rate
-- Healthcare access rate
-- Primary health indicators (life expectancy, disease prevalence)
+  <h3>KPIs</h3>
+  <ul>
+    <li>Total population covered</li>
+    <li>Overall health outcome score</li>
+    <li>Year-over-year health improvement rate</li>
+    <li>Healthcare access rate</li>
+    <li>Primary health indicators (life expectancy, disease prevalence)</li>
+  </ul>
 
-**Visualizations:**
-- KPI cards with sparklines
-- Geographic heat map (state/region)
-- Line chart: health metrics over time
-- Bar chart: top 10 states by health outcomes
-- Donut chart: population distribution by risk category
+  <h3>Visualizations</h3>
+  <ul>
+    <li>KPI cards with sparklines</li>
+    <li>Geographic heat map (state/region)</li>
+    <li>Line chart: health metrics over time</li>
+    <li>Bar chart: top 10 states by health outcomes</li>
+    <li>Donut chart: population distribution by risk category</li>
+  </ul>
 
-**Power BI features:**
-- DAX time intelligence (YoY, MoM)
-- Conditional KPI formatting
-- Custom tooltips
-- Bookmarks for view states
-- Drill-through to regional details
-
+  <h3>Power BI Features</h3>
+  <ul>
+    <li>DAX time intelligence (YoY, MoM)</li>
+    <li>Conditional KPI formatting</li>
+    <li>Custom tooltips</li>
+    <li>Bookmarks for view states</li>
+    <li>Drill-through to regional details</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 3: Analysis 2</strong></summary>
+  <summary><strong>Analysis 2 — Healthcare Disparities &amp; Demographics</strong></summary>
 
-## Analysis 2 — Healthcare Disparities & Demographics
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-**Focus:** Health equity across demographic groups
+  <h3>Focus</h3>
+  <p>Health equity across demographic groups.</p>
 
-**Key metrics:**
-- Disparity index by demographic group
-- Access gap percentage
-- Outcome variance across populations
-- Social determinants impact score
+  <h3>Key Metrics</h3>
+  <ul>
+    <li>Disparity index by demographic group</li>
+    <li>Access gap percentage</li>
+    <li>Outcome variance across populations</li>
+    <li>Social determinants impact score</li>
+  </ul>
 
-**Visualizations:**
-- Clustered bars: outcomes by age, ethnicity, income
-- Scatter plot: social determinants vs outcomes
-- Matrix with conditional formatting
-- Small multiples across demographic segments
-- Waterfall chart: disparity contributing factors
+  <h3>Visualizations</h3>
+  <ul>
+    <li>Clustered bars: outcomes by age, ethnicity, income</li>
+    <li>Scatter plot: social determinants vs outcomes</li>
+    <li>Matrix with conditional formatting</li>
+    <li>Small multiples across demographic segments</li>
+    <li>Waterfall chart: disparity contributing factors</li>
+  </ul>
 
-**Power BI features:**
-- Row-level security (demonstration)
-- CALCULATE/FILTER DAX measures
-- Accessibility-aware color palettes
-- Field parameters for dynamic metrics
-- What-if parameters
-
+  <h3>Power BI Features</h3>
+  <ul>
+    <li>Row-level security (demonstration)</li>
+    <li>CALCULATE/FILTER DAX measures</li>
+    <li>Accessibility-aware color palettes</li>
+    <li>Field parameters for dynamic metrics</li>
+    <li>What-if parameters</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 4: Analysis 3</strong></summary>
+  <summary><strong>Analysis 3 — Resource Utilization &amp; Efficiency</strong></summary>
 
-## Analysis 3 — Resource Utilization & Efficiency
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-**Focus:** Facility performance and resource allocation
+  <h3>Focus</h3>
+  <p>Facility performance and resource allocation.</p>
 
-**Key metrics:**
-- Average length of stay (ALOS)
-- Readmission rate
-- Cost per patient
-- Bed utilization rate
-- Patient satisfaction scores
+  <h3>Key Metrics</h3>
+  <ul>
+    <li>Average length of stay (ALOS)</li>
+    <li>Readmission rate</li>
+    <li>Cost per patient</li>
+    <li>Bed utilization rate</li>
+    <li>Patient satisfaction scores</li>
+  </ul>
 
-**Visualizations:**
-- Cost vs quality performance quadrant
-- Gauge charts vs benchmarks
-- Area chart: utilization over time
-- Treemap: spending by department
-- Top/Bottom N facility performance
+  <h3>Visualizations</h3>
+  <ul>
+    <li>Cost vs quality performance quadrant</li>
+    <li>Gauge charts vs benchmarks</li>
+    <li>Area chart: utilization over time</li>
+    <li>Treemap: spending by department</li>
+    <li>Top/Bottom N facility performance</li>
+  </ul>
 
-**Power BI features:**
-- Advanced DAX (RANKX, TOPN, SUMX)
-- Decomposition tree
-- Q&A visual
-- Key influencers visual
-- Mobile-optimized layout
-
+  <h3>Power BI Features</h3>
+  <ul>
+    <li>Advanced DAX (RANKX, TOPN, SUMX)</li>
+    <li>Decomposition tree</li>
+    <li>Q&amp;A visual</li>
+    <li>Key influencers visual</li>
+    <li>Mobile-optimized layout</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 5: Analysis 4</strong></summary>
+  <summary><strong>Analysis 4 — Disease/Condition Deep Dive</strong></summary>
 
-## Analysis 4 — Disease/Condition Deep Dive
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-**Focus:** Targeted condition analysis (e.g., diabetes, heart disease)
+  <h3>Focus</h3>
+  <p>Targeted condition analysis (e.g., diabetes, heart disease).</p>
 
-**Key metrics:**
-- Prevalence rate
-- Incidence rate (new cases)
-- Mortality rate
-- Treatment adherence percentage
-- Complication rate
+  <h3>Key Metrics</h3>
+  <ul>
+    <li>Prevalence rate</li>
+    <li>Incidence rate (new cases)</li>
+    <li>Mortality rate</li>
+    <li>Treatment adherence percentage</li>
+    <li>Complication rate</li>
+  </ul>
 
-**Visualizations:**
-- Ribbon chart: prevalence trends by demographic
-- Funnel chart: patient care journey
-- Line/clustered column combo: cases vs mortality
-- Slicer panel: condition, region, demographic
-- Custom visuals: timeline slider, image navigation
+  <h3>Visualizations</h3>
+  <ul>
+    <li>Ribbon chart: prevalence trends by demographic</li>
+    <li>Funnel chart: patient care journey</li>
+    <li>Line/clustered column combo: cases vs mortality</li>
+    <li>Slicer panel: condition, region, demographic</li>
+    <li>Custom visuals: timeline slider, image navigation</li>
+  </ul>
 
-**Power BI features:**
-- Power Query advanced transformations (unpivot, merge)
-- Calculated columns vs measures
-- Date table with fiscal calendar
-- Hierarchies for drill-down
-- Cross-filter direction management
-
+  <h3>Power BI Features</h3>
+  <ul>
+    <li>Power Query advanced transformations (unpivot, merge)</li>
+    <li>Calculated columns vs measures</li>
+    <li>Date table with fiscal calendar</li>
+    <li>Hierarchies for drill-down</li>
+    <li>Cross-filter direction management</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 6: Analysis 5</strong></summary>
+  <summary><strong>Analysis 5 — Executive Summary Dashboard</strong></summary>
 
-## Analysis 5 — Executive Summary Dashboard
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-**Focus:** C-suite level overview and navigation
+  <h3>Focus</h3>
+  <p>C-suite level overview and navigation.</p>
 
-**Components:**
-- Critical KPIs from all analysis areas
-- Executive summary cards
-- Trend indicators with directional arrows
-- Alert banners for out-of-threshold metrics
-- Navigation buttons to detailed dashboards
+  <h3>Components</h3>
+  <ul>
+    <li>Critical KPIs from all analysis areas</li>
+    <li>Executive summary cards</li>
+    <li>Trend indicators with directional arrows</li>
+    <li>Alert banners for out-of-threshold metrics</li>
+    <li>Navigation buttons to detailed dashboards</li>
+  </ul>
 
-**Power BI features:**
-- Page navigation actions
-- Button visuals with conditional formatting
-- Dashboard templates and themes
-- Performance optimization techniques
-- Publishing to Power BI Service (if available)
-- Scheduled refresh setup demonstration
-
+  <h3>Power BI Features</h3>
+  <ul>
+    <li>Page navigation actions</li>
+    <li>Button visuals with conditional formatting</li>
+    <li>Dashboard templates and themes</li>
+    <li>Performance optimization techniques</li>
+    <li>Publishing to Power BI Service (if available)</li>
+    <li>Scheduled refresh setup demonstration</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 7: Technical implementation</strong></summary>
+  <summary><strong>Technical Implementation Checklist</strong></summary>
 
-## Technical Implementation Checklist
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-### Data Preparation (Power Query)
-- Connect to multiple data sources
-- Clean and transform data (nulls, duplicates)
-- Create custom columns using M language
-- Merge/append queries
-- Establish proper data types
-- Create date dimension table
-- Implement data validation checks
-- Document transformation steps
+  <h3>Data Preparation (Power Query)</h3>
+  <ul>
+    <li>Connect to multiple data sources</li>
+    <li>Clean and transform data (nulls, duplicates)</li>
+    <li>Create custom columns using M language</li>
+    <li>Merge/append queries</li>
+    <li>Establish proper data types</li>
+    <li>Create date dimension table</li>
+    <li>Implement data validation checks</li>
+    <li>Document transformation steps</li>
+  </ul>
 
-### Data Modeling
-- Build a star schema (fact + dimension tables)
-- Establish relationships (one-to-many, many-to-many)
-- Set proper cardinality and cross-filter directions
-- Create hierarchies (geographic, date, demographic)
-- Hide unnecessary fields from report view
-- Organize tables into display folders
-- Validate model using DAX Studio (optional)
+  <h3>Data Modeling</h3>
+  <ul>
+    <li>Build a star schema (fact + dimension tables)</li>
+    <li>Establish relationships (one-to-many, many-to-many)</li>
+    <li>Set proper cardinality and cross-filter directions</li>
+    <li>Create hierarchies (geographic, date, demographic)</li>
+    <li>Hide unnecessary fields from report view</li>
+    <li>Organize tables into display folders</li>
+    <li>Validate model using DAX Studio (optional)</li>
+  </ul>
 
-### DAX Measures & Calculations
-- Basic aggregations (SUM, AVERAGE, COUNT)
-- Time intelligence (YoY, YTD, QoQ)
-- CALCULATE with multiple filters
-- Iterator functions (SUMX, AVERAGEX)
-- Ranking (RANKX, TOPN)
-- Statistical measures (STDEV, MEDIAN)
-- Conditional logic (IF, SWITCH, HASONEVALUE)
-- Variables for optimization
-- Measure documentation with comments
+  <h3>DAX Measures &amp; Calculations</h3>
+  <ul>
+    <li>Basic aggregations (SUM, AVERAGE, COUNT)</li>
+    <li>Time intelligence (YoY, YTD, QoQ)</li>
+    <li>CALCULATE with multiple filters</li>
+    <li>Iterator functions (SUMX, AVERAGEX)</li>
+    <li>Ranking (RANKX, TOPN)</li>
+    <li>Statistical measures (STDEV, MEDIAN)</li>
+    <li>Conditional logic (IF, SWITCH, HASONEVALUE)</li>
+    <li>Variables for optimization</li>
+    <li>Measure documentation with comments</li>
+  </ul>
 
-### Visualizations & Design
-- Consistent color scheme and branding
-- Accessible color choices (colorblind-friendly)
-- Proper chart type selection
-- Clear titles and labels
-- Legend positioning and formatting
-- Data labels when appropriate
-- Appropriate use of white space
-- Mobile layout for each page
+  <h3>Visualizations &amp; Design</h3>
+  <ul>
+    <li>Consistent color scheme and branding</li>
+    <li>Accessible color choices (colorblind-friendly)</li>
+    <li>Proper chart type selection</li>
+    <li>Clear titles and labels</li>
+    <li>Legend positioning and formatting</li>
+    <li>Data labels when appropriate</li>
+    <li>Appropriate use of white space</li>
+    <li>Mobile layout for each page</li>
+  </ul>
 
-### Interactivity & User Experience
-- Slicers with appropriate selection modes
-- Cross-filtering between visuals
-- Drill-through pages
-- Tooltips (default and custom)
-- Bookmarks for saved views
-- Buttons for navigation
-- Sync slicers across pages
-- Clear visual hierarchy
-
+  <h3>Interactivity &amp; User Experience</h3>
+  <ul>
+    <li>Slicers with appropriate selection modes</li>
+    <li>Cross-filtering between visuals</li>
+    <li>Drill-through pages</li>
+    <li>Tooltips (default and custom)</li>
+    <li>Bookmarks for saved views</li>
+    <li>Buttons for navigation</li>
+    <li>Sync slicers across pages</li>
+    <li>Clear visual hierarchy</li>
+  </ul>
 </details>
 
+---
+
 <details>
-<summary><strong>Dropdown Section 8: Key insights, deliverables, skills demonstrated, limitations, conclusion</strong></summary>
+  <summary><strong>Insights, Deliverables &amp; Project Notes</strong></summary>
 
-## Key Business Insights to Highlight
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-- Health outcome trends by region and demographic segment
-- Disparity analysis with targeted intervention recommendations
-- Resource optimization across facilities and departments
-- Cost-effectiveness comparison for programs and providers
-- Risk stratification for preventive care prioritization
-- Policy recommendations grounded in data-driven evidence
+  <h3>Key Business Insights to Highlight</h3>
+  <ul>
+    <li>Health outcome trends by region and demographic segment</li>
+    <li>Disparity analysis with targeted intervention recommendations</li>
+    <li>Resource optimization across facilities and departments</li>
+    <li>Cost-effectiveness comparison for programs and providers</li>
+    <li>Risk stratification for preventive care prioritization</li>
+    <li>Policy recommendations grounded in data-driven evidence</li>
+  </ul>
 
-## Project Deliverables
+  <h3>Project Deliverables</h3>
+  <p><strong>Power BI Desktop File (.pbix)</strong></p>
+  <ul>
+    <li>Complete data model</li>
+    <li>All dashboards and reports</li>
+    <li>Documented DAX measures</li>
+  </ul>
 
-**Power BI Desktop File (.pbix)**
-- Complete data model
-- All dashboards and reports
-- Documented DAX measures
+  <p><strong>Portfolio Web Page</strong></p>
+  <ul>
+    <li>Project overview and business context</li>
+    <li>Key insights and recommendations</li>
+    <li>Dashboard screenshots with annotations</li>
+    <li>Technical approach explanation</li>
+    <li>Embedded Power BI report (if published) or high-quality images</li>
+    <li>Tools and techniques used section</li>
+  </ul>
 
-**Portfolio Web Page**
-- Project overview and business context
-- Key insights and recommendations
-- Dashboard screenshots with annotations
-- Technical approach explanation
-- Embedded Power BI report (if published) or high-quality images
-- Tools and techniques used section
+  <p><strong>Supporting Documentation</strong></p>
+  <ul>
+    <li>Data dictionary</li>
+    <li>DAX measure documentation</li>
+    <li>Data source citations</li>
+    <li>Methodology notes</li>
+    <li>Business recommendations summary</li>
+  </ul>
 
-**Supporting Documentation**
-- Data dictionary
-- DAX measure documentation
-- Data source citations
-- Methodology notes
-- Business recommendations summary
+  <h3>Skills Demonstrated</h3>
+  <p><strong>Technical skills:</strong></p>
+  <ul>
+    <li>Power Query M language for ETL</li>
+    <li>Advanced DAX (time intelligence, iterators, context transition)</li>
+    <li>Data modeling (star schema, relationships)</li>
+    <li>Power BI Service publishing and sharing</li>
+    <li>Mobile layout design</li>
+    <li>Performance optimization</li>
+  </ul>
 
-## Skills Demonstrated
+  <p><strong>Business skills:</strong></p>
+  <ul>
+    <li>Healthcare domain knowledge</li>
+    <li>Population health analytics</li>
+    <li>Health equity analysis</li>
+    <li>Resource allocation strategy</li>
+    <li>Executive-level communication</li>
+    <li>Policy recommendation formulation</li>
+  </ul>
 
-**Technical skills:**
-- Power Query M language for ETL
-- Advanced DAX (time intelligence, iterators, context transition)
-- Data modeling (star schema, relationships)
-- Power BI Service publishing and sharing
-- Mobile layout design
-- Performance optimization
+  <p><strong>Data skills:</strong></p>
+  <ul>
+    <li>Multi-source data integration</li>
+    <li>Data quality assurance</li>
+    <li>Statistical analysis</li>
+    <li>Trend identification</li>
+    <li>Comparative analysis</li>
+  </ul>
 
-**Business skills:**
-- Healthcare domain knowledge
-- Population health analytics
-- Health equity analysis
-- Resource allocation strategy
-- Executive-level communication
-- Policy recommendation formulation
+  <h3>Limitations</h3>
+  <ul>
+    <li>Public health datasets may have reporting lags or inconsistent definitions across sources.</li>
+    <li>Multi-source integration can introduce coverage gaps that need explicit documentation.</li>
+    <li>Real-world stakeholder access constraints may limit validation of operational impact.</li>
+  </ul>
 
-**Data skills:**
-- Multi-source data integration
-- Data quality assurance
-- Statistical analysis
-- Trend identification
-- Comparative analysis
+  <h3>Conclusion</h3>
+  <p>
+    This project highlights the ability to synthesize complex healthcare data into actionable, executive-ready insights
+    while demonstrating advanced Power BI modeling, DAX, and dashboard design skills.
+  </p>
 
-## Limitations
+  <h3>Differentiation from Other Portfolio Projects</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Aspect</th>
+        <th>SQL/Excel/Tableau Projects</th>
+        <th>Power BI Project</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Domain</td>
+        <td>E-commerce, Retail</td>
+        <td>Healthcare, Public Health</td>
+      </tr>
+      <tr>
+        <td>Data Type</td>
+        <td>Transactional, Sales</td>
+        <td>Population health, Clinical outcomes</td>
+      </tr>
+      <tr>
+        <td>Analysis Focus</td>
+        <td>Business performance</td>
+        <td>Health equity, Outcomes, Policy</td>
+      </tr>
+      <tr>
+        <td>Tool Strength</td>
+        <td>Querying, Dashboards, Visualization</td>
+        <td>DAX, Data modeling, Self-service BI</td>
+      </tr>
+      <tr>
+        <td>Audience</td>
+        <td>Business stakeholders</td>
+        <td>Healthcare administrators, Policy makers</td>
+      </tr>
+    </tbody>
+  </table>
 
-- Public health datasets may have reporting lags or inconsistent definitions across sources.
-- Multi-source integration can introduce coverage gaps that need explicit documentation.
-- Real-world stakeholder access constraints may limit validation of operational impact.
+  <h3>Timeline &amp; Milestones</h3>
+  <ul>
+    <li><strong>Week 1:</strong> Data acquisition, cleaning, and initial Power Query setup</li>
+    <li><strong>Week 2:</strong> Data modeling and DAX measure creation</li>
+    <li><strong>Week 3:</strong> Dashboard design and visualization development</li>
+    <li><strong>Week 4:</strong> Insights documentation, web page creation, final refinements</li>
+  </ul>
 
-## Conclusion
+  <h3>Success Criteria</h3>
+  <ul>
+    <li>Dashboard loads in under 3 seconds</li>
+    <li>At least 15 custom DAX measures demonstrating various functions</li>
+    <li>Five distinct dashboard pages with clear purposes</li>
+    <li>Mobile-optimized layouts for all pages</li>
+    <li>3–5 key business recommendations based on data</li>
+    <li>Professional, accessible design following best practices</li>
+    <li>Clear documentation of all technical choices</li>
+  </ul>
 
-This project highlights the ability to synthesize complex healthcare data into actionable, executive-ready insights while demonstrating advanced Power BI modeling, DAX, and dashboard design skills.
+  <h3>Notes for Portfolio Presentation</h3>
+  <p>When presenting this project to potential employers, emphasize:</p>
+  <ul>
+    <li>Domain versatility in a regulated healthcare context</li>
+    <li>Technical depth in DAX and data modeling</li>
+    <li>Business value tied to actionable recommendations</li>
+    <li>Self-service BI enablement for stakeholders</li>
+    <li>Scalability through performance optimization</li>
+  </ul>
 
-## Differentiation from Other Portfolio Projects
-
-| Aspect | SQL/Excel/Tableau Projects | Power BI Project |
-| --- | --- | --- |
-| Domain | E-commerce, Retail | Healthcare, Public Health |
-| Data Type | Transactional, Sales | Population health, Clinical outcomes |
-| Analysis Focus | Business performance | Health equity, Outcomes, Policy |
-| Tool Strength | Querying, Dashboards, Visualization | DAX, Data modeling, Self-service BI |
-| Audience | Business stakeholders | Healthcare administrators, Policy makers |
-
-## Timeline & Milestones
-
-- **Week 1:** Data acquisition, cleaning, and initial Power Query setup
-- **Week 2:** Data modeling and DAX measure creation
-- **Week 3:** Dashboard design and visualization development
-- **Week 4:** Insights documentation, web page creation, final refinements
-
-## Success Criteria
-
-- Dashboard loads in under 3 seconds
-- At least 15 custom DAX measures demonstrating various functions
-- Five distinct dashboard pages with clear purposes
-- Mobile-optimized layouts for all pages
-- 3–5 key business recommendations based on data
-- Professional, accessible design following best practices
-- Clear documentation of all technical choices
-
-## Notes for Portfolio Presentation
-
-When presenting this project to potential employers, emphasize:
-- Domain versatility in a regulated healthcare context
-- Technical depth in DAX and data modeling
-- Business value tied to actionable recommendations
-- Self-service BI enablement for stakeholders
-- Scalability through performance optimization
-
-## Project Assets (to be added)
-
-- Power BI report screenshots: `images/`
-- Source datasets and data dictionary: `data/`
-- Power BI workbook: `workbook/`
-
+  <h3>Project Assets (to be added)</h3>
+  <ul>
+    <li>Power BI report screenshots: <code>images/</code></li>
+    <li>Source datasets and data dictionary: <code>data/</code></li>
+    <li>Power BI workbook: <code>workbook/</code></li>
+  </ul>
 </details>
