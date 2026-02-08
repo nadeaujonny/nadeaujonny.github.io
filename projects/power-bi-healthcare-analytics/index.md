@@ -538,12 +538,11 @@ CALCULATE(
 ---
 
 <details>
-  <summary><strong>Dashboard Pages</strong></summary>
+  <summary><strong>Dashboard Page 1 — Executive Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Page 1 — Executive Overview</h3>
   <p>
     A high-level population health snapshot designed for quick assessment of chronic disease indicators across the
     United States. This page provides at-a-glance KPIs, geographic comparisons, and trend context — enabling
@@ -587,6 +586,54 @@ CALCULATE(
     <li><strong>Trend patterns vary across indicators:</strong> some topics show steady year-over-year improvement while others plateau or worsen — the trend line makes it easy to distinguish improving conditions from stagnating ones</li>
     <li><strong>Geographic clustering is visible:</strong> the filled map reveals regional patterns where neighboring states share similar indicator values, suggesting that shared environmental, economic, or policy factors may drive health outcomes in those areas</li>
   </ul>
+
+</details>
+
+---
+
+<details>
+  <summary><strong>Dashboard Page 2 — Trend Analysis</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <p><em>Coming soon</em> — multi-year indicator comparisons identifying improving vs. worsening conditions.</p>
+
+</details>
+
+---
+
+<details>
+  <summary><strong>Dashboard Page 3 — State Performance</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <p><em>Coming soon</em> — geographic deep dive with rankings, drill-through, and state-vs-national benchmarks.</p>
+
+</details>
+
+---
+
+<details>
+  <summary><strong>Dashboard Page 4 — Health Disparities</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <p><em>Coming soon</em> — demographic gap analysis using Group Max/Min, Disparity Gap, and Disparity Ratio measures.</p>
+
+</details>
+
+---
+
+<details>
+  <summary><strong>Dashboard Page 5 — Action Prioritization</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <p><em>Coming soon</em> — composite scoring to identify highest-priority states for intervention.</p>
 
 </details>
 
