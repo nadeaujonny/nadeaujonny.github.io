@@ -1,18 +1,18 @@
 ---
 layout: default
-title: Power BI Healthcare Analytics Dashboard
-description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicators — Power Query ETL, star schema modeling, 20+ DAX measures, and 5 interactive dashboards — to identify high-burden states, track health trends, and quantify demographic disparities."
+title: Power BI — CDC Chronic Disease Analytics
+description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicators — Power Query ETL, star schema dimensional modeling, 10 DAX measures, and interactive dashboards — to track U.S. health trends, rank states, and quantify demographic disparities across 9 chronic disease topics."
 breadcrumbs:
   - title: Projects
     url: /projects/
-  - title: Power BI Healthcare Analytics Dashboard
+  - title: Power BI — CDC Chronic Disease Analytics
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
-# Power BI Healthcare Analytics Dashboard
+# Power BI — CDC Chronic Disease Analytics
 
-> This project analyzes the CDC's U.S. Chronic Disease Indicators (CDI) dataset to identify high-burden states, track chronic disease trends, quantify demographic disparities, and provide data-driven recommendations for public health resource allocation using Power BI.
+> An end-to-end Power BI project analyzing the CDC's U.S. Chronic Disease Indicators dataset to track health trends across 9 topics, rank state performance, and quantify demographic disparities — demonstrating Power Query ETL, star schema modeling, and DAX measure development.
 
 ---
 
@@ -24,41 +24,36 @@ breadcrumbs:
 
   <h3>Overview</h3>
   <p>
-    This project demonstrates an end-to-end Power BI workflow by transforming CDC Chronic Disease Indicators (CDI) data
-    into a suite of interactive dashboards. The analysis covers national trends, state-by-state performance rankings,
-    risk factor correlations, and health equity gaps to support evidence-based prioritization of public health interventions.
+    This project analyzes the CDC's U.S. Chronic Disease Indicators (CDI) dataset using Power BI to track chronic disease
+    trends across the United States, compare state-level performance against national benchmarks, and quantify health
+    disparities across demographic groups. The analysis covers 9 chronic disease topics, 52 locations, and 7 years of
+    surveillance data.
   </p>
 
-  <h3>Business Context</h3>
+  <h3>Why Power BI</h3>
   <p>
-    Healthcare policymakers need to allocate limited prevention and intervention resources effectively across states and
-    programs. This dashboard enables evidence-based decision-making by answering: which states have the highest chronic
-    disease burden, which health indicators are improving vs. worsening, where demographic disparities are largest, and
-    how prevention programs should be prioritized.
+    This project was designed to showcase practical Power BI skills used in analytics roles: building a complete ETL pipeline
+    in Power Query, designing a normalized star schema data model, writing DAX measures for aggregations, time intelligence,
+    rankings, and disparity calculations, and creating interactive report pages. The CDC dataset provides a real-world context
+    that requires meaningful data transformation before analysis can begin.
   </p>
 
-  <h3>Why the CDI Dataset</h3>
+  <h3>Project Goals</h3>
   <ul>
-    <li>Real-world government data published by the CDC with consistent methodology across states and years</li>
-    <li>Supports trend analysis, geographic comparison, and demographic stratification in a single source</li>
-    <li>Large enough to require meaningful ETL and modeling (500K+ rows) while remaining focused on actionable health metrics</li>
-  </ul>
-
-  <h3>Objectives</h3>
-  <ul>
-    <li>Build a complete Power Query ETL pipeline to clean, filter, and reshape raw CDC data into an analysis-ready star schema</li>
-    <li>Design a normalized data model with dimension and fact tables optimized for DAX performance</li>
-    <li>Develop 20+ DAX measures covering aggregations, time intelligence, rankings, disparity calculations, and composite scoring</li>
-    <li>Create 5 interactive dashboard pages that progress from executive overview to actionable recommendations</li>
-    <li>Identify high-burden states, track multi-year trends, quantify demographic gaps, and prioritize intervention targets</li>
+    <li>Build a complete Power Query ETL pipeline to import, filter, and reshape raw CDC data into an analysis-ready star schema</li>
+    <li>Design a normalized data model with one fact table and four dimension tables optimized for DAX performance</li>
+    <li>Develop 10 DAX measures covering core aggregations, time intelligence, state rankings, and demographic disparity calculations</li>
+    <li>Create interactive dashboard pages that track health trends, compare states, and surface demographic inequities</li>
+    <li>Demonstrate end-to-end Power BI proficiency from raw data ingestion through polished report delivery</li>
   </ul>
 
   <h3>Tools &amp; Skills Demonstrated</h3>
   <ul>
-    <li><strong>Power BI Desktop:</strong> data modeling, relationships, report design, drill-through, bookmarks, and interactivity</li>
-    <li><strong>Power Query:</strong> data import, type standardization, scope filtering, dimension table creation via duplicate queries</li>
-    <li><strong>DAX:</strong> time intelligence, RANKX, context transition, filter manipulation, composite index calculations</li>
-    <li><strong>Visualization:</strong> KPI cards, line charts, filled maps, matrices, scatter plots, decomposition trees, conditional formatting</li>
+    <li><strong>Power BI Desktop:</strong> data modeling, relationships, DAX authoring, report design, and interactivity</li>
+    <li><strong>Power Query (M):</strong> data import, type standardization, scope filtering, null removal, dimension table creation via duplicate-and-reduce method</li>
+    <li><strong>DAX:</strong> SUM, AVERAGE, CALCULATE with ALL, RANKX, DATEADD time intelligence, ALLEXCEPT for group-level analysis, DIVIDE for safe division</li>
+    <li><strong>Data Modeling:</strong> star schema design with one-to-many relationships, single-direction filter propagation, separate _Measures table</li>
+    <li><strong>Visualization:</strong> KPI cards, line charts, filled maps, bar charts, matrix tables, conditional formatting</li>
   </ul>
 
 </details>
@@ -81,28 +76,53 @@ breadcrumbs:
 
   <h3>Format</h3>
   <ul>
-    <li><strong>File type:</strong> CSV (long/tidy format — one row per measurement observation)</li>
-    <li><strong>Granularity:</strong> Year × State × Indicator × Stratification</li>
-    <li><strong>Records:</strong> 500,000+ measurements across years, states, and demographics</li>
+    <li><strong>File type:</strong> CSV in tidy/long format — one row per measurement observation</li>
+    <li><strong>Granularity:</strong> Year × Location × Indicator × Stratification</li>
+    <li><strong>Structure:</strong> Each row represents a single data point for a specific year, state, health indicator, and demographic group</li>
   </ul>
 
-  <h3>Key Fields</h3>
+  <h3>Scope Decisions</h3>
+  <p>
+    The full CDI dataset contains hundreds of thousands of rows spanning dozens of topics, all U.S. states and territories,
+    and multiple stratification categories. To create a focused and meaningful analysis, I made the following scope decisions
+    during the Power Query ETL phase:
+  </p>
+
+  <h4>9 Topics Selected</h4>
   <ul>
-    <li><strong>Year:</strong> reporting period</li>
-    <li><strong>Location:</strong> state name and abbreviation</li>
-    <li><strong>Indicator:</strong> condition or risk factor being measured</li>
-    <li><strong>Stratification:</strong> overall, age group, sex, or race/ethnicity</li>
-    <li><strong>DataValue:</strong> metric value (rate, percentage, or count depending on indicator)</li>
-    <li><strong>Confidence Limits:</strong> low and high confidence interval bounds</li>
+    <li><strong>Alcohol</strong></li>
+    <li><strong>Arthritis</strong></li>
+    <li><strong>Asthma</strong></li>
+    <li><strong>Cancer</strong></li>
+    <li><strong>Cardiovascular Disease</strong></li>
+    <li><strong>Chronic Kidney Disease</strong></li>
+    <li><strong>Diabetes</strong></li>
+    <li><strong>Nutrition, Physical Activity, and Weight Status</strong></li>
+    <li><strong>Tobacco</strong></li>
+  </ul>
+  <p>
+    These 9 topics represent major chronic disease categories that collectively account for the leading causes of death
+    and disability in the United States. They include both direct disease outcomes (Cancer, Cardiovascular Disease, Diabetes)
+    and behavioral risk factors (Alcohol, Tobacco, Nutrition/Physical Activity) — enabling analysis of both upstream causes
+    and downstream health impacts.
+  </p>
+
+  <h4>52 Locations</h4>
+  <ul>
+    <li>50 U.S. states + District of Columbia + United States (national aggregate)</li>
+    <li>Territories excluded to maintain consistency in state-to-state comparisons and national benchmark calculations</li>
   </ul>
 
-  <h3>Scope Selected</h3>
+  <h4>7 Years</h4>
   <ul>
-    <li><strong>Risk factors:</strong> Obesity, Smoking, Physical Inactivity</li>
-    <li><strong>Outcomes:</strong> Diabetes, Heart Disease, Hypertension</li>
-    <li><strong>Time range:</strong> 2011–2023 (most recent 12 years available)</li>
-    <li><strong>Geography:</strong> 50 US states + DC (territories excluded for consistency)</li>
-    <li><strong>Stratification:</strong> Overall data for executive views; demographic breakdowns (age, sex, race/ethnicity) for disparity analysis</li>
+    <li>2015, 2016, 2018, 2019, 2020, 2021, 2022</li>
+    <li><strong>Note:</strong> 2017 is missing from the dataset — this is a gap in the source data, not a filtering decision</li>
+  </ul>
+
+  <h4>Filtered Result</h4>
+  <ul>
+    <li><strong>999+ rows</strong> after removing territories, null data values, and out-of-scope topics</li>
+    <li>Rows with null <code>DataValue</code> were removed to ensure clean aggregations in DAX measures</li>
   </ul>
 
 </details>
@@ -115,54 +135,160 @@ breadcrumbs:
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Import &amp; Baseline Cleanup</h3>
-  <ul>
-    <li>Imported the full CDI CSV into Power BI Desktop</li>
-    <li>Set correct data types: Year → Whole Number, DataValue → Decimal, text fields → Text</li>
-    <li>Renamed the raw query to <code>CDI_Raw</code> to preserve the original import as a reference</li>
-  </ul>
-
-  <h3>Scope Filtering</h3>
-  <ul>
-    <li>Filtered to 6 selected indicators only (Obesity, Smoking, Physical Inactivity, Diabetes, Heart Disease, Hypertension)</li>
-    <li>Filtered to US states only (excluded territories and national aggregates)</li>
-    <li>Filtered to 2011–2023 time period</li>
-    <li>Removed rows with null <code>DataValue</code> to ensure clean aggregations</li>
-  </ul>
-
-  <h3>Dimension Table Creation</h3>
   <p>
-    Used the <strong>duplicate query method</strong> — duplicating the filtered base query and reducing each copy to
-    unique dimension attributes — to build normalized dimension tables:
+    Before building the data model and DAX measures, I transformed the raw CDC dataset using <strong>Power Query</strong>
+    in Power BI Desktop. The goal was to convert a single wide CSV file into a normalized star schema with one fact table
+    and four dimension tables — each optimized for downstream analysis.
   </p>
-  <ul>
-    <li><strong>Dim_Date:</strong> distinct Year values with calendar grouping fields</li>
-    <li><strong>Dim_Location:</strong> State name, abbreviation, and Census Region grouping</li>
-    <li><strong>Dim_Indicator:</strong> indicator name, category (Risk Factor vs. Outcome), and description</li>
-    <li><strong>Dim_Stratification:</strong> stratification type, value, and <code>IsOverall</code> flag for easy filtering</li>
-  </ul>
 
-  <h3>Fact Table Build</h3>
-  <ul>
-    <li>Created <code>Fact_CDI</code> containing foreign keys (Year, Location, Indicator, Stratification) plus the <code>DataValue</code> metric</li>
-    <li>Added an <code>IsOverall</code> flag column to enable quick filtering between executive (overall) and disparity (stratified) views</li>
-  </ul>
+  <h3>Step 1 — Import Raw Data</h3>
+  <p>
+    Imported the full CDI CSV file into Power BI and preserved it as <code>CDI_Raw</code>. This query serves as the
+    unmodified reference copy of the original data — no manual edits or transformations applied.
+  </p>
 
-  <h3>Power Query Steps</h3>
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/power-query-steps.png"
-      alt="Power Query Editor showing Applied Steps for CDI data transformation"
+      src="images/powerbi-power-query-cdi-raw.png"
+      alt="Power Query Editor showing the raw CDI dataset before transformation"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Power Query transformation steps showing data cleaning, scope filtering, and dimension table creation.
+      <code>CDI_Raw</code> — original imported dataset preserved as-is before any transformations.
       <span style="display:block; margin-top:4px;">
-        <a href="images/power-query-steps.png">Open full-size</a>
+        <a href="images/powerbi-power-query-cdi-raw.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
+
+  <h3>Step 2 — Filter &amp; Scope</h3>
+  <ul>
+    <li>Filtered to 9 selected topics (Alcohol, Arthritis, Asthma, Cancer, Cardiovascular Disease, Chronic Kidney Disease, Diabetes, Nutrition/Physical Activity/Weight Status, Tobacco)</li>
+    <li>Filtered to 52 locations (50 states + DC + national aggregate; territories excluded)</li>
+    <li>Removed rows with null <code>DataValue</code> to prevent aggregation errors downstream</li>
+    <li>Set correct data types: <code>YearStart</code> → Whole Number, <code>DataValue</code> → Decimal, <code>LowConfidenceLimit</code> → Decimal, <code>HighConfidenceLimit</code> → Decimal, text fields → Text</li>
+  </ul>
+
+  <h3>Step 3 — Create Dimension Tables</h3>
+  <p>
+    Used the <strong>duplicate-and-reduce method</strong>: duplicated the filtered base query, then removed all columns
+    except the dimension attributes, and applied <em>Remove Duplicates</em> to produce clean lookup tables. This approach
+    ensures every value in each dimension table has a corresponding record in the fact table.
+  </p>
+
+  <h4>Dim_Location (52 rows, 4 columns)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-power-query-dim-location.png"
+      alt="Power Query showing Dim_Location dimension table with 52 rows"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      <code>Dim_Location</code> — 52 unique locations with <code>LocationAbbr</code>, <code>LocationDesc</code>, <code>Geolocation</code>, and <code>LocationID</code>.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-power-query-dim-location.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Dim_Indicator (9 rows, 7 columns)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-power-query-dim-indicator.png"
+      alt="Power Query showing Dim_Indicator dimension table with 9 rows"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      <code>Dim_Indicator</code> — 9 unique health indicators with <code>Topic</code>, <code>TopicID</code>, <code>Question</code>, <code>QuestionID</code>, <code>DataValueType</code>, <code>DataValueTypeID</code>, and <code>DataValueUnit</code>.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-power-query-dim-indicator.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <p>
+    Each indicator maps a broad topic to a specific measurement question. For example:
+  </p>
+  <ul>
+    <li><strong>Cancer</strong> → Invasive cancer incidence</li>
+    <li><strong>Diabetes</strong> → Diabetic ketoacidosis mortality</li>
+    <li><strong>Tobacco</strong> → Current cigarette smoking among adults</li>
+  </ul>
+
+  <h4>Dim_Stratification (5 rows, 4 columns)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-power-query-dim-stratification.png"
+      alt="Power Query showing Dim_Stratification dimension table with 5 rows"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      <code>Dim_Stratification</code> — 5 unique demographic groups with <code>StratificationCategory1</code>, <code>Stratification1</code>, <code>StratificationCategoryID1</code>, and <code>StratificationID1</code>.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-power-query-dim-stratification.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <p>
+    The stratification dimension enables both executive-level views (Overall) and demographic disparity analysis:
+  </p>
+  <ul>
+    <li><strong>Overall</strong> — aggregate population values</li>
+    <li><strong>Sex (Male)</strong></li>
+    <li><strong>Race/Ethnicity (Hispanic)</strong></li>
+    <li><strong>Age (Age >=65)</strong></li>
+    <li><strong>Grade (Grade 10)</strong></li>
+  </ul>
+
+  <h4>Dim_Date (7 rows, 2 columns)</h4>
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-power-query-dim-date.png"
+      alt="Power Query showing Dim_Date dimension table with 7 rows"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      <code>Dim_Date</code> — 7 unique year records with <code>YearStart</code> and <code>YearEnd</code> covering 2015–2022 (2017 absent from source data).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-power-query-dim-date.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Step 4 — Build Fact Table</h3>
+  <p>
+    Created <code>Fact_CDI</code> by selecting only the foreign key columns and metric columns from the filtered base
+    query. This table contains the measurement data that connects to all four dimension tables through key relationships.
+  </p>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-power-query-fact-cdi.png"
+      alt="Power Query showing Fact_CDI fact table with foreign keys and metric columns"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      <code>Fact_CDI</code> — 999+ rows with 7 columns: <code>YearStart</code>, <code>LocationID</code>, <code>QuestionID</code>, <code>StratificationID1</code>, <code>DataValue</code>, <code>LowConfidenceLimit</code>, <code>HighConfidenceLimit</code>.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-power-query-fact-cdi.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h3>Why This ETL Approach Matters</h3>
+  <ul>
+    <li><strong>Accuracy:</strong> removing null values and territories prevents inflated or misleading aggregations in DAX measures</li>
+    <li><strong>Performance:</strong> normalized dimension tables reduce data redundancy and optimize Power BI's VertiPaq storage engine</li>
+    <li><strong>Maintainability:</strong> the duplicate-and-reduce method ensures dimension values always align with fact table records</li>
+    <li><strong>Scalability:</strong> adding new years or topics requires updating scope filters rather than restructuring the model</li>
+  </ul>
 
 </details>
 
@@ -174,49 +300,88 @@ breadcrumbs:
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Model Architecture</h3>
+  <h3>What Is a Star Schema</h3>
   <p>
-    Normalized star schema with 1 fact table at the center and 4 dimension tables providing descriptive context.
-    All relationships are single-direction, one-to-many from dimension to fact, ensuring consistent filter propagation
-    across all visuals.
+    A star schema organizes data into a central <strong>fact table</strong> containing measurable values (metrics) surrounded
+    by <strong>dimension tables</strong> that provide descriptive context (who, what, where, when). This structure is the
+    standard for analytical data models in Power BI because it optimizes query performance, simplifies DAX measure writing,
+    and creates predictable filter propagation across report visuals.
   </p>
 
-  <h3>Fact Table</h3>
-  <ul>
-    <li><strong>Fact_CDI:</strong> Year key, Location key, Indicator key, Stratification key → DataValue metric</li>
-  </ul>
+  <h3>Model Architecture</h3>
 
-  <h3>Dimension Tables</h3>
-  <ul>
-    <li><strong>Dim_Date:</strong> Year, calendar grouping fields</li>
-    <li><strong>Dim_Location:</strong> State name, abbreviation, Census Region</li>
-    <li><strong>Dim_Indicator:</strong> Indicator name, Category (Risk Factor / Outcome), Description</li>
-    <li><strong>Dim_Stratification:</strong> Stratification type, value, IsOverall flag</li>
-  </ul>
-
-  <h3>Why Star Schema</h3>
-  <ul>
-    <li>Optimizes Power BI's VertiPaq storage engine for fast aggregation queries</li>
-    <li>Creates a clear semantic layer where dimensions describe and the fact table measures</li>
-    <li>Supports complex DAX measures that rely on predictable filter context propagation</li>
-    <li>Separates descriptive attributes from metrics, reducing data redundancy</li>
-  </ul>
-
-  <h3>Model Diagram</h3>
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/model-star-schema.png"
-      alt="Power BI data model showing star schema with Fact_CDI and four dimension tables"
+      src="images/powerbi-data-connections.png"
+      alt="Power BI data model diagram showing star schema with Fact_CDI connected to four dimension tables"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Star schema model with Fact_CDI at the center connected to Dim_Date, Dim_Location, Dim_Indicator, and Dim_Stratification.
+      Star schema data model with <code>Fact_CDI</code> at the center connected to <code>Dim_Date</code>, <code>Dim_Location</code>, <code>Dim_Indicator</code>, and <code>Dim_Stratification</code>.
       <span style="display:block; margin-top:4px;">
-        <a href="images/model-star-schema.png">Open full-size</a>
+        <a href="images/powerbi-data-connections.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
+
+  <h3>Fact Table</h3>
+  <p>
+    <strong>Fact_CDI</strong> (999+ rows, 7 columns) — the central measurement table containing one row per observation.
+  </p>
+  <ul>
+    <li><strong>Foreign keys:</strong> <code>YearStart</code>, <code>LocationID</code>, <code>QuestionID</code>, <code>StratificationID1</code></li>
+    <li><strong>Metrics:</strong> <code>DataValue</code>, <code>LowConfidenceLimit</code>, <code>HighConfidenceLimit</code></li>
+  </ul>
+
+  <h3>Dimension Tables</h3>
+
+  <h4>Dim_Location (52 rows, 4 columns)</h4>
+  <ul>
+    <li><strong>Key:</strong> <code>LocationID</code></li>
+    <li><strong>Attributes:</strong> <code>LocationAbbr</code> (state abbreviation), <code>LocationDesc</code> (full state name), <code>Geolocation</code> (coordinates)</li>
+    <li><strong>Purpose:</strong> enables geographic filtering, map visualizations, and state-level comparisons</li>
+  </ul>
+
+  <h4>Dim_Indicator (9 rows, 7 columns)</h4>
+  <ul>
+    <li><strong>Key:</strong> <code>QuestionID</code></li>
+    <li><strong>Attributes:</strong> <code>Topic</code>, <code>TopicID</code>, <code>Question</code>, <code>DataValueType</code>, <code>DataValueTypeID</code>, <code>DataValueUnit</code></li>
+    <li><strong>Purpose:</strong> provides indicator metadata including the specific measurement question, data value type, and unit of measurement for each topic</li>
+  </ul>
+
+  <h4>Dim_Stratification (5 rows, 4 columns)</h4>
+  <ul>
+    <li><strong>Key:</strong> <code>StratificationID1</code></li>
+    <li><strong>Attributes:</strong> <code>StratificationCategory1</code>, <code>Stratification1</code>, <code>StratificationCategoryID1</code></li>
+    <li><strong>Purpose:</strong> enables filtering between overall population values and specific demographic group breakdowns for disparity analysis</li>
+  </ul>
+
+  <h4>Dim_Date (7 rows, 2 columns)</h4>
+  <ul>
+    <li><strong>Key:</strong> <code>YearStart</code></li>
+    <li><strong>Attributes:</strong> <code>YearEnd</code></li>
+    <li><strong>Purpose:</strong> supports time-series trend analysis and year-over-year DAX calculations using DATEADD</li>
+  </ul>
+
+  <h3>Relationships</h3>
+  <p>
+    All relationships follow the same pattern: <strong>one-to-many</strong> from each dimension table to <code>Fact_CDI</code>,
+    with <strong>single-direction</strong> filter propagation flowing from dimension to fact. This ensures:
+  </p>
+  <ul>
+    <li>Slicer selections on any dimension (year, state, indicator, demographic group) correctly filter the fact table</li>
+    <li>DAX measures using <code>CALCULATE</code> and <code>ALL</code> can override filter context predictably</li>
+    <li>No circular dependencies or ambiguous filter paths exist in the model</li>
+  </ul>
+
+  <h3>Why This Structure Improves Performance and Analysis</h3>
+  <ul>
+    <li><strong>VertiPaq optimization:</strong> narrow dimension tables with low cardinality compress efficiently in Power BI's in-memory engine</li>
+    <li><strong>DAX clarity:</strong> measures reference dimension attributes for context and fact columns for calculations — the separation makes formulas easier to write and debug</li>
+    <li><strong>Filter propagation:</strong> one-to-many relationships ensure that slicers and cross-filters work consistently across all report pages</li>
+    <li><strong>Reduced redundancy:</strong> descriptive text (state names, indicator descriptions) is stored once in dimensions rather than repeated across 999+ fact rows</li>
+  </ul>
 
 </details>
 
@@ -228,136 +393,144 @@ breadcrumbs:
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
+  <h3>Measures Table</h3>
   <p>
-    The report uses 20+ DAX measures organized into four functional categories. Each measure is designed to leverage
-    the star schema's filter context for accurate, context-aware calculations across all dashboard pages.
+    All DAX measures are organized in a dedicated <code>_Measures</code> table — a best practice in Power BI that
+    separates calculation logic from data tables. This keeps the model clean, makes measures easy to find in the
+    Fields pane, and prevents accidental aggregation of measure columns alongside raw data.
   </p>
 
-  <h3>Core Measures</h3>
-  <ul>
-    <li><strong>Selected Value:</strong> AVERAGE of DataValue within the current filter context (indicator, state, year, stratification)</li>
-    <li><strong>National Average:</strong> CALCULATE-based measure filtered to Overall stratification across all states for the selected indicator</li>
-    <li><strong>State Rank:</strong> RANKX over all states for the selected indicator, enabling dynamic rankings as slicer selections change</li>
-  </ul>
+  <p>
+    The 10 measures below are grouped into three functional categories: <strong>Core Aggregations</strong>,
+    <strong>Time Intelligence</strong>, and <strong>Disparity Analysis</strong>. Each measure is designed to
+    leverage the star schema's filter context for accurate, context-aware calculations.
+  </p>
+
+  <h3>Core Aggregations</h3>
+  <p>
+    These foundational measures drive all primary visualizations — KPI cards, trend lines, bar charts, and map shading.
+  </p>
+
+  <h4>Total Value</h4>
+  <pre><code class="language-dax">Total Value = SUM(Fact_CDI[DataValue])</code></pre>
+  <p>Aggregate sum of all data values within the current filter context. Used for total-volume views where the sum across locations or indicators is meaningful.</p>
+
+  <h4>Average Value</h4>
+  <pre><code class="language-dax">Average Value = AVERAGE(Fact_CDI[DataValue])</code></pre>
+  <p>Mean data value within the current filter context. This is the <strong>primary metric for analysis</strong> — most health indicators are rates or percentages where the average is more meaningful than the sum.</p>
+
+  <h4>National Average</h4>
+  <pre><code class="language-dax">National Average =
+CALCULATE(
+    [Average Value],
+    ALL(Dim_Location)
+)</code></pre>
+  <p>
+    Calculates the national benchmark by removing all location filters from the <code>[Average Value]</code> calculation.
+    When a slicer selects a specific state, this measure still returns the all-states average — enabling state-vs-national
+    comparison in KPI cards and reference lines.
+  </p>
+
+  <h4>State Rank</h4>
+  <pre><code class="language-dax">State Rank =
+RANKX(
+    ALL(Dim_Location[LocationDesc]),
+    [Average Value],
+    ,
+    DESC
+)</code></pre>
+  <p>
+    Ranks states from highest to lowest average value (1 = highest value). Uses <code>ALL(Dim_Location[LocationDesc])</code>
+    to evaluate every state regardless of the current filter context, then ranks them by <code>[Average Value]</code>.
+    This enables dynamic state rankings that update as indicator and year selections change.
+  </p>
 
   <h3>Time Intelligence</h3>
+  <p>
+    These measures track how health indicators change over time, supporting trend analysis and identifying whether
+    conditions are improving or deteriorating year over year.
+  </p>
+
+  <h4>YoY Change</h4>
+  <pre><code class="language-dax">YoY Change =
+VAR CurrentValue = [Average Value]
+VAR PreviousValue =
+    CALCULATE(
+        [Average Value],
+        DATEADD(Dim_Date[YearStart], -1, YEAR)
+    )
+RETURN
+    CurrentValue - PreviousValue</code></pre>
+  <p>Calculates the absolute year-over-year change in average value. A positive result means the value increased from the prior year; a negative result means it decreased.</p>
+
+  <h4>YoY % Change</h4>
+  <pre><code class="language-dax">YoY % Change =
+VAR CurrentValue = [Average Value]
+VAR PreviousValue =
+    CALCULATE(
+        [Average Value],
+        DATEADD(Dim_Date[YearStart], -1, YEAR)
+    )
+RETURN
+    DIVIDE(CurrentValue - PreviousValue, PreviousValue)</code></pre>
+  <p>
+    Calculates the percentage year-over-year change using <code>DIVIDE</code> for safe division (returns blank instead of
+    error when the prior year value is zero or missing). For example, a result of 0.05 means the indicator increased 5%
+    compared to the previous year.
+  </p>
+
+  <h3>Disparity Analysis</h3>
+  <p>
+    These measures quantify the gap between the best-performing and worst-performing demographic groups within a given
+    state, indicator, and year. Disparity analysis is critical in public health analytics because it reveals whether
+    improvements in population-level averages are shared equitably across demographic groups or are masking widening
+    inequities.
+  </p>
+
+  <h4>Group Max</h4>
+  <pre><code class="language-dax">Group Max =
+CALCULATE(
+    MAX(Fact_CDI[DataValue]),
+    ALLEXCEPT(Fact_CDI, Dim_Location, Dim_Indicator, Dim_Date)
+)</code></pre>
+  <p>
+    Finds the highest data value among all demographic groups for a given location, indicator, and year combination.
+    <code>ALLEXCEPT</code> removes the stratification filter while preserving location, indicator, and date context —
+    so the measure scans across all demographic groups within the current state and indicator.
+  </p>
+
+  <h4>Group Min</h4>
+  <pre><code class="language-dax">Group Min =
+CALCULATE(
+    MIN(Fact_CDI[DataValue]),
+    ALLEXCEPT(Fact_CDI, Dim_Location, Dim_Indicator, Dim_Date)
+)</code></pre>
+  <p>
+    Finds the lowest data value among all demographic groups for a given location, indicator, and year combination.
+    The counterpart to <code>[Group Max]</code>, enabling the calculation of disparity measures below.
+  </p>
+
+  <h4>Disparity Gap</h4>
+  <pre><code class="language-dax">Disparity Gap = [Group Max] - [Group Min]</code></pre>
+  <p>
+    The absolute difference between the highest and lowest performing demographic groups. A gap of 10 means the worst-performing
+    group's rate is 10 percentage points (or units) higher than the best-performing group. Larger gaps indicate greater health inequity.
+  </p>
+
+  <h4>Disparity Ratio</h4>
+  <pre><code class="language-dax">Disparity Ratio = DIVIDE([Group Max], [Group Min])</code></pre>
+  <p>
+    The relative inequality between demographic groups. A ratio of 2.0 means the highest-burden group's rate is 2x
+    the lowest-burden group's rate. This measure is especially useful for comparing disparity severity across indicators
+    with different scales — a 5-point gap means something different for an indicator measured in percentages versus one
+    measured in rates per 100,000.
+  </p>
+
+  <h3>Why These Measures Matter for Health Analytics</h3>
   <ul>
-    <li><strong>YoY Change:</strong> Current Year Value minus Prior Year Value</li>
-    <li><strong>YoY % Change:</strong> (Current − Prior) / Prior, formatted as percentage</li>
-    <li><strong>Trend Direction:</strong> Conditional logic evaluating whether year-over-year movement represents improvement or deterioration based on indicator type (higher obesity = worsening; lower smoking = improving)</li>
-  </ul>
-
-  <h3>Disparity Measures</h3>
-  <ul>
-    <li><strong>Group Max:</strong> MAX of DataValue across demographic groups within a state and indicator</li>
-    <li><strong>Group Min:</strong> MIN of DataValue across demographic groups within a state and indicator</li>
-    <li><strong>Disparity Gap:</strong> Group Max − Group Min (absolute difference)</li>
-    <li><strong>Disparity Ratio:</strong> Group Max / Group Min (relative magnitude)</li>
-  </ul>
-
-  <h3>Composite Index (Advanced)</h3>
-  <ul>
-    <li><strong>Burden Index:</strong> Weighted composite of normalized indicator ranks per state, combining risk factor and outcome severity into a single score</li>
-    <li><strong>Priority Score:</strong> Combines burden level with trend direction to flag states that are both high-burden and worsening — the highest-priority intervention targets</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Dashboard 1 — Executive Overview: Population Health Snapshot</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>What is the overall chronic disease landscape across the United States, and which states need the most attention?</p>
-
-  <h3>Visuals</h3>
-  <ul>
-    <li><strong>KPI cards:</strong> current-year values for each indicator with YoY change arrows and conditional color coding</li>
-    <li><strong>Trend lines:</strong> selected indicators plotted over the 2011–2023 period showing national trajectory</li>
-    <li><strong>Filled map:</strong> state-level choropleth shading states by burden level for the selected indicator</li>
-    <li><strong>Top/Bottom 10 bar chart:</strong> ranked horizontal bars showing best and worst performing states side-by-side</li>
-  </ul>
-
-  <h3>Results</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/dashboard-01-overview.png"
-      alt="Executive Overview dashboard showing KPI cards, national trends, state map, and rankings"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Executive Overview dashboard with KPI cards, trend lines, state choropleth, and top/bottom state rankings.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/dashboard-01-overview.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>Obesity rates increased 15% nationally from 2011 to 2023, representing the strongest upward trend among all indicators</li>
-    <li>Southern states show consistently higher burden across multiple indicators, forming a geographic cluster of elevated risk</li>
-    <li>Diabetes prevalence grew faster than other chronic conditions over the analysis period, outpacing both heart disease and hypertension trends</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Prioritize prevention programs in top 10 high-burden states:</strong> concentrate resources where chronic disease rates are highest and still rising</li>
-    <li><strong>Focus on obesity reduction as the primary lever:</strong> obesity shows the strongest upward trend and is a known driver of diabetes, heart disease, and hypertension outcomes</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Dashboard 2 — Trends &amp; Indicator Comparison</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>Which indicators are improving vs. worsening over time? Where should prevention efforts be expanded, and where are current programs showing results?</p>
-
-  <h3>Visuals</h3>
-  <ul>
-    <li><strong>Small multiples line charts:</strong> all 6 indicators displayed side-by-side for direct trend comparison</li>
-    <li><strong>Matrix with conditional formatting:</strong> states as rows, indicators as columns, color-coded by severity (red = high burden, green = low burden)</li>
-    <li><strong>Worsening trends table:</strong> filtered list of states with negative trajectory (rising values for bad outcomes, declining values for protective factors)</li>
-  </ul>
-
-  <h3>Results</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/dashboard-02-trends.png"
-      alt="Trends dashboard showing small multiples, state-indicator matrix, and worsening trends table"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Trends &amp; Indicator Comparison dashboard with small multiples, conditional matrix, and worsening-trend identification.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/dashboard-02-trends.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>Smoking rates are declining nationally — the clearest positive trend across all indicators, indicating successful tobacco control programs</li>
-    <li>Physical inactivity is increasing in 35 states, representing a widespread and accelerating risk factor</li>
-    <li>Heart disease mortality is improving overall, but diabetes prevalence continues to worsen, suggesting different intervention trajectories</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Expand smoking cessation programs:</strong> the proven decline validates existing approaches — scale what works to states with slower improvement</li>
-    <li><strong>Launch physical activity initiatives in worsening states:</strong> physical inactivity is the most broadly deteriorating risk factor and represents an upstream lever for multiple outcomes</li>
+    <li><strong>Core aggregations</strong> provide the foundation for every visualization — KPI cards, trend lines, maps, and ranking tables all depend on <code>[Average Value]</code>, <code>[National Average]</code>, and <code>[State Rank]</code></li>
+    <li><strong>Time intelligence</strong> enables trend detection — policymakers need to know not just current values but whether conditions are improving or deteriorating, and at what rate</li>
+    <li><strong>Disparity measures</strong> go beyond population averages to surface inequities — a state's overall rate may look acceptable while specific demographic groups face significantly higher burden, requiring targeted interventions</li>
   </ul>
 
 </details>
@@ -365,291 +538,65 @@ breadcrumbs:
 ---
 
 <details>
-  <summary><strong>Dashboard 3 — Geographic Deep Dive: State Performance</strong></summary>
+  <summary><strong>Dashboard Pages</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
-  <p>What is driving outcomes in specific states? Which states are consistent outliers, and where do individual state profiles reveal mixed performance?</p>
-
-  <h3>Visuals</h3>
-  <ul>
-    <li><strong>Decomposition tree:</strong> breaks down state burden by indicator, enabling interactive root cause exploration</li>
-    <li><strong>State profile view:</strong> selected state's trends across all 6 indicators on a single panel</li>
-    <li><strong>Ranked indicator list:</strong> state's performance on each indicator compared to the national average with directional arrows</li>
-    <li><strong>Drill-through enabled:</strong> click any state on the overview map to navigate directly to that state's detailed profile</li>
-  </ul>
-
-  <h3>Results</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/dashboard-03-state-drill.png"
-      alt="State drill-down dashboard showing decomposition tree, state profile, and ranked indicators"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Geographic Deep Dive dashboard with decomposition tree, state trend profiles, and drill-through navigation.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/dashboard-03-state-drill.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>Mississippi, Alabama, and West Virginia appear consistently in the bottom 10 across multiple indicators, indicating systemic health infrastructure challenges</li>
-    <li>Colorado, Massachusetts, and Hawaii rank consistently among top performers, providing potential benchmarks for intervention design</li>
-    <li>Some states show mixed performance profiles — for example, Wisconsin demonstrates low smoking rates but high obesity prevalence, suggesting targeted rather than blanket approaches are needed</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Study best practices from improving states with similar baselines:</strong> identify states that started with high burden but showed meaningful improvement, and analyze what programs drove the change</li>
-    <li><strong>Create peer learning networks between similar states:</strong> group states by demographic and economic similarity to facilitate transferable strategy sharing</li>
-  </ul>
+  <p>
+    Dashboard development in progress. This section will showcase 5 interactive report pages analyzing health trends,
+    state comparisons, and demographic disparities.
+  </p>
 
 </details>
 
 ---
 
 <details>
-  <summary><strong>Dashboard 4 — Health Disparities: Demographics</strong></summary>
+  <summary><strong>Conclusion &amp; Next Steps</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
-  <p>Where are demographic gaps largest? Which population groups face the highest chronic disease burden, and how do disparities vary by state and indicator?</p>
-
-  <h3>Visuals</h3>
+  <h3>Work Completed</h3>
+  <p>
+    This project demonstrates the foundational stages of an end-to-end Power BI analytics workflow using real-world CDC
+    chronic disease surveillance data. The work completed so far includes:
+  </p>
   <ul>
-    <li><strong>Disparity gap KPI:</strong> Max − Min values across demographic groups for the selected indicator and state</li>
-    <li><strong>Bar chart by demographic group:</strong> side-by-side comparison of indicator values across race/ethnicity, age, and sex categories</li>
-    <li><strong>Heatmap matrix:</strong> states as rows, demographic groups as columns, color-coded by gap severity</li>
-    <li><strong>Scatter plot:</strong> burden level (x-axis) vs. disparity size (y-axis) to identify states with both high burden and high inequality</li>
+    <li><strong>Power Query ETL pipeline:</strong> imported raw CDC data, applied scope filtering (9 topics, 52 locations, 7 years), removed null values, and built 4 normalized dimension tables using the duplicate-and-reduce method</li>
+    <li><strong>Star schema data model:</strong> designed a fact table (<code>Fact_CDI</code>) connected to <code>Dim_Date</code>, <code>Dim_Location</code>, <code>Dim_Indicator</code>, and <code>Dim_Stratification</code> through one-to-many relationships with single-direction filtering</li>
+    <li><strong>10 DAX measures:</strong> developed core aggregations (Total Value, Average Value, National Average, State Rank), time intelligence (YoY Change, YoY % Change), and disparity analysis (Group Max, Group Min, Disparity Gap, Disparity Ratio) in a dedicated <code>_Measures</code> table</li>
   </ul>
 
-  <h3>Results</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/dashboard-04-disparities.png"
-      alt="Health disparities dashboard showing gap KPIs, demographic comparisons, heatmap, and scatter plot"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Health Disparities dashboard with demographic gap analysis, state-group heatmap, and burden-vs-disparity scatter plot.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/dashboard-04-disparities.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
+  <h3>Dashboard Development</h3>
+  <p>
+    The next phase of this project is building 5 interactive report pages that apply the data model and DAX measures
+    to answer specific public health questions:
+  </p>
   <ul>
-    <li>African American populations show 2.5x higher diabetes rates than the national average, representing the largest single-group disparity in the dataset</li>
-    <li>Hispanic populations have the largest disparity gaps in obesity prevalence across states</li>
-    <li>Age-based disparities are larger than race-based disparities for heart disease, indicating that age-targeted screening programs may have higher impact for cardiovascular outcomes</li>
-    <li>The urban-rural divide is significant for access-related outcomes, with rural areas showing higher burden across most risk factors</li>
+    <li><strong>Executive Overview:</strong> national KPI snapshot with trend lines and state-level map shading</li>
+    <li><strong>Trend Analysis:</strong> multi-year indicator comparisons identifying improving vs. worsening conditions</li>
+    <li><strong>State Performance:</strong> geographic deep dive with rankings, drill-through, and state-vs-national benchmarks</li>
+    <li><strong>Health Disparities:</strong> demographic gap analysis using Group Max/Min, Disparity Gap, and Disparity Ratio measures</li>
+    <li><strong>Action Prioritization:</strong> composite scoring to identify highest-priority states for intervention</li>
   </ul>
 
-  <h3>Business Recommendations</h3>
+  <h3>Skills Demonstrated</h3>
   <ul>
-    <li><strong>Target culturally-specific interventions for highest-disparity groups:</strong> tailor messaging, outreach channels, and program design to the populations facing the largest gaps</li>
-    <li><strong>Expand screening and outreach in underserved communities:</strong> prioritize early detection programs in areas where disparity data indicates delayed diagnosis and treatment</li>
-    <li><strong>Address social determinants of health:</strong> food access, healthcare access, and economic stability are upstream drivers of the disparities observed in the clinical indicators</li>
+    <li><strong>Power Query:</strong> data import, type standardization, scope filtering, null handling, dimension table creation via duplicate-and-reduce method</li>
+    <li><strong>Data Modeling:</strong> star schema design, one-to-many relationships, single-direction filter propagation, separate _Measures table</li>
+    <li><strong>DAX:</strong> SUM, AVERAGE, CALCULATE with ALL/ALLEXCEPT, RANKX, DATEADD time intelligence, DIVIDE for safe division, VAR for readable multi-step formulas</li>
+    <li><strong>Analytical Thinking:</strong> scoping decisions that balance breadth with focus, choosing metrics that enable both aggregate and demographic-level analysis</li>
   </ul>
 
-</details>
-
----
-
-<details>
-  <summary><strong>Dashboard 5 — Recommendations: Action Prioritization</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>Where should policymakers allocate resources? What is the priority order for intervention, and which states require immediate attention vs. ongoing monitoring?</p>
-
-  <h3>Visuals</h3>
+  <h3>Future Enhancements</h3>
   <ul>
-    <li><strong>Quadrant chart:</strong> burden level (x-axis) vs. trend direction (y-axis), segmenting states into action categories:
-      <ul>
-        <li>Top-right = <strong>HIGH PRIORITY</strong> (high burden + worsening trend)</li>
-        <li>Bottom-right = <strong>MONITOR</strong> (high burden + improving trend)</li>
-        <li>Top-left = <strong>EMERGING CONCERN</strong> (low burden + worsening trend)</li>
-        <li>Bottom-left = <strong>MAINTAIN</strong> (low burden + improving trend)</li>
-      </ul>
-    </li>
-    <li><strong>Priority states table:</strong> ranked by composite Priority Score combining burden index and trend severity</li>
-    <li><strong>Top drivers chart:</strong> stacked bar showing which indicators contribute most to each state's overall burden index</li>
-  </ul>
-
-  <h3>Results</h3>
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/dashboard-05-recommendations.png"
-      alt="Action prioritization dashboard showing quadrant chart, priority rankings, and burden driver breakdown"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Action Prioritization dashboard with burden-vs-trend quadrant, composite priority rankings, and indicator contribution analysis.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/dashboard-05-recommendations.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>12 states fall in the high-priority quadrant (high burden + worsening trends), requiring immediate intervention planning</li>
-    <li>Obesity drives 45% of the composite burden index across all states, confirming it as the single largest contributor to chronic disease outcomes</li>
-    <li>States with multi-indicator issues need comprehensive programs rather than single-issue campaigns — treating obesity alone will not address heart disease in states where smoking and inactivity are also elevated</li>
-  </ul>
-
-  <h3>Business Recommendations</h3>
-  <ul>
-    <li><strong>Deploy comprehensive chronic disease programs in priority states:</strong> fund multi-indicator prevention initiatives in the 12 high-priority states identified by the composite scoring model</li>
-    <li><strong>Focus on prevention over treatment:</strong> risk factors (obesity, smoking, inactivity) explain 70%+ of outcome variance — upstream prevention delivers higher ROI than downstream disease management</li>
-    <li><strong>Allocate funding proportional to burden + trend severity:</strong> use the Priority Score to inform grant distribution, ensuring states with both high burden and deteriorating trends receive proportionally more resources</li>
-    <li><strong>Create performance dashboards for program tracking:</strong> deploy this dashboard framework as an ongoing monitoring tool to track intervention impact and adjust resource allocation as trends shift</li>
+    <li>Build all 5 dashboard pages with interactive slicers, drill-through navigation, and conditional formatting</li>
+    <li>Add composite Burden Index and Priority Score measures combining multiple indicators into a single state-level ranking</li>
+    <li>Implement bookmarks for guided analysis flow between executive overview and detailed drill-downs</li>
+    <li>Create custom tooltips showing state profiles on map hover</li>
+    <li>Publish to Power BI Service for web-based interactive access</li>
   </ul>
 
 </details>
-
----
-
-<details>
-  <summary><strong>Key Insights Summary</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <ul>
-    <li><strong>Trend insights:</strong> Obesity and physical inactivity are worsening nationally; smoking rates are declining — indicating that targeted prevention programs can produce measurable results</li>
-    <li><strong>Geographic insights:</strong> Southern states show persistent high burden across multiple indicators; Western states generally perform better, creating a geographic gradient in chronic disease outcomes</li>
-    <li><strong>Disparity insights:</strong> Significant racial/ethnic gaps exist in diabetes and obesity prevalence; age-based gaps dominate heart disease metrics, requiring different intervention strategies for different conditions</li>
-    <li><strong>Driver insights:</strong> Risk factors (obesity, smoking, inactivity) explain 70%+ of outcome variance, reinforcing prevention-first resource allocation</li>
-    <li><strong>Priority insight:</strong> 12 high-burden, worsening-trend states represent the highest-priority intervention targets based on composite scoring</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Business Recommendations</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Immediate Actions (0–6 months)</h3>
-  <ul>
-    <li>Launch targeted prevention programs in the 12 priority states identified by the burden + trend composite model</li>
-    <li>Expand screening initiatives in high-disparity communities where demographic gaps are largest</li>
-    <li>Implement performance tracking dashboards for program accountability using this report framework as a baseline</li>
-  </ul>
-
-  <h3>Strategic Initiatives (6–18 months)</h3>
-  <ul>
-    <li>Develop peer learning networks between states with similar demographics and baselines to transfer successful strategies</li>
-    <li>Create culturally-specific intervention programs for populations with the highest disparity ratios</li>
-    <li>Address social determinants of health through policy changes targeting food access, healthcare availability, and economic stability</li>
-  </ul>
-
-  <h3>Long-term Investments (18+ months)</h3>
-  <ul>
-    <li>Build statewide health information infrastructure to enable real-time chronic disease monitoring</li>
-    <li>Expand healthcare access in rural and underserved areas where geographic barriers amplify disparity gaps</li>
-    <li>Shift funding allocation from treatment-focused to prevention-focused models, aligning investment with the risk factor analysis findings</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Power BI Features Demonstrated</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Data Preparation</h3>
-  <ul>
-    <li>Power Query transformations (type standardization, filtering, null handling)</li>
-    <li>Duplicate query method for dimension table creation</li>
-    <li>Data type optimization for VertiPaq storage engine</li>
-    <li>Scope filtering strategies (indicators, geography, time range)</li>
-  </ul>
-
-  <h3>Data Modeling</h3>
-  <ul>
-    <li>Star schema design with 1 fact table and 4 dimension tables</li>
-    <li>One-to-many relationships with single-direction filtering</li>
-    <li>Semantic layer creation for business-friendly field names</li>
-    <li>Model optimization for DAX performance</li>
-  </ul>
-
-  <h3>DAX Expertise</h3>
-  <ul>
-    <li>20+ calculated measures across core, time intelligence, ranking, and disparity categories</li>
-    <li>Time intelligence functions (year-over-year calculations)</li>
-    <li>RANKX and dynamic ranking logic</li>
-    <li>Context transition and filter context manipulation with CALCULATE</li>
-    <li>Composite index calculations combining multiple normalized metrics</li>
-    <li>Conditional trend direction logic based on indicator type</li>
-  </ul>
-
-  <h3>Visualization &amp; Interactivity</h3>
-  <ul>
-    <li>Multiple chart types: filled maps, matrices, line charts, bar charts, scatter plots, decomposition trees</li>
-    <li>Drill-through pages for state-level deep dives</li>
-    <li>Custom tooltips with contextual detail</li>
-    <li>Bookmarks and page navigation for guided analysis flow</li>
-    <li>Conditional formatting on matrices and KPI cards</li>
-    <li>KPI cards with YoY change indicators and directional arrows</li>
-    <li>Slicers and cross-filters for interactive exploration</li>
-    <li>Mobile layout optimization</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Tools Used</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <ul>
-    <li><strong>Power BI Desktop:</strong> dashboard development, DAX authoring, data modeling, and report design</li>
-    <li><strong>Power Query:</strong> ETL pipeline — data import, cleaning, filtering, and dimensional table creation</li>
-    <li><strong>DAX:</strong> advanced calculations including time intelligence, rankings, disparity metrics, and composite indices</li>
-    <li><strong>Excel:</strong> initial data exploration and field validation before Power BI import</li>
-    <li><strong>GitHub:</strong> version control and project documentation</li>
-  </ul>
-
-</details>
-
----
-
-<details>
-  <summary><strong>Project Files</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <ul>
-    <li><a href="README.md">View Project README</a></li>
-    <li><a href="https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725" target="_blank" rel="noopener">Download CDC CDI Dataset</a></li>
-  </ul>
-
-</details>
-
----
