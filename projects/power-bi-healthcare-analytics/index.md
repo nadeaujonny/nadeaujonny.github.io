@@ -543,10 +543,50 @@ CALCULATE(
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
+  <h3>Page 1 — Executive Overview</h3>
   <p>
-    Dashboard development in progress. This section will showcase 5 interactive report pages analyzing health trends,
-    state comparisons, and demographic disparities.
+    A high-level population health snapshot designed for quick assessment of chronic disease indicators across the
+    United States. This page provides at-a-glance KPIs, geographic comparisons, and trend context — enabling
+    analysts and decision-makers to identify which indicators are most pressing and where to focus deeper analysis.
   </p>
+
+  <h4>Business Questions Answered</h4>
+  <ul>
+    <li>Which chronic disease indicators have the highest or lowest average values nationally?</li>
+    <li>How do states compare against each other for a selected health topic?</li>
+    <li>What are the trends over time — are conditions improving or worsening year over year?</li>
+  </ul>
+
+  <h4>Visuals on This Page</h4>
+  <ul>
+    <li><strong>4 KPI Cards:</strong> Total Value, Average Value, National Average, and State Rank — providing immediate numeric context for the selected filters</li>
+    <li><strong>Trend Line Chart:</strong> Average Value over time by year, showing directional movement across the 2015–2022 period</li>
+    <li><strong>Top 10 Bar Chart:</strong> states ranked by Average Value, highlighting the highest-burden locations for the selected topic</li>
+    <li><strong>Filled Map:</strong> geographic view with color-coded states based on Average Value, revealing regional patterns and clusters</li>
+    <li><strong>3 Interactive Slicers:</strong> Topic, Year, and Stratification — enabling dynamic filtering across all visuals on the page</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-dashboard-1.png"
+      alt="Power BI Executive Overview dashboard showing KPI cards, trend line, top 10 bar chart, filled map, and slicers"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Executive Overview — national KPI snapshot with geographic comparison, trend analysis, and interactive filtering.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-dashboard-1.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Key Insights</h4>
+  <ul>
+    <li><strong>State rankings shift by topic:</strong> states that rank highest for one health indicator (e.g., Tobacco use) often differ from those ranking highest for another (e.g., Cardiovascular Disease), revealing that chronic disease burden is not uniformly distributed</li>
+    <li><strong>Trend patterns vary across indicators:</strong> some topics show steady year-over-year improvement while others plateau or worsen — the trend line makes it easy to distinguish improving conditions from stagnating ones</li>
+    <li><strong>Geographic clustering is visible:</strong> the filled map reveals regional patterns where neighboring states share similar indicator values, suggesting that shared environmental, economic, or policy factors may drive health outcomes in those areas</li>
+  </ul>
 
 </details>
 
