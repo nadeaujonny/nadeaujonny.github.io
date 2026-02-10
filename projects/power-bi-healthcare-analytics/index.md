@@ -592,12 +592,71 @@ CALCULATE(
 ---
 
 <details>
-  <summary><strong>Dashboard Page 2 — Trend Analysis</strong></summary>
+  <summary><strong>Dashboard Page 2 — Trends &amp; Indicator Comparison</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><em>Coming soon</em> — multi-year indicator comparisons identifying improving vs. worsening conditions.</p>
+  <p>
+    A multi-indicator trend analysis dashboard designed to track how chronic disease indicators evolve over time and
+    compare performance across topics and states. This page enables analysts to identify which health conditions are
+    improving versus worsening, evaluate year-over-year momentum, and assess cross-indicator performance in a single
+    unified view.
+  </p>
+
+  <h4>Business Questions Answered</h4>
+  <ul>
+    <li>Which chronic disease indicators are improving or worsening over the 2018–2022 period?</li>
+    <li>How do year-over-year change rates compare across different health topics?</li>
+    <li>What is the longitudinal trend pattern for each indicator — steady improvement, plateau, or deterioration?</li>
+    <li>How do states perform across multiple indicators simultaneously — which locations excel or struggle across the board?</li>
+  </ul>
+
+  <h4>Visuals on This Page</h4>
+  <ul>
+    <li><strong>Multi-Line Trend Chart:</strong> Average Value by YearStart and Topic — showing all 9 chronic disease topics simultaneously on a 2018–2022 timeline to reveal directional patterns and relative magnitude differences</li>
+    <li><strong>Indicator Performance Summary Table:</strong> matrix displaying Topic, Average Value, and YoY % Change — providing a sortable reference table that quantifies both current state and recent momentum for each indicator</li>
+    <li><strong>State Performance by Indicator Matrix:</strong> cross-tabulation showing each state's Average Value broken out by all topics — enabling quick identification of states with consistently high or low values across multiple health domains</li>
+    <li><strong>YoY % Change Bar Chart:</strong> horizontal bars color-coded by direction (red for worsening, green for improving) — making it immediately clear which topics gained or lost ground in the most recent year</li>
+    <li><strong>4 Interactive Slicers:</strong> Topic, LocationDesc (state), Stratification, and YearStart — supporting focused drill-downs into specific indicators, geographies, demographic groups, or time periods</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-dashboard-2.png"
+      alt="Power BI Trends and Indicator Comparison dashboard showing multi-line trend chart, performance summary table, state-by-indicator matrix, and YoY change bar chart"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Trends &amp; Indicator Comparison — longitudinal view tracking year-over-year changes and cross-indicator performance patterns from 2018–2022.
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-dashboard-2.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Key Insights</h4>
+  <ul>
+    <li><strong>Diabetes shows the most significant improvement:</strong> with a year-over-year decline of -12.57%, Diabetes indicators demonstrate the steepest downward trend — suggesting that public health interventions targeting diabetes management (screening programs, medication adherence, lifestyle modification support) may be yielding measurable population-level improvements</li>
+    <li><strong>Alcohol and Tobacco trends are moving in the wrong direction:</strong> both indicators show positive YoY % Change values (Alcohol +4.03%, Tobacco +3.74%), meaning prevalence or burden is increasing rather than decreasing — this signals that risk factor mitigation efforts for these behavioral health domains may be losing effectiveness or facing new barriers</li>
+    <li><strong>Asthma indicators also improving:</strong> the -4.38% YoY change for Asthma suggests recent reductions in prevalence or severity, potentially linked to environmental interventions (air quality improvements, allergen reduction) or better access to controller medications</li>
+    <li><strong>Cardiovascular Disease remains the highest-magnitude indicator:</strong> despite a modest -1.34% YoY improvement, Cardiovascular Disease maintains an average value of 68.44 — substantially higher than most other topics — highlighting that heart disease and stroke continue to represent the largest chronic disease burden in the dataset</li>
+    <li><strong>Cross-indicator variability reveals uneven progress:</strong> the multi-line chart shows that not all chronic diseases move in the same direction — some topics plateau while others improve or worsen — indicating that blanket public health strategies may not be sufficient and topic-specific interventions are required</li>
+    <li><strong>State-level heterogeneity is visible in the matrix:</strong> states do not perform uniformly across all indicators — a state ranking poorly for Alcohol may rank well for Diabetes, suggesting that local policy environments, healthcare infrastructure, and demographic compositions create indicator-specific outcomes rather than universal health system quality</li>
+  </ul>
+
+  <h4>Why This Dashboard Matters for Public Health Decision-Making</h4>
+  <p>
+    Executive overviews provide snapshots, but trend analysis reveals <em>direction and momentum</em> — the difference
+    between a static problem and a worsening crisis. This dashboard enables public health agencies to:
+  </p>
+  <ul>
+    <li><strong>Prioritize resource allocation:</strong> indicators showing positive YoY % Change (worsening conditions) may require immediate intervention funding, while those improving can inform best-practice replication</li>
+    <li><strong>Evaluate policy effectiveness:</strong> longitudinal trends help assess whether recent legislation, funding initiatives, or awareness campaigns are producing measurable outcomes over multi-year horizons</li>
+    <li><strong>Identify emerging concerns early:</strong> topics that were stable but recently show upward momentum (like Alcohol and Tobacco in this view) can be flagged before they escalate into larger-scale public health challenges</li>
+    <li><strong>Support evidence-based advocacy:</strong> when requesting budget increases or policy changes, stakeholders can point to specific YoY % Change values and trend lines as quantitative justification rather than relying on anecdotal evidence</li>
+  </ul>
 
 </details>
 
