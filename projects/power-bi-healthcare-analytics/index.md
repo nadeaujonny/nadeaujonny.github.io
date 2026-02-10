@@ -743,7 +743,71 @@ CALCULATE(
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><em>Coming soon</em> — demographic gap analysis using Group Max/Min, Disparity Gap, and Disparity Ratio measures.</p>
+  <p>
+    A demographic disparity analysis dashboard designed to quantify and visualize health inequities across population
+    subgroups within a selected state and chronic disease topic. This page leverages the Disparity Gap, Disparity Ratio,
+    Group Max, and Group Min DAX measures to surface where demographic groups experience significantly different health
+    outcomes — enabling public health analysts to move beyond population-level averages and identify the specific groups
+    bearing disproportionate disease burden.
+  </p>
+
+  <h4>Business Questions Answered</h4>
+  <ul>
+    <li>How large is the gap between the highest-burden and lowest-burden demographic groups for a selected state and health topic?</li>
+    <li>Which demographic groups carry the highest and lowest chronic disease burden within a given state?</li>
+    <li>Is the disparity between demographic groups widening, narrowing, or holding steady over time?</li>
+    <li>Where does a state's overall average fall relative to its highest- and lowest-performing demographic groups?</li>
+    <li>How do group-level values compare across all available demographic stratifications simultaneously?</li>
+  </ul>
+
+  <h4>Visuals on This Page</h4>
+  <ul>
+    <li><strong>4 KPI Cards:</strong> Disparity Gap, Disparity Ratio, Group Max, and Group Min — quantifying both the absolute difference and relative inequality between the highest-burden and lowest-burden demographic groups for the selected state and topic</li>
+    <li><strong>Health Burden by Demographic Group (Horizontal Bar Chart):</strong> Average Value by Stratification1 — displaying each demographic group's burden side-by-side to reveal which subpopulations face the greatest and least disease impact for the selected topic</li>
+    <li><strong>Disparity Trend Over Time (Multi-Line Chart):</strong> Group Max, Group Min, and Disparity Gap plotted across 2019–2022 — tracking whether the inequality between demographic groups is widening, narrowing, or holding steady over the analysis period</li>
+    <li><strong>Demographic Disparity Matrix (Conditional Formatting Table):</strong> LocationDesc × Stratification cross-tabulation with color-coded cells — red for higher burden, green for lower burden — enabling quick visual pattern recognition across all demographic groups in a single compact reference</li>
+    <li><strong>Average Value, Group Min and Group Max (Gauge Chart):</strong> a gauge visual displaying the state's overall Average Value positioned between the Group Min and Group Max boundaries — providing intuitive context for where the population average falls within the full range of demographic outcomes</li>
+    <li><strong>3 Interactive Slicers:</strong> Topic (dropdown selector), LocationDesc (state dropdown selector), and YearStart (multi-select dropdown) — enabling focused analysis on specific state-topic-year combinations for targeted disparity investigation</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-dashboard-4.png"
+      alt="Power BI Health Disparities Analysis dashboard showing KPI cards for Disparity Gap, Disparity Ratio, Group Max and Group Min, horizontal bar chart of health burden by demographic group, multi-line disparity trend chart, conditional formatting matrix, and gauge chart with New York and Alcohol selected"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Health Disparities Analysis — demographic gap quantification with disparity trend tracking, group-level burden comparison, and conditional formatting matrix (New York, Alcohol selected).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-dashboard-4.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Key Insights</h4>
+  <ul>
+    <li><strong>Male demographic group carries the highest alcohol-related burden (20.0):</strong> among all stratification groups in New York, males show the highest Average Value for Alcohol indicators — consistent with national epidemiological data showing higher rates of heavy drinking, binge drinking, and alcohol-related morbidity among men compared to other demographic groups</li>
+    <li><strong>Age >=65 group shows dramatically lower alcohol burden (5.3):</strong> the oldest demographic group's Average Value is less than one-third of the Male group's value, creating the floor of the disparity range — this likely reflects both lower alcohol consumption rates among older adults and survivorship effects where individuals with severe alcohol-related conditions may not reach age 65</li>
+    <li><strong>Disparity Ratio of 5.69 indicates severe demographic inequality:</strong> the highest-burden group's rate is nearly 6 times the lowest-burden group's rate — a ratio this large signals that population-level averages substantially understate the burden experienced by the most affected demographic groups and overstate the burden for the least affected, making targeted interventions essential</li>
+    <li><strong>Disparity Gap is widening over the 2019–2022 period:</strong> the multi-line trend chart shows the Group Max line trending upward while the Group Min line remains relatively flat — driving the Disparity Gap (orange line) from approximately 15 in 2019 to 23 by 2022, indicating that alcohol-related health inequities in New York are growing rather than narrowing over time</li>
+    <li><strong>New York's overall average (14.91) sits in the lower half of the demographic range:</strong> the gauge chart positions the state's overall Average Value closer to the Group Min (4.90) than the Group Max (27.90), indicating that the population-level average is pulled down by lower-burden groups — masking the substantially higher burden experienced by the Male and Overall stratification categories</li>
+    <li><strong>The conditional formatting matrix reveals at-a-glance disparity patterns:</strong> color-coded cells in the matrix table immediately highlight which demographic groups fall above (red) or below (green) average — for New York's Alcohol indicators, the Male group (19.98) and Overall group (16.20) show elevated values while Age >=65 (5.33) stands out as markedly lower, making the demographic disparity pattern visible without reading individual numbers</li>
+  </ul>
+
+  <h4>Why This Dashboard Matters for Health Equity Analysis</h4>
+  <p>
+    Population-level averages are useful for benchmarking, but they can mask critical inequities between demographic
+    groups. A state may appear to perform well on an aggregate metric while specific subpopulations experience
+    disproportionately high disease burden — making disparity analysis essential for equitable public health
+    decision-making. This dashboard enables health equity analysts to:
+  </p>
+  <ul>
+    <li><strong>Quantify the equity gap:</strong> the Disparity Gap and Disparity Ratio KPIs transform abstract concerns about inequality into concrete, measurable values that can be tracked over time and compared across states or topics — providing the numeric foundation for equity-focused goal-setting</li>
+    <li><strong>Identify which groups need targeted intervention:</strong> the horizontal bar chart and conditional formatting matrix make it immediately clear which demographic subpopulations face the highest burden — enabling health departments to design interventions tailored to specific groups rather than applying uniform strategies that may not reach those most affected</li>
+    <li><strong>Monitor whether disparities are improving or worsening:</strong> the Disparity Trend Over Time chart provides longitudinal accountability — if a state launches an equity-focused initiative, this visual tracks whether the gap between Group Max and Group Min actually narrows in subsequent years or continues to widen despite intervention</li>
+    <li><strong>Contextualize overall averages:</strong> the gauge chart and matrix together reveal how a state's overall average relates to the full range of demographic outcomes — preventing decision-makers from being misled by favorable aggregate statistics that obscure significant within-state inequities</li>
+  </ul>
 
 </details>
 
