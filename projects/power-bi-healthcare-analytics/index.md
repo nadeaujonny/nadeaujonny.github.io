@@ -663,12 +663,75 @@ CALCULATE(
 ---
 
 <details>
-  <summary><strong>Dashboard Page 3 — State Performance</strong></summary>
+  <summary><strong>Dashboard Page 3 — State Performance Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><em>Coming soon</em> — geographic deep dive with rankings, drill-through, and state-vs-national benchmarks.</p>
+  <p>
+    A state-level deep dive dashboard designed to profile individual state performance across chronic disease indicators.
+    This page enables analysts to select a specific state, assess how it compares to the national average across all
+    health topics, drill into topic-level and demographic breakdowns, and track indicator trends over time — providing
+    the detailed context needed for state-specific policy evaluation and resource allocation decisions.
+  </p>
+
+  <h4>Business Questions Answered</h4>
+  <ul>
+    <li>How does a selected state's overall chronic disease burden compare to the national average?</li>
+    <li>Which health indicators contribute the most to a state's overall average value?</li>
+    <li>Where does a state rank nationally for each chronic disease topic?</li>
+    <li>How do demographic subgroups (Male, Hispanic, Overall) differ within a given indicator for that state?</li>
+    <li>Are the state's indicator values trending upward or downward over recent years?</li>
+  </ul>
+
+  <h4>Visuals on This Page</h4>
+  <ul>
+    <li><strong>4 KPI Cards:</strong> Average Value, National Average, State Rank, and YoY Change — providing immediate numeric context for the selected state across all filtered indicators</li>
+    <li><strong>Health Indicator Breakdown (Decomposition Tree):</strong> a hierarchical visual that starts with the state's overall Average Value and branches first by Topic (Arthritis, Alcohol, Tobacco), then by Stratification group (Male, Hispanic, Overall) — enabling interactive drill-down from aggregate performance to topic-level and demographic-level detail</li>
+    <li><strong>State Rankings Table:</strong> a summary matrix showing each Topic alongside its Average Value and State Rank — providing a compact view of where the state stands nationally across all indicators in a single sortable reference</li>
+    <li><strong>Average Value and National Average by Topic (Horizontal Bar Chart):</strong> side-by-side comparison of the selected state's Average Value against the National Average for each topic — making it immediately visible which indicators fall above or below the national benchmark</li>
+    <li><strong>Average Value by YearStart and Topic (Multi-Line Trend Chart):</strong> longitudinal view tracking each topic's Average Value from 2019–2022 — revealing whether specific indicators are improving, worsening, or holding steady over time for the selected state</li>
+    <li><strong>3 Interactive Slicers:</strong> LocationDesc (state dropdown selector), YearStart (multi-select checkboxes for 2015–2022), and Topic (multi-select checkboxes for all 9 chronic disease categories) — enabling flexible filtering to isolate specific states, time periods, or health topics</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-dashboard-3.png"
+      alt="Power BI State Performance Analysis dashboard showing KPI cards, decomposition tree, state rankings table, horizontal bar chart comparing state vs national average, multi-line trend chart, and interactive slicers with California selected"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      State Performance Analysis — state-level profile with indicator breakdown, national benchmarking, rankings, and trend tracking (California selected).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-dashboard-3.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Key Insights</h4>
+  <ul>
+    <li><strong>California's overall average (13.80) falls well below the national average (17.43):</strong> this positions California among the lowest-burden states in the dataset, suggesting that the state's public health infrastructure and policy environment contribute to better-than-average chronic disease outcomes across the board</li>
+    <li><strong>Arthritis is California's highest-burden indicator (20.84) but still ranks 50th nationally:</strong> even California's weakest-performing topic places it near the bottom of the national rankings (where higher rank = higher burden), reinforcing the state's consistently strong relative performance</li>
+    <li><strong>The decomposition tree reveals demographic variation within indicators:</strong> for Arthritis, the Male subgroup (20.93) and Hispanic subgroup (17.98) both exceed the Overall population average (16.58) — highlighting that aggregate state values can mask meaningful demographic differences that warrant targeted public health attention</li>
+    <li><strong>Tobacco ranks 51st (10.46 average) — among the lowest nationally:</strong> this is consistent with California's historically aggressive tobacco control policies, including high cigarette excise taxes, comprehensive smoke-free workplace laws, and sustained public education campaigns through the California Tobacco Control Program</li>
+    <li><strong>The state-vs-national bar chart shows California consistently below the national average across all topics:</strong> Arthritis, Alcohol, Tobacco, and Asthma all show the state's light blue bars falling short of the darker national average bars — visually confirming that California outperforms the national benchmark in every displayed category</li>
+    <li><strong>Trend lines (2019–2022) show relatively stable indicator values:</strong> Arthritis holds steady around 20–21, while Alcohol, Asthma, and Tobacco remain flat in the 10–15 range — suggesting California's chronic disease indicators are neither significantly improving nor deteriorating, maintaining a stable baseline during a period that includes the COVID-19 pandemic disruption</li>
+    <li><strong>The rankings table provides actionable prioritization:</strong> with Alcohol ranking 36th (the highest/worst-performing rank among California's topics), it stands out as the indicator where California has the most room for improvement relative to other states — making it a candidate for additional investment or policy intervention</li>
+  </ul>
+
+  <h4>Why This Dashboard Matters for State-Level Decision-Making</h4>
+  <p>
+    National averages and aggregate rankings provide useful benchmarks, but public health decisions are ultimately made
+    at the state level — where budgets are allocated, programs are designed, and policies are enacted. This dashboard
+    enables state-level stakeholders to:
+  </p>
+  <ul>
+    <li><strong>Identify relative strengths and weaknesses:</strong> the rankings table and bar chart make it clear which topics a state handles well versus where it lags — allowing health departments to allocate resources toward their highest-burden indicators rather than spreading effort uniformly</li>
+    <li><strong>Detect demographic disparities within state borders:</strong> the decomposition tree's stratification breakdowns reveal whether a state's strong overall performance masks inequities in specific demographic groups — a critical insight for health equity planning</li>
+    <li><strong>Track progress over time:</strong> the multi-line trend chart provides longitudinal accountability — if a state launches a new tobacco reduction program, this visual tracks whether indicator values actually decline in subsequent years</li>
+    <li><strong>Support evidence-based benchmarking:</strong> by comparing a state's values directly against the national average for each topic, decision-makers can quantify exactly how far above or below the benchmark they fall and set realistic improvement targets</li>
+  </ul>
 
 </details>
 
