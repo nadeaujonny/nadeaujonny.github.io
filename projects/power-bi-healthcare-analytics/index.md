@@ -889,46 +889,59 @@ CALCULATE(
 ---
 
 <details>
-  <summary><strong>Conclusion &amp; Next Steps</strong></summary>
+  <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Work Completed</h3>
   <p>
-    This project demonstrates the foundational stages of an end-to-end Power BI analytics workflow using real-world CDC
-    chronic disease surveillance data. The work completed so far includes:
+    This project demonstrates an end-to-end Power BI analytics workflow using real-world CDC chronic disease surveillance
+    data. From raw CSV import through polished interactive dashboards, the analysis covers the full Power BI development
+    lifecycle: Power Query ETL, star schema data modeling, DAX measure authoring, and multi-page report design — applied
+    to a dataset spanning 9 chronic disease topics, 52 locations, and 7 years of public health surveillance.
+  </p>
+
+  <h3>What the Data Revealed</h3>
+  <p>
+    Across five dashboard pages, the analysis surfaced distinct patterns at every level — national trends, state-level
+    performance, demographic disparities, and actionable prioritization signals:
   </p>
   <ul>
-    <li><strong>Power Query ETL pipeline:</strong> imported raw CDC data, applied scope filtering (9 topics, 52 locations, 7 years), removed null values, and built 4 normalized dimension tables using the duplicate-and-reduce method</li>
-    <li><strong>Star schema data model:</strong> designed a fact table (<code>Fact_CDI</code>) connected to <code>Dim_Date</code>, <code>Dim_Location</code>, <code>Dim_Indicator</code>, and <code>Dim_Stratification</code> through one-to-many relationships with single-direction filtering</li>
-    <li><strong>10 DAX measures:</strong> developed core aggregations (Total Value, Average Value, National Average, State Rank), time intelligence (YoY Change, YoY % Change), and disparity analysis (Group Max, Group Min, Disparity Gap, Disparity Ratio) in a dedicated <code>_Measures</code> table</li>
+    <li><strong>Uneven progress across health topics:</strong> Diabetes showed the strongest improvement (-12.57% YoY), while Alcohol (+4.03%) and Tobacco (+3.74%) moved in the wrong direction — confirming that blanket public health strategies are insufficient and topic-specific interventions are required</li>
+    <li><strong>Cardiovascular Disease dominates overall burden:</strong> with an average value of 68.44, Cardiovascular Disease remains substantially higher than all other topics in the dataset, reinforcing heart disease and stroke as the single largest chronic disease challenge nationally</li>
+    <li><strong>State performance varies by indicator:</strong> states that rank poorly for one topic often perform well on others — California ranks 50th for Arthritis but 36th for Alcohol — indicating that chronic disease outcomes are shaped by local policy environments and healthcare infrastructure rather than uniform system quality</li>
+    <li><strong>Demographic disparities are significant and widening:</strong> in New York, the Alcohol-related disparity ratio reached 5.69 (the highest-burden group's rate was nearly 6x the lowest), and the disparity gap widened from approximately 15 in 2019 to 23 by 2022 — showing that population-level averages mask growing inequities between demographic groups</li>
+    <li><strong>High-burden states with worsening trends require urgent attention:</strong> the priority matrix identified Texas (60.82 average, 16.64% YoY increase), California (59.23 average, 37.54% YoY increase), and Florida (38.09 average, 37.41% YoY increase) as states combining high disease burden with rapid deterioration — placing them in the highest-priority quadrant for intervention</li>
   </ul>
 
-  <h3>Dashboard Development</h3>
+  <h3>Connecting the Analyses</h3>
   <p>
-    The next phase of this project is building 5 interactive report pages that apply the data model and DAX measures
-    to answer specific public health questions:
+    Each dashboard was designed to answer a distinct set of business questions, but the findings compound when viewed
+    together. The Executive Overview identified which topics carry the highest national burden and where geographic
+    clusters exist. The Trends dashboard revealed whether those burdens are improving or worsening over time. The State
+    Performance page enabled drill-down into individual states to compare against national benchmarks. The Health
+    Disparities dashboard exposed that favorable state-level averages can mask significant demographic inequities. And
+    the Action Prioritization page synthesized burden and trend data into a two-dimensional triage framework for
+    resource allocation decisions.
   </p>
-  <ul>
-    <li><strong>Executive Overview:</strong> national KPI snapshot with trend lines and state-level map shading</li>
-    <li><strong>Trend Analysis:</strong> multi-year indicator comparisons identifying improving vs. worsening conditions</li>
-    <li><strong>State Performance:</strong> geographic deep dive with rankings, drill-through, and state-vs-national benchmarks</li>
-    <li><strong>Health Disparities:</strong> demographic gap analysis using Group Max/Min, Disparity Gap, and Disparity Ratio measures</li>
-    <li><strong>Action Prioritization:</strong> composite scoring to identify highest-priority states for intervention</li>
-  </ul>
+  <p>
+    The technical implementation progressed from foundational Power Query transformations through normalized star schema
+    design, 10 purpose-built DAX measures across three functional categories, and five interactive report pages with
+    KPI cards, scatter plots, decomposition trees, conditional formatting matrices, gauge charts, and multi-line trend
+    analysis — demonstrating how increasing analytical complexity can be layered into a cohesive, decision-ready deliverable.
+  </p>
 
   <h3>Skills Demonstrated</h3>
   <ul>
-    <li><strong>Power Query:</strong> data import, type standardization, scope filtering, null handling, dimension table creation via duplicate-and-reduce method</li>
-    <li><strong>Data Modeling:</strong> star schema design, one-to-many relationships, single-direction filter propagation, separate _Measures table</li>
-    <li><strong>DAX:</strong> SUM, AVERAGE, CALCULATE with ALL/ALLEXCEPT, RANKX, DATEADD time intelligence, DIVIDE for safe division, VAR for readable multi-step formulas</li>
-    <li><strong>Analytical Thinking:</strong> scoping decisions that balance breadth with focus, choosing metrics that enable both aggregate and demographic-level analysis</li>
+    <li><strong>Power Query (M):</strong> data import, type standardization, scope filtering, null handling, and dimension table creation via the duplicate-and-reduce method</li>
+    <li><strong>Data Modeling:</strong> star schema design with one fact table and four dimension tables, one-to-many relationships, single-direction filter propagation, and a dedicated <code>_Measures</code> table</li>
+    <li><strong>DAX:</strong> SUM, AVERAGE, CALCULATE with ALL/ALLEXCEPT, RANKX, DATEADD time intelligence, DIVIDE for safe division, MAX/MIN for group-level analysis, and VAR for readable multi-step formulas</li>
+    <li><strong>Report Design:</strong> 5 interactive dashboard pages with KPI cards, filled maps, scatter plot priority matrices, decomposition trees, conditional formatting matrices, gauge charts, trend lines, bar charts, and multi-select slicers</li>
+    <li><strong>Analytical Thinking:</strong> scoping decisions that balance breadth with focus, disparity analysis that goes beyond population averages, and a two-dimensional prioritization framework combining burden level with trend direction</li>
   </ul>
 
   <h3>Future Enhancements</h3>
   <ul>
-    <li>Build all 5 dashboard pages with interactive slicers, drill-through navigation, and conditional formatting</li>
     <li>Add composite Burden Index and Priority Score measures combining multiple indicators into a single state-level ranking</li>
     <li>Implement bookmarks for guided analysis flow between executive overview and detailed drill-downs</li>
     <li>Create custom tooltips showing state profiles on map hover</li>
