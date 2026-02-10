@@ -819,7 +819,70 @@ CALCULATE(
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <p><em>Coming soon</em> — composite scoring to identify highest-priority states for intervention.</p>
+  <p>
+    An action-oriented prioritization dashboard designed to identify which states require the most urgent public health
+    intervention based on a combination of disease burden (Average Value) and trend direction (YoY % Change). This page
+    uses a scatter plot priority matrix to classify states into quadrants — highlighting those with both high burden and
+    worsening trends as top candidates for resource allocation — while a ranked table and topic burden comparison provide
+    the supporting detail needed to justify intervention decisions.
+  </p>
+
+  <h4>Business Questions Answered</h4>
+  <ul>
+    <li>Which states have both high chronic disease burden and worsening year-over-year trends — making them the highest priority for intervention?</li>
+    <li>How do states distribute across the burden-vs-trend priority matrix — are most states improving, worsening, or stagnating?</li>
+    <li>Which health topics contribute the most to overall chronic disease burden across the selected indicators?</li>
+    <li>What are the top-ranked states by average value, and how fast are their conditions deteriorating?</li>
+    <li>Where should public health agencies focus limited resources for maximum population health impact?</li>
+  </ul>
+
+  <h4>Visuals on This Page</h4>
+  <ul>
+    <li><strong>State Priority Matrix — Burden vs. Trend (Scatter Plot):</strong> a quadrant-style scatter plot with YoY % Change on the x-axis and Average Value on the y-axis — each bubble represents a state color-coded by location, with dashed reference lines dividing the chart into four priority zones: upper-right (high burden + worsening) = highest priority, upper-left (high burden + improving) = monitor, lower-right (low burden + worsening) = watch, and lower-left (low burden + improving) = lowest priority — enabling immediate visual triage of all states simultaneously</li>
+    <li><strong>Health Topics Ranked by Burden (Horizontal Bar Chart):</strong> Average Value by Topic — ranking the selected health topics from highest to lowest burden to reveal which chronic disease categories contribute the most to overall population health impact across the filtered scope</li>
+    <li><strong>High-Priority States Table (High Burden + Worsening):</strong> a ranked table displaying LocationDesc, Average Value, YoY % Change, and State Rank — listing the top states that fall in the high-burden, worsening-trend zone of the priority matrix with detailed numeric context for each</li>
+    <li><strong>2 Interactive Slicers:</strong> Health Topic (multi-select checkboxes for all 9 chronic disease categories) and Year (multi-select checkboxes for 2015–2022) — enabling analysts to focus the prioritization analysis on specific health domains and time periods</li>
+  </ul>
+
+  <figure style="margin: 0 0 18px 0;">
+    <img
+      src="images/powerbi-dashboard-5.png"
+      alt="Power BI Action Prioritization dashboard showing state priority matrix scatter plot with burden vs trend quadrants, health topics ranked by burden bar chart, high-priority states table, and slicers with Alcohol, Diabetes, Nutrition/Physical Activity, and Tobacco selected for year 2020"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
+      Action Prioritization — state-level triage using burden vs. trend priority matrix, topic burden ranking, and high-priority state identification (Alcohol, Diabetes, Nutrition/Physical Activity, and Tobacco selected; 2020).
+      <span style="display:block; margin-top:4px;">
+        <a href="images/powerbi-dashboard-5.png">Open full-size</a>
+      </span>
+    </figcaption>
+  </figure>
+
+  <h4>Key Insights</h4>
+  <ul>
+    <li><strong>The majority of states cluster in the lower-right quadrant (low burden + worsening):</strong> most state bubbles sit below the horizontal reference line with positive YoY % Change values, indicating that while absolute burden levels remain moderate for most states, the trend direction is unfavorable — conditions are getting worse rather than better across the selected health topics in 2020</li>
+    <li><strong>Diabetes dominates the topic burden ranking by a wide margin:</strong> the horizontal bar chart shows Diabetes with an Average Value roughly 4–5 times higher than the next-highest topics (Nutrition/Physical Activity, Tobacco, and Alcohol) — confirming that Diabetes-related indicators represent the single largest contributor to chronic disease burden among the selected topics and should be weighted heavily in any composite prioritization scoring</li>
+    <li><strong>Texas emerges as a high-priority state (Average Value: 60.82, YoY % Change: 16.64%):</strong> positioned well above the cluster of states in the scatter plot, Texas combines a substantially above-average burden with a double-digit worsening trend — placing it firmly in the upper-right priority quadrant and flagging it as a candidate for targeted intervention across the selected health topics</li>
+    <li><strong>California and Florida show alarming trend acceleration despite high burden:</strong> California (59.23 average, 37.54% YoY change) and Florida (38.09 average, 37.41% YoY change) both exhibit YoY % Change rates exceeding 37% — among the highest deterioration rates in the table — indicating that these large-population states are not only carrying significant disease burden but are experiencing rapid year-over-year worsening that demands immediate attention</li>
+    <li><strong>South Carolina and Georgia represent emerging high-priority states:</strong> both states show YoY % Change rates above 33% (South Carolina: 37.96%, Georgia: 33.68%) with Average Values around 28 — while their absolute burden is moderate, the steep upward trajectory suggests they could move into the high-burden zone within 1–2 years if current trends continue unchecked</li>
+    <li><strong>The national aggregate (United States) sits as a dramatic outlier at 432.62 Average Value:</strong> the gray bubble at the top of the scatter plot represents the summed national figure, which is not directly comparable to individual state values but serves as a reference point — its 29.59% YoY increase underscores that the worsening trend is not isolated to a few states but reflects a broad national pattern across the selected health topics in 2020</li>
+    <li><strong>Tennessee shows relatively stable trends compared to peers (1.75% YoY change):</strong> despite ranking 9th by Average Value (28.58), Tennessee's near-flat year-over-year change suggests its chronic disease burden is holding steady rather than accelerating — making it lower priority for immediate intervention compared to states with similar burden levels but steeper upward trends like South Carolina or Georgia</li>
+  </ul>
+
+  <h4>Why This Dashboard Matters for Public Health Resource Allocation</h4>
+  <p>
+    Public health agencies operate with finite budgets and must allocate intervention resources where they will have the
+    greatest population health impact. Simple rankings by burden alone miss a critical dimension: <em>trend direction</em>.
+    A state with moderate burden but rapidly worsening trends may warrant more urgent attention than a high-burden state
+    where conditions are stable or improving. This dashboard enables public health decision-makers to:
+  </p>
+  <ul>
+    <li><strong>Triage states using two dimensions simultaneously:</strong> the scatter plot priority matrix combines burden level and trend direction into a single visual, allowing analysts to immediately identify which states fall into the critical upper-right quadrant (high burden + worsening) versus those in lower-priority zones — replacing subjective prioritization with a data-driven framework</li>
+    <li><strong>Allocate resources proportionally to disease burden by topic:</strong> the topic burden ranking reveals that Diabetes accounts for a disproportionate share of overall chronic disease impact — informing decisions about whether intervention budgets should be distributed equally across topics or weighted toward the highest-burden categories</li>
+    <li><strong>Build evidence-based justification for intervention targeting:</strong> the high-priority states table provides the specific numeric values (Average Value, YoY % Change, State Rank) needed to justify why particular states were selected for intervention — replacing anecdotal reasoning with quantifiable metrics that can withstand scrutiny from budget committees and oversight bodies</li>
+    <li><strong>Monitor intervention urgency over time:</strong> by changing the Year slicer, analysts can track whether high-priority states are responding to interventions (moving left in the scatter plot as YoY % Change decreases) or continuing to deteriorate — providing longitudinal accountability for resource allocation decisions</li>
+  </ul>
 
 </details>
 
