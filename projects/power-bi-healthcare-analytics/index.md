@@ -463,19 +463,27 @@ RETURN
     CurrentValue - PreviousValue</code></pre>
   <p>Calculates the absolute year-over-year change in average value. A positive result means the value increased from the prior year; a negative result means it decreased.</p>
 
+  <h4>Previous Year Value</h4>
+  <pre><code class="language-dax">Previous Year Value =
+CALCULATE(
+    [Average Value],
+    PREVIOUSYEAR(Dim_Date[YearStart])
+)</code></pre>
+  <p>
+    A helper measure that returns the average value from the prior year. Uses <code>PREVIOUSYEAR</code> to shift the date
+    context back one year, providing a clean reference point for year-over-year calculations.
+  </p>
+
   <h4>YoY % Change</h4>
   <pre><code class="language-dax">YoY % Change =
-VAR CurrentValue = [Average Value]
-VAR PreviousValue =
-    CALCULATE(
-        [Average Value],
-        DATEADD(Dim_Date[YearStart], -1, YEAR)
-    )
-RETURN
-    DIVIDE(CurrentValue - PreviousValue, PreviousValue)</code></pre>
+DIVIDE(
+    [Average Value] - [Previous Year Value],
+    [Previous Year Value]
+)</code></pre>
   <p>
     Calculates the percentage year-over-year change using <code>DIVIDE</code> for safe division (returns blank instead of
-    error when the prior year value is zero or missing). For example, a result of 0.05 means the indicator increased 5%
+    error when the prior year value is zero or missing). References the <code>[Previous Year Value]</code> helper measure
+    for a cleaner, more maintainable formula. For example, a result of 0.05 means the indicator increased 5%
     compared to the previous year.
   </p>
 
