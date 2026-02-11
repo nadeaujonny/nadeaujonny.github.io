@@ -54,12 +54,12 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <a class="project-card-link python-card" href="/projects/python-placeholder/" aria-label="Open Python project: Coming Soon">
+    <a class="project-card-link python-card" href="/projects/python-financial-analysis/" aria-label="Open Python project: Financial Analysis">
       <div class="project-card-content">
         <h2>Python</h2>
-        <h3>Portfolio Project (Coming Soon)</h3>
-        <p>Placeholder project card for an upcoming Python analytics portfolio build.</p>
-        <div class="project-card-cta">Details soon →</div>
+        <h3>Financial Analysis</h3>
+        <p>Analyzing 10 years of financial market data using Python for time series analysis, risk metrics, and forecasting.</p>
+        <div class="project-card-cta">Open project →</div>
       </div>
     </a>
   </div>
