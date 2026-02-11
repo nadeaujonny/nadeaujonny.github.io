@@ -1,0 +1,47 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# macOS
+.DS_Store
+
+# Data files (downloaded via API, not committed)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Generated outputs (regenerated from notebooks)
+outputs/figures/*
+!outputs/figures/.gitkeep
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables and credentials
+.env
+*.env
+
+# Distribution and packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Byte-compiled / optimized
+*.pyc
+*.pyo
