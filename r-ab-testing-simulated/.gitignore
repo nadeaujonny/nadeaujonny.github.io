@@ -1,0 +1,24 @@
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+
+# Reports - keep .Rmd files, ignore rendered HTML
+/reports/*.html
+
+# Raw data files - ignore all raw data
+/data/raw/*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*~
+
+# R specific
+*.Rproj.user/
+.Rproj.user/
