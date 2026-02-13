@@ -361,14 +361,14 @@ plt.savefig("./outputs/figures/python_diversification_benefit.png", dpi=300)</co
 
   <h3>Visualizations</h3>
 
-![Correlation Heatmap (Detailed)](./outputs/figures/python_correlation_heatmap_detailed.png)
-*Figure 1: Full-period correlations of daily returns across all six assets, providing a static view of cross-asset co-movement and diversification potential.*
+<img src="./outputs/figures/python_correlation_heatmap_detailed.png" alt="Correlation Heatmap (Detailed)" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 1: Full-period correlations of daily returns across all six assets, providing a static view of cross-asset co-movement and diversification potential.</em></p>
 
-![Rolling Correlations](./outputs/figures/python_rolling_correlations.png)
-*Figure 2: Rolling correlation trends for key asset pairs, showing that correlation changes across market regimes and often spikes during stress periods.*
+<img src="./outputs/figures/python_rolling_correlations.png" alt="Rolling Correlations" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 2: Rolling correlation trends for key asset pairs, showing that correlation changes across market regimes and can spike during stress periods.</em></p>
 
-![Diversification Benefit](./outputs/figures/python_diversification_benefit.png)
-*Figure 3: Concentrated vs diversified portfolio risk comparison, illustrating how blending lower-correlated assets can reduce overall volatility.*
+<img src="./outputs/figures/python_diversification_benefit.png" alt="Diversification Benefit" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 3: Concentrated vs diversified portfolio risk comparison, illustrating how blending lower-correlated assets can reduce overall volatility.</em></p>
 
   <h3>Key Insights</h3>
   <ul>
