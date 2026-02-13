@@ -1,34 +1,20 @@
-# requirements.R
-# Install (if missing) and load required packages for A/B testing analysis
+# Install required packages (only runs if missing)
 
-# List of required packages
-required_packages <- c(
+packages <- c(
   "tidyverse",
-  "infer",
   "broom",
-  "patchwork",
+  "janitor",
+  "infer",
   "gt",
-  "lmtest",
-  "sandwich",
-  "pwr",
-  "ggeffects"
+  "patchwork",
+  "effectsize"
 )
 
-# Function to install and load packages
-install_and_load <- function(package) {
-  if (!require(package, character.only = TRUE, quietly = TRUE)) {
-    message(paste("Installing", package, "..."))
-    install.packages(package, dependencies = TRUE)
-    library(package, character.only = TRUE)
-  } else {
-    library(package, character.only = TRUE)
-    message(paste(package, "loaded successfully"))
-  }
+installed <- packages %in% installed.packages()
+
+if (any(!installed)) {
+  install.packages(packages[!installed])
 }
 
-# Install and load all required packages
-message("Checking and loading required packages...")
-invisible(lapply(required_packages, install_and_load))
+lapply(packages, library, character.only = TRUE)
 
-message("\nAll required packages are installed and loaded!")
-message("You're ready to run the A/B testing analysis.")

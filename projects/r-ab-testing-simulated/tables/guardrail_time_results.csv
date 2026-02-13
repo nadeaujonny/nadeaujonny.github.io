@@ -1,0 +1,2 @@
+metric,mean_control,mean_treatment,mean_diff_treat_minus_control,boot_ci_low,boot_ci_high,t_test_p_value,wilcoxon_p_value
+time_to_complete,7.872813381832093,7.532177876964805,-0.3406355048672882,-0.4602515986525437,-0.222552290132061,1.3934740299420213e-8,1.3208442743186915e-8

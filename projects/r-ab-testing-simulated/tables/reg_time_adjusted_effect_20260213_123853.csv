@@ -1,0 +1,2 @@
+metric,adjusted_diff,ci_low,ci_high,p_value
+"time_to_complete (OLS, regression-adjusted)",-0.3412829566216663,-0.45886153416762665,-0.22370437907570595,1.3131349354150402e-8
