@@ -331,10 +331,9 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")</code></
   </p>
 
   <h3>Code</h3>
-```python
-# Load daily return data used in Notebook 3
+<pre><code class="language-python"># Load daily return data used in Notebook 3
 daily_returns = pd.read_csv(
-    '../data/daily_returns_2015_2024.csv',
+    "./data/daily_returns_2015_2024.csv",
     index_col=0,
     parse_dates=True
 )
@@ -343,23 +342,22 @@ daily_returns = pd.read_csv(
 correlation_matrix = daily_returns.corr()
 
 # Rolling correlations to capture regime shifts
-rolling_corr_spy_tlt_60 = daily_returns['SPY'].rolling(60).corr(daily_returns['TLT'])
-rolling_corr_spy_tlt_252 = daily_returns['SPY'].rolling(252).corr(daily_returns['TLT'])
-rolling_corr_spy_gld_60 = daily_returns['SPY'].rolling(60).corr(daily_returns['GLD'])
+rolling_corr_spy_tlt_60 = daily_returns["SPY"].rolling(60).corr(daily_returns["TLT"])
+rolling_corr_spy_tlt_252 = daily_returns["SPY"].rolling(252).corr(daily_returns["TLT"])
+rolling_corr_spy_gld_60 = daily_returns["SPY"].rolling(60).corr(daily_returns["GLD"])
 
 # Simple concentrated vs diversified risk comparison
-concentrated = daily_returns[['SPY']].mean(axis=1)
-diversified = daily_returns[['SPY', 'TLT', 'GLD']].mean(axis=1)
+concentrated = daily_returns[["SPY"]].mean(axis=1)
+diversified = daily_returns[["SPY", "TLT", "GLD"]].mean(axis=1)
 vol_compare = pd.Series({
-    'Concentrated': concentrated.std() * np.sqrt(252),
-    'Diversified': diversified.std() * np.sqrt(252)
+    "Concentrated": concentrated.std() * np.sqrt(252),
+    "Diversified": diversified.std() * np.sqrt(252)
 })
 
 # Figure exports from Notebook 3
-plt.savefig('../outputs/figures/python_correlation_heatmap_detailed.png', dpi=300)
-plt.savefig('../outputs/figures/python_rolling_correlations.png', dpi=300)
-plt.savefig('../outputs/figures/python_diversification_benefit.png', dpi=300)
-```
+plt.savefig("./outputs/figures/python_correlation_heatmap_detailed.png", dpi=300)
+plt.savefig("./outputs/figures/python_rolling_correlations.png", dpi=300)
+plt.savefig("./outputs/figures/python_diversification_benefit.png", dpi=300)</code></pre>
 
   <h3>Visualizations</h3>
 
