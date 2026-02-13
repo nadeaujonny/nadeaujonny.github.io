@@ -1009,6 +1009,78 @@ code, pre {
   background: var(--surface2);
 }
 
+/* ===== Dropdown bars: full-width, panel-colored, thin separators ===== */
+:root {
+  --panel-bg: rgba(245, 247, 250, 0.98);
+  --divider: rgba(0, 0, 0, 0.12);
+}
+
+.page-content .wrapper details,
+main .wrapper details,
+details.dropdown-section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--divider);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.page-content .wrapper details:last-of-type,
+main .wrapper details:last-of-type,
+details.dropdown-section:last-of-type {
+  border-bottom: 1px solid var(--divider);
+}
+
+.page-content .wrapper details > summary,
+main .wrapper details > summary,
+details.dropdown-section > summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--panel-bg);
+  padding: 18px 20px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  list-style: none;
+}
+
+.page-content .wrapper details > summary::-webkit-details-marker,
+main .wrapper details > summary::-webkit-details-marker,
+details.dropdown-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.page-content .wrapper details > summary::after,
+main .wrapper details > summary::after,
+details.dropdown-section > summary::after {
+  margin-left: auto;
+}
+
+.page-content .wrapper details > div,
+main .wrapper details > div,
+details.dropdown-section .dropdown-content {
+  background: var(--panel-bg);
+  padding: 0 20px 18px 20px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.page-content .wrapper details > summary:hover,
+main .wrapper details > summary:hover,
+details.dropdown-section > summary:hover {
+  filter: brightness(0.985);
+}
+
 /* =========================================================
    FOCUS STYLES — visible ring for keyboard nav (WCAG 2.1 AA)
    ========================================================= */
