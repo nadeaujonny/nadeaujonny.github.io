@@ -224,8 +224,7 @@ print(f"Downloaded {len(prices)} days of data")
 
   <h3>Code</h3>
 
-```python
-# Calculate daily returns
+<pre><code class="language-python"># Calculate daily returns
 daily_returns = prices.pct_change().dropna()
 
 # Calculate cumulative returns (buy-and-hold performance)
@@ -238,8 +237,7 @@ volatility = daily_returns.std() * np.sqrt(252) * 100
 sharpe_ratio = (annual_return - 2.0) / volatility
 
 # Display final values
-print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
-```
+print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")</code></pre>
 
   <h3>Visualizations</h3>
 
