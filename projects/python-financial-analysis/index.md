@@ -222,7 +222,7 @@ print(f"Downloaded {len(prices)} days of data")
     Finally, I evaluated maximum drawdown for each asset to quantify investor pain during market stress. Maximum drawdown represents the worst peak-to-trough decline before recovery, which is critical for understanding downside exposure. This drawdown analysis also highlights crisis periods, including the sharp COVID-19 selloff in March 2020.
   </p>
 
-### Code
+  <h3>Code</h3>
 
 ```python
 # Calculate daily returns
