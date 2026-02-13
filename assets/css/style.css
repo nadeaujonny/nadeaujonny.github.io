@@ -4,6 +4,7 @@
 
 /* ---------- Theme tokens ---------- */
 :root{
+  color-scheme: light;
   --bg:#0b0f14;
   --surface:#0f1620;
   --surface2:#121b26;
@@ -270,19 +271,30 @@ header,footer{ color:var(--muted); }
    STICKY HEADER - Navigation stays at top when scrolling
    ========================================================= */
 .site-header,
-header{
+header.site-header{
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: transparent;
+  background: rgba(255,255,255,0.92) !important;
+  color: #111 !important;
   padding: 12px 0;
+  forced-color-adjust: none;
+}
+
+.site-header *,
+header.site-header *{
+  forced-color-adjust: none;
 }
 
 /* Give the nav-tabs a solid background so content doesn't show through when scrolling */
 .site-header .nav-tabs,
 .site-header .site-nav,
-.site-header .topbar-nav{
-  background: var(--surface);
+.site-header .topbar-nav,
+.site-header .header-nav,
+.site-header .top-nav,
+.site-header .nav-bar{
+  background: rgba(255,255,255,0.92) !important;
+  color: #111 !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
@@ -302,6 +314,7 @@ header{
   font-weight:800;
   text-decoration:none;
   background:transparent;
+  color:#111 !important;
 }
 .site-nav a + a,
 .nav-tab + .nav-tab,
@@ -311,12 +324,14 @@ header{
 .site-nav a:hover,
 .nav-tab:hover,
 .topbar-link:hover{
-  background:var(--surface2);
+  background:rgba(240,243,247,0.92) !important;
+  color:#000 !important;
   text-decoration:none;
 }
 .site-nav a[aria-current="page"],
 .nav-tab[aria-current="page"]{
-  background:var(--surface2);
+  background:rgba(240,243,247,0.92) !important;
+  color:#111 !important;
 }
 
 /* Mobile nav stacking */
@@ -390,8 +405,15 @@ main .wrapper{
   text-decoration:none !important;
 }
 .site-header a,
-.site-header a:visited{
-  color:rgba(255,255,255,.95);
+.site-header a:visited,
+.site-header nav a,
+.site-header .site-nav a,
+.site-header .nav-tabs .nav-tab,
+.site-header .topbar-nav .topbar-link,
+.site-header .header-nav a,
+.site-header .top-nav a,
+.site-header .nav-bar a{
+  color:#111 !important;
 }
 
 /* ---------- Fix: nav text readable on white nav strip ---------- */
@@ -399,14 +421,20 @@ main .wrapper{
 .site-header .nav-tabs .nav-tab,
 .site-header .topbar-nav .topbar-link,
 .site-header .topbar-link,
-.site-header nav a{
-  color:rgba(15,15,18,.92) !important;
+.site-header nav a,
+.site-header .header-nav a,
+.site-header .top-nav a,
+.site-header .nav-bar a{
+  color:#111 !important;
 }
 .site-header .site-nav a:hover,
 .site-header .nav-tabs .nav-tab:hover,
 .site-header .topbar-nav .topbar-link:hover,
 .site-header .topbar-link:hover,
-.site-header nav a:hover{
+.site-header nav a:hover,
+.site-header .header-nav a:hover,
+.site-header .top-nav a:hover,
+.site-header .nav-bar a:hover{
   color:#000 !important;
 }
 
