@@ -680,7 +680,9 @@ code, pre {
 }
 
 .python-card {
-  background-image: linear-gradient(135deg, #306998 0%, #ffd43b 100%) !important;
+  background:
+    linear-gradient(rgba(20, 20, 40, 0.85), rgba(20, 20, 40, 0.85)),
+    url("/assets/python-project-card-image.png") !important;
 }
 
 .r-card {
