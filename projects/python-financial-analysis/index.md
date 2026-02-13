@@ -211,89 +211,79 @@ print(f"Downloaded {len(prices)} days of data")
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
+  <h3>Business Question</h3>
+  <p>
+    Which assets delivered the best return-to-risk profile over 2015&ndash;2024, and where were the largest downside episodes
+    that could challenge portfolio durability?
+  </p>
+
   <h3>Methodology</h3>
   <p>
-    I converted adjusted close prices into daily percentage returns to create a consistent basis for comparing assets with very different price levels. From those daily returns, I built cumulative return series using a buy-and-hold assumption to show how each investment compounded over the full 2015&ndash;2024 window.
+    Daily percentage returns were computed from adjusted close prices so every asset could be compared on a common scale.
+    I then annualized return and volatility, applied a 2% risk-free assumption for Sharpe ratio, and ranked assets by
+    risk-adjusted efficiency.
   </p>
   <p>
-    I then calculated core risk metrics, including annualized volatility and Sharpe ratio. Annualized volatility captures the magnitude of return fluctuations (total risk), while the Sharpe ratio measures return per unit of risk after subtracting a 2% risk-free baseline. This made it possible to compare not only which asset returned more, but which delivered more efficient risk-adjusted performance.
-  </p>
-  <p>
-    Finally, I evaluated maximum drawdown for each asset to quantify investor pain during market stress. Maximum drawdown represents the worst peak-to-trough decline before recovery, which is critical for understanding downside exposure. This drawdown analysis also highlights crisis periods, including the sharp COVID-19 selloff in March 2020.
+    To measure downside risk, I calculated maximum drawdown from each return stream&rsquo;s cumulative path. This complements
+    volatility by showing worst peak-to-trough losses and highlights stress behavior during sharp market shocks.
   </p>
 
-  <h3>Code</h3>
+  <h3>Code Highlight (Key Logic)</h3>
+  <pre><code class="language-python">import numpy as np
+import pandas as pd
 
-<pre><code class="language-python"># Calculate daily returns
+# Daily returns
 daily_returns = prices.pct_change().dropna()
 
-# Calculate cumulative returns (buy-and-hold performance)
-cumulative_returns = (1 + daily_returns).cumprod()
+def max_drawdown(return_series: pd.Series) -> float:
+    """Max drawdown from cumulative returns."""
+    cum = (1 + return_series).cumprod()
+    peak = cum.cummax()
+    dd = (cum / peak) - 1
+    return dd.min()
 
-# Calculate annualized volatility
-volatility = daily_returns.std() * np.sqrt(252) * 100
+def risk_metrics(returns: pd.DataFrame, rf: float = 0.02) -> pd.DataFrame:
+    """Annualized return, volatility, Sharpe, max drawdown for each asset."""
+    ann_return = (1 + returns.mean())**252 - 1
+    ann_vol = returns.std() * np.sqrt(252)
+    sharpe = (ann_return - rf) / ann_vol
+    mdd = returns.apply(max_drawdown)
 
-# Calculate Sharpe Ratio (risk-adjusted return)
-sharpe_ratio = (annual_return - 2.0) / volatility
+    metrics = pd.DataFrame({
+        "Annual Return": ann_return,
+        "Annual Volatility": ann_vol,
+        "Sharpe (rf=2%)": sharpe,
+        "Max Drawdown": mdd
+    })
 
-# Display final values
-print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")</code></pre>
+    return metrics.sort_values("Sharpe (rf=2%)", ascending=False)
+
+metrics_df = risk_metrics(daily_returns, rf=0.02)
+print(metrics_df.round(4))</code></pre>
 
   <h3>Visualizations</h3>
+  <img src="./outputs/figures/python_risk_return_scatter.png" alt="Risk-return scatter plot across portfolio assets" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 1: Annualized return versus volatility comparison to evaluate risk-adjusted positioning across assets.</em></p>
 
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="./outputs/figures/python_cumulative_returns.png"
-      alt="Cumulative growth of one dollar invested in each asset from 2015 to 2024"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Cumulative return trajectories for all six assets, showing that $1 invested in AAPL grew to $10.36 versus $3.41 in SPY over the same period.
-      <span style="display:block; margin-top:4px;">
-        <a href="./outputs/figures/python_cumulative_returns.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="./outputs/figures/python_risk_return_scatter.png"
-      alt="Risk-return scatter plot comparing annualized return and volatility across assets"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Risk-return comparison across assets; higher returns generally came with higher volatility, with AAPL leading on risk-adjusted efficiency via the strongest Sharpe ratio.
-      <span style="display:block; margin-top:4px;">
-        <a href="./outputs/figures/python_risk_return_scatter.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="./outputs/figures/python_maximum_drawdown.png"
-      alt="Maximum drawdown plot showing peak-to-trough declines for each asset over time"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Drawdown profiles across the decade, highlighting deep stress episodes such as the March 2020 COVID-19 crash and XLE&rsquo;s worst decline of -66.81%.
-      <span style="display:block; margin-top:4px;">
-        <a href="./outputs/figures/python_maximum_drawdown.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+  <img src="./outputs/figures/python_maximum_drawdown.png" alt="Maximum drawdown paths for each asset" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 2: Drawdown trajectories showing each asset&rsquo;s worst historical peak-to-trough declines.</em></p>
 
   <h3>Key Insights</h3>
   <ul>
-    <li><strong>AAPL delivered the strongest absolute growth:</strong> $1 invested in 2015 compounded to $10.36 by 2024, compared with $3.41 for SPY.</li>
-    <li><strong>AAPL also led on risk-adjusted returns:</strong> its Sharpe ratio of 0.856 indicates the highest return per unit of risk among the assets analyzed.</li>
-    <li><strong>Risk-return tradeoff was clear:</strong> AAPL posted a higher annual return (26.36%) but also materially higher volatility (28.47%) versus SPY&rsquo;s 13.05% return and 17.62% volatility.</li>
-    <li><strong>Maximum drawdown highlighted downside pain:</strong> XLE experienced the deepest peak-to-trough decline at -66.81%, underscoring sector-specific crash risk in energy.</li>
-    <li><strong>Systemic stress appeared across all assets in March 2020:</strong> the COVID-19 shock is visible as a synchronized drawdown event in the portfolio.</li>
-    <li><strong>Return quality matters as much as return level:</strong> Sharpe ratio analysis helped separate assets that merely rose from those that compensated investors more efficiently for risk taken.</li>
+    <li>Return and volatility moved together, reinforcing the core risk-return tradeoff across the portfolio.</li>
+    <li>Sharpe ranking provided a clearer quality signal than raw return alone.</li>
+    <li>Maximum drawdown exposed downside severity that volatility by itself can understate.</li>
+    <li>Drawdown paths revealed synchronized stress windows during broad market disruptions.</li>
+    <li>Some assets showed materially deeper downside tails despite similar long-run growth.</li>
+    <li>Risk metrics should be interpreted as a package, not as standalone indicators.</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Use Sharpe and max drawdown together when screening or rebalancing portfolio weights.</li>
+    <li>Set risk limits based on acceptable drawdown tolerance, not only annual volatility.</li>
+    <li>Stress-test allocations against crisis-style scenarios before implementing changes.</li>
+    <li>Reassess risk metrics periodically as return distributions evolve through market regimes.</li>
   </ul>
 
 </details>
@@ -308,240 +298,222 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")</code></
 
   <h3>Business Question</h3>
   <p>
-    How strongly do the portfolio assets move together, and which combinations actually improve diversification?
-    More specifically, this analysis tests whether cross-asset correlations remain stable or shift across market
-    regimes &mdash; and what those shifts imply for portfolio risk management.
+    How stable are cross-asset relationships over time, and how much risk reduction can be achieved by combining assets
+    with lower co-movement instead of concentrating in a single market exposure?
   </p>
 
   <h3>Methodology</h3>
   <p>
-    To evaluate diversification properly, I used <em>daily returns</em> rather than raw prices. Returns place all
-    assets on a comparable scale and capture day-to-day co-movement, which is the relevant input for correlation and
-    portfolio risk analysis.
+    I analyzed daily return correlations to quantify co-movement, then layered rolling correlation windows to track
+    how relationships shifted across market environments. This helps distinguish long-run averages from regime-specific
+    behavior that matters for real-time risk management.
   </p>
   <p>
-    I first computed a full-period correlation matrix to provide a static baseline view of how each asset pair behaved
-    across 2015&ndash;2024. I then added rolling correlations (60-day and 252-day windows) for key pairs such as SPY-TLT
-    and SPY-GLD to show that relationships are dynamic, not fixed, and can change materially across market regimes.
-  </p>
-  <p>
-    Finally, I translated the correlation findings into a simple diversification demonstration by comparing the
-    volatility of a concentrated portfolio against a diversified allocation. This illustrates the core portfolio
-    principle: combining lower-correlated assets can reduce total risk even when individual assets remain volatile.
+    I also compared concentrated and diversified portfolio volatility using annualized covariance matrix math. This
+    translates correlation into a direct diversification outcome at the portfolio level.
   </p>
 
-  <h3>Code</h3>
-<pre><code class="language-python"># Load daily return data used in Notebook 3
-daily_returns = pd.read_csv(
-    "./data/daily_returns_2015_2024.csv",
-    index_col=0,
-    parse_dates=True
-)
+  <h3>Code Highlight (Key Logic)</h3>
+  <pre><code class="language-python">import numpy as np
+import pandas as pd
 
-# Static correlation view across the full sample
-correlation_matrix = daily_returns.corr()
+# Load daily returns
+daily_returns = pd.read_csv("./data/daily_returns_2015_2024.csv", index_col=0, parse_dates=True)
 
-# Rolling correlations to capture regime shifts
-rolling_corr_spy_tlt_60 = daily_returns["SPY"].rolling(60).corr(daily_returns["TLT"])
-rolling_corr_spy_tlt_252 = daily_returns["SPY"].rolling(252).corr(daily_returns["TLT"])
-rolling_corr_spy_gld_60 = daily_returns["SPY"].rolling(60).corr(daily_returns["GLD"])
+# Static correlation (full period)
+corr = daily_returns.corr()
 
-# Simple concentrated vs diversified risk comparison
-concentrated = daily_returns[["SPY"]].mean(axis=1)
-diversified = daily_returns[["SPY", "TLT", "GLD"]].mean(axis=1)
-vol_compare = pd.Series({
-    "Concentrated": concentrated.std() * np.sqrt(252),
-    "Diversified": diversified.std() * np.sqrt(252)
-})
+# Rolling correlation (regime sensitivity)
+rolling_corr_spy_tlt = daily_returns["SPY"].rolling(252).corr(daily_returns["TLT"])
 
-# Figure exports from Notebook 3
-plt.savefig("./outputs/figures/python_correlation_heatmap_detailed.png", dpi=300)
-plt.savefig("./outputs/figures/python_rolling_correlations.png", dpi=300)
-plt.savefig("./outputs/figures/python_diversification_benefit.png", dpi=300)</code></pre>
+# Diversification math: portfolio volatility via covariance
+cov = daily_returns.cov() * 252  # annualized covariance
+
+w_concentrated = np.array([1, 0, 0])                 # SPY only
+w_diversified = np.array([0.6, 0.3, 0.1])            # SPY/TLT/GLD example
+
+assets = ["SPY", "TLT", "GLD"]
+cov_3 = cov.loc[assets, assets].values
+
+vol_concentrated = np.sqrt(w_concentrated.T @ cov_3 @ w_concentrated)
+vol_diversified = np.sqrt(w_diversified.T @ cov_3 @ w_diversified)
+
+print(f"Annualized vol (SPY only): {vol_concentrated:.2%}")
+print(f"Annualized vol (diversified): {vol_diversified:.2%}")</code></pre>
 
   <h3>Visualizations</h3>
+  <img src="./outputs/figures/python_correlation_heatmap_detailed.png" alt="Detailed correlation heatmap of portfolio returns" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 1: Full-period return correlation map for baseline diversification assessment.</em></p>
 
-<img src="./outputs/figures/python_correlation_heatmap_detailed.png" alt="Correlation Heatmap (Detailed)" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 1: Full-period correlations of daily returns across all six assets, providing a static view of cross-asset co-movement and diversification potential.</em></p>
+  <img src="./outputs/figures/python_rolling_correlations.png" alt="Rolling correlation trends across selected asset pairs" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 2: Rolling correlations showing that cross-asset relationships vary across regimes.</em></p>
 
-<img src="./outputs/figures/python_rolling_correlations.png" alt="Rolling Correlations" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 2: Rolling correlation trends for key asset pairs, showing that correlation changes across market regimes and can spike during stress periods.</em></p>
-
-<img src="./outputs/figures/python_diversification_benefit.png" alt="Diversification Benefit" class="project-image" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 3: Concentrated vs diversified portfolio risk comparison, illustrating how blending lower-correlated assets can reduce overall volatility.</em></p>
+  <img src="./outputs/figures/python_diversification_benefit.png" alt="Diversification benefit comparison between concentrated and mixed portfolio" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 3: Volatility comparison illustrating risk reduction from a diversified allocation.</em></p>
 
   <h3>Key Insights</h3>
   <ul>
-    <li><strong>Equity clustering is persistent:</strong> SPY and EFA generally move together, showing that international developed equities are not fully independent from U.S. equity risk.</li>
-    <li><strong>Bonds diversify equities:</strong> TLT maintains low to negative correlation with SPY in many periods, supporting its role as a core portfolio stabilizer.</li>
-    <li><strong>Gold is a partial diversifier:</strong> GLD typically shows lower and less stable correlation versus equities, adding a distinct return stream rather than equity-like behavior.</li>
-    <li><strong>Correlations are regime-dependent:</strong> Rolling windows show that relationships shift over time, which means static assumptions can understate portfolio risk.</li>
-    <li><strong>Stress periods weaken diversification:</strong> During market shocks, equity-linked correlations tend to rise, reducing diversification benefits exactly when protection is most needed.</li>
-    <li><strong>Diversification lowers volatility:</strong> A blended multi-asset allocation produces smoother return behavior than concentrated equity exposure.</li>
-    <li><strong>Risk management requires monitoring:</strong> Correlation should be treated as a dynamic risk input and reviewed continuously, not as a one-time estimate.</li>
+    <li>Static correlations provided useful baseline structure, but they masked major time variation.</li>
+    <li>Correlations changed materially across calm and stress periods.</li>
+    <li>Negative or low-correlation relationships were not constant through the full sample.</li>
+    <li>Diversification benefits were strongest when cross-asset co-movement stayed moderate.</li>
+    <li>Diversification can weaken during market stress when correlations converge upward.</li>
+    <li>Covariance-based portfolio volatility gave a more practical risk view than pairwise correlation alone.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Use TLT and GLD as intentional diversifiers rather than adding only equity-like exposures.</li>
-    <li>Track rolling correlations in portfolio monitoring to detect diversification breakdowns during stressed markets.</li>
-    <li>Avoid assuming EFA provides strong downside insulation versus SPY in crisis regimes.</li>
-    <li>Rebalance periodically so target diversification weights are maintained as market moves shift exposures.</li>
-    <li>In risk planning, stress-test portfolios under higher-correlation scenarios rather than relying on long-run averages.</li>
+    <li>Monitor rolling correlations as an ongoing risk dashboard, not a one-time diagnostic.</li>
+    <li>Use scenario-aware allocations that anticipate temporary correlation breakdowns.</li>
+    <li>Favor diversification across distinct risk drivers, not just additional tickers.</li>
+    <li>Rebalance with covariance-based portfolio volatility targets rather than static weight rules.</li>
   </ul>
 
 </details>
 
 ---
 
-<details markdown="1">
+<details>
   <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
 
-<div markdown="1">
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
----  Analysis 4 — Time Series Decomposition
+  <h3>Business Question</h3>
+  <p>
+    What components drive SPY price movement over time, and how can trend, seasonality, and residual shocks be
+    separated to support clearer regime interpretation for investment decisions?
+  </p>
 
-* * *
+  <h3>Methodology</h3>
+  <p>
+    I used moving averages (50-day and 200-day) as practical regime indicators, then decomposed the SPY series into
+    trend, seasonal, and residual components using a trading-year periodicity. This clarifies whether observed price
+    behavior is persistent structure or short-lived noise.
+  </p>
+  <p>
+    I additionally ran an ADF test on returns to assess stationarity assumptions relevant for downstream forecasting.
+    This combination links interpretability, market regime monitoring, and model-readiness diagnostics.
+  </p>
 
-### Business Question
-How can we separate long-term market direction from short-term noise in SPY, and how clearly do moving-average regimes and decomposition components reflect major market events such as the COVID crash and the 2022 rate-hike environment?
-
-### Methodology
-Moving averages are used as a practical regime filter. The 50-day average reacts faster to recent changes, while the 200-day average captures the broader trend; comparing the two helps identify whether market behavior is strengthening or weakening over time.
-
-Time-series decomposition helps isolate structure in the data. Instead of treating price movement as one signal, decomposition splits it into trend, seasonal, and residual components so we can distinguish persistent direction from transient variation.
-
-This approach also supports structural-break interpretation. In this dataset, key windows to monitor include the abrupt disruption during COVID-19 in 2020 and the choppier repricing period during aggressive rate hikes in 2022.
-
-### Code
-<pre><code class="language-python">from statsmodels.tsa.seasonal import seasonal_decompose
+  <h3>Code Highlight (Key Logic)</h3>
+  <pre><code class="language-python">import numpy as np
+from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.stattools import adfuller
 
-# 50-day and 200-day moving averages (trend signals)
+# Moving averages (trend/regime signals)
 prices["SPY_MA50"] = prices["SPY"].rolling(50).mean()
 prices["SPY_MA200"] = prices["SPY"].rolling(200).mean()
 
-# Time series decomposition (trend/seasonal/residual)
-decomp = seasonal_decompose(prices["SPY"].dropna(), model="multiplicative", period=252)
+# Decomposition (trend/seasonal/residual) — use trading-year seasonality
+spy_series = prices["SPY"].dropna()
+decomp = seasonal_decompose(spy_series, model="multiplicative", period=252)
 
-# Stationarity test (returns are typically more stationary than prices)
+# Stationarity check (returns typically closer to stationary than prices)
 adf_stat, p_value, *_ = adfuller(daily_returns["SPY"].dropna())
-print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")
+print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")</code></pre>
 
-# Export figures (these files exist in outputs/figures)
-# python_moving_averages.png
-# python_time_series_decomposition.png</code></pre>
+  <h3>Visualizations</h3>
+  <img src="./outputs/figures/python_moving_averages.png" alt="SPY series with 50-day and 200-day moving averages" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 1: Moving-average overlays used as lagging trend and regime confirmation signals.</em></p>
 
-### Visualizations
-<img src="./outputs/figures/python_moving_averages.png" alt="Moving Averages" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 1: SPY price with 50-day and 200-day moving averages highlighting trend direction and crossover signals.</em></p>
+  <img src="./outputs/figures/python_time_series_decomposition.png" alt="Decomposed SPY time series into trend seasonal and residual components" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 2: Multiplicative decomposition separating trend, seasonality, and residual shocks.</em></p>
 
-<img src="./outputs/figures/python_time_series_decomposition.png" alt="Time Series Decomposition" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 2: Decomposition of SPY into observed, trend, seasonal, and residual components to separate long-term movement from short-term noise.</em></p>
+  <h3>Key Insights</h3>
+  <ul>
+    <li>Trend was the dominant component in long-horizon SPY behavior.</li>
+    <li>Seasonality appeared weaker and less explanatory than underlying trend.</li>
+    <li>Residuals concentrated shock periods that standard trend views can hide.</li>
+    <li>MA50/MA200 crossovers were useful but lagging regime indicators.</li>
+    <li>Short-term reversals often emerged before moving-average confirmation.</li>
+    <li>Return-series stationarity diagnostics are more appropriate than testing raw price levels alone.</li>
+  </ul>
 
-### Key Insights
-<ul>
-  <li><strong>Trend carries most of the signal:</strong> The decomposition trend component explains the broad multi-year direction more clearly than raw day-to-day price movement.</li>
-  <li><strong>Moving averages clarify regimes:</strong> The 50/200-day pair smooths short-term noise and makes regime shifts easier to interpret visually.</li>
-  <li><strong>COVID is a clear structural break:</strong> The 2020 shock appears as an abrupt disruption relative to the surrounding trend path.</li>
-  <li><strong>2022 reflects a distinct policy regime:</strong> The rate-hike period shows a different market character with choppier behavior and sharper reversals than the prior expansion phase.</li>
-  <li><strong>Residuals capture shock behavior:</strong> The residual component concentrates event-driven volatility that is not explained by long-run trend or recurring seasonal structure.</li>
-  <li><strong>Crossover signals are useful but lagging:</strong> Moving-average crossovers can support risk monitoring, but they typically confirm transitions after they begin.</li>
-</ul>
-
-</div>
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Use moving averages as confirmation tools rather than primary entry timing signals.</li>
+    <li>Treat large residual spikes as risk events requiring tighter exposure controls.</li>
+    <li>Combine trend diagnostics with volatility and macro context for regime decisions.</li>
+    <li>Prefer return-based modeling inputs when building predictive pipelines.</li>
+  </ul>
 
 </details>
 
 ---
 
-<details markdown="1">
+<details>
   <summary><strong>Analysis 5 &mdash; Forecasting</strong></summary>
-  <div markdown="1">
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
----  Analysis 5 — Forecasting
+  <h3>Business Question</h3>
+  <p>
+    Can a classical ARIMA baseline produce directionally useful out-of-sample SPY forecasts, and how should forecast
+    uncertainty be interpreted for practical portfolio decision support?
+  </p>
 
-* * *
+  <h3>Methodology</h3>
+  <p>
+    I applied an 80/20 chronological train-test split to preserve real forecasting order, then fit ARIMA(1,1,1) on
+    the training segment. Predictions were generated for the full test horizon and evaluated with MAE and RMSE.
+  </p>
+  <p>
+    Forecast intervals were included to represent uncertainty explicitly. This is important because market regime
+    shifts and volatility clustering can quickly degrade point-forecast reliability.
+  </p>
 
-### Business Question
-ARIMA can provide a useful baseline for short-term SPY forecasting, especially as a structured starting point for comparing more advanced models. The core business question is whether a classical statistical model can produce directionally helpful out-of-sample estimates on recent market data.
-
-Forecast quality is evaluated with a realistic time-based train/test split so the model only learns from earlier history and is tested on later periods. Even with this setup, forecasting prices remains difficult because markets experience regime shifts, non-stationarity, and shock events that can quickly invalidate historical relationships.
-
-### Methodology
-The analysis uses cleaned daily prices from 2015 to 2024 and focuses on SPY as the benchmark series. To preserve temporal integrity, the dataset is split using an 80/20 time-based approach, where the earlier portion is used for training and the later portion is reserved for testing.
-
-An ARIMA(1,1,1) model is then fit on the training segment of SPY prices. After fitting, the model generates out-of-sample forecasts across the entire test horizon to simulate forward prediction in a production-style setting.
-
-Forecast quality is assessed using MAE, RMSE, and MAPE. MAE and RMSE summarize average and squared error magnitude, while MAPE expresses error relative to price level; together they provide a practical accuracy view, while still requiring caution because financial series are noisy and prone to structural breaks.
-
-### Code
-<pre><code class="language-python">import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+  <h3>Code Highlight (Key Logic)</h3>
+  <pre><code class="language-python">import numpy as np
+import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-# Load cleaned prices (2015–2024)
 prices = pd.read_csv("cleaned_prices_2015_2024.csv", index_col=0, parse_dates=True)
-spy_prices = prices["SPY"]
+spy = prices["SPY"]
 
-# Time-based train/test split (80/20)
-split_point = int(len(spy_prices) * 0.8)
-train_data = spy_prices[:split_point]
-test_data = spy_prices[split_point:]
+# Time-based split (80/20)
+split = int(len(spy) * 0.8)
+train, test = spy.iloc[:split], spy.iloc[split:]
 
-# ARIMA(1,1,1) model on training data
-model = ARIMA(train_data, order=(1, 1, 1))
-fitted_model = model.fit()
+# Fit ARIMA(1,1,1)
+model = ARIMA(train, order=(1, 1, 1))
+fit = model.fit()
 
-# Forecast across the test horizon
-predictions = fitted_model.forecast(steps=len(test_data))
+# Forecast with intervals
+fc = fit.get_forecast(steps=len(test))
+pred = fc.predicted_mean
+conf = fc.conf_int()  # lower/upper bounds
 
-# Evaluate forecast accuracy
-mae = mean_absolute_error(test_data, predictions)
-rmse = np.sqrt(mean_squared_error(test_data, predictions))
-mape = np.mean(np.abs((test_data - predictions) / test_data)) * 100
+mae = mean_absolute_error(test, pred)
+rmse = np.sqrt(mean_squared_error(test, pred))
+print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 
-print(f"MAE: ${mae:.2f}")
-print(f"RMSE: ${rmse:.2f}")
-print(f"MAPE: {mape:.2f}%")
+  <h3>Visualizations</h3>
+  <img src="./outputs/figures/python_train_test_split.png" alt="SPY time-based train and test split" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 1: Chronological train-test split used to evaluate realistic out-of-sample forecast performance.</em></p>
 
-# Figures exported by Notebook 5:
-# python_train_test_split.png
-# python_arima_predictions.png</code></pre>
+  <img src="./outputs/figures/python_arima_predictions.png" alt="ARIMA forecast compared with actual SPY prices" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+  <p><em>Figure 2: ARIMA baseline predictions versus actual prices on the holdout window.</em></p>
 
-### Visualizations
-<img src="./outputs/figures/python_train_test_split.png" alt="Train-Test Split" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 1: Time-based 80/20 train-test split for SPY (train on earlier history, test on later period) to simulate real-world forecasting.</em></p>
+  <h3>Key Insights</h3>
+  <ul>
+    <li>Forecasting price levels remained difficult despite a structured model setup.</li>
+    <li>ARIMA served as a transparent baseline, not a final production model.</li>
+    <li>Predictive accuracy degraded during sharp regime transitions.</li>
+    <li>Point forecasts were most useful when interpreted with prediction intervals.</li>
+    <li>Model error increased in high-volatility windows relative to calmer periods.</li>
+    <li>Return and volatility forecasting are often more stable than direct price-level forecasting.</li>
+  </ul>
 
-<img src="./outputs/figures/python_arima_predictions.png" alt="ARIMA Predictions vs Actual" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
-<p><em>Figure 2: ARIMA(1,1,1) out-of-sample forecast versus actual SPY prices on the test set. The split line marks the transition from training to testing.</em></p>
-
-### Key Insights
-<ul>
-  <li><strong>ARIMA is a practical baseline:</strong> ARIMA(1,1,1) provides a transparent benchmark for short-horizon SPY forecasting and model comparison.</li>
-  <li><strong>Price-level forecasting is inherently hard:</strong> Financial markets are noisy and adaptive, which limits the stability of learned time-series patterns.</li>
-  <li><strong>Regime shifts weaken generalization:</strong> Model performance can deteriorate when market structure changes between training and test periods.</li>
-  <li><strong>Volatility changes increase forecast error:</strong> Sudden expansions in volatility often produce larger misses than calmer market intervals.</li>
-  <li><strong>Trend tracking can lag:</strong> Forecasts may follow broad direction at times but can react slowly to sharp accelerations or reversals.</li>
-  <li><strong>Error metrics serve different purposes:</strong> MAE and RMSE summarize magnitude error, while MAPE adds a scale-aware perspective for interpretation.</li>
-  <li><strong>Uncertainty should be explicit:</strong> Forecast outputs are better treated as probabilistic guidance than deterministic signals in investment workflows.</li>
-</ul>
-
-### Business Recommendations
-<ul>
-  <li>Treat ARIMA as a benchmark and compare it directly against naive baselines such as random walk before adopting more complex models.</li>
-  <li>Model returns or volatility, not only raw prices, to improve stationarity and reduce sensitivity to non-constant levels.</li>
-  <li>Introduce exogenous drivers (e.g., rates, VIX, macro indicators) to improve regime awareness and contextual forecasting.</li>
-  <li>Use rolling or expanding retraining windows so models adapt more quickly to changing market conditions.</li>
-  <li>Report prediction intervals and scenario ranges alongside point forecasts to support risk-aware decision-making.</li>
-</ul>
-
-  </div>
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Keep ARIMA as a baseline benchmark in model comparison workflows.</li>
+    <li>Add rolling retraining to adapt faster to evolving market structure.</li>
+    <li>Prioritize interval-aware reporting over single-point forecast narratives.</li>
+    <li>Evaluate return/volatility targets and exogenous features for improved robustness.</li>
+  </ul>
 
 </details>
 
