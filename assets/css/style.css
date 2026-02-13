@@ -1136,27 +1136,29 @@ details > summary:focus-visible {
   outline-offset: 2px;
 }
 
-/* ===== Header Navigation Full-Height Buttons ===== */
+/* ===== Remove Header Vertical Gaps ===== */
+
+header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 header nav {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 70px;   /* match current header height */
   display: flex;
-  align-items: stretch;   /* makes children fill full height */
-  height: 70px;           /* set the height of the header bar */
+  align-items: stretch;
 }
 
+/* Ensure nav links fill the header */
 header nav a {
+  height: 100%;
   display: flex;
-  align-items: center;     /* vertical center */
-  justify-content: center; /* horizontal center */
-  height: 100%;            /* fill entire header height */
-  padding: 0 40px;         /* only horizontal padding */
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* remove any existing top/bottom padding on nav links */
-header nav a {
-  padding-top: 0;
-  padding-bottom: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ===== Full-Width Dropdown Bars (Project Pages) ===== */
