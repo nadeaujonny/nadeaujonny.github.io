@@ -596,10 +596,4 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 └── outputs/                  # Generated outputs and exports
 </code></pre>
 
-  <h3>Contact</h3>
-  <!-- TODO: Update LinkedIn link -->
-  <p>
-    <a href="https://www.linkedin.com/in/nadeaujonny/" target="_blank" rel="noopener">Connect on LinkedIn &rarr;</a>
-  </p>
-
 </details>
