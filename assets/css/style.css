@@ -1135,3 +1135,26 @@ details > summary:focus-visible {
   outline: 2px solid var(--link);
   outline-offset: 2px;
 }
+
+/* ===== Header Navigation Full-Height Buttons ===== */
+header nav {
+  display: flex;
+  align-items: stretch;   /* makes children fill full height */
+  height: 70px;           /* set the height of the header bar */
+}
+
+header nav a {
+  display: flex;
+  align-items: center;     /* vertical center */
+  justify-content: center; /* horizontal center */
+  height: 100%;            /* fill entire header height */
+  padding: 0 40px;         /* only horizontal padding */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* remove any existing top/bottom padding on nav links */
+header nav a {
+  padding-top: 0;
+  padding-bottom: 0;
+}
