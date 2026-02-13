@@ -65,12 +65,12 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <a class="project-card-link r-card" href="/projects/r-placeholder/" aria-label="Open R project: Coming Soon">
+    <a class="project-card-link r-card" href="/projects/r-ab-testing-simulated/" aria-label="Open R project: A/B Testing & Experimentation">
       <div class="project-card-content">
         <h2>R</h2>
-        <h3>Portfolio Project (Coming Soon)</h3>
-        <p>Placeholder project card for an upcoming R analytics portfolio build.</p>
-        <div class="project-card-cta">Details soon →</div>
+        <h3>A/B Testing & Experimentation</h3>
+        <p>Comprehensive A/B testing analysis workflow demonstrating statistical testing, power analysis, regression adjustment, and quality assurance using simulated SaaS onboarding data.</p>
+        <div class="project-card-cta">Open project →</div>
       </div>
     </a>
   </div>
