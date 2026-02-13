@@ -395,132 +395,57 @@ plt.savefig("./outputs/figures/python_diversification_benefit.png", dpi=300)</co
 ---
 
 <details>
-  <summary><strong>Analysis 4 &mdash; Time Series Trends &amp; Decomposition</strong></summary>
+  <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+---  Analysis 4 — Time Series Decomposition
+
+* * *
 
 ### Business Question
-
-<p>
-  Financial markets are dynamic systems in which asset prices reflect both long-run macroeconomic forces and short-run shifts in investor sentiment. This analysis examines how major ETFs evolve through time to identify persistent directional trends versus temporary dislocations.
-</p>
-
-<p>
-  Beyond simple price direction, the objective is to test whether recurring patterns and structural breaks can be detected in a systematic way. In particular, moving-average relationships are used to interpret market regimes (risk-on vs. risk-off), while decomposition techniques separate broad trend effects from seasonal behavior and unexplained residual shocks.
-</p>
-
-<p>
-  From a portfolio-management perspective, this framework helps answer whether observable technical signals align with known market events such as the COVID-19 drawdown and the higher-volatility rate-hike environment. The goal is to produce interpretable evidence that supports timing, risk monitoring, and allocation decisions.
-</p>
+How can we separate long-term market direction from short-term noise in SPY, and how clearly do moving-average regimes and decomposition components reflect major market events such as the COVID crash and the 2022 rate-hike environment?
 
 ### Methodology
+Moving averages are used as a practical regime filter. The 50-day average reacts faster to recent changes, while the 200-day average captures the broader trend; comparing the two helps identify whether market behavior is strengthening or weakening over time.
 
-<p>
-  Price series were first normalized to a common starting value so relative performance could be compared across assets with different price levels. This ensures the analysis focuses on trajectory and regime behavior rather than nominal price differences.
-</p>
+Time-series decomposition helps isolate structure in the data. Instead of treating price movement as one signal, decomposition splits it into trend, seasonal, and residual components so we can distinguish persistent direction from transient variation.
 
-<p>
-  Trend-following structure was evaluated using 50-day and 200-day moving averages, with crossover events flagged as potential regime transitions. Golden crosses (50-day above 200-day) were interpreted as strengthening momentum regimes, while death crosses signaled potential deterioration in trend conditions.
-</p>
-
-<p>
-  A classical time-series decomposition was then applied to isolate trend, seasonal, and residual components. Interpreting these components alongside known event windows made it possible to identify structural breaks, including the COVID crash and the elevated volatility period associated with rapid policy-rate increases.
-</p>
+This approach also supports structural-break interpretation. In this dataset, key windows to monitor include the abrupt disruption during COVID-19 in 2020 and the choppier repricing period during aggressive rate hikes in 2022.
 
 ### Code
+<pre><code class="language-python">from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.stattools import adfuller
 
-```python
-from statsmodels.tsa.seasonal import seasonal_decompose
-import matplotlib.pyplot as plt
+# 50-day and 200-day moving averages (trend signals)
+prices["SPY_MA50"] = prices["SPY"].rolling(50).mean()
+prices["SPY_MA200"] = prices["SPY"].rolling(200).mean()
 
-# Normalize for comparability
-normalized = prices.div(prices.iloc[0]).mul(100)
+# Time series decomposition (trend/seasonal/residual)
+decomp = seasonal_decompose(prices["SPY"].dropna(), model="multiplicative", period=252)
 
-# Rolling moving averages for regime interpretation
-prices['SPY_50MA'] = prices['SPY'].rolling(window=50, min_periods=50).mean()
-prices['SPY_200MA'] = prices['SPY'].rolling(window=200, min_periods=200).mean()
+# Stationarity test (returns are typically more stationary than prices)
+adf_stat, p_value, *_ = adfuller(daily_returns["SPY"].dropna())
+print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")
 
-# Golden/death cross flags
-prices['Cross_Signal'] = (prices['SPY_50MA'] > prices['SPY_200MA']).astype(int)
-
-# Time series decomposition (trading-day seasonality proxy)
-decomposition = seasonal_decompose(prices['SPY'].dropna(), model='multiplicative', period=252)
-
-# Plot references (full styling omitted for brevity)
-ax = prices[['SPY', 'SPY_50MA', 'SPY_200MA']].plot(figsize=(12, 6))
-ax.set_title('SPY with 50-Day and 200-Day Moving Averages')
-plt.savefig('outputs/figures/python_moving_averages.png', dpi=300, bbox_inches='tight')
-
-decomposition.plot()
-plt.savefig('outputs/figures/python_time_series_decomposition.png', dpi=300, bbox_inches='tight')
-```
+# Export figures (these files exist in outputs/figures)
+# python_moving_averages.png
+# python_time_series_decomposition.png</code></pre>
 
 ### Visualizations
+<img src="./outputs/figures/python_moving_averages.png" alt="Moving Averages" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 1: SPY price with 50-day and 200-day moving averages highlighting trend direction and crossover signals.</em></p>
 
-<figure style="margin: 0 0 18px 0;">
-  <img
-    src="images/python-moving-averages.png"
-    alt="SPY price with 50-day and 200-day moving averages for regime detection"
-    loading="lazy"
-    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-  >
-  <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-    SPY trend profile with 50-day and 200-day moving averages. Crossovers highlight potential transitions between bullish and defensive market regimes.
-    <span style="display:block; margin-top:4px;">
-      <a href="images/python-moving-averages.png">Open full-size</a>
-    </span>
-  </figcaption>
-</figure>
-
-<figure style="margin: 0 0 18px 0;">
-  <img
-    src="images/python-decomposition.png"
-    alt="Time series decomposition of SPY into trend seasonal and residual components"
-    loading="lazy"
-    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-  >
-  <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-    Decomposition output separating long-run trend, seasonal effects, and residual noise to isolate underlying market structure.
-    <span style="display:block; margin-top:4px;">
-      <a href="images/python-decomposition.png">Open full-size</a>
-    </span>
-  </figcaption>
-</figure>
-
-<figure style="margin: 0 0 18px 0;">
-  <img
-    src="images/python-market-regimes.png"
-    alt="Market regime timeline showing bull bear and high-volatility transition periods"
-    loading="lazy"
-    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-  >
-  <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-    Regime segmentation view used to contextualize trend strength, drawdowns, and transition intervals across the full sample window.
-    <span style="display:block; margin-top:4px;">
-      <a href="images/python-market-regimes.png">Open full-size</a>
-    </span>
-  </figcaption>
-</figure>
+<img src="./outputs/figures/python_time_series_decomposition.png" alt="Time Series Decomposition" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 2: Decomposition of SPY into observed, trend, seasonal, and residual components to separate long-term movement from short-term noise.</em></p>
 
 ### Key Insights
-
 <ul>
-  <li><strong>Trend dominates long horizons:</strong> The decomposition trend component explains most multi-year price direction, while seasonal effects are comparatively weak for broad ETFs.</li>
-  <li><strong>Crossover signals are regime-sensitive:</strong> Golden crosses generally align with sustained recovery phases, whereas death crosses tend to cluster around risk-off transitions and prolonged drawdowns.</li>
-  <li><strong>Structural breaks are visible in residuals:</strong> Event-driven shocks such as the COVID selloff and policy-tightening volatility appear as large residual deviations from baseline trend behavior.</li>
-  <li><strong>Signal confirmation improves interpretation:</strong> Moving-average signals are most useful when evaluated alongside decomposition outputs and macro context rather than as standalone trading triggers.</li>
+  <li><strong>Trend carries most of the signal:</strong> The decomposition trend component explains the broad multi-year direction more clearly than raw day-to-day price movement.</li>
+  <li><strong>Moving averages clarify regimes:</strong> The 50/200-day pair smooths short-term noise and makes regime shifts easier to interpret visually.</li>
+  <li><strong>COVID is a clear structural break:</strong> The 2020 shock appears as an abrupt disruption relative to the surrounding trend path.</li>
+  <li><strong>2022 reflects a distinct policy regime:</strong> The rate-hike period shows a different market character with choppier behavior and sharper reversals than the prior expansion phase.</li>
+  <li><strong>Residuals capture shock behavior:</strong> The residual component concentrates event-driven volatility that is not explained by long-run trend or recurring seasonal structure.</li>
+  <li><strong>Crossover signals are useful but lagging:</strong> Moving-average crossovers can support risk monitoring, but they typically confirm transitions after they begin.</li>
 </ul>
-
-### Business Interpretation
-
-<p>
-  For decision-makers, this analysis provides a practical monitoring framework: decomposition clarifies whether market moves are structural or transitory, and moving-average relationships provide a transparent regime dashboard for tactical risk management.
-</p>
-
-<p>
-  In application, crossover events can trigger deeper portfolio review rather than automatic execution, especially during known high-volatility macro periods. Combining technical and statistical signals supports more disciplined rebalancing, clearer communication of market conditions, and stronger governance around drawdown response.
-</p>
 
 </details>
 
