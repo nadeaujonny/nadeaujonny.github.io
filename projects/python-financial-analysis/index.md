@@ -175,7 +175,7 @@ print(f"Downloaded {len(prices)} days of data")
 
   <h3>Results</h3>
 
-![10-Year Price History](../outputs/figures/python_price_history_10years.png)
+![10-Year Price History](./outputs/figures/python_price_history_10years.png)
 *Figure 1: Normalized price history (base = 100) for all six assets over the 2015-2024 period, allowing direct comparison of cumulative growth across assets with different price scales.*
 
   <h4>Summary Statistics</h4>
@@ -187,7 +187,7 @@ print(f"Downloaded {len(prices)} days of data")
     characteristic explored further in Analysis&nbsp;2.
   </p>
 
-![Correlation Heatmap](../outputs/figures/python_correlation_heatmap.png)
+![Correlation Heatmap](./outputs/figures/python_correlation_heatmap.png)
 *Figure 2: Pairwise correlation heatmap of daily returns across all six assets, highlighting diversification opportunities where correlations are low or negative.*
 
 
@@ -365,13 +365,13 @@ plt.savefig('../outputs/figures/python_diversification_benefit.png', dpi=300)
 
   <h3>Visualizations</h3>
 
-![Correlation Heatmap (Detailed)](../outputs/figures/python_correlation_heatmap_detailed.png)
+![Correlation Heatmap (Detailed)](./outputs/figures/python_correlation_heatmap_detailed.png)
 *Figure 1: Full-period correlations of daily returns across all six assets, providing a static view of cross-asset co-movement and diversification potential.*
 
-![Rolling Correlations](../outputs/figures/python_rolling_correlations.png)
+![Rolling Correlations](./outputs/figures/python_rolling_correlations.png)
 *Figure 2: Rolling correlation trends for key asset pairs, showing that correlation changes across market regimes and often spikes during stress periods.*
 
-![Diversification Benefit](../outputs/figures/python_diversification_benefit.png)
+![Diversification Benefit](./outputs/figures/python_diversification_benefit.png)
 *Figure 3: Concentrated vs diversified portfolio risk comparison, illustrating how blending lower-correlated assets can reduce overall volatility.*
 
   <h3>Key Insights</h3>
