@@ -519,47 +519,30 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 
 ---
 
-<details>
-  <summary><strong>Key Findings &amp; Recommendations</strong></summary>
+## Key Findings & Recommendations
 
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+### Key Findings
 
-  <h3>Major Insights</h3>
-  <!-- TODO: Replace placeholder insights with actual summary findings -->
-  <ul>
-    <li><strong>[TBD]:</strong> Placeholder summary insight about overall portfolio performance across the 10-year period</li>
-    <li><strong>[TBD]:</strong> Placeholder summary insight about risk-return tradeoffs and the most efficient assets</li>
-    <li><strong>[TBD]:</strong> Placeholder summary insight about diversification effectiveness and correlation dynamics</li>
-    <li><strong>[TBD]:</strong> Placeholder summary insight about time series patterns and regime behavior</li>
-    <li><strong>[TBD]:</strong> Placeholder summary insight about forecasting model performance and limitations</li>
-  </ul>
+- Over the 2015-2024 window, normalized price paths showed large dispersion in outcomes across assets, reinforcing that raw price levels are not comparable and that base-normalized views are essential for cross-asset performance interpretation.
+- Return and risk were not aligned: the strongest cumulative growth came from higher-volatility equity exposure, while lower-volatility assets produced smoother but more modest outcomes, highlighting the core return-versus-stability trade-off in portfolio design.
+- Risk-adjusted results and drawdown analysis showed that assets can post strong long-run returns while still experiencing severe interim losses, meaning investor experience is driven by path risk, not just endpoint performance.
+- Correlation structure confirmed equity clustering (broad market, international equity, and sector equity moving together), which limits diversification if portfolios are built only from equity sleeves.
+- Defensive assets behaved differently: long-duration Treasuries and gold provided lower or negative co-movement versus equities in parts of the sample, supporting their role as diversifiers rather than primary growth engines.
+- Rolling-correlation analysis showed relationships are regime-dependent, with correlation spikes during stress periods; diversification remains valuable but can partially weaken when it is needed most.
+- The diversified comparison portfolio demonstrated a practical diversification effect: materially lower volatility and shallower drawdowns with comparable risk-adjusted efficiency versus an all-equity benchmark.
+- Trend diagnostics (moving averages and decomposition) indicated a persistent long-run upward regime in the benchmark series, interrupted by short-lived structural breaks (e.g., COVID shock), with trend dominating seasonal and residual components.
+- Forecasting results showed a classical ARIMA baseline struggled to track the late-sample rally, illustrating that univariate linear models have limited ability to anticipate regime shifts and nonlinear market dynamics.
 
-  <h3>Portfolio Recommendations</h3>
-  <!-- TODO: Replace placeholder recommendations with actual data-driven recommendations -->
-  <ul>
-    <li><strong>[TBD]:</strong> Placeholder recommendation about optimal asset allocation based on risk-return analysis</li>
-    <li><strong>[TBD]:</strong> Placeholder recommendation about diversification strategy using correlation insights</li>
-    <li><strong>[TBD]:</strong> Placeholder recommendation about rebalancing approach based on regime analysis</li>
-    <li><strong>[TBD]:</strong> Placeholder recommendation about risk management using drawdown and VaR metrics</li>
-  </ul>
+### Business Recommendations
 
-  <h3>Business Value</h3>
-  <!-- TODO: Replace placeholder text with actual business value statement -->
-  <p>
-    This analysis demonstrates how Python-based quantitative methods can support portfolio evaluation and
-    risk management decisions. The combination of exploratory analysis, statistical modeling, and machine
-    learning provides a comprehensive toolkit for data-driven investment insights.
-  </p>
+- Build portfolios with intentional cross-regime diversification (equities + rates + real assets) rather than relying on multiple equity proxies that share the same latent risk factors.
+- Pair return metrics with downside diagnostics (drawdown, volatility, and rolling correlations) in recurring risk reviews so allocation decisions reflect both performance and resilience.
+- Operationalize correlation monitoring with rolling windows and stress-period overlays; treat correlation as time-varying and adjust risk budgets when co-movement begins to rise.
+- Use classical models (like ARIMA) as statistical baselines, then benchmark richer alternatives (multivariate, regime-switching, and machine-learning/hybrid approaches) against that baseline.
+- Adopt rolling retraining and walk-forward validation for forecasting workflows so models are repeatedly recalibrated as market regimes evolve.
+- Communicate forecasts as ranges and scenarios, not point certainties, and explicitly disclose model limitations during structural breaks.
+- Translate analytics into governance: define rebalance triggers, drawdown thresholds, and exception-based risk alerts to make insights actionable in live portfolio processes.
 
-  <h3>Disclaimer</h3>
-  <p>
-    <em>This project is for educational and portfolio demonstration purposes only. It does not constitute
-    financial advice, investment recommendations, or trading signals. Past performance does not guarantee
-    future results. Always consult a qualified financial advisor before making investment decisions.</em>
-  </p>
-
-</details>
 
 ---
 
