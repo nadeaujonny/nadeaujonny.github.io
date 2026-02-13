@@ -20,7 +20,6 @@ breadcrumbs:
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Overview</h3>
   <p>
@@ -77,7 +76,6 @@ breadcrumbs:
   <summary><strong>Data Modeling & Preparation</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Tableau Data Model</h3>
   <p>
@@ -135,7 +133,6 @@ breadcrumbs:
   <summary><strong>Analysis 1 — Order Fulfillment Performance Metrics (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -335,7 +332,6 @@ breadcrumbs:
   <summary><strong>Analysis 2 — Revenue & Sales Performance (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -520,7 +516,6 @@ breadcrumbs:
   <summary><strong>Analysis 3 — Customer Experience & Review Quality (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -753,7 +748,6 @@ breadcrumbs:
   <summary><strong>Analysis 4 — Marketplace Ecosystem: Products & Sellers (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -978,7 +972,6 @@ breadcrumbs:
   <summary><strong>Analysis 5 — Executive Summary Dashboard (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -1123,7 +1116,6 @@ breadcrumbs:
   <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     This analysis examined 99,441 Olist e-commerce orders across five interconnected dashboards to evaluate the marketplace from four perspectives: operational performance, financial health, customer satisfaction, and ecosystem dynamics. The goal was to move beyond surface-level metrics and uncover the relationships between them — where delivery performance impacts satisfaction, where geographic concentration creates both revenue strength and strategic risk, and where marketplace growth introduces new operational pressure.
@@ -1153,7 +1145,6 @@ breadcrumbs:
   <summary><strong>Limitations</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <ul>
     <li><strong>Truncated boundary periods:</strong> August 2018 shows a sharp drop in order volume consistent with incomplete data collection, and August–November 2016 contains too few orders for reliable trend analysis. Insights drawn from these boundary months should be treated as directional rather than definitive.</li>
@@ -1168,7 +1159,6 @@ breadcrumbs:
   <summary><strong>Explore the Dashboard</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Interactive Dashboard on Tableau Public</h3>
   <p>

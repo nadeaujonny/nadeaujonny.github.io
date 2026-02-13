@@ -1082,6 +1082,7 @@ details.dropdown-section > summary {
   padding: 18px 24px;
   margin: 0;
   border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0;
   box-shadow: none;
   cursor: pointer;
@@ -1115,6 +1116,13 @@ details.dropdown-section .dropdown-content {
 main .wrapper details > summary:hover,
 details.dropdown-section > summary:hover {
   filter: brightness(0.985);
+}
+
+/* When details is open, keep the border on summary */
+.page-content .wrapper details[open] > summary,
+main .wrapper details[open] > summary,
+details.dropdown-section[open] > summary {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* =========================================================
