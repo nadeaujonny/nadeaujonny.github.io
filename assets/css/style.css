@@ -117,6 +117,10 @@ details{
   overflow:hidden;
 }
 
+.dropdown-section{
+  margin:20px 0;
+}
+
 details > summary{
   list-style:none;
   cursor:pointer;

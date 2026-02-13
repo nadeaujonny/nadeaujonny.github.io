@@ -26,7 +26,7 @@ breadcrumbs:
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -66,7 +66,7 @@ breadcrumbs:
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Dataset</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -121,7 +121,7 @@ breadcrumbs:
 
 ---
 
-<details markdown="1">
+<details class="dropdown-section" markdown="1">
   <summary><strong>Analysis 1 &mdash; Data Acquisition &amp; Exploratory Data Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -205,7 +205,7 @@ print(f"Downloaded {len(prices)} days of data")
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Analysis 2 &mdash; Returns &amp; Risk Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -290,7 +290,7 @@ print(metrics_df.round(4))</code></pre>
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Analysis 3 &mdash; Correlation &amp; Diversification</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -373,7 +373,7 @@ print(f"Annualized vol (diversified): {vol_diversified:.2%}")</code></pre>
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -441,7 +441,7 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")</code></pre>
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Analysis 5 &mdash; Forecasting</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -548,7 +548,7 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 
 ---
 
-<details>
+<details class="dropdown-section">
   <summary><strong>Technical Details</strong></summary>
 
   <div style="margin-top: 12px;"></div>
