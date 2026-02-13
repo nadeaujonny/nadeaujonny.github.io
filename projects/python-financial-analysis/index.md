@@ -128,103 +128,100 @@ breadcrumbs:
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
-  <!-- TODO: Replace placeholder text with actual business question -->
   <p>
     What are the fundamental characteristics of each asset's price history over the 2015&ndash;2024 period?
-    How do the assets compare in terms of price levels, trading volume, and basic statistical properties?
+    How do the assets compare in terms of price levels, growth trajectories, and basic statistical properties,
+    and what preliminary relationships exist between them?
   </p>
 
-  <h3>Method</h3>
-  <!-- TODO: Replace placeholder text with actual methodology -->
-  <ul>
-    <li>Retrieved daily OHLCV data for all six tickers using the yfinance API</li>
-    <li>Cleaned and validated data for missing values, stock splits, and corporate actions</li>
-    <li>Computed descriptive statistics (mean, median, standard deviation, skewness, kurtosis)</li>
-    <li>Visualized price history trends and initial relationships between assets</li>
-    <li>Generated correlation heatmap to identify preliminary asset relationships</li>
-  </ul>
+  <h3>Methodology</h3>
+  <p>
+    The first step in any financial analysis is acquiring reliable data and understanding its structure. Using the
+    <a href="https://github.com/ranaroussi/yfinance" target="_blank" rel="noopener">yfinance</a> Python library,
+    I programmatically downloaded 10 years of daily price data (January 2015 through December 2024) for six
+    diversified assets: SPY (S&amp;P 500), AAPL (Apple), XLE (Energy), TLT (Bonds), GLD (Gold), and EFA
+    (International Equities). This yielded 2,515 trading days of data per asset.
+  </p>
+  <p>
+    After retrieval, I validated the dataset for completeness and quality. The data contained zero missing values
+    across all six tickers &mdash; a 100% complete dataset requiring no imputation or interpolation. I then computed
+    descriptive statistics to understand the central tendency, dispersion, and shape of each asset's price
+    distribution over the full period.
+  </p>
+  <p>
+    Finally, I generated two key exploratory visualizations: a normalized price history chart to compare growth
+    trajectories across assets with different price scales, and a correlation heatmap of daily returns to identify
+    preliminary relationships and potential diversification opportunities within the portfolio.
+  </p>
 
   <h3>Code</h3>
-  <!-- TODO: Add actual code snippet from notebook 1 -->
 
 ```python
-# Placeholder — will be replaced with actual analysis code
-import pandas as pd
-import numpy as np
-import yfinance as yf
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Define tickers and time period
+# Define portfolio assets
 tickers = ['SPY', 'AAPL', 'XLE', 'TLT', 'GLD', 'EFA']
-start_date = '2015-01-01'
-end_date = '2024-12-31'
 
-# Download data
-data = yf.download(tickers, start=start_date, end=end_date)
-prices = data['Adj Close']
+# Download data via Yahoo Finance API
+data = yf.download(
+    tickers=tickers,
+    start='2015-01-01',
+    end='2024-12-31',
+    auto_adjust=True
+)
 
-# Descriptive statistics
-print(prices.describe())
+# Extract closing prices
+prices = data['Close']
+print(f"Downloaded {len(prices)} days of data")
 ```
 
   <h3>Results</h3>
 
-  <!-- TODO: Replace placeholder image with actual price history chart -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-price-history.png"
-      alt="Price history chart for all six assets from 2015 to 2024"
+      src="../outputs/figures/python_price_history_10years.png"
+      alt="Normalized price history chart for SPY, AAPL, XLE, TLT, GLD, and EFA from 2015 to 2024"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Adjusted close price history for SPY, AAPL, XLE, TLT, GLD, and EFA (2015&ndash;2024).
+      Normalized price history (base&nbsp;=&nbsp;100) for all six assets over the 2015&ndash;2024 period, allowing direct comparison of cumulative growth across assets with different price scales.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-price-history.png">Open full-size</a>
+        <a href="../outputs/figures/python_price_history_10years.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
-  <!-- TODO: Replace placeholder image with actual descriptive statistics visualization -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/python-descriptive-stats.png"
-      alt="Descriptive statistics summary for all six assets"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Descriptive statistics summary across all assets.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/python-descriptive-stats.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+  <h4>Summary Statistics</h4>
+  <p>
+    Descriptive statistics were computed across all 2,515 trading days for each asset. Key observations from the
+    summary table include wide variation in price ranges (AAPL traded from approximately $27 to over $250, while
+    TLT ranged from $82 to $138), confirming the need for normalization when comparing growth trajectories. Standard
+    deviations also varied significantly across assets, reflecting their different volatility profiles &mdash; a
+    characteristic explored further in Analysis&nbsp;2.
+  </p>
 
-  <!-- TODO: Replace placeholder image with actual correlation heatmap -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-correlation-heatmap.png"
-      alt="Initial correlation heatmap showing relationships between the six assets"
+      src="../outputs/figures/python_correlation_heatmap.png"
+      alt="Correlation heatmap showing pairwise return correlations between all six assets"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Initial correlation heatmap of daily returns across all assets.
+      Pairwise correlation heatmap of daily returns across all six assets, highlighting diversification opportunities where correlations are low or negative.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-correlation-heatmap.png">Open full-size</a>
+        <a href="../outputs/figures/python_correlation_heatmap.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <h3>Key Insights</h3>
-  <!-- TODO: Replace placeholder insights with actual findings -->
   <ul>
-    <li><strong>[TBD]:</strong> Placeholder insight about overall price trends observed across the 10-year period</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about relative performance differences between asset classes</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about data quality and any notable observations during EDA</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about initial correlation patterns between assets</li>
+    <li><strong>Massive performance divergence:</strong> AAPL gained approximately 935% over the 10-year period, far outpacing SPY at 240%, while TLT (long-term bonds) lost roughly 11% &mdash; highlighting the enormous spread in outcomes across asset classes.</li>
+    <li><strong>100% data completeness:</strong> All 2,515 trading days across all six tickers contained valid price data with zero missing values, confirming the reliability of the yfinance API for historical financial data retrieval.</li>
+    <li><strong>Bonds as a diversifier:</strong> TLT (20+ Year Treasury Bonds) showed negative correlation with equity assets, confirming its role as a portfolio diversification tool that tends to move inversely to stocks during market stress.</li>
+    <li><strong>Equity clustering:</strong> SPY, AAPL, XLE, and EFA exhibited moderate-to-strong positive correlations with each other, indicating that equity assets across sectors and geographies share common risk factors and tend to move together.</li>
+    <li><strong>Gold&rsquo;s independence:</strong> GLD displayed low correlation with both equities and bonds, suggesting it provides a distinct return driver that is relatively uncoupled from traditional asset class movements.</li>
+    <li><strong>Foundation for deeper analysis:</strong> The clean, complete dataset and initial correlation patterns established a solid basis for the risk metrics, time series decomposition, and forecasting analyses that follow.</li>
   </ul>
 
 </details>
