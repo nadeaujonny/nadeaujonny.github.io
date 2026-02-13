@@ -95,9 +95,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 1 — Top Products by Revenue</strong></summary>
 
@@ -154,9 +151,6 @@ LIMIT 10;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 2 — Top Products by Profit</strong></summary>
 
@@ -213,9 +207,6 @@ LIMIT 10;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 3 — Top Brands by Profit</strong></summary>
 
@@ -278,9 +269,6 @@ LIMIT 10;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 4 — Top Products by Profit Margin</strong></summary>
 
@@ -362,9 +350,6 @@ LIMIT 10;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 5 — Top Products by Return Rate</strong></summary>
 
@@ -465,9 +450,6 @@ LIMIT 10;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 6 — Long-Term Trends in Revenue, Profit, and Returns</strong></summary>
 
@@ -557,9 +539,6 @@ ORDER BY month;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 7 — Seasonal Trends in Revenue, Profit, and Returns</strong></summary>
 
@@ -639,9 +618,6 @@ ORDER BY month_num;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 8 — Customer Lifetime Value (CLV) and Retention Patterns</strong></summary>
 
@@ -720,9 +696,6 @@ LIMIT 20;</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Conclusion</strong></summary>
 

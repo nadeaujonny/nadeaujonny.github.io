@@ -63,9 +63,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Dataset</strong></summary>
 
@@ -118,9 +115,6 @@ breadcrumbs:
   </p>
 
 </details>
-
----
-
 <details class="dropdown-section" markdown="1">
   <summary><strong>Analysis 1 &mdash; Data Acquisition &amp; Exploratory Data Analysis</strong></summary>
 
@@ -202,9 +196,6 @@ print(f"Downloaded {len(prices)} days of data")
   </ul>
 
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Analysis 2 &mdash; Returns &amp; Risk Analysis</strong></summary>
 
@@ -287,9 +278,6 @@ print(metrics_df.round(4))</code></pre>
   </ul>
 
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Analysis 3 &mdash; Correlation &amp; Diversification</strong></summary>
 
@@ -370,9 +358,6 @@ print(f"Annualized vol (diversified): {vol_diversified:.2%}")</code></pre>
   </ul>
 
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
 
@@ -438,9 +423,6 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")</code></pre>
   </ul>
 
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Analysis 5 &mdash; Forecasting</strong></summary>
 
@@ -514,9 +496,6 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
   </ul>
 
 </details>
-
-<hr>
-
 <details class="dropdown-section">
   <summary>Key Findings & Recommendations</summary>
   <div class="dropdown-content">
@@ -547,9 +526,6 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 
   </div>
 </details>
-
----
-
 <details class="dropdown-section">
   <summary><strong>Technical Details</strong></summary>
 

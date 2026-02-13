@@ -57,9 +57,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dataset</strong></summary>
 
@@ -126,9 +123,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
 
@@ -291,9 +285,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Data Model (Star Schema)</strong></summary>
 
@@ -384,9 +375,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Key DAX Measures</strong></summary>
 
@@ -542,9 +530,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dashboard Page 1 — Executive Overview</strong></summary>
 
@@ -596,9 +581,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dashboard Page 2 — Trends &amp; Indicator Comparison</strong></summary>
 
@@ -667,9 +649,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dashboard Page 3 — State Performance Analysis</strong></summary>
 
@@ -742,9 +721,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dashboard Page 4 — Health Disparities</strong></summary>
 
@@ -818,9 +794,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Dashboard Page 5 — Action Prioritization</strong></summary>
 
@@ -893,9 +866,6 @@ CALCULATE(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Conclusion</strong></summary>
 

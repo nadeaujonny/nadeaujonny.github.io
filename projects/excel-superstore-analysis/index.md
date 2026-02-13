@@ -16,7 +16,6 @@ breadcrumbs:
   <p>An end-to-end Excel analytics project demonstrating Power Query data cleaning, KPI development, pivot-table analysis, and executive dashboard design using the Superstore retail dataset.</p>
 </blockquote>
 
-<hr>
 
 <details>
   <summary><strong>Project Overview</strong></summary>
@@ -64,9 +63,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
   
@@ -156,9 +152,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
   
@@ -239,9 +232,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
   
@@ -375,9 +365,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
   
@@ -476,9 +463,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
   
@@ -549,9 +533,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
   
@@ -636,9 +617,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
-<hr>
-
 <details>
   <summary><strong>Project Implementation &amp; Deliverables</strong></summary>
   
