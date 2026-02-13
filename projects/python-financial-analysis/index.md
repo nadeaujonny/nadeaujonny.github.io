@@ -514,6 +514,9 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
   </ul>
 
 </details>
+
+<hr>
+
 <details class="dropdown-section">
   <summary>Key Findings & Recommendations</summary>
   <div class="dropdown-content">
