@@ -1048,9 +1048,13 @@ main .wrapper details,
 details.dropdown-section {
   width: 100%;
   margin: 0;
+  margin-left: 0;
+  margin-right: 0;
   padding: 0;
+  padding-left: 0;
+  padding-right: 0;
   border: 0;
-  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
   background: transparent;
   border-radius: 0;
   box-shadow: none;
@@ -1071,7 +1075,7 @@ details.dropdown-section > summary {
   justify-content: space-between;
   gap: 12px;
   background: var(--panel-bg);
-  padding: 18px 20px;
+  padding: 18px 24px;
   margin: 0;
   border: 0;
   border-radius: 0;
