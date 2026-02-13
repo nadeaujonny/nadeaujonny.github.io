@@ -121,7 +121,7 @@ breadcrumbs:
 
 ---
 
-<details>
+<details markdown="1">
   <summary><strong>Analysis 1 &mdash; Data Acquisition &amp; Exploratory Data Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
@@ -175,20 +175,8 @@ print(f"Downloaded {len(prices)} days of data")
 
   <h3>Results</h3>
 
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="../outputs/figures/python_price_history_10years.png"
-      alt="Normalized price history chart for SPY, AAPL, XLE, TLT, GLD, and EFA from 2015 to 2024"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Normalized price history (base&nbsp;=&nbsp;100) for all six assets over the 2015&ndash;2024 period, allowing direct comparison of cumulative growth across assets with different price scales.
-      <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_price_history_10years.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+![10-Year Price History](../outputs/figures/python_price_history_10years.png)
+*Figure 1: Normalized price history (base = 100) for all six assets over the 2015-2024 period, allowing direct comparison of cumulative growth across assets with different price scales.*
 
   <h4>Summary Statistics</h4>
   <p>
@@ -199,20 +187,9 @@ print(f"Downloaded {len(prices)} days of data")
     characteristic explored further in Analysis&nbsp;2.
   </p>
 
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="../outputs/figures/python_correlation_heatmap.png"
-      alt="Correlation heatmap showing pairwise return correlations between all six assets"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Pairwise correlation heatmap of daily returns across all six assets, highlighting diversification opportunities where correlations are low or negative.
-      <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_correlation_heatmap.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+![Correlation Heatmap](../outputs/figures/python_correlation_heatmap.png)
+*Figure 2: Pairwise correlation heatmap of daily returns across all six assets, highlighting diversification opportunities where correlations are low or negative.*
+
 
   <h3>Key Insights</h3>
   <ul>
