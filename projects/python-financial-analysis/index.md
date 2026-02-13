@@ -455,8 +455,9 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")
 
 ---
 
-<details>
+<details markdown="1">
   <summary><strong>Analysis 5 &mdash; Forecasting</strong></summary>
+  <div markdown="1">
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
@@ -539,6 +540,8 @@ print(f"MAPE: {mape:.2f}%")
   <li>Use rolling or expanding retraining windows so models adapt more quickly to changing market conditions.</li>
   <li>Report prediction intervals and scenario ranges alongside point forecasts to support risk-aware decision-making.</li>
 </ul>
+
+  </div>
 
 </details>
 
