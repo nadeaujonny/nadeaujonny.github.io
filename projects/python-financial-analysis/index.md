@@ -245,7 +245,7 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="../outputs/figures/python_cumulative_returns.png"
+      src="./outputs/figures/python_cumulative_returns.png"
       alt="Cumulative growth of one dollar invested in each asset from 2015 to 2024"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -253,14 +253,14 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Cumulative return trajectories for all six assets, showing that $1 invested in AAPL grew to $10.36 versus $3.41 in SPY over the same period.
       <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_cumulative_returns.png">Open full-size</a>
+        <a href="./outputs/figures/python_cumulative_returns.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="../outputs/figures/python_risk_return_scatter.png"
+      src="./outputs/figures/python_risk_return_scatter.png"
       alt="Risk-return scatter plot comparing annualized return and volatility across assets"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -268,14 +268,14 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Risk-return comparison across assets; higher returns generally came with higher volatility, with AAPL leading on risk-adjusted efficiency via the strongest Sharpe ratio.
       <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_risk_return_scatter.png">Open full-size</a>
+        <a href="./outputs/figures/python_risk_return_scatter.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="../outputs/figures/python_maximum_drawdown.png"
+      src="./outputs/figures/python_maximum_drawdown.png"
       alt="Maximum drawdown plot showing peak-to-trough declines for each asset over time"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -283,7 +283,7 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Drawdown profiles across the decade, highlighting deep stress episodes such as the March 2020 COVID-19 crash and XLE&rsquo;s worst decline of -66.81%.
       <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_maximum_drawdown.png">Open full-size</a>
+        <a href="./outputs/figures/python_maximum_drawdown.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
