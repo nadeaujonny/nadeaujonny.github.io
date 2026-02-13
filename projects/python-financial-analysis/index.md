@@ -457,105 +457,84 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
-  <!-- TODO: Replace placeholder text with actual business question -->
-  <p>
-    Can statistical time series models and machine learning methods produce useful short-term forecasts
-    of asset prices or returns? How do different modeling approaches compare in accuracy and reliability?
-  </p>
+---  Analysis 5 — Forecasting
 
-  <h3>Method</h3>
-  <!-- TODO: Replace placeholder text with actual methodology -->
-  <ul>
-    <li>Split data into training and test sets using time-based train/test split</li>
-    <li>Built ARIMA/SARIMA models using ACF/PACF-informed parameter selection</li>
-    <li>Implemented machine learning regression models (e.g., Random Forest, Linear Regression) for return prediction</li>
-    <li>Evaluated model performance using RMSE, MAE, and directional accuracy metrics</li>
-    <li>Generated forward-looking forecasts with confidence intervals</li>
-    <li>Compared statistical vs. ML approaches for financial time series prediction</li>
-  </ul>
+* * *
 
-  <h3>Code</h3>
-  <!-- TODO: Add actual code snippet from notebook 5 -->
+### Business Question
+ARIMA can provide a useful baseline for short-term SPY forecasting, especially as a structured starting point for comparing more advanced models. The core business question is whether a classical statistical model can produce directionally helpful out-of-sample estimates on recent market data.
 
-```python
-# Placeholder — will be replaced with actual analysis code
+Forecast quality is evaluated with a realistic time-based train/test split so the model only learns from earlier history and is tested on later periods. Even with this setup, forecasting prices remains difficult because markets experience regime shifts, non-stationarity, and shock events that can quickly invalidate historical relationships.
+
+### Methodology
+The analysis uses cleaned daily prices from 2015 to 2024 and focuses on SPY as the benchmark series. To preserve temporal integrity, the dataset is split using an 80/20 time-based approach, where the earlier portion is used for training and the later portion is reserved for testing.
+
+An ARIMA(1,1,1) model is then fit on the training segment of SPY prices. After fitting, the model generates out-of-sample forecasts across the entire test horizon to simulate forward prediction in a production-style setting.
+
+Forecast quality is assessed using MAE, RMSE, and MAPE. MAE and RMSE summarize average and squared error magnitude, while MAPE expresses error relative to price level; together they provide a practical accuracy view, while still requiring caution because financial series are noisy and prone to structural breaks.
+
+### Code
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-# Train/test split (80/20 time-based)
-train_size = int(len(prices) * 0.8)
-train, test = prices['SPY'][:train_size], prices['SPY'][train_size:]
+# Load cleaned prices (2015–2024)
+prices = pd.read_csv("cleaned_prices_2015_2024.csv", index_col=0, parse_dates=True)
+spy_prices = prices["SPY"]
 
-# ARIMA model
-model = ARIMA(train, order=(1, 1, 1))
-fitted = model.fit()
-forecast = fitted.forecast(steps=len(test))
+# Time-based train/test split (80/20)
+split_point = int(len(spy_prices) * 0.8)
+train_data = spy_prices[:split_point]
+test_data = spy_prices[split_point:]
 
-# Evaluate
-rmse = np.sqrt(mean_squared_error(test, forecast))
-print(f'ARIMA RMSE: {rmse:.4f}')
-```
+# ARIMA(1,1,1) model on training data
+model = ARIMA(train_data, order=(1, 1, 1))
+fitted_model = model.fit()
 
-  <h3>Results</h3>
+# Forecast across the test horizon
+predictions = fitted_model.forecast(steps=len(test_data))
 
-  <!-- TODO: Replace placeholder image with actual vs predicted chart -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/python-actual-vs-predicted.png"
-      alt="Actual vs predicted values chart comparing model forecast to real prices"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Actual vs. predicted values on the test set, comparing model forecasts to realized prices.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/python-actual-vs-predicted.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+# Evaluate forecast accuracy
+mae = mean_absolute_error(test_data, predictions)
+rmse = np.sqrt(mean_squared_error(test_data, predictions))
+mape = np.mean(np.abs((test_data - predictions) / test_data)) * 100
 
-  <!-- TODO: Replace placeholder image with actual forecast chart -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/python-forecast.png"
-      alt="Future forecast chart with confidence intervals"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Forward-looking forecast with 95% confidence intervals showing projected price trajectory.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/python-forecast.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+print(f"MAE: ${mae:.2f}")
+print(f"RMSE: ${rmse:.2f}")
+print(f"MAPE: {mape:.2f}%")
 
-  <!-- TODO: Replace placeholder image with actual accuracy metrics visualization -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/python-accuracy-metrics.png"
-      alt="Model accuracy metrics comparison across different forecasting approaches"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Model accuracy comparison: RMSE, MAE, and directional accuracy across forecasting methods.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/python-accuracy-metrics.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+# Figures exported by Notebook 5:
+# python_train_test_split.png
+# python_arima_predictions.png</code></pre>
 
-  <h3>Key Insights</h3>
-  <!-- TODO: Replace placeholder insights with actual findings -->
-  <ul>
-    <li><strong>[TBD]:</strong> Placeholder insight about forecasting accuracy of ARIMA vs. ML models</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about challenges of financial time series prediction</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about confidence interval width and forecast uncertainty</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about practical applicability of the forecasting results</li>
-  </ul>
+### Visualizations
+<img src="./outputs/figures/python_train_test_split.png" alt="Train-Test Split" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 1: Time-based 80/20 train-test split for SPY (train on earlier history, test on later period) to simulate real-world forecasting.</em></p>
+
+<img src="./outputs/figures/python_arima_predictions.png" alt="ARIMA Predictions vs Actual" style="max-width:100%; height:auto; display:block; margin: 12px 0;">
+<p><em>Figure 2: ARIMA(1,1,1) out-of-sample forecast versus actual SPY prices on the test set. The split line marks the transition from training to testing.</em></p>
+
+### Key Insights
+<ul>
+  <li><strong>ARIMA is a practical baseline:</strong> ARIMA(1,1,1) provides a transparent benchmark for short-horizon SPY forecasting and model comparison.</li>
+  <li><strong>Price-level forecasting is inherently hard:</strong> Financial markets are noisy and adaptive, which limits the stability of learned time-series patterns.</li>
+  <li><strong>Regime shifts weaken generalization:</strong> Model performance can deteriorate when market structure changes between training and test periods.</li>
+  <li><strong>Volatility changes increase forecast error:</strong> Sudden expansions in volatility often produce larger misses than calmer market intervals.</li>
+  <li><strong>Trend tracking can lag:</strong> Forecasts may follow broad direction at times but can react slowly to sharp accelerations or reversals.</li>
+  <li><strong>Error metrics serve different purposes:</strong> MAE and RMSE summarize magnitude error, while MAPE adds a scale-aware perspective for interpretation.</li>
+  <li><strong>Uncertainty should be explicit:</strong> Forecast outputs are better treated as probabilistic guidance than deterministic signals in investment workflows.</li>
+</ul>
+
+### Business Recommendations
+<ul>
+  <li>Treat ARIMA as a benchmark and compare it directly against naive baselines such as random walk before adopting more complex models.</li>
+  <li>Model returns or volatility, not only raw prices, to improve stationarity and reduce sensitivity to non-constant levels.</li>
+  <li>Introduce exogenous drivers (e.g., rates, VIX, macro indicators) to improve regime awareness and contextual forecasting.</li>
+  <li>Use rolling or expanding retraining windows so models adapt more quickly to changing market conditions.</li>
+  <li>Report prediction intervals and scenario ranges alongside point forecasts to support risk-aware decision-making.</li>
+</ul>
 
 </details>
 
