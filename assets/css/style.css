@@ -277,7 +277,7 @@ header.site-header{
   z-index: 1000;
   background: rgba(255,255,255,0.92) !important;
   color: #111 !important;
-  padding: 12px 0;
+  padding: 0;
   forced-color-adjust: none;
 }
 
@@ -1188,4 +1188,36 @@ header nav a {
 /* Remove extra gap between sections */
 .project-section details {
   margin: 0;
+}
+
+/* ===== Remove extra transparent space around the header nav ===== */
+header,
+.site-header,
+.header,
+.top-header,
+.nav-wrapper,
+.nav-container,
+.nav-bar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: normal !important;
+}
+
+/* Ensure the nav itself doesn’t add extra vertical spacing */
+header nav,
+.site-header nav {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* If there is a “floating bar” background container, remove its extra padding */
+header .nav-inner,
+.site-header .nav-inner,
+header .navbar,
+.site-header .navbar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
 }
