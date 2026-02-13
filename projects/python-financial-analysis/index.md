@@ -288,12 +288,12 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")</code></
 
   <h3>Key Insights</h3>
   <ul>
-    <li>✅ <strong>AAPL delivered the strongest absolute growth:</strong> $1 invested in 2015 compounded to $10.36 by 2024, compared with $3.41 for SPY.</li>
-    <li>✅ <strong>AAPL also led on risk-adjusted returns:</strong> its Sharpe ratio of 0.856 indicates the highest return per unit of risk among the assets analyzed.</li>
-    <li>✅ <strong>Risk-return tradeoff was clear:</strong> AAPL posted a higher annual return (26.36%) but also materially higher volatility (28.47%) versus SPY&rsquo;s 13.05% return and 17.62% volatility.</li>
-    <li>✅ <strong>Maximum drawdown highlighted downside pain:</strong> XLE experienced the deepest peak-to-trough decline at -66.81%, underscoring sector-specific crash risk in energy.</li>
-    <li>✅ <strong>Systemic stress appeared across all assets in March 2020:</strong> the COVID-19 shock is visible as a synchronized drawdown event in the portfolio.</li>
-    <li>✅ <strong>Return quality matters as much as return level:</strong> Sharpe ratio analysis helped separate assets that merely rose from those that compensated investors more efficiently for risk taken.</li>
+    <li><strong>AAPL delivered the strongest absolute growth:</strong> $1 invested in 2015 compounded to $10.36 by 2024, compared with $3.41 for SPY.</li>
+    <li><strong>AAPL also led on risk-adjusted returns:</strong> its Sharpe ratio of 0.856 indicates the highest return per unit of risk among the assets analyzed.</li>
+    <li><strong>Risk-return tradeoff was clear:</strong> AAPL posted a higher annual return (26.36%) but also materially higher volatility (28.47%) versus SPY&rsquo;s 13.05% return and 17.62% volatility.</li>
+    <li><strong>Maximum drawdown highlighted downside pain:</strong> XLE experienced the deepest peak-to-trough decline at -66.81%, underscoring sector-specific crash risk in energy.</li>
+    <li><strong>Systemic stress appeared across all assets in March 2020:</strong> the COVID-19 shock is visible as a synchronized drawdown event in the portfolio.</li>
+    <li><strong>Return quality matters as much as return level:</strong> Sharpe ratio analysis helped separate assets that merely rose from those that compensated investors more efficiently for risk taken.</li>
   </ul>
 
 </details>
