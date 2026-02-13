@@ -1221,3 +1221,39 @@ header .navbar,
   padding-bottom: 0 !important;
   margin: 0 !important;
 }
+
+/* ===== Fix project dropdown extra gap + extra line under summary ===== */
+
+/* Target all <details><summary> dropdowns used on project pages */
+details summary {
+  margin: 0 !important;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  line-height: 1.2;
+  border-bottom: 0 !important;   /* removes the extra line under the title bar */
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+/* If any theme adds a pseudo-element line under summary, kill it */
+details summary::after,
+details summary::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Remove the default top-gap that often comes from the first element inside the open panel */
+details > :not(summary):first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Also remove top margin on common elements inside dropdown content */
+details > :not(summary) p:first-child,
+details > :not(summary) ul:first-child,
+details > :not(summary) ol:first-child,
+details > :not(summary) h1:first-child,
+details > :not(summary) h2:first-child,
+details > :not(summary) h3:first-child {
+  margin-top: 0 !important;
+}
