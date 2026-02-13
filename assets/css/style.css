@@ -1257,3 +1257,39 @@ details > :not(summary) h2:first-child,
 details > :not(summary) h3:first-child {
   margin-top: 0 !important;
 }
+
+/* ===== Remove white strip under opened dropdown summaries ===== */
+
+/* Remove any default spacing that creates a "blank bar" right under the summary */
+details[open] > summary + * {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* If your dropdown content is wrapped in a div, this catches it too */
+details[open] > summary + div {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Also remove top spacing on the first actual content element inside the dropdown */
+details[open] > :not(summary):first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Common first elements that often add a top margin */
+details[open] > :not(summary) > p:first-child,
+details[open] > :not(summary) > ul:first-child,
+details[open] > :not(summary) > ol:first-child,
+details[open] > :not(summary) > h1:first-child,
+details[open] > :not(summary) > h2:first-child,
+details[open] > :not(summary) > h3:first-child {
+  margin-top: 0 !important;
+}
