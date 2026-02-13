@@ -309,95 +309,89 @@ print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
-  <!-- TODO: Replace placeholder text with actual business question -->
   <p>
-    How are the six assets correlated with each other, and how do those correlations change over time?
-    Which asset pairs offer the best diversification benefits, and do correlations increase during market stress?
+    How strongly do the portfolio assets move together, and which combinations actually improve diversification?
+    More specifically, this analysis tests whether cross-asset correlations remain stable or shift across market
+    regimes &mdash; and what those shifts imply for portfolio risk management.
   </p>
 
-  <h3>Method</h3>
-  <!-- TODO: Replace placeholder text with actual methodology -->
-  <ul>
-    <li>Computed full-period correlation matrix of daily returns</li>
-    <li>Calculated rolling correlations (e.g., 60-day and 252-day windows) to track relationship changes over time</li>
-    <li>Created scatter plots for key asset pairs to visualize co-movement patterns</li>
-    <li>Analyzed correlation stability across different market regimes (bull vs. bear markets)</li>
-    <li>Identified diversification opportunities based on low or negative correlations</li>
-  </ul>
+  <h3>Methodology</h3>
+  <p>
+    To evaluate diversification properly, I used <em>daily returns</em> rather than raw prices. Returns place all
+    assets on a comparable scale and capture day-to-day co-movement, which is the relevant input for correlation and
+    portfolio risk analysis.
+  </p>
+  <p>
+    I first computed a full-period correlation matrix to provide a static baseline view of how each asset pair behaved
+    across 2015&ndash;2024. I then added rolling correlations (60-day and 252-day windows) for key pairs such as SPY-TLT
+    and SPY-GLD to show that relationships are dynamic, not fixed, and can change materially across market regimes.
+  </p>
+  <p>
+    Finally, I translated the correlation findings into a simple diversification demonstration by comparing the
+    volatility of a concentrated portfolio against a diversified allocation. This illustrates the core portfolio
+    principle: combining lower-correlated assets can reduce total risk even when individual assets remain volatile.
+  </p>
 
   <h3>Code</h3>
-  <!-- TODO: Add actual code snippet from notebook 3 -->
-
 ```python
-# Placeholder — will be replaced with actual analysis code
-# Full-period correlation matrix
+# Load daily return data used in Notebook 3
+daily_returns = pd.read_csv(
+    '../data/daily_returns_2015_2024.csv',
+    index_col=0,
+    parse_dates=True
+)
+
+# Static correlation view across the full sample
 correlation_matrix = daily_returns.corr()
 
-# Rolling 60-day correlation between SPY and TLT
-rolling_corr = daily_returns['SPY'].rolling(60).corr(daily_returns['TLT'])
+# Rolling correlations to capture regime shifts
+rolling_corr_spy_tlt_60 = daily_returns['SPY'].rolling(60).corr(daily_returns['TLT'])
+rolling_corr_spy_tlt_252 = daily_returns['SPY'].rolling(252).corr(daily_returns['TLT'])
+rolling_corr_spy_gld_60 = daily_returns['SPY'].rolling(60).corr(daily_returns['GLD'])
 
-# Visualize correlation heatmap
-sns.heatmap(correlation_matrix, annot=True, cmap='RdBu_r', center=0)
-plt.title('Asset Return Correlations')
+# Simple concentrated vs diversified risk comparison
+concentrated = daily_returns[['SPY']].mean(axis=1)
+diversified = daily_returns[['SPY', 'TLT', 'GLD']].mean(axis=1)
+vol_compare = pd.Series({
+    'Concentrated': concentrated.std() * np.sqrt(252),
+    'Diversified': diversified.std() * np.sqrt(252)
+})
+
+# Figure exports from Notebook 3
+plt.savefig('../outputs/figures/python_correlation_heatmap_detailed.png', dpi=300)
+plt.savefig('../outputs/figures/python_rolling_correlations.png', dpi=300)
+plt.savefig('../outputs/figures/python_diversification_benefit.png', dpi=300)
 ```
 
-  <h3>Results</h3>
+  <h3>Visualizations</h3>
 
-  <!-- TODO: Replace placeholder image with actual correlation heatmap -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="../outputs/figures/python_correlation_heatmap_detailed.png"
-      alt="Full-period correlation heatmap of daily returns"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Full-period correlation heatmap of daily returns across all six assets.
-      <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_correlation_heatmap_detailed.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+![Correlation Heatmap (Detailed)](../outputs/figures/python_correlation_heatmap_detailed.png)
+*Figure 1: Full-period correlations of daily returns across all six assets, providing a static view of cross-asset co-movement and diversification potential.*
 
-  <!-- TODO: Replace placeholder image with actual rolling correlation chart -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="../outputs/figures/python_rolling_correlations.png"
-      alt="Rolling correlation chart showing how asset correlations change over time"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Rolling correlations between key asset pairs over time, highlighting regime-dependent relationship changes.
-      <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_rolling_correlations.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+![Rolling Correlations](../outputs/figures/python_rolling_correlations.png)
+*Figure 2: Rolling correlation trends for key asset pairs, showing that correlation changes across market regimes and often spikes during stress periods.*
 
-  <!-- TODO: Replace placeholder image with actual scatter plots -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="../outputs/figures/python_diversification_benefit.png"
-      alt="Scatter plots of daily returns for key asset pairs"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Asset pair scatter plots showing co-movement patterns and diversification relationships.
-      <span style="display:block; margin-top:4px;">
-        <a href="../outputs/figures/python_diversification_benefit.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
+![Diversification Benefit](../outputs/figures/python_diversification_benefit.png)
+*Figure 3: Concentrated vs diversified portfolio risk comparison, illustrating how blending lower-correlated assets can reduce overall volatility.*
 
   <h3>Key Insights</h3>
-  <!-- TODO: Replace placeholder insights with actual findings -->
   <ul>
-    <li><strong>[TBD]:</strong> Placeholder insight about which asset pairs show strongest/weakest correlations</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about how correlations change during market stress periods</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about diversification effectiveness of bonds (TLT) and gold (GLD)</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about rolling correlation stability vs. instability</li>
+    <li><strong>Equity clustering is persistent:</strong> SPY and EFA generally move together, showing that international developed equities are not fully independent from U.S. equity risk.</li>
+    <li><strong>Bonds diversify equities:</strong> TLT maintains low to negative correlation with SPY in many periods, supporting its role as a core portfolio stabilizer.</li>
+    <li><strong>Gold is a partial diversifier:</strong> GLD typically shows lower and less stable correlation versus equities, adding a distinct return stream rather than equity-like behavior.</li>
+    <li><strong>Correlations are regime-dependent:</strong> Rolling windows show that relationships shift over time, which means static assumptions can understate portfolio risk.</li>
+    <li><strong>Stress periods weaken diversification:</strong> During market shocks, equity-linked correlations tend to rise, reducing diversification benefits exactly when protection is most needed.</li>
+    <li><strong>Diversification lowers volatility:</strong> A blended multi-asset allocation produces smoother return behavior than concentrated equity exposure.</li>
+    <li><strong>Risk management requires monitoring:</strong> Correlation should be treated as a dynamic risk input and reviewed continuously, not as a one-time estimate.</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Use TLT and GLD as intentional diversifiers rather than adding only equity-like exposures.</li>
+    <li>Track rolling correlations in portfolio monitoring to detect diversification breakdowns during stressed markets.</li>
+    <li>Avoid assuming EFA provides strong downside insulation versus SPY in crisis regimes.</li>
+    <li>Rebalance periodically so target diversification weights are maintained as market moves shift exposures.</li>
+    <li>In risk planning, stress-test portfolios under higher-correlation scenarios rather than relying on long-run averages.</li>
   </ul>
 
 </details>
