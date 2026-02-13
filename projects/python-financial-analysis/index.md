@@ -394,8 +394,10 @@ plt.savefig("./outputs/figures/python_diversification_benefit.png", dpi=300)</co
 
 ---
 
-<details>
+<details markdown="1">
   <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
+
+<div markdown="1">
 
 ---  Analysis 4 — Time Series Decomposition
 
@@ -446,6 +448,8 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")
   <li><strong>Residuals capture shock behavior:</strong> The residual component concentrates event-driven volatility that is not explained by long-run trend or recurring seasonal structure.</li>
   <li><strong>Crossover signals are useful but lagging:</strong> Moving-average crossovers can support risk monitoring, but they typically confirm transitions after they begin.</li>
 </ul>
+
+</div>
 
 </details>
 
