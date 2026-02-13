@@ -1158,3 +1158,25 @@ header nav a {
   padding-top: 0;
   padding-bottom: 0;
 }
+
+/* ===== Full-Width Dropdown Bars (Project Pages) ===== */
+
+/* Remove horizontal padding from dropdown summary bars */
+.project-section details summary {
+  margin-left: -40px;   /* must match container horizontal padding */
+  margin-right: -40px;  /* must match container horizontal padding */
+  padding: 18px 40px;   /* restore inner padding */
+  width: calc(100% + 80px);
+  box-sizing: border-box;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+/* Remove rounded look */
+.project-section details summary {
+  border-radius: 0;
+}
+
+/* Remove extra gap between sections */
+.project-section details {
+  margin: 0;
+}
