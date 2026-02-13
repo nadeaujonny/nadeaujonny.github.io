@@ -300,7 +300,8 @@ header.site-header *{
 
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
-  display:flex;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
   width:100%;
   border:1px solid var(--border);
   border-radius:12px;
@@ -308,8 +309,11 @@ header.site-header *{
   background:var(--surface);
 }
 .site-nav a,.nav-tab,.topbar-link{
-  flex:1;
-  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
   padding:12px 10px;
   font-weight:800;
   text-decoration:none;
@@ -336,7 +340,7 @@ header.site-header *{
 
 /* Mobile nav stacking */
 @media (max-width:520px){
-  .site-nav,.nav-tabs,.topbar-nav{ flex-direction:column; }
+  .site-nav,.nav-tabs,.topbar-nav{ grid-template-columns:1fr; }
   .site-nav a + a,
   .nav-tab + .nav-tab,
   .topbar-link + .topbar-link{
