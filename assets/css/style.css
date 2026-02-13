@@ -110,16 +110,19 @@ a:hover{ color:var(--linkHover); text-decoration:underline; }
 
 /* ---------- Dropdowns (<details>) ---------- */
 details{
-  margin:10px 0;                 /* tighter spacing */
+  margin:0;
   border-radius:var(--radius);
   border:1px solid var(--border);
   background:var(--surface);
   overflow:hidden;
 }
 
-.dropdown-section{
-  margin-top:24px;
-  margin-bottom:24px;
+details.dropdown-section {
+  margin: 14px 0;
+}
+
+details.dropdown-section + details.dropdown-section {
+  margin-top: 14px;
 }
 
 details > summary{
