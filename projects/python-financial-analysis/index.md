@@ -229,123 +229,96 @@ print(f"Downloaded {len(prices)} days of data")
 ---
 
 <details>
-  <summary><strong>Analysis 2 &mdash; Returns &amp; Risk Metrics</strong></summary>
+  <summary><strong>Analysis 2 &mdash; Returns &amp; Risk Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
-  <!-- TODO: Replace placeholder text with actual business question -->
+  <h3>Methodology</h3>
   <p>
-    How do the six assets compare on a risk-adjusted basis? What are the cumulative return profiles, volatility
-    characteristics, drawdown patterns, and risk-return tradeoffs for each asset over the analysis period?
+    I converted adjusted close prices into daily percentage returns to create a consistent basis for comparing assets with very different price levels. From those daily returns, I built cumulative return series using a buy-and-hold assumption to show how each investment compounded over the full 2015&ndash;2024 window.
+  </p>
+  <p>
+    I then calculated core risk metrics, including annualized volatility and Sharpe ratio. Annualized volatility captures the magnitude of return fluctuations (total risk), while the Sharpe ratio measures return per unit of risk after subtracting a 2% risk-free baseline. This made it possible to compare not only which asset returned more, but which delivered more efficient risk-adjusted performance.
+  </p>
+  <p>
+    Finally, I evaluated maximum drawdown for each asset to quantify investor pain during market stress. Maximum drawdown represents the worst peak-to-trough decline before recovery, which is critical for understanding downside exposure. This drawdown analysis also highlights crisis periods, including the sharp COVID-19 selloff in March 2020.
   </p>
 
-  <h3>Method</h3>
-  <!-- TODO: Replace placeholder text with actual methodology -->
-  <ul>
-    <li>Calculated daily and annualized returns for each asset</li>
-    <li>Computed risk metrics: annualized volatility, Sharpe ratio, maximum drawdown, Value at Risk (VaR)</li>
-    <li>Plotted cumulative return curves to compare long-term growth trajectories</li>
-    <li>Analyzed return distributions to assess normality, skewness, and tail risk</li>
-    <li>Created risk-return scatter plot to visualize the efficient frontier relationship</li>
-    <li>Computed and visualized drawdown profiles for each asset</li>
-  </ul>
-
   <h3>Code</h3>
-  <!-- TODO: Add actual code snippet from notebook 2 -->
 
 ```python
-# Placeholder — will be replaced with actual analysis code
 # Calculate daily returns
 daily_returns = prices.pct_change().dropna()
 
-# Annualized metrics
-ann_return = daily_returns.mean() * 252
-ann_volatility = daily_returns.std() * np.sqrt(252)
-sharpe_ratio = ann_return / ann_volatility
-
-# Cumulative returns
+# Calculate cumulative returns (buy-and-hold performance)
 cumulative_returns = (1 + daily_returns).cumprod()
 
-# Maximum drawdown
-rolling_max = cumulative_returns.cummax()
-drawdown = (cumulative_returns - rolling_max) / rolling_max
+# Calculate annualized volatility
+volatility = daily_returns.std() * np.sqrt(252) * 100
+
+# Calculate Sharpe Ratio (risk-adjusted return)
+sharpe_ratio = (annual_return - 2.0) / volatility
+
+# Display final values
+print(f"$1 in AAPL became: ${cumulative_returns['AAPL'].iloc[-1]:.2f}")
 ```
 
-  <h3>Results</h3>
+  <h3>Visualizations</h3>
 
-  <!-- TODO: Replace placeholder image with actual cumulative returns chart -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-cumulative-returns.png"
-      alt="Cumulative returns chart for all six assets from 2015 to 2024"
+      src="../outputs/figures/python_cumulative_returns.png"
+      alt="Cumulative growth of one dollar invested in each asset from 2015 to 2024"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Cumulative returns for all six assets over the 2015&ndash;2024 period.
+      Cumulative return trajectories for all six assets, showing that $1 invested in AAPL grew to $10.36 versus $3.41 in SPY over the same period.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-cumulative-returns.png">Open full-size</a>
+        <a href="../outputs/figures/python_cumulative_returns.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
-  <!-- TODO: Replace placeholder image with actual return distributions -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-return-distributions.png"
-      alt="Return distribution histograms for all six assets"
+      src="../outputs/figures/python_risk_return_scatter.png"
+      alt="Risk-return scatter plot comparing annualized return and volatility across assets"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Daily return distributions showing the shape, spread, and tail behavior of each asset.
+      Risk-return comparison across assets; higher returns generally came with higher volatility, with AAPL leading on risk-adjusted efficiency via the strongest Sharpe ratio.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-return-distributions.png">Open full-size</a>
+        <a href="../outputs/figures/python_risk_return_scatter.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
-  <!-- TODO: Replace placeholder image with actual risk-return scatter plot -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-risk-return-scatter.png"
-      alt="Risk-return scatter plot showing annualized return vs volatility for each asset"
+      src="../outputs/figures/python_maximum_drawdown.png"
+      alt="Maximum drawdown plot showing peak-to-trough declines for each asset over time"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Risk-return scatter plot: annualized return vs. annualized volatility for each asset.
+      Drawdown profiles across the decade, highlighting deep stress episodes such as the March 2020 COVID-19 crash and XLE&rsquo;s worst decline of -66.81%.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-risk-return-scatter.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <!-- TODO: Replace placeholder image with actual drawdown chart -->
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/python-drawdown-chart.png"
-      alt="Maximum drawdown chart for all six assets"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Drawdown profiles showing peak-to-trough declines for each asset over time.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/python-drawdown-chart.png">Open full-size</a>
+        <a href="../outputs/figures/python_maximum_drawdown.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
   <h3>Key Insights</h3>
-  <!-- TODO: Replace placeholder insights with actual findings -->
   <ul>
-    <li><strong>[TBD]:</strong> Placeholder insight about cumulative return differences across asset classes</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about risk-return tradeoffs and Sharpe ratio comparisons</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about drawdown severity and recovery patterns</li>
-    <li><strong>[TBD]:</strong> Placeholder insight about return distribution characteristics (fat tails, skewness)</li>
+    <li>✅ <strong>AAPL delivered the strongest absolute growth:</strong> $1 invested in 2015 compounded to $10.36 by 2024, compared with $3.41 for SPY.</li>
+    <li>✅ <strong>AAPL also led on risk-adjusted returns:</strong> its Sharpe ratio of 0.856 indicates the highest return per unit of risk among the assets analyzed.</li>
+    <li>✅ <strong>Risk-return tradeoff was clear:</strong> AAPL posted a higher annual return (26.36%) but also materially higher volatility (28.47%) versus SPY&rsquo;s 13.05% return and 17.62% volatility.</li>
+    <li>✅ <strong>Maximum drawdown highlighted downside pain:</strong> XLE experienced the deepest peak-to-trough decline at -66.81%, underscoring sector-specific crash risk in energy.</li>
+    <li>✅ <strong>Systemic stress appeared across all assets in March 2020:</strong> the COVID-19 shock is visible as a synchronized drawdown event in the portfolio.</li>
+    <li>✅ <strong>Return quality matters as much as return level:</strong> Sharpe ratio analysis helped separate assets that merely rose from those that compensated investors more efficiently for risk taken.</li>
   </ul>
 
 </details>
