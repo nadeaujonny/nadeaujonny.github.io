@@ -118,11 +118,11 @@ details{
 }
 
 details.dropdown-section {
-  margin: 14px 0;
+  margin: 0;
 }
 
 details.dropdown-section + details.dropdown-section {
-  margin-top: 14px;
+  margin-top: 0;
 }
 
 details > summary{
