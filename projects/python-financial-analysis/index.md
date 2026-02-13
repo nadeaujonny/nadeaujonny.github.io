@@ -515,32 +515,36 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
 
 </details>
 
----
+<details class="dropdown-section">
+  <summary>Key Findings & Recommendations</summary>
+  <div class="dropdown-content">
 
-## Key Findings & Recommendations
+    <h3>Key Findings</h3>
+    <ul>
+      <li>Over the 2015-2024 window, normalized price paths showed large dispersion in outcomes across assets, reinforcing that raw price levels are not comparable and that base-normalized views are essential for cross-asset performance interpretation.</li>
+      <li>Return and risk were not aligned: the strongest cumulative growth came from higher-volatility equity exposure, while lower-volatility assets produced smoother but more modest outcomes, highlighting the core return-versus-stability trade-off in portfolio design.</li>
+      <li>Risk-adjusted results and drawdown analysis showed that assets can post strong long-run returns while still experiencing severe interim losses, meaning investor experience is driven by path risk, not just endpoint performance.</li>
+      <li>Correlation structure confirmed equity clustering (broad market, international equity, and sector equity moving together), which limits diversification if portfolios are built only from equity sleeves.</li>
+      <li>Defensive assets behaved differently: long-duration Treasuries and gold provided lower or negative co-movement versus equities in parts of the sample, supporting their role as diversifiers rather than primary growth engines.</li>
+      <li>Rolling-correlation analysis showed relationships are regime-dependent, with correlation spikes during stress periods; diversification remains valuable but can partially weaken when it is needed most.</li>
+      <li>The diversified comparison portfolio demonstrated a practical diversification effect: materially lower volatility and shallower drawdowns with comparable risk-adjusted efficiency versus an all-equity benchmark.</li>
+      <li>Trend diagnostics (moving averages and decomposition) indicated a persistent long-run upward regime in the benchmark series, interrupted by short-lived structural breaks (e.g., COVID shock), with trend dominating seasonal and residual components.</li>
+      <li>Forecasting results showed a classical ARIMA baseline struggled to track the late-sample rally, illustrating that univariate linear models have limited ability to anticipate regime shifts and nonlinear market dynamics.</li>
+    </ul>
 
-### Key Findings
+    <h3>Business Recommendations</h3>
+    <ul>
+      <li>Build portfolios with intentional cross-regime diversification (equities + rates + real assets) rather than relying on multiple equity proxies that share the same latent risk factors.</li>
+      <li>Pair return metrics with downside diagnostics (drawdown, volatility, and rolling correlations) in recurring risk reviews so allocation decisions reflect both performance and resilience.</li>
+      <li>Operationalize correlation monitoring with rolling windows and stress-period overlays; treat correlation as time-varying and adjust risk budgets when co-movement begins to rise.</li>
+      <li>Use classical models (like ARIMA) as statistical baselines, then benchmark richer alternatives (multivariate, regime-switching, and machine-learning/hybrid approaches) against that baseline.</li>
+      <li>Adopt rolling retraining and walk-forward validation for forecasting workflows so models are repeatedly recalibrated as market regimes evolve.</li>
+      <li>Communicate forecasts as ranges and scenarios, not point certainties, and explicitly disclose model limitations during structural breaks.</li>
+      <li>Translate analytics into governance: define rebalance triggers, drawdown thresholds, and exception-based risk alerts to make insights actionable in live portfolio processes.</li>
+    </ul>
 
-- Over the 2015-2024 window, normalized price paths showed large dispersion in outcomes across assets, reinforcing that raw price levels are not comparable and that base-normalized views are essential for cross-asset performance interpretation.
-- Return and risk were not aligned: the strongest cumulative growth came from higher-volatility equity exposure, while lower-volatility assets produced smoother but more modest outcomes, highlighting the core return-versus-stability trade-off in portfolio design.
-- Risk-adjusted results and drawdown analysis showed that assets can post strong long-run returns while still experiencing severe interim losses, meaning investor experience is driven by path risk, not just endpoint performance.
-- Correlation structure confirmed equity clustering (broad market, international equity, and sector equity moving together), which limits diversification if portfolios are built only from equity sleeves.
-- Defensive assets behaved differently: long-duration Treasuries and gold provided lower or negative co-movement versus equities in parts of the sample, supporting their role as diversifiers rather than primary growth engines.
-- Rolling-correlation analysis showed relationships are regime-dependent, with correlation spikes during stress periods; diversification remains valuable but can partially weaken when it is needed most.
-- The diversified comparison portfolio demonstrated a practical diversification effect: materially lower volatility and shallower drawdowns with comparable risk-adjusted efficiency versus an all-equity benchmark.
-- Trend diagnostics (moving averages and decomposition) indicated a persistent long-run upward regime in the benchmark series, interrupted by short-lived structural breaks (e.g., COVID shock), with trend dominating seasonal and residual components.
-- Forecasting results showed a classical ARIMA baseline struggled to track the late-sample rally, illustrating that univariate linear models have limited ability to anticipate regime shifts and nonlinear market dynamics.
-
-### Business Recommendations
-
-- Build portfolios with intentional cross-regime diversification (equities + rates + real assets) rather than relying on multiple equity proxies that share the same latent risk factors.
-- Pair return metrics with downside diagnostics (drawdown, volatility, and rolling correlations) in recurring risk reviews so allocation decisions reflect both performance and resilience.
-- Operationalize correlation monitoring with rolling windows and stress-period overlays; treat correlation as time-varying and adjust risk budgets when co-movement begins to rise.
-- Use classical models (like ARIMA) as statistical baselines, then benchmark richer alternatives (multivariate, regime-switching, and machine-learning/hybrid approaches) against that baseline.
-- Adopt rolling retraining and walk-forward validation for forecasting workflows so models are repeatedly recalibrated as market regimes evolve.
-- Communicate forecasts as ranges and scenarios, not point certainties, and explicitly disclose model limitations during structural breaks.
-- Translate analytics into governance: define rebalance triggers, drawdown thresholds, and exception-based risk alerts to make insights actionable in live portfolio processes.
-
+  </div>
+</details>
 
 ---
 
