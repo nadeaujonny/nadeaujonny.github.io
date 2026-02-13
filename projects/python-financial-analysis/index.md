@@ -346,7 +346,7 @@ plt.title('Asset Return Correlations')
   <!-- TODO: Replace placeholder image with actual correlation heatmap -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-correlation-heatmap-full.png"
+      src="../outputs/figures/python_correlation_heatmap_detailed.png"
       alt="Full-period correlation heatmap of daily returns"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -354,7 +354,7 @@ plt.title('Asset Return Correlations')
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Full-period correlation heatmap of daily returns across all six assets.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-correlation-heatmap-full.png">Open full-size</a>
+        <a href="../outputs/figures/python_correlation_heatmap_detailed.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
@@ -362,7 +362,7 @@ plt.title('Asset Return Correlations')
   <!-- TODO: Replace placeholder image with actual rolling correlation chart -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-rolling-correlation.png"
+      src="../outputs/figures/python_rolling_correlations.png"
       alt="Rolling correlation chart showing how asset correlations change over time"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -370,7 +370,7 @@ plt.title('Asset Return Correlations')
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Rolling correlations between key asset pairs over time, highlighting regime-dependent relationship changes.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-rolling-correlation.png">Open full-size</a>
+        <a href="../outputs/figures/python_rolling_correlations.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
@@ -378,7 +378,7 @@ plt.title('Asset Return Correlations')
   <!-- TODO: Replace placeholder image with actual scatter plots -->
   <figure style="margin: 0 0 18px 0;">
     <img
-      src="images/python-pair-scatter-plots.png"
+      src="../outputs/figures/python_diversification_benefit.png"
       alt="Scatter plots of daily returns for key asset pairs"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
@@ -386,7 +386,7 @@ plt.title('Asset Return Correlations')
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
       Asset pair scatter plots showing co-movement patterns and diversification relationships.
       <span style="display:block; margin-top:4px;">
-        <a href="images/python-pair-scatter-plots.png">Open full-size</a>
+        <a href="../outputs/figures/python_diversification_benefit.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
