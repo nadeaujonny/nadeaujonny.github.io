@@ -1,24 +1,28 @@
-# R session files
+# R session / IDE
 .Rhistory
 .RData
 .Ruserdata
+.Rproj.user/
 
-# Reports - keep .Rmd files, ignore rendered HTML
-/reports/*.html
-
-# Raw data files - ignore all raw data
-/data/raw/*
-
-# OS files
+# OS noise
 .DS_Store
 Thumbs.db
+
+# Raw data should not be tracked (keep .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+
+# Optional: processed data can be tracked; if you prefer to ignore it, uncomment this:
+# data/processed/*
+# !data/processed/.gitkeep
+
+# Rendered outputs (keep source)
+reports/*.html
+reports/*.pdf
+reports/*.docx
 
 # Temporary files
 *.log
 *.tmp
 *.bak
 *~
-
-# R specific
-*.Rproj.user/
-.Rproj.user/
