@@ -1,0 +1,256 @@
+---
+title: "A/B Test Analysis Report: SaaS Onboarding Experiment"
+author: "Data Science Team"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: cosmo
+    code_folding: hide
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  fig.path = "../figures/",
+  dpi = 300
+)
+
+# Set seed for reproducibility
+set.seed(42)
+
+# Load required packages
+library(tidyverse)
+library(infer)
+library(broom)
+library(patchwork)
+library(gt)
+library(lmtest)
+library(sandwich)
+library(pwr)
+library(ggeffects)
+```
+
+# Executive Summary
+
+**Purpose:** [Brief summary of the experiment's goal]
+
+**Results:** [High-level findings - treatment effect, statistical significance, business impact]
+
+**Recommendation:** [Ship/No-ship decision with rationale]
+
+---
+
+# Business Context
+
+## Experiment Overview
+
+- **Hypothesis:** [What we're testing and why]
+- **Treatment Description:** [What changed for treatment group]
+- **Success Criteria:** [Primary metric and decision threshold]
+- **Duration:** [Experiment timeline]
+- **Sample Size:** [N per group]
+
+## Experiment Design
+
+[Details on randomization unit, stratification (if any), and allocation ratio]
+
+---
+
+# Data Generation & Dictionary
+
+```{r load-data}
+# Load the simulated experimental data
+# data <- read_csv("../data/raw/ab_test_data.csv")
+```
+
+## Data Dictionary
+
+| Variable | Type | Description |
+|----------|------|-------------|
+| user_id | character | Unique user identifier |
+| variant | factor | Treatment assignment (control/treatment) |
+| converted | binary | Whether user completed onboarding (primary metric) |
+| revenue | numeric | Revenue generated (secondary metric) |
+| ... | ... | ... |
+
+---
+
+# Data QA & Randomization Checks
+
+## Sample Ratio Mismatch (SRM)
+
+```{r srm-check}
+# Check for sample ratio mismatch
+# Expected vs observed allocation ratios
+```
+
+**SRM Test Result:** [Pass/Fail]
+
+## Covariate Balance
+
+```{r balance-check}
+# Test balance of pre-treatment covariates across groups
+```
+
+**Balance Assessment:** [Summary of findings]
+
+---
+
+# Primary Metric: Conversion
+
+## Descriptive Statistics
+
+```{r primary-descriptives}
+# Summary statistics by variant
+```
+
+## Hypothesis Test
+
+```{r primary-test}
+# Two-proportion z-test or equivalent
+# H0: p_treatment = p_control
+# Ha: p_treatment != p_control
+```
+
+**Test Results:**
+
+- Treatment conversion rate: [X%]
+- Control conversion rate: [Y%]
+- Absolute lift: [Z percentage points]
+- Relative lift: [W%]
+- p-value: [p]
+- 95% CI: [[lower, upper]]
+
+## Visualization
+
+```{r primary-viz}
+# Plot conversion rates with confidence intervals
+```
+
+---
+
+# Secondary Metric: Revenue
+
+```{r secondary-revenue}
+# Analysis of revenue metric
+# Mean comparison, t-test or Mann-Whitney
+```
+
+---
+
+# Guardrails
+
+```{r guardrails}
+# Check guardrail metrics to ensure no negative side effects
+# Examples: engagement time, feature usage, support tickets
+```
+
+---
+
+# Segmentation & Heterogeneous Effects
+
+```{r subgroup-analysis}
+# Analyze treatment effects within key segments
+# Examples: by device type, user tenure, acquisition channel
+```
+
+**Heterogeneity Findings:** [Summary of whether effects vary by subgroup]
+
+---
+
+# Regression-Adjusted Estimates
+
+## CUPED / ANCOVA
+
+```{r regression-adjusted}
+# Use pre-treatment covariates to reduce variance
+# ANCOVA or CUPED methodology
+```
+
+**Variance Reduction:** [X% reduction in standard error]
+
+**Adjusted Treatment Effect:** [Effect estimate with tighter CI]
+
+---
+
+# Power & MDE
+
+## Post-hoc Power Analysis
+
+```{r power-analysis}
+# Calculate achieved power given observed effect and sample size
+```
+
+**Achieved Power:** [X%]
+
+## Minimum Detectable Effect
+
+```{r mde-calculation}
+# Calculate the minimum effect we could have detected
+# with 80% power at alpha = 0.05
+```
+
+**MDE:** [X percentage points]
+
+---
+
+# Sensitivity Checks
+
+## Non-parametric Tests
+
+```{r sensitivity-nonparametric}
+# Bootstrap confidence intervals
+# Permutation tests
+```
+
+## Robustness to Outliers
+
+```{r sensitivity-outliers}
+# Analyze with outlier removal or winsorization
+```
+
+---
+
+# Final Decision Memo
+
+## Summary of Evidence
+
+1. **Statistical Significance:** [Yes/No, p-value]
+2. **Effect Size:** [Absolute and relative lift]
+3. **Practical Significance:** [Business impact assessment]
+4. **Guardrails:** [All passed/Any concerns]
+5. **Robustness:** [Consistent across sensitivity checks]
+
+## Recommendation
+
+**Decision:** [Ship / Don't Ship / Iterate]
+
+**Rationale:** [Brief explanation of decision based on evidence]
+
+**Next Steps:** [Implementation plan or further testing needed]
+
+---
+
+# Appendix
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
+```
+
+## Additional Diagnostics
+
+[Any additional plots, tables, or diagnostics]
+
+---
+
+**Report generated on:** `r Sys.time()`
