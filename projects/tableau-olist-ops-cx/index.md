@@ -73,9 +73,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Data Modeling & Preparation</strong></summary>
 
@@ -134,9 +131,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 1 — Order Fulfillment Performance Metrics (Sep 2016 – Aug 2018)</strong></summary>
 
@@ -337,9 +331,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 2 — Revenue & Sales Performance (Sep 2016 – Aug 2018)</strong></summary>
 
@@ -525,9 +516,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 3 — Customer Experience & Review Quality (Sep 2016 – Aug 2018)</strong></summary>
 
@@ -761,9 +749,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 4 — Marketplace Ecosystem: Products & Sellers (Sep 2016 – Aug 2018)</strong></summary>
 
@@ -989,9 +974,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Analysis 5 — Executive Summary Dashboard (Sep 2016 – Aug 2018)</strong></summary>
 
@@ -1137,9 +1119,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Conclusion</strong></summary>
 
@@ -1170,9 +1149,6 @@ breadcrumbs:
   </p>
 
 </details>
-
----
-
 <details>
   <summary><strong>Limitations</strong></summary>
 
@@ -1188,9 +1164,6 @@ breadcrumbs:
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Explore the Dashboard</strong></summary>
 
