@@ -26,3 +26,6 @@ reports/*.docx
 *.tmp
 *.bak
 *~
+**/.Rproj.user/
+**/.DS_Store
+**/.Rhistory
