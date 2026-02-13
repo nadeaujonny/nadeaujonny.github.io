@@ -378,7 +378,6 @@ print(f"Annualized vol (diversified): {vol_diversified:.2%}")</code></pre>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
   <h3>Business Question</h3>
   <p>
     What components drive SPY price movement over time, and how can trend, seasonality, and residual shocks be
@@ -447,7 +446,6 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")</code></pre>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
   <h3>Business Question</h3>
   <p>
     Can a classical ARIMA baseline produce directionally useful out-of-sample SPY forecasts, and how should forecast
