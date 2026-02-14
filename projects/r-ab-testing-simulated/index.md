@@ -109,17 +109,16 @@ title: A/B Testing & Experimentation Analysis (R)
 
   <h3>Key Code</h3>
 
-```r
-# Simulation parameters
-n_users <- 10000
-baseline_conversion <- 0.10
-treatment_lift <- 0.015  # +1.5 percentage points
+<pre><code class="language-r"># Simulation parameters
+n_users &lt;- 10000
+baseline_conversion &lt;- 0.10
+treatment_lift &lt;- 0.015  # +1.5 percentage points
 
-df <- tibble(
+df &lt;- tibble(
   user_id = 1:n_users,
   variant = sample(c("control", "treatment"), size = n_users, replace = TRUE),
   pre_sessions_7d = rpois(n_users, lambda = 3)
-) %>%
+) %&gt;%
   mutate(
     conversion_prob = case_when(
       variant == "control"   ~ baseline_conversion,
@@ -128,8 +127,7 @@ df <- tibble(
     converted = rbinom(n_users, 1, conversion_prob),
     time_to_complete = rnorm(n_users,
       mean = ifelse(variant == "treatment", 7.5, 8.0), sd = 3)
-  )
-```
+  )</code></pre>
 
   <h3>Key Points</h3>
   <ul>
@@ -159,19 +157,17 @@ df <- tibble(
 
   <h3>Key Code</h3>
 
-```r
-# SRM test (expected 50/50 split)
-counts <- df %>% count(variant)
-chisq <- chisq.test(x = counts$n, p = c(0.5, 0.5))
+<pre><code class="language-r"># SRM test (expected 50/50 split)
+counts &lt;- df %&gt;% count(variant)
+chisq &lt;- chisq.test(x = counts$n, p = c(0.5, 0.5))
 
 # Baseline covariate balance
-tt <- t.test(pre_sessions_7d ~ variant, data = df)
+tt &lt;- t.test(pre_sessions_7d ~ variant, data = df)
 
 # Fail loudly if SRM detected
-if (chisq$p.value < 0.01) {
+if (chisq$p.value &lt; 0.01) {
   stop("SRM detected — investigate randomization before proceeding.")
-}
-```
+}</code></pre>
 
   <h3>Results</h3>
 
@@ -242,21 +238,19 @@ if (chisq$p.value < 0.01) {
 
   <h3>Key Code</h3>
 
-```r
-# Two-proportion z-test
-pt <- prop.test(
+<pre><code class="language-r"># Two-proportion z-test
+pt &lt;- prop.test(
   x = c(x_control, x_treat),
   n = c(n_control, n_treat),
   correct = FALSE
 )
 
 # Effect size (Cohen's h)
-cohens_h <- 2 * asin(sqrt(p_treat)) - 2 * asin(sqrt(p_control))
+cohens_h &lt;- 2 * asin(sqrt(p_treat)) - 2 * asin(sqrt(p_control))
 
 # Absolute and relative lift
-abs_lift <- p_treat - p_control
-rel_lift <- (p_treat / p_control) - 1
-```
+abs_lift &lt;- p_treat - p_control
+rel_lift &lt;- (p_treat / p_control) - 1</code></pre>
 
   <h3>Results</h3>
 
@@ -316,20 +310,18 @@ rel_lift <- (p_treat / p_control) - 1
 
   <h3>Key Code</h3>
 
-```r
-# Parametric + nonparametric tests
-tt <- t.test(time_to_complete ~ variant, data = df)
-wt <- wilcox.test(time_to_complete ~ variant, data = df, exact = FALSE)
+<pre><code class="language-r"># Parametric + nonparametric tests
+tt &lt;- t.test(time_to_complete ~ variant, data = df)
+wt &lt;- wilcox.test(time_to_complete ~ variant, data = df, exact = FALSE)
 
 # Bootstrap CI for mean difference
-boot_diffs <- replicate(2000, {
-  boot_df <- df %>% group_by(variant) %>%
+boot_diffs &lt;- replicate(2000, {
+  boot_df &lt;- df %&gt;% group_by(variant) %&gt;%
     slice_sample(prop = 1, replace = TRUE)
   mean(boot_df$time_to_complete[boot_df$variant == "treatment"]) -
     mean(boot_df$time_to_complete[boot_df$variant == "control"])
 })
-boot_ci <- quantile(boot_diffs, probs = c(0.025, 0.975))
-```
+boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
 
   <h3>Visualization</h3>
   <figure>
@@ -398,22 +390,20 @@ boot_ci <- quantile(boot_diffs, probs = c(0.025, 0.975))
 
   <h3>Key Code</h3>
 
-```r
-# Bootstrap CI for absolute lift
-boot_diffs <- replicate(4000, {
-  p_c <- mean(sample(control_rows$converted_num, replace = TRUE))
-  p_t <- mean(sample(treat_rows$converted_num, replace = TRUE))
+<pre><code class="language-r"># Bootstrap CI for absolute lift
+boot_diffs &lt;- replicate(4000, {
+  p_c &lt;- mean(sample(control_rows$converted_num, replace = TRUE))
+  p_t &lt;- mean(sample(treat_rows$converted_num, replace = TRUE))
   p_t - p_c
 })
-boot_ci <- quantile(boot_diffs, probs = c(0.025, 0.975))
+boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))
 
 # Permutation test
-perm_diffs <- replicate(4000, {
-  df_perm <- df %>% mutate(variant_perm = sample(variant))
+perm_diffs &lt;- replicate(4000, {
+  df_perm &lt;- df %&gt;% mutate(variant_perm = sample(variant))
   # ... compute diff under shuffled labels
 })
-perm_p_value <- mean(abs(perm_diffs) >= abs(obs_diff))
-```
+perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
 
   <h3>Visualization</h3>
   <figure>
@@ -492,23 +482,21 @@ perm_p_value <- mean(abs(perm_diffs) >= abs(obs_diff))
 
   <h3>Key Code</h3>
 
-```r
-# Logistic regression for conversion
-m_conv <- glm(converted ~ variant + log1p_pre_sessions_7d,
+<pre><code class="language-r"># Logistic regression for conversion
+m_conv &lt;- glm(converted ~ variant + log1p_pre_sessions_7d,
               data = df, family = binomial())
-vc_conv <- sandwich::vcovHC(m_conv, type = "HC3")
+vc_conv &lt;- sandwich::vcovHC(m_conv, type = "HC3")
 
 # Adjusted risk difference via marginal means
-p_control <- predict(m_conv, newdata = df %>% mutate(variant = "control"),
+p_control &lt;- predict(m_conv, newdata = df %&gt;% mutate(variant = "control"),
                      type = "response")
-p_treat   <- predict(m_conv, newdata = df %>% mutate(variant = "treatment"),
+p_treat   &lt;- predict(m_conv, newdata = df %&gt;% mutate(variant = "treatment"),
                      type = "response")
-adj_rd <- mean(p_treat - p_control)  # Adjusted lift in probability
+adj_rd &lt;- mean(p_treat - p_control)  # Adjusted lift in probability
 
 # OLS for guardrail metric
-m_time <- lm(time_to_complete ~ variant + log1p_pre_sessions_7d, data = df)
-vc_time <- sandwich::vcovHC(m_time, type = "HC3")
-```
+m_time &lt;- lm(time_to_complete ~ variant + log1p_pre_sessions_7d, data = df)
+vc_time &lt;- sandwich::vcovHC(m_time, type = "HC3")</code></pre>
 
   <h3>Results</h3>
 
@@ -583,9 +571,8 @@ vc_time <- sandwich::vcovHC(m_time, type = "HC3")
 
   <h3>Key Code</h3>
 
-```r
-# MDE given current sample size
-mde_abs <- mde_solver(p0 = baseline_rate, n = n_per_group,
+<pre><code class="language-r"># MDE given current sample size
+mde_abs &lt;- mde_solver(p0 = baseline_rate, n = n_per_group,
                        alpha = 0.05, power_target = 0.80)
 
 # Required sample sizes for target lifts
@@ -593,14 +580,13 @@ power.prop.test(power = 0.80, p1 = baseline_rate,
                 p2 = baseline_rate + target_lift, sig.level = 0.05)
 
 # Power curve across effect sizes
-power_curve <- tibble(
+power_curve &lt;- tibble(
   lift_pp = seq(0, 3, by = 0.1),
   power = sapply(lift_pp / 100, function(d) {
     power.prop.test(n = n_per_group, p1 = p0,
                     p2 = p0 + d, sig.level = 0.05)$power
   })
-)
-```
+)</code></pre>
 
   <h3>Visualization</h3>
   <figure>
