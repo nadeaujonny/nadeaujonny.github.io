@@ -135,6 +135,26 @@ power_curve <- tibble(
   })
 )
 
+library(ggplot2)
+
+ggplot(power_curve, aes(x = lift_pp, y = power)) +
+  geom_line(linewidth = 1.2, color = "steelblue") +
+  geom_hline(yintercept = 0.80, linetype = "dashed", color = "red") +
+  annotate("text", x = 2.5, y = 0.82, label = "80% Power Target", color = "red") +
+  geom_vline(xintercept = mde_pp, linetype = "dotted", color = "darkgreen") +
+  annotate("text", x = mde_pp + 0.15, y = 0.5,
+           label = paste0("MDE: ", round(mde_pp, 2), "pp"),
+           color = "darkgreen", hjust = 0) +
+  labs(
+    title = "Statistical Power by Effect Size",
+    subtitle = paste0("Baseline: ", round(p0 * 100, 1), "% | n per group: ", n_per_group),
+    x = "Absolute Lift (percentage points)",
+    y = "Power"
+  ) +
+  theme_minimal(base_size = 12)
+
+ggsave("figures/power_curve.png", width = 9, height = 5, dpi = 200)
+
 # ------------------------------------------------------------
 # Save outputs
 # ------------------------------------------------------------
