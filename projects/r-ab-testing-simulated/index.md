@@ -569,7 +569,7 @@ power_curve &lt;- tibble(
 
   <h3>Visualization</h3>
   <figure>
-    <img src="images/power_curve.png" alt="Power curve showing statistical power vs effect size" style="max-width:100%;">
+    <img src="figures/power_curve.png" alt="Power curve showing statistical power vs effect size" style="max-width:100%;">
     <figcaption>Figure: Statistical power by effect size. Red dashed line = 80% power target. Green dotted line = MDE at current sample size.</figcaption>
   </figure>
 
