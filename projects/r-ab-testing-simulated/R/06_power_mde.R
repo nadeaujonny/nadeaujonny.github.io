@@ -142,33 +142,8 @@ write_csv(mde_summary, file.path(tables_dir, paste0("power_mde_summary_", stamp,
 write_csv(sample_size_table, file.path(tables_dir, paste0("power_sample_size_requirements_", stamp, ".csv")))
 write_csv(power_curve, file.path(tables_dir, paste0("power_curve_", stamp, ".csv")))
 
-# ------------------------------------------------------------
-# 4) Power curve visualization
-# ------------------------------------------------------------
-library(ggplot2)
-
-ggplot(power_curve, aes(x = lift_pp, y = power)) +
-  geom_line(linewidth = 1.2, color = "steelblue") +
-  geom_hline(yintercept = 0.80, linetype = "dashed", color = "red") +
-  annotate("text", x = 2.5, y = 0.82, label = "80% Power Target", color = "red") +
-  geom_vline(xintercept = mde_pp, linetype = "dotted", color = "darkgreen") +
-  annotate("text", x = mde_pp + 0.15, y = 0.5,
-           label = paste0("MDE: ", round(mde_pp, 2), "pp"),
-           color = "darkgreen", hjust = 0) +
-  labs(
-    title = "Statistical Power by Effect Size",
-    subtitle = paste0("Baseline: ", round(p0 * 100, 1), "% | n per group: ", n_per_group),
-    x = "Absolute Lift (percentage points)",
-    y = "Power"
-  ) +
-  theme_minimal(base_size = 12)
-
-ggsave(file.path(figures_dir, "power_curve.png"), width = 9, height = 5, dpi = 200)
-
-message("Script 06 complete.")
+message("✅ Script 06 complete.")
 message("Saved tables to /tables/:")
 message(" - power_mde_summary_*")
 message(" - power_sample_size_requirements_*")
 message(" - power_curve_*")
-message("Saved figures to /figures/:")
-message(" - power_curve.png")
