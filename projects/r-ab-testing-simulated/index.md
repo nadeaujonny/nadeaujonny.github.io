@@ -90,9 +90,6 @@ title: A/B Testing & Experimentation Analysis (R)
   </table>
 
 </details>
-
----
-
 <details>
   <summary><strong>Experiment Design &amp; Data Generation</strong></summary>
 
@@ -138,9 +135,6 @@ df &lt;- tibble(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Quality Control &amp; SRM Detection</strong></summary>
 
@@ -219,9 +213,6 @@ if (chisq$p.value &lt; 0.01) {
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Primary Metric — Conversion Rate</strong></summary>
 
@@ -291,9 +282,6 @@ rel_lift &lt;- (p_treat / p_control) - 1</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Secondary Metric — Time-to-Complete Guardrail</strong></summary>
 
@@ -368,9 +356,6 @@ boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Bootstrap &amp; Permutation Inference</strong></summary>
 
@@ -460,9 +445,6 @@ perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Regression-Adjusted Treatment Effects</strong></summary>
 
@@ -552,9 +534,6 @@ vc_time &lt;- sandwich::vcovHC(m_time, type = "HC3")</code></pre>
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>Power Analysis &amp; MDE</strong></summary>
 
@@ -635,9 +614,6 @@ power_curve &lt;- tibble(
   </ul>
 
 </details>
-
----
-
 <details>
   <summary><strong>R Skills &amp; Techniques Demonstrated</strong></summary>
 
@@ -689,9 +665,6 @@ power_curve &lt;- tibble(
   </p>
 
 </details>
-
----
-
 <details>
   <summary><strong>Conclusion &amp; Project Summary</strong></summary>
 
