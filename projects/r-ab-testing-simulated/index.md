@@ -1,1230 +1,694 @@
 ---
 layout: default
-title: "R Project: A/B Testing & Experimentation Analysis"
-description: "End-to-end A/B testing and experimentation analysis of a simulated SaaS onboarding experiment using R — hypothesis testing, bootstrap inference, permutation tests, regression adjustment, and power analysis."
-breadcrumbs:
-  - title: Projects
-    url: /projects/
-  - title: "R A/B Testing & Experimentation"
+title: A/B Testing & Experimentation Analysis (R)
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>
 
-# R Project: A/B Testing &amp; Experimentation Analysis
+# A/B Testing & Experimentation Analysis (R)
 
-> Simulated SaaS onboarding experiment evaluating whether a redesigned onboarding flow improves trial-to-paid conversion while maintaining operational guardrails &mdash; full experimentation workflow from design through business recommendation.
-
-**Tools:** R &middot; tidyverse &middot; infer &middot; broom &middot; sandwich &middot; ggplot2 &middot; patchwork &middot; RMarkdown
-
-<p>
-  <a href="https://github.com/nadeaujonny/nadeaujonny.github.io/tree/main/projects/r-ab-testing-simulated" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-</p>
+> A complete A/B testing pipeline in R — from data generation and randomization QC through hypothesis testing, bootstrap/permutation inference, regression adjustment, and power analysis — built on simulated SaaS onboarding experiment data with 10,000 users.
 
 ---
 
-<details class="dropdown-section">
-  <summary><strong>Executive Summary</strong></summary>
+<details>
+  <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Experiment Goal</h3>
+  <h3>Overview</h3>
   <p>
-    Evaluate whether a new onboarding flow increases trial-to-paid conversion without harming the guardrail metric
-    (onboarding time-to-complete).
+    This project builds a 7-script experimentation pipeline in R simulating a SaaS A/B test comparing a new onboarding flow (treatment) against the current experience (control) across 10,000 users. The pipeline covers every stage of a rigorous experiment analysis — from data generation through power assessment.
+  </p>
+  <p>
+    The analysis follows industry methodology used at companies like Microsoft, Booking.com, and Netflix: verify randomization integrity (SRM) first, then analyze the primary metric, check guardrail metrics, validate with distribution-free inference (bootstrap/permutation), refine estimates with covariate adjustment, and assess statistical power for future experiment design.
   </p>
 
-  <h3>Key Metrics</h3>
+  <h3>Business Context</h3>
+  <p>
+    A/B testing is the gold standard for measuring the causal impact of product changes. This project simulates a realistic scenario: a SaaS company redesigns its onboarding flow, expecting to lift conversion rates and reduce time-to-complete. The pipeline demonstrates how to move from raw experiment data to a defensible ship/no-ship decision with quantified uncertainty.
+  </p>
+
+  <h3>Objectives</h3>
   <ul>
-    <li><strong>Primary Metric:</strong> 30-day conversion rate (binary converted flag)</li>
-    <li><strong>Guardrail:</strong> Onboarding time-to-complete (minutes) &mdash; lower is better</li>
+    <li>Generate a realistic simulated dataset with known ground-truth effects for pipeline validation</li>
+    <li>Verify randomization integrity via Sample Ratio Mismatch (SRM) and covariate balance tests</li>
+    <li>Measure the primary conversion metric with confidence intervals and effect sizes</li>
+    <li>Check guardrail metrics (time-to-complete) to ensure no unintended regressions</li>
+    <li>Validate results with bootstrap CIs and permutation tests (distribution-free inference)</li>
+    <li>Refine treatment effect estimates using regression adjustment with robust standard errors</li>
+    <li>Calculate minimum detectable effect (MDE) and required sample sizes for future experiments</li>
   </ul>
 
-  <h3>High-Level Outcome</h3>
-  <p>
-    Treatment increased conversion by <strong>+1.33 percentage points</strong> (10.2% &rarr; 11.5%, relative lift +13.1%)
-    with a p-value of 0.032. All three inference methods (Z-test, bootstrap, permutation) converge on a statistically
-    significant result. The guardrail metric <em>improved</em> &mdash; treatment users completed onboarding 0.34 minutes
-    faster on average (p &lt; 0.001).
-  </p>
-
-  <h3>Final Recommendation</h3>
-  <p>
-    <strong>Decision: Ship with staged rollout and monitoring.</strong> The conversion lift is statistically significant
-    and directionally consistent across all methods, while the guardrail moved favorably. However, the experiment was
-    slightly underpowered (MDE at 80% power = 1.77 pp vs. observed 1.33 pp), so a staged ramp with ongoing monitoring
-    is prudent before full deployment.
-  </p>
-
-  <h3>Why R?</h3>
-  <p>
-    R provides first-class support for statistical inference, resampling methods, power analysis, and fully
-    reproducible reporting via RMarkdown &mdash; making it the ideal tool for rigorous experimentation workflows.
-  </p>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Business Context &amp; Experiment Framing</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Problem</h3>
-  <p>
-    New users drop off during onboarding; conversion to paid subscriptions is below target. The product team
-    hypothesizes that a redesigned onboarding flow can reduce friction and increase activation.
-  </p>
-
-  <h3>Proposed Change</h3>
-  <p>
-    Implement a new onboarding flow (treatment) designed to reduce time-to-complete and improve the rate at which
-    trial users convert to paid subscriptions.
-  </p>
-
-  <h3>Business Value</h3>
-  <p>
-    Even small conversion improvements compound at scale. The guardrail metric (time-to-complete) ensures we
-    do not trade conversion gains for a degraded onboarding experience.
-  </p>
-
-  <h3>Experiment Design</h3>
-  <ul>
-    <li><strong>Randomization Unit:</strong> Individual users</li>
-    <li><strong>Split:</strong> 50/50 control vs. treatment</li>
-    <li><strong>Observation Window:</strong> 30 days post-assignment</li>
-    <li><strong>Sample Size:</strong> 10,000 users (5,017 control / 4,983 treatment)</li>
-    <li><strong>Primary KPI:</strong> Conversion rate (binary)</li>
-    <li><strong>Guardrail:</strong> Onboarding time-to-complete (minutes)</li>
-  </ul>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Technical Stack &amp; Reproducibility</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Core Tools</h3>
-  <ul>
-    <li><strong>Language:</strong> R 4.x</li>
-    <li><strong>IDE:</strong> RStudio / VS Code</li>
-    <li><strong>Version Control:</strong> Git / GitHub</li>
-    <li><strong>Reporting:</strong> RMarkdown (HTML output)</li>
-  </ul>
-
-  <h3>Key R Packages</h3>
-  <ul>
-    <li><code>tidyverse</code> &mdash; Data wrangling and visualization</li>
-    <li><code>infer</code> &mdash; Tidy hypothesis testing workflows</li>
-    <li><code>broom</code> &mdash; Model output tidying</li>
-    <li><code>ggplot2</code>, <code>patchwork</code> &mdash; Advanced visualizations</li>
-    <li><code>sandwich</code> &mdash; Robust (HC3) standard errors</li>
-    <li><code>janitor</code> &mdash; Data cleaning utilities</li>
-    <li><code>gt</code> &mdash; Publication-quality tables</li>
-    <li><code>effectsize</code> &mdash; Standardized effect size measures</li>
-  </ul>
-
-  <h3>Repository Structure</h3>
-  <pre><code>r-ab-testing-simulated/
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── ab_test_data.csv
-├── R/
-│   ├── 00_generate_data.R
-│   ├── 01_qc_srm.R
-│   ├── 02_primary_metric.R
-│   ├── 03_secondary_guardrails.R
-│   ├── 04_bootstrap_permutation.R
-│   ├── 05_regression_adjusted.R
-│   └── 06_power_mde.R
-├── figures/
-├── tables/
-├── reports/
-├── requirements.R
-└── README.md</code></pre>
-
-  <h3>Reproducibility</h3>
-  <p>
-    All analysis is fully reproducible with <code>set.seed(123)</code> and documented dependencies. Scripts run
-    sequentially (00&ndash;06) from data generation through power analysis. Outputs are saved to <code>tables/</code>
-    and <code>figures/</code> directories with timestamped filenames.
-  </p>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Dataset &amp; Simulation Design</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Dataset Type</h3>
-  <p>
-    Simulated dataset designed to mirror real-world product experimentation telemetry with realistic statistical
-    properties. Generated via <code>00_generate_data.R</code> with controlled parameters.
-  </p>
-
-  <h3>Sample Size</h3>
-  <ul>
-    <li><strong>Total Users:</strong> 10,000</li>
-    <li><strong>Control Group:</strong> 5,017</li>
-    <li><strong>Treatment Group:</strong> 4,983</li>
-  </ul>
-
-  <h3>Column Dictionary</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
+  <h3>Dataset Overview</h3>
+  <table>
     <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Column</th>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Type</th>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Description</th>
-      </tr>
+      <tr><th>Attribute</th><th>Value</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><code>user_id</code></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Integer</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Unique user identifier (1&ndash;10,000)</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><code>variant</code></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Character</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Experiment assignment: &ldquo;control&rdquo; or &ldquo;treatment&rdquo;</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><code>pre_sessions_7d</code></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Integer</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Count of sessions in 7 days pre-experiment (Poisson, &lambda; = 3)</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><code>converted</code></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Binary (0/1)</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Trial-to-paid conversion within 30 days (primary KPI)</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><code>time_to_complete</code></td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Numeric</td>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Onboarding completion time in minutes (guardrail metric)</td>
-      </tr>
+      <tr><td>Type</td><td>Simulated (known ground truth)</td></tr>
+      <tr><td>Sample Size</td><td>10,000 users</td></tr>
+      <tr><td>Variants</td><td>Control / Treatment (50/50 split)</td></tr>
+      <tr><td>Primary Metric</td><td>Conversion rate (binary)</td></tr>
+      <tr><td>Secondary Metric</td><td>Time-to-complete (continuous, minutes)</td></tr>
+      <tr><td>Covariate</td><td>pre_sessions_7d (Poisson, &lambda;=3)</td></tr>
+      <tr><td>Ground Truth</td><td>+1.5pp conversion lift, &minus;0.5 min time reduction</td></tr>
     </tbody>
   </table>
 
-  <h3>Data Generating Process (DGP)</h3>
-  <p>The simulation incorporates:</p>
-  <ul>
-    <li><strong>Baseline conversion rate:</strong> 10% for control group</li>
-    <li><strong>Treatment effect:</strong> +1.5 percentage point lift in conversion probability</li>
-    <li><strong>Pre-experiment engagement:</strong> Poisson-distributed session counts (&lambda; = 3)</li>
-    <li><strong>Onboarding time:</strong> Normal distribution (control mean = 8 min, treatment mean = 7.5 min, SD = 3 min), floored at 0.5 min</li>
-    <li><strong>Reproducible seed:</strong> <code>set.seed(123)</code></li>
-  </ul>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Data Quality &amp; Validation</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>QA Checklist</h3>
-  <ul>
-    <li>&#x2705; No missing values in any column</li>
-    <li>&#x2705; No duplicate <code>user_id</code> values</li>
-    <li>&#x2705; <code>converted</code> contains only 0/1 values</li>
-    <li>&#x2705; <code>time_to_complete</code> contains no negative values (minimum &ge; 0.5)</li>
-    <li>&#x2705; All required columns present: <code>user_id</code>, <code>variant</code>, <code>pre_sessions_7d</code>, <code>converted</code>, <code>time_to_complete</code></li>
-    <li>&#x2705; Exactly two variant levels: &ldquo;control&rdquo; and &ldquo;treatment&rdquo;</li>
-  </ul>
-
-  <h3>Summary Statistics</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
+  <h3>Tools &amp; Packages</h3>
+  <table>
     <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Metric</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Control</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Treatment</th>
-      </tr>
+      <tr><th>Package</th><th>Purpose</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">N</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">5,017</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">4,983</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Conversion Rate</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">10.2%</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.5%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Mean Pre-Sessions (7d)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3.01</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.96</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Mean Time-to-Complete (min)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.87</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.53</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">SD Time-to-Complete</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3.03</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.97</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">P90 Time-to-Complete (min)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.80</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.40</td>
-      </tr>
+      <tr><td>tidyverse / dplyr</td><td>Data manipulation, piping, summarization</td></tr>
+      <tr><td>ggplot2</td><td>Publication-quality figures</td></tr>
+      <tr><td>infer</td><td>Tidy permutation and bootstrap framework</td></tr>
+      <tr><td>broom</td><td>Tidy model outputs (tidy, glance, augment)</td></tr>
+      <tr><td>sandwich</td><td>HC3 robust standard errors</td></tr>
+      <tr><td>scales</td><td>Formatting (percent, comma)</td></tr>
+      <tr><td>janitor</td><td>clean_names, data cleaning</td></tr>
+      <tr><td>readr</td><td>CSV I/O</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Metrics Defined</h3>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Definition</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conversion Rate</td><td>Proportion of users who completed the target action (binary: 0/1)</td></tr>
+      <tr><td>Time-to-Complete</td><td>Minutes from onboarding start to completion (continuous)</td></tr>
+      <tr><td>Absolute Lift</td><td>Treatment rate &minus; Control rate (percentage points)</td></tr>
+      <tr><td>Relative Lift</td><td>(Treatment rate / Control rate) &minus; 1 (percent)</td></tr>
+      <tr><td>Cohen's h</td><td>Standardized effect size for comparing two proportions</td></tr>
+      <tr><td>MDE</td><td>Minimum detectable effect at 80% power and &alpha;=0.05</td></tr>
     </tbody>
   </table>
 
 </details>
-<details class="dropdown-section">
-  <summary><strong>Randomization Integrity &amp; SRM Checks</strong></summary>
+<details>
+  <summary><strong>Experiment Design &amp; Data Generation</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Sample Ratio Mismatch (SRM) Test</h3>
+  <h3>Approach</h3>
   <p>
-    Before examining treatment effects, the pipeline validates that the randomization split is trustworthy.
-    A chi-square goodness-of-fit test compares the observed group sizes against the expected 50/50 allocation.
+    Using simulated data with a known ground truth is the most rigorous way to validate an analysis pipeline. If the analysis recovers the planted 1.5pp conversion lift and 0.5-minute time reduction, the methodology is confirmed to work correctly. This is standard practice in experimentation platform development — teams at Microsoft and Netflix use simulation to verify their analysis code before deploying it on real experiments.
+  </p>
+  <p>
+    The simulation generates 10,000 users with 50/50 random assignment to control or treatment. Control baseline conversion is 10%, treatment adds a 1.5 percentage-point lift (11.5% true rate). Time-to-complete is normally distributed — control centered at 8.0 minutes, treatment at 7.5 minutes (0.5 min faster), both with SD=3. A pre-experiment covariate (<code>pre_sessions_7d</code>, Poisson &lambda;=3) is included to enable regression adjustment (CUPED) in later scripts.
   </p>
 
-  <h4>Expected vs. Observed Split</h4>
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Group</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Expected</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Observed</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Difference</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Control</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">50.00%</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">50.17%</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+0.17 pp</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Treatment</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">50.00%</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">49.83%</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.17 pp</td>
-      </tr>
-    </tbody>
-  </table>
+  <h3>Key Code</h3>
 
-  <h4>SRM Test Results</h4>
+<pre><code class="language-r"># Simulation parameters
+n_users &lt;- 10000
+baseline_conversion &lt;- 0.10
+treatment_lift &lt;- 0.015  # +1.5 percentage points
+
+df &lt;- tibble(
+  user_id = 1:n_users,
+  variant = sample(c("control", "treatment"), size = n_users, replace = TRUE),
+  pre_sessions_7d = rpois(n_users, lambda = 3)
+) %&gt;%
+  mutate(
+    conversion_prob = case_when(
+      variant == "control"   ~ baseline_conversion,
+      variant == "treatment" ~ baseline_conversion + treatment_lift
+    ),
+    converted = rbinom(n_users, 1, conversion_prob),
+    time_to_complete = rnorm(n_users,
+      mean = ifelse(variant == "treatment", 7.5, 8.0), sd = 3)
+  )</code></pre>
+
+  <h3>Key Points</h3>
   <ul>
-    <li><strong>Chi-Square Statistic:</strong> 0.116</li>
-    <li><strong>P-Value:</strong> 0.734</li>
-    <li><strong>Conclusion:</strong> &#x2705; <strong>PASS</strong> &mdash; No evidence of sample ratio mismatch. Randomization is trustworthy.</li>
-  </ul>
-
-  <h3>Covariate Balance Check</h3>
-  <p>
-    The only pre-experiment covariate (<code>pre_sessions_7d</code>) is compared between groups using a Welch
-    two-sample t-test to confirm that randomization produced balanced groups.
-  </p>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Metric</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Control</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Treatment</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Difference</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Mean Pre-Sessions</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3.01</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.96</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.05</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">SD Pre-Sessions</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.72</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.71</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.01</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Median Pre-Sessions</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <ul>
-    <li><strong>T-test P-Value:</strong> 0.188</li>
-    <li><strong>95% CI for difference:</strong> [&minus;0.02, 0.11]</li>
-    <li><strong>Conclusion:</strong> &#x2705; Baseline covariate is well-balanced between groups, confirming proper randomization.</li>
+    <li>Reproducible via <code>set.seed(123)</code> — every run produces identical data</li>
+    <li>Ground truth is known: +1.5pp conversion lift, &minus;0.5 min time-to-complete</li>
+    <li>Pre-experiment covariate (<code>pre_sessions_7d</code>) included for regression adjustment</li>
+    <li>Clean CSV output (<code>data/ab_test_data.csv</code>) feeds all downstream scripts</li>
   </ul>
 
 </details>
-<details class="dropdown-section">
-  <summary><strong>Analysis 1 &mdash; Primary Metric: Conversion Rate</strong></summary>
+<details>
+  <summary><strong>Quality Control &amp; SRM Detection</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
+  <h3>Approach</h3>
   <p>
-    Did the new onboarding flow increase trial-to-paid conversion, and is the lift statistically and practically significant?
+    Before analyzing any experiment results, the first step is verifying randomization integrity. Sample Ratio Mismatch (SRM) is the single most critical quality check — if the observed 50/50 split deviates significantly from expectation, something is wrong with assignment, logging, or data processing. SRM detection is standard practice at Microsoft, Booking.com, and other companies running experiments at scale.
+  </p>
+  <p>
+    The pipeline applies a chi-square goodness-of-fit test against the expected 50/50 proportions and a Welch two-sample t-test to verify that the pre-experiment covariate (<code>pre_sessions_7d</code>) is balanced across variants. If SRM is detected (p &lt; 0.01), the pipeline halts — analyzing results from a compromised randomization is worse than analyzing no results at all.
   </p>
 
-  <h3>Descriptive Results</h3>
+  <h3>Key Code</h3>
 
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
+<pre><code class="language-r"># SRM test (expected 50/50 split)
+counts &lt;- df %&gt;% count(variant)
+chisq &lt;- chisq.test(x = counts$n, p = c(0.5, 0.5))
+
+# Baseline covariate balance
+tt &lt;- t.test(pre_sessions_7d ~ variant, data = df)
+
+# Fail loudly if SRM detected
+if (chisq$p.value &lt; 0.01) {
+  stop("SRM detected — investigate randomization before proceeding.")
+}</code></pre>
+
+  <h3>Results</h3>
+
+  <h4>Group Counts</h4>
+  <table>
     <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Variant</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Users</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Conversions</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Conversion Rate</th>
-      </tr>
+      <tr><th>Variant</th><th>n</th><th>Expected Prop</th><th>Observed Prop</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Control</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">5,017</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">511</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">10.19%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Treatment</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">4,983</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">574</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.52%</td>
-      </tr>
+      <tr><td>Control</td><td>5,017</td><td>0.500</td><td>0.502</td></tr>
+      <tr><td>Treatment</td><td>4,983</td><td>0.500</td><td>0.498</td></tr>
     </tbody>
   </table>
 
-  <h4>Effect Size</h4>
+  <h4>SRM Test Result</h4>
+  <table>
+    <thead>
+      <tr><th>Chi-square Statistic</th><th>df</th><th>p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0.116</td><td>1</td><td>0.734</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Baseline Covariate Balance</h4>
+  <table>
+    <thead>
+      <tr><th>Variant</th><th>Mean pre_sessions_7d</th><th>SD</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Control</td><td>3.006</td><td>1.725</td></tr>
+      <tr><td>Treatment</td><td>2.961</td><td>1.713</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em; color:#555;">Welch t-test for covariate balance: p = 0.188</p>
+
+  <h3>Key Findings</h3>
   <ul>
-    <li><strong>Absolute Lift:</strong> +1.33 percentage points</li>
-    <li><strong>Relative Lift:</strong> +13.1%</li>
-    <li><strong>Cohen&rsquo;s h:</strong> 0.043 (small effect)</li>
+    <li>No SRM detected (chi-square p = 0.734, well above the 0.01 threshold) — randomization is intact</li>
+    <li>Baseline covariate <code>pre_sessions_7d</code> is balanced across variants (t-test p = 0.188) — no pre-existing group differences</li>
+    <li>Pipeline cleared to proceed with primary and guardrail metric analysis</li>
   </ul>
 
-  <h3>Statistical Inference &mdash; Multiple Methods</h3>
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Always run SRM before analyzing any experiment — it is the single most important integrity check</li>
+    <li>Automate SRM checks into experiment platforms to catch issues before analysts examine results</li>
+    <li>If SRM is detected, do NOT analyze results — investigate the root cause (logging bugs, bot traffic, assignment errors) first</li>
+  </ul>
 
+</details>
+<details>
+  <summary><strong>Primary Metric — Conversion Rate</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Approach</h3>
   <p>
-    Three independent inference methods are applied to validate the result. Convergence across parametric,
-    resampling, and permutation approaches strengthens confidence in the finding.
+    Conversion rate is the primary decision metric for this experiment. The analysis uses a two-proportion z-test (<code>prop.test</code>) comparing control vs. treatment conversion rates. This is the standard frequentist approach for binary outcome experiments.
+  </p>
+  <p>
+    The analysis reports absolute lift (percentage points), relative lift (%), a 95% confidence interval for the difference, and Cohen's h as a standardized effect size. The distinction between statistical significance and practical significance matters — the width of the confidence interval tells us about the range of plausible effects, which is more informative than a binary p-value threshold.
   </p>
 
-  <h4>Method 1: Two-Proportion Z-Test</h4>
+  <h3>Key Code</h3>
+
+<pre><code class="language-r"># Two-proportion z-test
+pt &lt;- prop.test(
+  x = c(x_control, x_treat),
+  n = c(n_control, n_treat),
+  correct = FALSE
+)
+
+# Effect size (Cohen's h)
+cohens_h &lt;- 2 * asin(sqrt(p_treat)) - 2 * asin(sqrt(p_control))
+
+# Absolute and relative lift
+abs_lift &lt;- p_treat - p_control
+rel_lift &lt;- (p_treat / p_control) - 1</code></pre>
+
+  <h3>Results</h3>
+
+  <h4>Conversion Summary</h4>
+  <table>
+    <thead>
+      <tr><th>Variant</th><th>n</th><th>Conversions</th><th>Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Control</td><td>5,017</td><td>511</td><td>10.19%</td></tr>
+      <tr><td>Treatment</td><td>4,983</td><td>574</td><td>11.52%</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Test Results</h4>
+  <table>
+    <thead>
+      <tr><th>Absolute Lift (pp)</th><th>Relative Lift (%)</th><th>95% CI Low</th><th>95% CI High</th><th>p-value</th><th>Cohen's h</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>+1.33</td><td>+13.1%</td><td>0.11pp</td><td>2.55pp</td><td>0.032</td><td>0.043</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Findings</h3>
   <ul>
-    <li><strong>Test Statistic (&chi;&sup2;):</strong> 4.598</li>
-    <li><strong>P-Value:</strong> 0.032</li>
-    <li><strong>95% Confidence Interval:</strong> [+0.11 pp, +2.55 pp]</li>
-    <li><strong>Interpretation:</strong> Significant at &alpha; = 0.05</li>
+    <li>Treatment conversion rate (11.52%) is 1.33pp higher than control (10.19%) — close to the planted 1.5pp effect</li>
+    <li>The 95% confidence interval [0.11pp, 2.55pp] excludes zero, confirming statistical significance at &alpha;=0.05</li>
+    <li>Relative lift of 13.1% over a 10% baseline — a meaningful improvement for SaaS onboarding</li>
+    <li>Cohen's h = 0.043 indicates a small but real effect size, consistent with typical product A/B tests</li>
   </ul>
 
-  <h4>Method 2: Bootstrap Confidence Interval</h4>
+  <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Bootstrap Iterations:</strong> 4,000</li>
-    <li><strong>95% Bootstrap CI:</strong> [+0.12 pp, +2.57 pp]</li>
-    <li><strong>Interpretation:</strong> Entire interval above zero &mdash; consistent with a positive treatment effect</li>
+    <li>A 1.33pp lift on a 10% baseline represents a ~13% relative improvement — meaningful for SaaS onboarding funnels where even small gains compound across thousands of users</li>
+    <li>Always report confidence intervals alongside p-values — the range of plausible effects (0.11pp to 2.55pp) is more useful than binary significance</li>
+    <li>Estimate business impact: at 100K annual signups, a 1.33pp lift translates to ~1,330 additional conversions per year</li>
   </ul>
 
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="figures/bootstrap_abs_lift.png"
-      alt="Bootstrap distribution of the absolute conversion lift between treatment and control groups"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Bootstrap distribution of the absolute lift (treatment &minus; control). Dashed line marks the observed difference of +1.33 pp.
-      <span style="display:block; margin-top:4px;">
-        <a href="figures/bootstrap_abs_lift.png">Open full-size</a>
-      </span>
-    </figcaption>
+</details>
+<details>
+  <summary><strong>Secondary Metric — Time-to-Complete Guardrail</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Approach</h3>
+  <p>
+    Guardrail metrics ensure the treatment does not cause unintended harm. Even if conversion improves, if the onboarding process takes significantly longer, the user experience may suffer — leading to downstream churn or support costs that offset the conversion gain.
+  </p>
+  <p>
+    The analysis compares time-to-complete using three complementary methods: a Welch t-test (parametric), Wilcoxon rank-sum test (non-parametric), and bootstrap CI (distribution-free). Using multiple approaches validates robustness, especially when the underlying distribution may be skewed or heavy-tailed.
+  </p>
+
+  <h3>Key Code</h3>
+
+<pre><code class="language-r"># Parametric + nonparametric tests
+tt &lt;- t.test(time_to_complete ~ variant, data = df)
+wt &lt;- wilcox.test(time_to_complete ~ variant, data = df, exact = FALSE)
+
+# Bootstrap CI for mean difference
+boot_diffs &lt;- replicate(2000, {
+  boot_df &lt;- df %&gt;% group_by(variant) %&gt;%
+    slice_sample(prop = 1, replace = TRUE)
+  mean(boot_df$time_to_complete[boot_df$variant == "treatment"]) -
+    mean(boot_df$time_to_complete[boot_df$variant == "control"])
+})
+boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
+
+  <h3>Visualization</h3>
+  <figure>
+    <img src="images/guardrail_time_to_complete.png" alt="Box plot of onboarding time-to-complete by variant" style="max-width:100%;">
+    <figcaption>Figure: Onboarding time-to-complete by variant. Treatment group completed onboarding faster on average.</figcaption>
   </figure>
 
-  <h4>Method 3: Permutation Test</h4>
-  <ul>
-    <li><strong>Permutation Iterations:</strong> 4,000</li>
-    <li><strong>Observed Difference:</strong> +1.33 pp</li>
-    <li><strong>Empirical P-Value (two-sided):</strong> 0.036</li>
-    <li><strong>Infer Package P-Value:</strong> 0.033</li>
-    <li><strong>Interpretation:</strong> Significant &mdash; observed lift falls in the extreme tail of the null distribution</li>
-  </ul>
+  <h3>Results</h3>
 
-  <h3>Method Comparison Summary</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
+  <h4>Time-to-Complete Summary</h4>
+  <table>
     <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Method</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Point Estimate</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">95% CI Lower</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">95% CI Upper</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P-Value</th>
-        <th style="text-align:center; border-bottom: 2px solid #ddd; padding: 8px 6px;">Significant?</th>
-      </tr>
+      <tr><th>Variant</th><th>n</th><th>Mean (min)</th><th>Median (min)</th><th>SD</th><th>p90</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Z-Test</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+0.11 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+2.55 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.032</td>
-        <td style="padding: 8px 6px; text-align:center; border-bottom: 1px solid #eee;">Yes</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Bootstrap</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+0.12 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+2.57 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:center; border-bottom: 1px solid #eee;">Yes</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Permutation</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.036</td>
-        <td style="padding: 8px 6px; text-align:center; border-bottom: 1px solid #eee;">Yes</td>
-      </tr>
+      <tr><td>Control</td><td>5,017</td><td>7.87</td><td>7.87</td><td>3.03</td><td>11.80</td></tr>
+      <tr><td>Treatment</td><td>4,983</td><td>7.53</td><td>7.49</td><td>2.97</td><td>11.40</td></tr>
     </tbody>
   </table>
 
-  <h3>Key Insights</h3>
+  <h4>Test Results</h4>
+  <table>
+    <thead>
+      <tr><th>Mean Diff (min)</th><th>Bootstrap CI Low</th><th>Bootstrap CI High</th><th>t-test p-value</th><th>Wilcoxon p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&minus;0.34</td><td>&minus;0.46</td><td>&minus;0.22</td><td>&lt; 0.001</td><td>&lt; 0.001</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Findings</h3>
   <ul>
-    <li><strong>Consistent evidence:</strong> All three methods agree that the treatment effect is statistically significant at &alpha; = 0.05.</li>
-    <li><strong>Narrow but positive CI:</strong> The lower bound of the confidence interval is close to zero (+0.11 pp), indicating the true effect could be small.</li>
-    <li><strong>Small effect size:</strong> Cohen&rsquo;s h of 0.043 classifies this as a small effect, though even small conversion improvements can be meaningful at scale.</li>
+    <li>Treatment group completed onboarding 0.34 minutes faster on average — consistent with the planted 0.5-min effect (sampling variability accounts for the difference)</li>
+    <li>All three testing approaches (t-test, Wilcoxon, bootstrap) agree: the difference is highly significant (p &lt; 0.001)</li>
+    <li>Bootstrap CI [&minus;0.46, &minus;0.22] is entirely below zero — the guardrail metric shows improvement, not regression</li>
+    <li>The guardrail is clear: the new onboarding flow is both more effective (higher conversion) and faster (lower time-to-complete)</li>
   </ul>
 
-  <h3>Business Recommendation</h3>
-  <p>
-    The conversion lift is real and directionally consistent across all methods. Proceed to guardrail and power analysis
-    before making a final ship decision.
-  </p>
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Even a 0.34-minute reduction compounds across thousands of users — calculate total time saved per month to quantify UX improvement</li>
+    <li>Use multiple testing approaches when the metric distribution may be non-normal — agreement across methods strengthens confidence</li>
+    <li>Always check guardrail metrics before shipping — a conversion lift that degrades the user experience may not be worth it</li>
+  </ul>
 
 </details>
-<details class="dropdown-section">
-  <summary><strong>Analysis 2 &mdash; Guardrail: Onboarding Time-to-Complete</strong></summary>
+<details>
+  <summary><strong>Bootstrap &amp; Permutation Inference</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Business Question</h3>
+  <h3>Approach</h3>
   <p>
-    Does the new onboarding flow maintain or improve the user experience, as measured by time-to-complete?
-    A degradation here would indicate the treatment is creating friction despite improving conversion.
+    This section validates the primary conversion results using computation-based inference that does not rely on distributional assumptions. These methods are increasingly preferred in industry experimentation because they provide intuitive uncertainty quantification without requiring normality or large-sample approximations.
+  </p>
+  <p>
+    Bootstrap confidence intervals (B=4,000 resamples) resample within each group to build a distribution of the observed lift. This is the gold standard for uncertainty quantification in modern experimentation platforms — it directly answers "what range of lifts is consistent with the data?"
+  </p>
+  <p>
+    The permutation test (B=4,000 shuffles) breaks the variant-outcome relationship by randomly shuffling labels, building a null distribution. The p-value is the proportion of permuted differences as extreme as the observed difference. The analysis also demonstrates the <code>infer</code> package for a cleaner tidy workflow.
   </p>
 
-  <h3>Time-to-Complete by Variant</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Variant</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Mean (min)</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Median (min)</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">SD</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P90</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Control</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.87</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.87</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3.03</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.80</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Treatment</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.53</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.49</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.97</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11.40</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Statistical Tests</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Test</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Difference</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">95% CI</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P-Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Welch t-test</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[&minus;0.46, &minus;0.22]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Wilcoxon rank-sum</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Bootstrap (B = 2,000)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[&minus;0.46, &minus;0.22]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="figures/guardrail_time_to_complete.png"
-      alt="Box plot comparing onboarding time-to-complete between control and treatment groups"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Onboarding time-to-complete by variant. Treatment users complete onboarding faster on average.
-      <span style="display:block; margin-top:4px;">
-        <a href="figures/guardrail_time_to_complete.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li><strong>Guardrail improved:</strong> Treatment users completed onboarding 0.34 minutes faster, a highly significant difference (p &lt; 0.001).</li>
-    <li><strong>Consistent across tests:</strong> Parametric (t-test), nonparametric (Wilcoxon), and bootstrap methods all agree on the direction and magnitude.</li>
-    <li><strong>No harm detected:</strong> The new onboarding flow reduced friction rather than increasing it, ruling out a speed-quality tradeoff concern.</li>
-  </ul>
-
-  <h3>Business Recommendation</h3>
-  <p>
-    The guardrail metric moves favorably &mdash; treatment not only improves conversion but also delivers a faster
-    onboarding experience. No red flags for user experience degradation.
-  </p>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Analysis 3 &mdash; Regression-Adjusted Treatment Effects</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Does the treatment effect hold after adjusting for the pre-experiment engagement covariate? Regression adjustment
-    can improve precision and verify that the unadjusted estimate is not confounded.
-  </p>
-
-  <h3>Conversion Model: Logistic Regression</h3>
-
-  <h4>Model Specification</h4>
-  <pre><code class="language-r">glm(converted ~ variant + log1p(pre_sessions_7d),
-    data = df,
-    family = binomial())</code></pre>
-
-  <h4>Regression Coefficients (Robust HC3 Standard Errors)</h4>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Variable</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Log-Odds</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Std. Error</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Odds Ratio</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">OR 95% CI</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P-Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">(Intercept)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;2.183</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.099</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.113</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[0.093, 0.137]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;"><strong>Treatment</strong></td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;"><strong>0.138</strong></td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.064</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;"><strong>1.148</strong></td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;"><strong>[1.012, 1.303]</strong></td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;"><strong>0.032</strong></td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">log1p(Pre-Sessions)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.005</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.068</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.005</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[0.879, 1.148]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.943</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h4>Treatment Effect Interpretation</h4>
-  <ul>
-    <li><strong>Odds Ratio:</strong> 1.148 (95% CI: [1.012, 1.303])</li>
-    <li><strong>Interpretation:</strong> Treatment increases the odds of conversion by 14.8%, controlling for pre-experiment engagement.</li>
-  </ul>
-
-  <h3>Marginal Effects &amp; Adjusted Risk Difference</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Method</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Treatment Effect</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">95% CI</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Unadjusted (Simple Difference)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[+0.11, +2.55]</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Regression-Adjusted (Marginal Effect)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[+0.25, +2.57]</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p>
-    <strong>Interpretation:</strong> The adjusted and unadjusted estimates are nearly identical (+1.33 pp), confirming that
-    the pre-experiment covariate does not confound the treatment effect. This is expected given the confirmed randomization
-    balance. The adjusted CI is slightly tighter, demonstrating the variance-reduction benefit of covariate adjustment.
-  </p>
-
-  <h3>Guardrail Model: OLS Regression</h3>
-
-  <h4>Model Specification</h4>
-  <pre><code class="language-r">lm(time_to_complete ~ variant + log1p(pre_sessions_7d),
-   data = df)</code></pre>
-
-  <h4>Treatment Effect (Robust HC3 Standard Errors)</h4>
-  <ul>
-    <li><strong>Adjusted Difference:</strong> &minus;0.34 minutes</li>
-    <li><strong>95% CI:</strong> [&minus;0.46, &minus;0.22]</li>
-    <li><strong>P-Value:</strong> &lt; 0.001</li>
-    <li><strong>Interpretation:</strong> Treatment reduces onboarding time by 0.34 minutes, confirmed after adjustment.</li>
-  </ul>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>Regression adjustment confirms the unadjusted estimates for both conversion and time-to-complete.</li>
-    <li>Pre-experiment sessions have no meaningful relationship with conversion (p = 0.943), consistent with proper randomization.</li>
-    <li>Robust (HC3) standard errors protect against heteroscedasticity without changing conclusions.</li>
-  </ul>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Analysis 4 &mdash; Power Analysis &amp; Minimum Detectable Effect</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Was the experiment adequately powered to detect the observed effect? What sample sizes would be needed for
-    future experiments targeting specific lift thresholds?
-  </p>
-
-  <h3>Experiment Parameters</h3>
-  <ul>
-    <li><strong>Baseline Conversion Rate:</strong> 10.19%</li>
-    <li><strong>Sample Size per Group:</strong> 4,983 (conservative, using smaller group)</li>
-    <li><strong>Significance Level (&alpha;):</strong> 0.05</li>
-    <li><strong>Target Power:</strong> 0.80</li>
-  </ul>
-
-  <h3>Minimum Detectable Effect (MDE)</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Metric</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">MDE at 80% Power</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.77 pp</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Observed Lift</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.33 pp</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Estimated Power at Observed Lift</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">~55%</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p>
-    The observed lift (1.33 pp) falls <em>below</em> the 80%-power MDE threshold (1.77 pp), meaning the experiment was
-    slightly underpowered for the true effect size. This does not invalidate the significant result &mdash; it means
-    there was approximately a 45% chance of missing a real effect of this magnitude.
-  </p>
-
-  <h3>Sample Size Requirements for Future Experiments</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Target Lift</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">N per Group</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Total N</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+0.5 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">58,686</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">117,372</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.0 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">14,981</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">29,962</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.5 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">6,794</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">13,588</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+2.0 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3,898</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7,796</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Power Curve (Selected Points)</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Lift (pp)</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Power</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.5</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">12.6%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.0</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">36.5%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.5</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">67.0%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">1.8</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">81.7%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.0</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">88.6%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">2.5</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">97.5%</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">3.0</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">99.7%</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li>The experiment was slightly underpowered for the observed effect size (power ~55% vs. the standard 80% threshold).</li>
-    <li>To reliably detect a +1.33 pp lift at 80% power, approximately 7,000+ users per group would be needed.</li>
-    <li>Despite the power shortfall, the result was still statistically significant &mdash; the true effect may be larger than the point estimate.</li>
-    <li>Future experiments targeting smaller lifts (&lt; 1 pp) would require substantially larger samples (30,000+ per group).</li>
-  </ul>
-
-  <h3>Business Recommendation</h3>
-  <p>
-    For confirmatory testing, increase sample size to 15,000+ per group to achieve 80% power for effects as small
-    as 1.0 pp. This experiment provides a useful signal but should be validated with a larger follow-up if the business
-    requires higher certainty for marginal effects.
-  </p>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Analysis 5 &mdash; Sensitivity &amp; Robustness Checks</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Business Question</h3>
-  <p>
-    Do conclusions remain stable across different analytical approaches and assumptions?
-  </p>
-
-  <h3>Conversion Effect &mdash; Method Comparison</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Method</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Point Estimate</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">95% CI</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P-Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Two-Proportion Z-Test</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[+0.11, +2.55]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.032</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Bootstrap (B = 4,000)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[+0.12, +2.57]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Permutation (B = 4,000)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.036</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Infer Permutation (B = 4,000)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.033</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Logistic Regression (HC3)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">+1.33 pp</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">[+0.25, +2.57]</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">0.032</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Guardrail Effect &mdash; Method Comparison</h3>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Method</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Point Estimate</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">P-Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Welch t-test</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Wilcoxon rank-sum</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Bootstrap (B = 2,000)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&mdash;</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">OLS Regression (HC3)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&minus;0.34 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">&lt; 0.001</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Key Insights</h3>
-  <ul>
-    <li><strong>All five conversion methods converge</strong> on a +1.33 pp lift with p-values in the 0.032&ndash;0.036 range.</li>
-    <li><strong>All four guardrail methods converge</strong> on a &minus;0.34 minute reduction with extreme significance.</li>
-    <li>Confidence intervals are consistent across parametric and resampling approaches.</li>
-    <li>The stability of results across methods increases confidence that the findings are not artifacts of a single analytical choice.</li>
-  </ul>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Final Decision Memo</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Summary of Effects</h3>
-
-  <h4>Primary Metric: Conversion Rate</h4>
-  <ul>
-    <li><strong>Observed Lift:</strong> +1.33 percentage points (+13.1% relative)</li>
-    <li><strong>95% Confidence Interval:</strong> [+0.11 pp, +2.55 pp]</li>
-    <li><strong>Statistical Significance:</strong> Yes (p = 0.032)</li>
-    <li><strong>Practical Significance:</strong> Meaningful at scale &mdash; projects to meaningful incremental conversions annually</li>
-  </ul>
-
-  <h4>Guardrail: Time-to-Complete</h4>
-  <ul>
-    <li><strong>Observed Change:</strong> &minus;0.34 minutes (treatment is faster)</li>
-    <li><strong>95% CI:</strong> [&minus;0.46, &minus;0.22]</li>
-    <li><strong>Statistical Significance:</strong> Yes (p &lt; 0.001)</li>
-    <li><strong>Assessment:</strong> &#x2705; Guardrail improved &mdash; no degradation</li>
-  </ul>
-
-  <h3>Business Impact Projection</h3>
-  <p>Assuming 100,000 annual trial signups:</p>
-
-  <table style="border-collapse: collapse; width: 100%; max-width: 780px; margin: 20px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:left; border-bottom: 2px solid #ddd; padding: 8px 6px;">Metric</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Current (Control)</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">New (Treatment)</th>
-        <th style="text-align:right; border-bottom: 2px solid #ddd; padding: 8px 6px;">Incremental Gain</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Annual Conversions</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">10,190</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">11,520</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee; font-weight:700;">+1,330 paid users</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; border-bottom: 1px solid #eee;">Onboarding Time (avg)</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.87 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee;">7.53 min</td>
-        <td style="padding: 8px 6px; text-align:right; border-bottom: 1px solid #eee; font-weight:700;">&minus;0.34 min per user</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Risks &amp; Considerations</h3>
-  <ol>
-    <li><strong>Power gap:</strong> The experiment was slightly underpowered (MDE at 80% power = 1.77 pp vs. observed 1.33 pp). The true effect could be smaller than estimated.</li>
-    <li><strong>Simulated data:</strong> Results reflect a controlled simulation; real-world behavior may introduce additional variability.</li>
-    <li><strong>Short observation window:</strong> 30-day conversion may not capture long-term retention or LTV effects.</li>
-  </ol>
-
-  <h3>Mitigation Strategies</h3>
-  <ol>
-    <li>Deploy via staged rollout (25% &rarr; 50% &rarr; 100%) with real-time KPI monitoring.</li>
-    <li>Run a confirmatory test at larger scale (15,000+ per group) to narrow the confidence interval.</li>
-    <li>Add 90-day and 180-day retention follow-up metrics to assess long-term impact.</li>
-  </ol>
-
-  <h3>Recommendation</h3>
-
-  <p><strong>&#x2705; SHIP &mdash; with staged rollout and monitoring gates.</strong></p>
-
-  <p>
-    The conversion lift is statistically significant across all five inference methods, the guardrail metric
-    improved (faster onboarding), and the treatment effect is directionally consistent after covariate adjustment.
-    Although the experiment was slightly underpowered for the observed effect size, the consistency of evidence
-    across methods and the favorable guardrail signal support a ship decision with appropriate monitoring safeguards.
-  </p>
-
-  <h4>Rollout Plan</h4>
-  <ul>
-    <li><strong>Phase 1:</strong> Ship to 25% of new users for 2 weeks with daily KPI monitoring.</li>
-    <li><strong>Phase 2:</strong> Scale to 100% if conversion and guardrail metrics hold within expected ranges.</li>
-    <li><strong>Monitoring:</strong> Track conversion rate, time-to-complete, and support ticket volume weekly.</li>
-  </ul>
-
-  <h4>Next Experiments</h4>
-  <ol>
-    <li><strong>Onboarding Variant Tuning:</strong> Test specific onboarding steps to isolate which changes drive the most lift.</li>
-    <li><strong>Retention Study:</strong> Measure 90-day and 180-day retention to validate long-term quality of converted users.</li>
-    <li><strong>Larger Confirmatory Test:</strong> Run at 15,000+ users per group to achieve 80% power for a 1.0 pp lift.</li>
-  </ol>
-
-</details>
-<details class="dropdown-section">
-  <summary><strong>Code &amp; Reproducibility</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <h3>Prerequisites</h3>
-  <ul>
-    <li>R version 4.0 or higher</li>
-    <li>RStudio (recommended)</li>
-    <li>Git</li>
-  </ul>
-
-  <h3>Quick Start</h3>
-  <pre><code class="language-bash"># Clone repository
-git clone https://github.com/nadeaujonny/nadeaujonny.github.io.git
-cd projects/r-ab-testing-simulated
-
-# Install required packages
-Rscript requirements.R
-
-# Run full analysis pipeline (scripts 00-06)
-Rscript R/00_generate_data.R
-Rscript R/01_qc_srm.R
-Rscript R/02_primary_metric.R
-Rscript R/03_secondary_guardrails.R
-Rscript R/04_bootstrap_permutation.R
-Rscript R/05_regression_adjusted.R
-Rscript R/06_power_mde.R</code></pre>
-
-  <h3>Analysis Scripts (in order)</h3>
-  <ol>
-    <li><code>00_generate_data.R</code> &mdash; Create simulated dataset (10,000 users, seed = 123)</li>
-    <li><code>01_qc_srm.R</code> &mdash; Data quality and SRM randomization checks</li>
-    <li><code>02_primary_metric.R</code> &mdash; Conversion rate analysis with prop.test and effect sizes</li>
-    <li><code>03_secondary_guardrails.R</code> &mdash; Time-to-complete guardrail analysis (t-test, Wilcoxon, bootstrap)</li>
-    <li><code>04_bootstrap_permutation.R</code> &mdash; Bootstrap CI and permutation tests for conversion lift</li>
-    <li><code>05_regression_adjusted.R</code> &mdash; Covariate-adjusted estimates with robust standard errors</li>
-    <li><code>06_power_mde.R</code> &mdash; Power analysis and MDE calculations</li>
-  </ol>
-
-  <h3>Output Artifacts</h3>
-  <ul>
-    <li><code>data/ab_test_data.csv</code> &mdash; Clean analysis dataset</li>
-    <li><code>figures/*.png</code> &mdash; All visualizations</li>
-    <li><code>tables/*.csv</code> &mdash; Statistical results tables</li>
-  </ul>
-
-  <h3>Key Code Highlights</h3>
-
-  <h4>Bootstrap Confidence Interval</h4>
-  <pre><code class="language-r"># Bootstrap conversion rate difference (4,000 iterations)
-boot_diffs <- replicate(B, {
-  p_c <- mean(sample(control_rows$converted_num,
-                     size = nrow(control_rows),
-                     replace = TRUE))
-  p_t <- mean(sample(treat_rows$converted_num,
-                     size = nrow(treat_rows),
-                     replace = TRUE))
+  <h3>Key Code</h3>
+
+<pre><code class="language-r"># Bootstrap CI for absolute lift
+boot_diffs &lt;- replicate(4000, {
+  p_c &lt;- mean(sample(control_rows$converted_num, replace = TRUE))
+  p_t &lt;- mean(sample(treat_rows$converted_num, replace = TRUE))
   p_t - p_c
 })
+boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))
 
-# 95% percentile CI
-boot_ci <- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
+# Permutation test
+perm_diffs &lt;- replicate(4000, {
+  df_perm &lt;- df %&gt;% mutate(variant_perm = sample(variant))
+  # ... compute diff under shuffled labels
+})
+perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
 
-  <h4>Regression-Adjusted Treatment Effect with Robust SEs</h4>
-  <pre><code class="language-r">library(sandwich)
+  <h3>Visualization</h3>
+  <figure>
+    <img src="images/bootstrap_abs_lift.png" alt="Bootstrap distribution of absolute lift with observed value marked" style="max-width:100%;">
+    <figcaption>Figure: Bootstrap distribution of the absolute conversion lift (B=4,000 resamples). Dashed line marks the observed lift.</figcaption>
+  </figure>
 
-# Logistic regression with HC3 robust standard errors
-m_conv <- glm(converted ~ variant + log1p(pre_sessions_7d),
+  <h3>Results</h3>
+
+  <h4>Bootstrap Results</h4>
+  <table>
+    <thead>
+      <tr><th>Observed Lift (pp)</th><th>95% CI Low (pp)</th><th>95% CI High (pp)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>+1.33</td><td>+0.12</td><td>+2.57</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Permutation Results</h4>
+  <table>
+    <thead>
+      <tr><th>Observed Lift (pp)</th><th>Permutation p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>+1.33</td><td>0.036</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Method Comparison</h4>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>prop.test (z-test)</td><td>0.032</td></tr>
+      <tr><td>Manual permutation (B=4,000)</td><td>0.036</td></tr>
+      <tr><td>infer permutation (B=4,000)</td><td>0.033</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li>Bootstrap CI [+0.12pp, +2.57pp] closely aligns with the analytical CI from prop.test [+0.11pp, +2.55pp] — the methods converge</li>
+    <li>All three p-values (0.032, 0.036, 0.033) are consistent and significant at &alpha;=0.05 — strong evidence the result is not due to chance</li>
+    <li>The bootstrap distribution provides a direct visual of lift uncertainty — more intuitive for stakeholders than a p-value alone</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Bootstrap CIs are increasingly preferred in industry — they are intuitive, assumption-free, and work well with any metric distribution</li>
+    <li>Use the bootstrap distribution as a stakeholder visual: "here is what the lift looks like across 4,000 resamples of the data"</li>
+    <li>Permutation tests directly answer "could this result be due to chance?" — a compelling framing for non-technical decision-makers</li>
+  </ul>
+
+</details>
+<details>
+  <summary><strong>Regression-Adjusted Treatment Effects</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Approach</h3>
+  <p>
+    Regression adjustment — known as CUPED (Controlled-experiment Using Pre-Experiment Data) in industry — uses pre-experiment covariates to reduce residual variance, producing tighter confidence intervals without requiring additional sample size. This is standard practice at Microsoft, Netflix, and Uber for improving experiment sensitivity.
+  </p>
+  <p>
+    For the primary metric (conversion), the analysis fits a logistic regression with variant and <code>log1p(pre_sessions_7d)</code> as predictors, then computes an adjusted risk difference via marginal means (G-computation). HC3 robust standard errors from the <code>sandwich</code> package protect against heteroskedasticity. A bootstrap CI (B=1,000) provides distribution-free uncertainty for the adjusted risk difference.
+  </p>
+  <p>
+    For the guardrail metric (time-to-complete), an OLS regression with the same covariates is used. The treatment coefficient directly estimates the adjusted mean difference in minutes, again with HC3 robust standard errors.
+  </p>
+
+  <h3>Key Code</h3>
+
+<pre><code class="language-r"># Logistic regression for conversion
+m_conv &lt;- glm(converted ~ variant + log1p_pre_sessions_7d,
               data = df, family = binomial())
+vc_conv &lt;- sandwich::vcovHC(m_conv, type = "HC3")
 
-vc_conv <- sandwich::vcovHC(m_conv, type = "HC3")
+# Adjusted risk difference via marginal means
+p_control &lt;- predict(m_conv, newdata = df %&gt;% mutate(variant = "control"),
+                     type = "response")
+p_treat   &lt;- predict(m_conv, newdata = df %&gt;% mutate(variant = "treatment"),
+                     type = "response")
+adj_rd &lt;- mean(p_treat - p_control)  # Adjusted lift in probability
 
-# Adjusted risk difference via predicted probabilities
-df_control <- df %>% mutate(variant = "control")
-df_treat   <- df %>% mutate(variant = "treatment")
+# OLS for guardrail metric
+m_time &lt;- lm(time_to_complete ~ variant + log1p_pre_sessions_7d, data = df)
+vc_time &lt;- sandwich::vcovHC(m_time, type = "HC3")</code></pre>
 
-adj_rd <- mean(predict(m_conv, df_treat, type = "response") -
-               predict(m_conv, df_control, type = "response"))</code></pre>
+  <h3>Results</h3>
 
-  <h4>Power Curve</h4>
-  <pre><code class="language-r"># Power at observed sample size across candidate lifts
-power_curve <- tibble(
-  lift_pp = seq(0.0, 3.0, by = 0.1),
+  <h4>Logistic Regression Coefficients (Conversion)</h4>
+  <table>
+    <thead>
+      <tr><th>Term</th><th>Log-Odds</th><th>Odds Ratio</th><th>OR 95% CI</th><th>p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>(Intercept)</td><td>&minus;2.183</td><td>0.113</td><td>[0.093, 0.137]</td><td>&lt; 0.001</td></tr>
+      <tr><td>variant: treatment</td><td>+0.138</td><td>1.148</td><td>[1.012, 1.303]</td><td>0.032</td></tr>
+      <tr><td>log1p(pre_sessions_7d)</td><td>+0.005</td><td>1.005</td><td>[0.879, 1.148]</td><td>0.943</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em; color:#555;">Standard errors: HC3 robust via sandwich package.</p>
+
+  <h4>Adjusted Risk Difference (Conversion)</h4>
+  <table>
+    <thead>
+      <tr><th>Adjusted Lift (pp)</th><th>Bootstrap CI Low (pp)</th><th>Bootstrap CI High (pp)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>+1.33</td><td>+0.25</td><td>+2.57</td></tr>
+    </tbody>
+  </table>
+
+  <h4>OLS Regression Coefficients (Time-to-Complete)</h4>
+  <table>
+    <thead>
+      <tr><th>Term</th><th>Estimate (min)</th><th>95% CI</th><th>p-value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>(Intercept)</td><td>7.942</td><td>[7.765, 8.119]</td><td>&lt; 0.001</td></tr>
+      <tr><td>variant: treatment</td><td>&minus;0.341</td><td>[&minus;0.459, &minus;0.224]</td><td>&lt; 0.001</td></tr>
+      <tr><td>log1p(pre_sessions_7d)</td><td>&minus;0.054</td><td>[&minus;0.175, 0.067]</td><td>0.382</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em; color:#555;">Standard errors: HC3 robust via sandwich package.</p>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li>Adjusted conversion lift (+1.33pp) matches the unadjusted estimate closely — the covariate adjustment confirms rather than changes the conclusion</li>
+    <li>The adjusted bootstrap CI [+0.25pp, +2.57pp] is slightly tighter than the unadjusted CI, demonstrating the variance-reduction benefit of CUPED</li>
+    <li>The pre-experiment covariate (<code>pre_sessions_7d</code>) is not a significant predictor of either outcome (p &gt; 0.38) — expected in a well-randomized simulation, but the adjustment still provides marginal precision gains</li>
+    <li>Adjusted time-to-complete difference (&minus;0.341 min) is consistent with the unadjusted estimate, with robust standard errors protecting against heteroskedasticity</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Regression adjustment should be standard practice — it provides free precision (tighter CIs) without requiring more users or longer experiments</li>
+    <li>Always use robust standard errors (HC3) for experiment analysis — they protect against model misspecification and heteroskedasticity</li>
+    <li>Report the adjusted risk difference in percentage points — stakeholders understand "1.33pp lift" better than "odds ratio of 1.148"</li>
+  </ul>
+
+</details>
+<details>
+  <summary><strong>Power Analysis &amp; MDE</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
+
+  <h3>Approach</h3>
+  <p>
+    Power analysis answers a critical pre-experiment question: "given our sample size, what is the smallest effect we can reliably detect?" This minimum detectable effect (MDE) determines whether an experiment is worth running. If the MDE is larger than the expected effect, the experiment is underpowered and likely to produce inconclusive results.
+  </p>
+  <p>
+    The analysis calculates the MDE at 80% power for the current sample size, computes required sample sizes for a range of target lifts (0.5pp, 1.0pp, 1.5pp, 2.0pp), and generates a power curve showing how statistical power changes across effect sizes.
+  </p>
+
+  <h3>Key Code</h3>
+
+<pre><code class="language-r"># MDE given current sample size
+mde_abs &lt;- mde_solver(p0 = baseline_rate, n = n_per_group,
+                       alpha = 0.05, power_target = 0.80)
+
+# Required sample sizes for target lifts
+power.prop.test(power = 0.80, p1 = baseline_rate,
+                p2 = baseline_rate + target_lift, sig.level = 0.05)
+
+# Power curve across effect sizes
+power_curve &lt;- tibble(
+  lift_pp = seq(0, 3, by = 0.1),
   power = sapply(lift_pp / 100, function(d) {
-    p1 <- min(max(p0 + d, 0), 1)
-    power.prop.test(
-      n = n_per_group, p1 = p0, p2 = p1,
-      sig.level = 0.05, alternative = "two.sided"
-    )$power
+    power.prop.test(n = n_per_group, p1 = p0,
+                    p2 = p0 + d, sig.level = 0.05)$power
   })
 )</code></pre>
 
+  <h3>Visualization</h3>
+  <figure>
+    <img src="images/power_curve.png" alt="Power curve showing statistical power vs effect size" style="max-width:100%;">
+    <figcaption>Figure: Statistical power by effect size. Red dashed line = 80% power target. Green dotted line = MDE at current sample size.</figcaption>
+  </figure>
+
+  <h3>Results</h3>
+
+  <h4>MDE Summary</h4>
+  <table>
+    <thead>
+      <tr><th>Baseline Rate</th><th>n per Group</th><th>MDE at 80% Power (pp)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>10.19%</td><td>4,983</td><td>1.77pp</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Sample Size Requirements</h4>
+  <table>
+    <thead>
+      <tr><th>Target Lift (pp)</th><th>Required n per Group</th><th>Total n Required</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0.5</td><td>58,686</td><td>117,372</td></tr>
+      <tr><td>1.0</td><td>14,981</td><td>29,962</td></tr>
+      <tr><td>1.5</td><td>6,794</td><td>13,588</td></tr>
+      <tr><td>2.0</td><td>3,898</td><td>7,796</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Findings</h3>
+  <ul>
+    <li>With ~5,000 users per group and a 10.19% baseline, the MDE at 80% power is 1.77pp — the experiment is slightly underpowered for the observed 1.33pp lift (power ~55% at that effect size)</li>
+    <li>The planted 1.5pp effect falls just below the MDE threshold, which explains why the observed p-value (0.032) is significant but not overwhelmingly so</li>
+    <li>Detecting a 0.5pp lift would require ~58,700 per group (roughly 12x the current sample) — small effects demand large experiments</li>
+    <li>The power curve shows diminishing returns: moving from 80% to 95% power roughly doubles the required sample size</li>
+  </ul>
+
+  <h3>Business Recommendations</h3>
+  <ul>
+    <li>Always calculate MDE before launching an experiment — if the MDE is larger than the expected effect, the experiment is underpowered and likely to waste resources</li>
+    <li>Use power analysis to negotiate experiment duration: "we need X weeks at current traffic to detect a Y% lift with 80% power"</li>
+    <li>For small expected effects, use CUPED/regression adjustment to lower the effective MDE without increasing sample size</li>
+  </ul>
+
 </details>
-<details class="dropdown-section">
-  <summary><strong>Skills &amp; Techniques Demonstrated</strong></summary>
+<details>
+  <summary><strong>R Skills &amp; Techniques Demonstrated</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
-  <h3>Statistical &amp; Analytical Skills</h3>
-  <ul>
-    <li><strong>Experimental Design:</strong> Sample size planning, power analysis, randomization integrity testing (SRM checks), covariate balance assessment</li>
-    <li><strong>Hypothesis Testing:</strong> Multiple inference methods (parametric prop.test, bootstrap resampling, permutation tests) with appropriate handling of binary outcomes</li>
-    <li><strong>Advanced Techniques:</strong> Bootstrap confidence intervals, permutation tests for exact p-values, regression adjustment for precision gains, robust (HC3) standard errors, marginal effects from logistic models</li>
-    <li><strong>Sensitivity Analysis:</strong> Cross-method comparison to validate result stability across analytical assumptions</li>
-  </ul>
+  <h3>R Packages Used</h3>
+  <table>
+    <thead>
+      <tr><th>Package</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>tidyverse</td><td>Data manipulation, piping, ggplot2</td></tr>
+      <tr><td>dplyr</td><td>filter, mutate, group_by, summarise</td></tr>
+      <tr><td>janitor</td><td>clean_names, data cleaning</td></tr>
+      <tr><td>broom</td><td>Tidy model outputs</td></tr>
+      <tr><td>scales</td><td>Formatting (percent, dollar)</td></tr>
+      <tr><td>infer</td><td>Tidy permutation/bootstrap framework</td></tr>
+      <tr><td>sandwich</td><td>Robust (HC3) standard errors</td></tr>
+      <tr><td>readr</td><td>CSV I/O</td></tr>
+      <tr><td>ggplot2</td><td>Publication-quality figures</td></tr>
+    </tbody>
+  </table>
 
-  <h3>Technical Skills</h3>
-  <ul>
-    <li><strong>R Programming:</strong> Efficient data manipulation with <code>tidyverse</code>, statistical modeling with <code>glm</code>/<code>lm</code>, custom resampling functions, reproducible seed-controlled workflows</li>
-    <li><strong>Data Visualization:</strong> Publication-quality plots with <code>ggplot2</code>, bootstrap distributions, box plots with jitter overlays</li>
-    <li><strong>Statistical Packages:</strong> <code>infer</code> for tidy hypothesis testing, <code>broom</code> for model output tidying, <code>sandwich</code> for robust inference, <code>janitor</code> for data cleaning</li>
-    <li><strong>Version Control:</strong> Git/GitHub with modular, sequential script architecture</li>
-  </ul>
+  <h3>Statistical Methods Applied</h3>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Script</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Chi-square goodness-of-fit</td><td>01</td><td>SRM detection</td></tr>
+      <tr><td>Two-sample t-test</td><td>01, 03</td><td>Covariate balance, time comparison</td></tr>
+      <tr><td>Two-proportion z-test</td><td>02</td><td>Primary metric comparison</td></tr>
+      <tr><td>Cohen's h</td><td>02</td><td>Standardized effect size</td></tr>
+      <tr><td>Wilcoxon rank-sum</td><td>03</td><td>Non-parametric time comparison</td></tr>
+      <tr><td>Bootstrap CI</td><td>03, 04, 05</td><td>Distribution-free confidence intervals</td></tr>
+      <tr><td>Permutation test</td><td>04</td><td>Null hypothesis simulation</td></tr>
+      <tr><td>Logistic regression (GLM)</td><td>05</td><td>Binary outcome modeling</td></tr>
+      <tr><td>OLS regression</td><td>05</td><td>Continuous outcome modeling</td></tr>
+      <tr><td>HC3 robust SEs</td><td>05</td><td>Heteroskedasticity-consistent inference</td></tr>
+      <tr><td>Marginal means / Adjusted RD</td><td>05</td><td>Causal effect estimation</td></tr>
+      <tr><td>Power analysis</td><td>06</td><td>Experiment design / MDE</td></tr>
+    </tbody>
+  </table>
 
-  <h3>Business &amp; Communication Skills</h3>
-  <ul>
-    <li><strong>Strategic Thinking:</strong> Clear problem framing, balancing statistical rigor with practical significance, guardrail metrics to prevent unintended harm</li>
-    <li><strong>Decision Frameworks:</strong> Ship/no-ship recommendation grounded in multi-method statistical evidence, business impact projection, and risk assessment</li>
-    <li><strong>Stakeholder Communication:</strong> Executive summary for non-technical audiences, clear visualization of uncertainty, actionable rollout plan with monitoring gates</li>
-    <li><strong>Experimental Best Practices:</strong> Randomization validation before examining results, multiple inference methods without p-hacking, transparent reporting of power limitations</li>
-  </ul>
+  <h3>Programming Practices</h3>
+  <p>
+    The pipeline follows a modular architecture: each of the 7 scripts (00&ndash;06) reads from <code>data/</code>, writes results to <code>tables/</code> and visualizations to <code>figures/</code>. Defensive coding is used throughout — <code>stopifnot()</code> for column checks, explicit factor levels, and SRM-based early termination. All results are reproducible via <code>set.seed(123)</code>, and the code follows a consistent tidyverse style with clear variable naming.
+  </p>
 
 </details>
-<details class="dropdown-section">
-  <summary><strong>Limitations</strong></summary>
+<details>
+  <summary><strong>Conclusion &amp; Project Summary</strong></summary>
 
   <div style="margin-top: 12px;"></div>
   <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
+  <h3>Pipeline Summary</h3>
+  <p>
+    Starting with data generation, the pipeline verified randomization integrity via SRM (chi-square p = 0.734), measured the primary conversion lift (+1.33pp, p = 0.032), confirmed the guardrail metric showed improvement (&minus;0.34 min, p &lt; 0.001), validated results with distribution-free inference (bootstrap CI [+0.12pp, +2.57pp], permutation p = 0.036), refined estimates with covariate adjustment (+1.33pp adjusted, bootstrap CI [+0.25pp, +2.57pp]), and assessed statistical power (MDE = 1.77pp at 80% power with current sample size).
+  </p>
+
+  <h3>Key Takeaways</h3>
   <ul>
-    <li>Simulated data may not capture all real-world production behaviors (e.g., network effects, seasonal patterns).</li>
-    <li>The simplified simulation includes only one pre-experiment covariate (<code>pre_sessions_7d</code>); real experiments typically have richer covariate sets for segmentation and adjustment.</li>
-    <li>The 30-day observation window may not capture delayed conversion effects or long-term retention impacts.</li>
-    <li>The experiment was slightly underpowered for the observed effect size, which increases uncertainty around the point estimate.</li>
-    <li>No revenue or lifetime value (LTV) data is included; conversion lift does not directly translate to revenue impact without additional modeling.</li>
+    <li>Treatment increased conversion by +1.33pp (absolute) — a ~13% relative lift over the 10.19% baseline</li>
+    <li>Guardrail metric (time-to-complete) improved by 0.34 minutes — no regressions detected</li>
+    <li>All inference methods (prop.test, bootstrap, permutation) produced consistent results (p-values: 0.032, 0.036, 0.033)</li>
+    <li>Regression adjustment confirmed the unadjusted estimate and tightened the confidence interval</li>
+    <li>The experiment was slightly underpowered (MDE = 1.77pp vs. observed 1.33pp) but still detected a significant effect</li>
+    <li>The pipeline follows industry best practices: SRM &rarr; primary metric &rarr; guardrails &rarr; validation &rarr; regression adjustment &rarr; power</li>
   </ul>
 
-</details>
-<details class="dropdown-section">
-  <summary><strong>Next Steps</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
-
-  <ul>
-    <li>Run a confirmatory test with larger sample size (15,000+ per group) to achieve 80% power for a 1.0 pp lift.</li>
-    <li>Add device, channel, and region covariates to enable heterogeneous treatment effect analysis and targeted rollout strategies.</li>
-    <li>Incorporate revenue and retention metrics as secondary outcomes to quantify business value beyond conversion rate.</li>
-    <li>Operationalize an experimentation scorecard for ongoing product releases with pre-registered hypotheses and decision criteria.</li>
-    <li>Build a monitoring dashboard for staged rollout tracking with automated guardrail alerts.</li>
-  </ul>
+  <h3>Limitations</h3>
+  <p>
+    The data is simulated — real experiments involve messier realities including non-compliance, network effects, and novelty/primacy bias. The analysis focuses on a single binary primary metric; real experiments often track multiple correlated metrics requiring multiple comparison correction (e.g., Bonferroni, Benjamini-Hochberg). Future enhancements could include sequential testing for early stopping, Bayesian analysis with informative priors, and heterogeneous treatment effect estimation (CATE) to identify which user segments benefit most.
+  </p>
 
 </details>
