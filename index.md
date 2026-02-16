@@ -14,14 +14,6 @@ End-to-end analytics: **SQL + Excel** analysis, **Tableau/Power BI** dashboards,
 
 ---
 
-## Featured Projects
-- **Excel:** Superstore Sales Dashboard (Power Query → pivots → interactive dashboard)  
-  <a href="/projects/excel-superstore-analysis/">View project →</a>
-- **SQL:** E-commerce Revenue & Returns Analysis (BigQuery + thelook_ecommerce)  
-  <a href="/projects/sql-ecommerce-analysis/">View project →</a>
-
----
-
 ## About Me
 I have a strong quantitative foundation in mathematics and computer science, combined with extensive experience explaining complex concepts through tutoring and formal teacher training. During my studies and teaching experience, I discovered a stronger interest in analyzing data, uncovering patterns, and communicating insights rather than pursuing a traditional classroom role.
 
