@@ -16,12 +16,6 @@ breadcrumbs:
 
 **Tools:** Python &middot; pandas &middot; NumPy &middot; matplotlib &middot; seaborn &middot; statsmodels &middot; scikit-learn &middot; yfinance &middot; Jupyter Notebook
 
-<p>
-  <a href="https://github.com/nadeaujonny/nadeaujonny.github.io/tree/main/projects/python-financial-analysis" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-</p>
-
-**Date Completed:** February 12, 2026
-
 ---
 
 <details class="dropdown-section">
