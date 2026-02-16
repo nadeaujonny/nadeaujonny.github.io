@@ -2,10 +2,6 @@
 layout: default
 title: Tableau — Olist Ops & Customer Experience
 description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders covering fulfillment performance, delivery efficiency, revenue trends, and customer experience metrics."
-breadcrumbs:
-  - title: Projects
-    url: /projects/
-  - title: Tableau — Olist Ops & Customer Experience
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
