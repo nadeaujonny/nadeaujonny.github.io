@@ -2,10 +2,6 @@
 layout: default
 title: Power BI — CDC Chronic Disease Analytics
 description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicators — Power Query ETL, star schema dimensional modeling, 10 DAX measures, and interactive dashboards — to track U.S. health trends, rank states, and quantify demographic disparities across 9 chronic disease topics."
-breadcrumbs:
-  - title: Projects
-    url: /projects/
-  - title: Power BI — CDC Chronic Disease Analytics
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>

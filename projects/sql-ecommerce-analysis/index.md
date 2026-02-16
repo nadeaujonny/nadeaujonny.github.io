@@ -2,10 +2,6 @@
 layout: default
 title: E-commerce Revenue & Returns Analysis (SQL)
 description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL — CTEs, window functions, and time-series logic — to identify revenue drivers, return risk, and profit opportunities."
-breadcrumbs:
-  - title: Projects
-    url: /projects/
-  - title: E-commerce Revenue & Returns Analysis (SQL)
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>

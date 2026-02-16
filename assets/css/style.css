@@ -962,37 +962,6 @@ code, pre {
   top: 8px;
 }
 
-/* =========================================================
-   BREADCRUMBS — trail above page content
-   ========================================================= */
-.breadcrumbs {
-  margin-bottom: 14px;
-}
-.breadcrumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.875rem;
-  color: rgba(15, 15, 18, 0.55);
-}
-/* Separator between crumbs using ::before on every item after the first */
-.breadcrumbs li + li::before {
-  content: "›";
-  margin: 0 6px;
-  color: rgba(15, 15, 18, 0.35);
-}
-.breadcrumbs a {
-  color: #2563eb !important;
-}
-.breadcrumbs a:hover {
-  color: #1d4ed8 !important;
-}
-.breadcrumbs li[aria-current="page"] {
-  font-weight: 600;
-  color: rgba(15, 15, 18, 0.7);
-}
 
 /* =========================================================
    BACK TO PROJECTS — link at top of individual project pages
