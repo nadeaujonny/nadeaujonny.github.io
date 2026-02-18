@@ -10,7 +10,7 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
      style="width:100%; max-height:300px; object-fit:cover; object-position:center 15%; border-radius:12px; margin: 12px 0 18px 0;">
 
 ### Data Analyst
-End-to-end analytics: **SQL + Excel** analysis, **Tableau/Power BI** dashboards, and **Python/R** automation.
+Math graduate turned data analyst--SQL, Excel, and Tableau.
 
 ---
 
