@@ -15,7 +15,7 @@ End-to-end analytics: **SQL + Excel** analysis, **Tableau/Power BI** dashboards,
 ---
 
 ## About Me
-I have a strong quantitative foundation in mathematics and computer science, combined with extensive experience explaining complex concepts through tutoring and formal teacher training. During my studies and teaching experience, I discovered a stronger interest in analyzing data, uncovering patterns, and communicating insights rather than pursuing a traditional classroom role.
+I have a strong quantitative foundation in mathematics, combined with extensive experience explaining complex concepts through tutoring and formal teacher training. During my studies and teaching experience, I discovered a stronger interest in analyzing data, uncovering patterns, and communicating insights rather than pursuing a traditional classroom role.
 
 I transitioned into data analytics by completing the Google Data Analytics Professional Certificate and continuing to build practical skills through independent projects. I now focus on applying SQL, Excel, and data visualization tools to analyze business and operational data, with an emphasis on clear, actionable insights.
 
