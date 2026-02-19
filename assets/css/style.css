@@ -265,7 +265,7 @@ pre{
 
 /* ---------- Separators / header/footer muted ---------- */
 hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
-header,footer{ color:var(--muted); }
+header,footer{ color:rgba(255,255,255,.70); }
 
 /* =========================================================
    STICKY HEADER - Navigation stays at top when scrolling
@@ -359,15 +359,15 @@ header.site-header *{
   max-width:var(--max);
   margin:0 auto;
   padding:0 18px;
-  color:var(--muted);
+  color:rgba(255,255,255,.70);
   display:flex;
   flex-wrap:wrap;
   gap:10px 16px;
   align-items:center;
   justify-content:space-between;
 }
-.footer-links a{ margin-left:12px; color:var(--muted); }
-.footer-links a:hover{ color:var(--text); text-decoration:none; }
+.footer-links a{ margin-left:12px; color:rgba(255,255,255,.70); }
+.footer-links a:hover{ color:#fff; text-decoration:none; }
 
 /* ---------- Space background readability ---------- */
 /* White text for content OUTSIDE dropdowns/cards */
