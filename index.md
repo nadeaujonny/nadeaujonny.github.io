@@ -22,11 +22,11 @@ I transitioned into data analytics by completing the Google Data Analytics Profe
 ---
 
 ## Tools & Technologies
-- **Languages:** SQL, Python, R  
+- **Languages:** SQL, R  
 - **Databases:** BigQuery, MySQL  
 - **Visualization:** Tableau, Power BI  
 - **Spreadsheets:** Excel, Google Sheets  
-- **Other:** Git, GitHub, Jupyter Notebook  
+- **Other:** Git, GitHub  
 
 ---
 
