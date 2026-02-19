@@ -149,6 +149,7 @@ details > summary::after{
   transition:transform 160ms ease;
 }
 details[open] > summary::after{ transform:rotate(180deg); }
+details.is-closing > summary::after{ transform:rotate(0deg); }
 details[open] > summary{
   border-bottom-left-radius:0;
   border-bottom-right-radius:0;

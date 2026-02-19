@@ -58,10 +58,19 @@
 
   button.addEventListener('click', () => {
     if (lastActiveOpen && lastActiveOpen.open) {
-      lastActiveOpen.open = false;
-      lastActiveOpen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const target = lastActiveOpen;
+      // Hide button immediately for snappy feedback
+      lastActiveOpen = null;
+      button.hidden = true;
+      button.setAttribute('aria-hidden', 'true');
+
+      if (target._animatedClose) {
+        target._animatedClose();
+      } else {
+        target.open = false;
+      }
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    updateButtonVisibility();
   });
 
   document.body.appendChild(button);
