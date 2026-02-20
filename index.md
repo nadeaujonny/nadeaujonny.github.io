@@ -23,12 +23,16 @@ I am currently seeking an entry-level or junior data analyst role where I can ap
 
 ---
 
-## Tools & Technologies
-- **Languages:** SQL, R  
-- **Databases:** BigQuery, MySQL  
-- **Visualization:** Tableau, Power BI  
-- **Spreadsheets:** Excel, Google Sheets  
-- **Other:** Git, GitHub  
+## Technical Skils
+- **SQL & Databases:** BigQuery, MySQL, Selecting, Filtering, Operators, Strings, Dates, Ints/Doubles, Sorting, Limits,
+Grouping, Aggregations, Joins, Subqueries, Case Statements, CTEs, Window Functions, DDL, DML
+- **Spreadsheets:** Excel, Google Sheets, Formulas, Data Cleaning, Lookups, Pivot Tables, Charts, Slicers, Filtering,
+Formatting, Conditional Formatting, Relative/Absolute Cell Referencing, Aggregation Functions, Data Type Management,
+Date Functions, String Functions, Conditional Functions, Logical Functions, Power Query
+- **Visualization & BI:** Tableau (Calculated Fields, KPI Cards, Filters, Charts, Graphs, Maps), Power BI (DAX, Star Schema,
+Power Query), Excel Dashboards, KPI Design, Data Storytelling
+- **Programming:** R (tidyverse, janitor, ggplot2), Jupyter Notebooks, RStudio
+- **Version Control:** Git, GitHub
 
 ---
 
@@ -36,7 +40,7 @@ I am currently seeking an entry-level or junior data analyst role where I can ap
 - **B.A. in Mathematics** — UCSB  
 - **Minor: Secondary Mathematics & Science Education** — UCSB  
 - **Single Subject Teaching Credential Coursework (Mathematics)** — CSULB (4.0 GPA)  
-- **Google Data Analytics Professional Certificate** — 100% overall grade  
+- **Google Data Analytics Professional Certificate** — Coursera  
 
 ---
 
