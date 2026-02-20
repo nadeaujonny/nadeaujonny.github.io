@@ -293,20 +293,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
       (function() {
         var divElement = document.getElementById('viz1771626821090');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        var containerWidth = divElement.offsetWidth || 800;
-        if (containerWidth > 500) {
-          var nativeWidth = 1500;
-          var aspectRatio = 0.662;
-          var scaleFactor = containerWidth / nativeWidth;
-          var nativeHeight = Math.round(nativeWidth * aspectRatio);
-          vizElement.style.width = nativeWidth + 'px';
-          vizElement.style.height = nativeHeight + 'px';
-          vizElement.style.transform = 'scale(' + scaleFactor + ')';
-          vizElement.style.transformOrigin = 'top left';
-          divElement.style.height = Math.round(nativeHeight * scaleFactor) + 'px';
-          divElement.style.overflow = 'hidden';
+        vizElement.style.width = '100%';
+        if (divElement.offsetWidth > 500) {
+          vizElement.style.height = Math.round(divElement.offsetWidth * 0.662) + 'px';
         } else {
-          vizElement.style.width = '100%';
           vizElement.style.height = '2427px';
         }
         var scriptElement = document.createElement('script');
@@ -493,20 +483,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
       (function() {
         var divElement = document.getElementById('viz1771626798838');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        var containerWidth = divElement.offsetWidth || 800;
-        if (containerWidth > 500) {
-          var nativeWidth = 1500;
-          var aspectRatio = 0.662;
-          var scaleFactor = containerWidth / nativeWidth;
-          var nativeHeight = Math.round(nativeWidth * aspectRatio);
-          vizElement.style.width = nativeWidth + 'px';
-          vizElement.style.height = nativeHeight + 'px';
-          vizElement.style.transform = 'scale(' + scaleFactor + ')';
-          vizElement.style.transformOrigin = 'top left';
-          divElement.style.height = Math.round(nativeHeight * scaleFactor) + 'px';
-          divElement.style.overflow = 'hidden';
+        vizElement.style.width = '100%';
+        if (divElement.offsetWidth > 500) {
+          vizElement.style.height = Math.round(divElement.offsetWidth * 0.662) + 'px';
         } else {
-          vizElement.style.width = '100%';
           vizElement.style.height = '2227px';
         }
         var scriptElement = document.createElement('script');
@@ -743,20 +723,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
       (function() {
         var divElement = document.getElementById('viz1771626774731');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        var containerWidth = divElement.offsetWidth || 800;
-        if (containerWidth > 500) {
-          var nativeWidth = 1500;
-          var aspectRatio = 0.662;
-          var scaleFactor = containerWidth / nativeWidth;
-          var nativeHeight = Math.round(nativeWidth * aspectRatio);
-          vizElement.style.width = nativeWidth + 'px';
-          vizElement.style.height = nativeHeight + 'px';
-          vizElement.style.transform = 'scale(' + scaleFactor + ')';
-          vizElement.style.transformOrigin = 'top left';
-          divElement.style.height = Math.round(nativeHeight * scaleFactor) + 'px';
-          divElement.style.overflow = 'hidden';
+        vizElement.style.width = '100%';
+        if (divElement.offsetWidth > 500) {
+          vizElement.style.height = Math.round(divElement.offsetWidth * 0.662) + 'px';
         } else {
-          vizElement.style.width = '100%';
           vizElement.style.height = '2077px';
         }
         var scriptElement = document.createElement('script');
@@ -821,20 +791,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
       (function() {
         var divElement = document.getElementById('viz1771626752892');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        var containerWidth = divElement.offsetWidth || 800;
-        if (containerWidth > 500) {
-          var nativeWidth = 1500;
-          var aspectRatio = 2.189;
-          var scaleFactor = containerWidth / nativeWidth;
-          var nativeHeight = Math.round(nativeWidth * aspectRatio);
-          vizElement.style.width = nativeWidth + 'px';
-          vizElement.style.height = nativeHeight + 'px';
-          vizElement.style.transform = 'scale(' + scaleFactor + ')';
-          vizElement.style.transformOrigin = 'top left';
-          divElement.style.height = Math.round(nativeHeight * scaleFactor) + 'px';
-          divElement.style.overflow = 'hidden';
+        vizElement.style.width = '100%';
+        if (divElement.offsetWidth > 500) {
+          vizElement.style.height = Math.round(divElement.offsetWidth * 2.189) + 'px';
         } else {
-          vizElement.style.width = '100%';
           vizElement.style.height = '5227px';
         }
         var scriptElement = document.createElement('script');
@@ -1023,20 +983,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
       (function() {
         var divElement = document.getElementById('viz1771626581613');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        var containerWidth = divElement.offsetWidth || 800;
-        if (containerWidth > 500) {
-          var nativeWidth = 1500;
-          var aspectRatio = 0.856;
-          var scaleFactor = containerWidth / nativeWidth;
-          var nativeHeight = Math.round(nativeWidth * aspectRatio);
-          vizElement.style.width = nativeWidth + 'px';
-          vizElement.style.height = nativeHeight + 'px';
-          vizElement.style.transform = 'scale(' + scaleFactor + ')';
-          vizElement.style.transformOrigin = 'top left';
-          divElement.style.height = Math.round(nativeHeight * scaleFactor) + 'px';
-          divElement.style.overflow = 'hidden';
+        vizElement.style.width = '100%';
+        if (divElement.offsetWidth > 500) {
+          vizElement.style.height = Math.round(divElement.offsetWidth * 0.856) + 'px';
         } else {
-          vizElement.style.width = '100%';
           vizElement.style.height = '3077px';
         }
         var scriptElement = document.createElement('script');
