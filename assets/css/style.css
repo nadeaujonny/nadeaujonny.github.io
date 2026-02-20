@@ -4,7 +4,7 @@
 
 /* ---------- Theme tokens ---------- */
 :root{
-  color-scheme: light;
+  color-scheme: light dark;
   --bg:#0b0f14;
   --surface:#0f1620;
   --surface2:#121b26;
@@ -1269,4 +1269,194 @@ details[open] > :not(summary) > h1:first-child,
 details[open] > :not(summary) > h2:first-child,
 details[open] > :not(summary) > h3:first-child {
   margin-top: 0 !important;
+}
+
+/* =========================================================
+   DARK MODE OVERRIDES
+   When the user's OS/browser is set to dark mode, invert the
+   header bar, content wrapper, and text colors accordingly.
+   ========================================================= */
+@media (prefers-color-scheme: dark) {
+
+  /* --- Header bar: black background, white text --- */
+  .site-header,
+  header.site-header {
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: #fff !important;
+  }
+
+  .site-header .nav-tabs,
+  .site-header .site-nav,
+  .site-header .topbar-nav,
+  .site-header .header-nav,
+  .site-header .top-nav,
+  .site-header .nav-bar {
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .site-nav,
+  .nav-tabs,
+  .topbar-nav {
+    background: #000 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* Nav link text: white */
+  .site-nav a,
+  .nav-tab,
+  .topbar-link,
+  .site-header a,
+  .site-header a:visited,
+  .site-header nav a,
+  .site-header .site-nav a,
+  .site-header .nav-tabs .nav-tab,
+  .site-header .topbar-nav .topbar-link,
+  .site-header .header-nav a,
+  .site-header .top-nav a,
+  .site-header .nav-bar a {
+    color: #fff !important;
+  }
+
+  /* Nav link hover */
+  .site-nav a:hover,
+  .nav-tab:hover,
+  .topbar-link:hover,
+  .site-header .site-nav a:hover,
+  .site-header .nav-tabs .nav-tab:hover,
+  .site-header .topbar-nav .topbar-link:hover,
+  .site-header .topbar-link:hover,
+  .site-header nav a:hover,
+  .site-header .header-nav a:hover,
+  .site-header .top-nav a:hover,
+  .site-header .nav-bar a:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #fff !important;
+  }
+
+  /* Active page nav link */
+  .site-nav a[aria-current="page"],
+  .nav-tab[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #fff !important;
+  }
+
+  /* Nav link separator borders */
+  .site-nav a + a,
+  .nav-tab + .nav-tab,
+  .topbar-link + .topbar-link {
+    border-left-color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* --- Content wrapper: black background, white text --- */
+  .page-content .wrapper,
+  main .wrapper {
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  /* Headings inside wrapper: white */
+  .page-content .wrapper h1,
+  .page-content .wrapper h2,
+  .page-content .wrapper h3,
+  .page-content .wrapper h4,
+  main .wrapper h1,
+  main .wrapper h2,
+  main .wrapper h3,
+  main .wrapper h4 {
+    color: rgba(255, 255, 255, 0.95) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* Homepage hero name */
+  .page-content .wrapper h1:first-child,
+  main .wrapper h1:first-child {
+    color: rgba(255, 255, 255, 0.95) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* Subtitle and description */
+  .page-content .wrapper h1:first-child + h3,
+  main .wrapper h1:first-child + h3 {
+    color: rgba(255, 255, 255, 0.80) !important;
+  }
+
+  .page-content .wrapper h1:first-child + h3 + p,
+  main .wrapper h1:first-child + h3 + p {
+    color: rgba(255, 255, 255, 0.80) !important;
+  }
+
+  /* Body text inside wrapper: white */
+  .page-content .wrapper p,
+  .page-content .wrapper li,
+  .page-content .wrapper span,
+  .page-content .wrapper small,
+  .page-content .wrapper strong,
+  .page-content .wrapper em,
+  .page-content .wrapper .muted,
+  main .wrapper p,
+  main .wrapper li,
+  main .wrapper span,
+  main .wrapper small,
+  main .wrapper strong,
+  main .wrapper em,
+  main .wrapper .muted {
+    color: inherit !important;
+  }
+
+  /* Links inside wrapper in dark mode */
+  .page-content .wrapper a,
+  main .wrapper a {
+    color: #9ecbff !important;
+  }
+  .page-content .wrapper a:hover,
+  main .wrapper a:hover {
+    color: #c7ddff !important;
+  }
+
+  /* --- Project cards: dark background, white text --- */
+  .project-card-link {
+    background: var(--surface) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .project-card-link:hover {
+    background: var(--surface2) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+  }
+
+  .project-card-link,
+  .project-card-link * {
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  .project-card-link h1,
+  .project-card-link h2,
+  .project-card-link h3,
+  .project-card-link h4 {
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* Card title fix classes */
+  .card h1, .card h2, .card h3, .card h4,
+  .project-card h1, .project-card h2, .project-card h3, .project-card h4,
+  .project-tile h1, .project-tile h2, .project-tile h3, .project-tile h4 {
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  .card a, .project-card a, .project-tile a {
+    color: #9ecbff !important;
+  }
+  .card a:hover, .project-card a:hover, .project-tile a:hover {
+    color: #c7ddff !important;
+  }
+
+  /* Footer links in dark mode */
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.70) !important;
+  }
+  .footer-links a:hover {
+    color: #fff !important;
+  }
 }
