@@ -1417,12 +1417,12 @@ details[open] > :not(summary) > h3:first-child {
 
   /* --- Project cards: dark background, white text --- */
   .project-card-link {
-    background: var(--surface) !important;
+    background-color: var(--surface) !important;
     border-color: rgba(255, 255, 255, 0.12) !important;
   }
 
   .project-card-link:hover {
-    background: var(--surface2) !important;
+    background-color: var(--surface2) !important;
     border-color: rgba(255, 255, 255, 0.18) !important;
   }
 
