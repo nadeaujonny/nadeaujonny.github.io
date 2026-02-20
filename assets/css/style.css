@@ -1013,8 +1013,15 @@ code, pre {
 
 /* ===== Dropdown bars: full-width, panel-colored, thin separators ===== */
 :root {
-  --panel-bg: rgba(245, 247, 250, 0.98);
-  --divider: rgba(0, 0, 0, 0.12);
+  --panel-bg: rgba(15, 22, 32, 0.98);
+  --divider: rgba(255, 255, 255, 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --panel-bg: rgba(245, 247, 250, 0.98);
+    --divider: rgba(0, 0, 0, 0.12);
+  }
 }
 
 .page-content .wrapper details,
@@ -1052,7 +1059,7 @@ details.dropdown-section > summary {
   padding: 18px 24px;
   margin: 0;
   border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--divider);
   border-radius: 0;
   box-shadow: none;
   cursor: pointer;
@@ -1092,7 +1099,7 @@ details.dropdown-section > summary:hover {
 .page-content .wrapper details[open] > summary,
 main .wrapper details[open] > summary,
 details.dropdown-section[open] > summary {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--divider);
 }
 
 /* =========================================================
