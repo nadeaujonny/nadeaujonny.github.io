@@ -15,9 +15,11 @@ Math graduate turned data analyst--SQL, Excel, and Tableau.
 ---
 
 ## About Me
-I have a strong quantitative foundation in mathematics, combined with extensive experience explaining complex concepts through tutoring and formal teacher training. During my studies and teaching experience, I discovered a stronger interest in analyzing data, uncovering patterns, and communicating insights rather than pursuing a traditional classroom role.
+I am a data analyst with a strong background in mathematics and problem-solving. My experience in teaching and tutoring has strengthened my ability to explain complex ideas clearly and communicate insights effectively.
 
-I transitioned into data analytics by completing the Google Data Analytics Professional Certificate and continuing to build practical skills through independent projects. I now focus on applying SQL, Excel, and data visualization tools to analyze business and operational data, with an emphasis on clear, actionable insights.
+Through hands-on projects and professional training, I have developed practical experience in SQL, Excel, Tableau, and BigQuery. I focus on cleaning data, identifying trends, and building dashboards that help teams make informed decisions.
+
+I am currently seeking an entry-level or junior data analyst role where I can apply analytical skills to support data-driven decision-making.
 
 ---
 
