@@ -18,7 +18,6 @@ description: "Portfolio performance and risk analysis of six diversified assets 
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Overview</h3>
   <p>
@@ -62,7 +61,6 @@ description: "Portfolio performance and risk analysis of six diversified assets 
   <summary><strong>Dataset</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Assets Analyzed</h3>
   <table>
@@ -118,7 +116,6 @@ description: "Portfolio performance and risk analysis of six diversified assets 
   <summary><strong>Analysis 1 &mdash; Data Acquisition &amp; Exploratory Data Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -207,7 +204,6 @@ normalized = (prices / prices.iloc[0]) * 100</code></pre>
   <summary><strong>Analysis 2 &mdash; Returns &amp; Risk Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -327,7 +323,6 @@ metrics_df = risk_metrics(daily_returns, rf=0.02)</code></pre>
   <summary><strong>Analysis 3 &mdash; Correlation &amp; Diversification</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -447,7 +442,6 @@ vol_diversified = np.sqrt(w_diversified.T @ cov_3 @ w_diversified)</code></pre>
   <summary><strong>Analysis 4 &mdash; Time Series Decomposition</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -538,7 +532,6 @@ print(f"ADF Statistic: {adf_stat:.3f}, p-value: {p_value:.4f}")</code></pre>
   <summary><strong>Analysis 5 &mdash; Forecasting (ARIMA Baseline)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>
@@ -639,7 +632,6 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
   <summary><strong>Key Findings &amp; Recommendations</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Key Findings</h3>
   <ul>
@@ -669,7 +661,6 @@ print(f"MAE: ${mae:.2f} | RMSE: ${rmse:.2f}")</code></pre>
   <summary><strong>Technical Details</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Libraries Used</h3>
   <table>

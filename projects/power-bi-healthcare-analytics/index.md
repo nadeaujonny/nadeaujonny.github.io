@@ -16,7 +16,6 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Overview</h3>
   <p>
@@ -57,7 +56,6 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <summary><strong>Dataset</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Source</h3>
   <p>
@@ -123,7 +121,6 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <summary><strong>Data Preparation (Power Query / ETL)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     Before building the data model and DAX measures, I transformed the raw CDC dataset using <strong>Power Query</strong>
@@ -285,7 +282,6 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <summary><strong>Data Model (Star Schema)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>What Is a Star Schema</h3>
   <p>
@@ -375,7 +371,6 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <summary><strong>Key DAX Measures</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Measures Table</h3>
   <p>
@@ -530,7 +525,6 @@ CALCULATE(
   <summary><strong>Dashboard Page 1 — Executive Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     A high-level population health snapshot designed for quick assessment of chronic disease indicators across the
@@ -581,7 +575,6 @@ CALCULATE(
   <summary><strong>Dashboard Page 2 — Trends &amp; Indicator Comparison</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     A multi-indicator trend analysis dashboard designed to track how chronic disease indicators evolve over time and
@@ -649,7 +642,6 @@ CALCULATE(
   <summary><strong>Dashboard Page 3 — State Performance Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     A state-level deep dive dashboard designed to profile individual state performance across chronic disease indicators.
@@ -721,7 +713,6 @@ CALCULATE(
   <summary><strong>Dashboard Page 4 — Health Disparities</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     A demographic disparity analysis dashboard designed to quantify and visualize health inequities across population
@@ -794,7 +785,6 @@ CALCULATE(
   <summary><strong>Dashboard Page 5 — Action Prioritization</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     An action-oriented prioritization dashboard designed to identify which states require the most urgent public health
@@ -866,7 +856,6 @@ CALCULATE(
   <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     This project demonstrates an end-to-end Power BI analytics workflow using real-world CDC chronic disease surveillance
