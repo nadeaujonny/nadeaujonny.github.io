@@ -288,19 +288,42 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h3>Results — Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-1-dashboard.png"
-      alt="Complete dashboard showing all order fulfillment performance metrics"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+    <div class='tableauPlaceholder' id='viz-analysis-1' style='position: relative; width: 100%; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;'>
+      <noscript>
+        <a href='https://public.tableau.com/views/tableau_olist_ops_dashboard_1/Dashboard1OperationsandCustomerExperienceAnalysis'>
+          <img alt='Dashboard 1 — Operations and Customer Experience Analysis' src='images/tableau-analysis-1-dashboard.png' style='border: none; width: 100%;' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+        <param name='embed_code_version' value='3' />
+        <param name='site_root' value='' />
+        <param name='name' value='tableau_olist_ops_dashboard_1/Dashboard1OperationsandCustomerExperienceAnalysis' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='no' />
+        <param name='language' value='en-US' />
+      </object>
+    </div>
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Interactive dashboard combining all order fulfillment KPIs, trends, and distributions.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-1-dashboard.png">Open full-size</a>
-      </span>
+      Interactive dashboard combining all order fulfillment KPIs, trends, and distributions. Use the filters to explore the data.
     </figcaption>
   </figure>
+  <script type='text/javascript'>
+    (function() {
+      var divElement = document.getElementById('viz-analysis-1');
+      var vizElement = divElement.getElementsByTagName('object')[0];
+      vizElement.style.width = '100%';
+      vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+      var scriptElement = document.createElement('script');
+      scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v2.js';
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
 
   <h3>Key Findings</h3>
   <ul>
@@ -471,19 +494,42 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h3>Results — Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-2-dashboard.png"
-      alt="Complete dashboard showing all revenue and sales performance metrics"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+    <div class='tableauPlaceholder' id='viz-analysis-2' style='position: relative; width: 100%; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;'>
+      <noscript>
+        <a href='https://public.tableau.com/views/tableau_olist_ops_dashboard_2/Dashboard2RevenueandSalesAnalysis'>
+          <img alt='Dashboard 2 — Revenue and Sales Analysis' src='images/tableau-analysis-2-dashboard.png' style='border: none; width: 100%;' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+        <param name='embed_code_version' value='3' />
+        <param name='site_root' value='' />
+        <param name='name' value='tableau_olist_ops_dashboard_2/Dashboard2RevenueandSalesAnalysis' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='no' />
+        <param name='language' value='en-US' />
+      </object>
+    </div>
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Interactive dashboard combining all revenue KPIs, trends, and distributions for comprehensive sales analysis.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-2-dashboard.png">Open full-size</a>
-      </span>
+      Interactive dashboard combining all revenue KPIs, trends, and distributions for comprehensive sales analysis. Use the filters to explore the data.
     </figcaption>
   </figure>
+  <script type='text/javascript'>
+    (function() {
+      var divElement = document.getElementById('viz-analysis-2');
+      var vizElement = divElement.getElementsByTagName('object')[0];
+      vizElement.style.width = '100%';
+      vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+      var scriptElement = document.createElement('script');
+      scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v2.js';
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
 
   <h3>Key Findings</h3>
   <ul>
@@ -704,19 +750,42 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h3>Results — Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-3-dashboard.png"
-      alt="Customer Experience and Reviews dashboard"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+    <div class='tableauPlaceholder' id='viz-analysis-3' style='position: relative; width: 100%; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;'>
+      <noscript>
+        <a href='https://public.tableau.com/views/tableau_olist_ops_dashboard_3/Dashboard3CustomerExperienceReviewsAnalysis'>
+          <img alt='Dashboard 3 — Customer Experience Reviews Analysis' src='images/tableau-analysis-3-dashboard.png' style='border: none; width: 100%;' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+        <param name='embed_code_version' value='3' />
+        <param name='site_root' value='' />
+        <param name='name' value='tableau_olist_ops_dashboard_3/Dashboard3CustomerExperienceReviewsAnalysis' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='no' />
+        <param name='language' value='en-US' />
+      </object>
+    </div>
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Customer Experience & Reviews dashboard consolidating KPIs, distributions, trends, and category insights.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-3-dashboard.png">Open full-size</a>
-      </span>
+      Customer Experience & Reviews dashboard consolidating KPIs, distributions, trends, and category insights. Use the filters to explore the data.
     </figcaption>
   </figure>
+  <script type='text/javascript'>
+    (function() {
+      var divElement = document.getElementById('viz-analysis-3');
+      var vizElement = divElement.getElementsByTagName('object')[0];
+      vizElement.style.width = '100%';
+      vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+      var scriptElement = document.createElement('script');
+      scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v2.js';
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
 
   <h3>Key Findings</h3>
   <ul>
@@ -765,19 +834,42 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h3>Results — Section A: Product Performance</h3>
 
   <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-4-dashboard-shot-1.png"
-      alt="Product Performance dashboard showing KPIs, treemap, revenue charts, and category trends"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+    <div class='tableauPlaceholder' id='viz-analysis-4' style='position: relative; width: 100%; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;'>
+      <noscript>
+        <a href='https://public.tableau.com/views/tableau_olist_ops_dashboard_4/Dashboard4MarketplaceEcosystem'>
+          <img alt='Dashboard 4 — Marketplace Ecosystem' src='images/tableau-analysis-4-dashboard-shot-1.png' style='border: none; width: 100%;' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+        <param name='embed_code_version' value='3' />
+        <param name='site_root' value='' />
+        <param name='name' value='tableau_olist_ops_dashboard_4/Dashboard4MarketplaceEcosystem' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='no' />
+        <param name='language' value='en-US' />
+      </object>
+    </div>
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Section A - Product Performance: Overview of 32,216 products sold across 71 categories, featuring treemap visualization, top 15 categories, Pareto analysis, and monthly trends.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-4-dashboard-shot-1.png">Open full-size</a>
-      </span>
+      Marketplace Ecosystem dashboard covering product performance, seller analysis, and integrated insights. Use the filters to explore the data.
     </figcaption>
   </figure>
+  <script type='text/javascript'>
+    (function() {
+      var divElement = document.getElementById('viz-analysis-4');
+      var vizElement = divElement.getElementsByTagName('object')[0];
+      vizElement.style.width = '100%';
+      vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+      var scriptElement = document.createElement('script');
+      scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v2.js';
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
 
   <h4>Product Performance Key Metrics</h4>
   <ul>
@@ -786,21 +878,6 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li><strong>1.142 Average Items per Order</strong> — suggests most orders are single-item purchases</li>
     <li><strong>39.25% Revenue Concentration</strong> in Top 5 Categories — moderate concentration indicating diversified marketplace</li>
   </ul>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-4-dashboard-shot-2.png"
-      alt="Product Performance continued showing Pareto chart, monthly trends, and category performance matrix"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Product Performance Analysis: Pareto chart demonstrating 80/20 rule, monthly category trends with seasonal peaks, and Category Performance Matrix correlating revenue with review scores.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-4-dashboard-shot-2.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
 
   <h4>Category Revenue Leaders</h4>
   <ul>
@@ -823,21 +900,6 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   </ul>
 
   <h3>Results — Section B: Seller Performance</h3>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-4-dashboard-shot-3.png"
-      alt="Seller Performance dashboard showing seller metrics, geographic distribution, top sellers, and growth trends"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Section B - Seller Performance: Analysis of 2,970 active sellers with $5,323 average revenue per seller, featuring geographic distribution across Brazil, top 10 sellers, performance quadrant, and seller growth timeline.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-4-dashboard-shot-3.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
 
   <h4>Seller Ecosystem Metrics</h4>
   <ul>
@@ -878,21 +940,6 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   </ul>
 
   <h3>Results — Section C: Integrated Analysis</h3>
-
-  <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-4-dashboard-shot-4.png"
-      alt="Integrated Analysis dashboard showing category-seller matrix heatmap and product weight vs price scatter plot"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
-    <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Section C - Integrated Analysis: Category-Seller Matrix heatmap revealing seller presence across states and categories, plus Product Weight vs Price scatter plot showing marketplace structure and logistics patterns.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-4-dashboard-shot-4.png">Open full-size</a>
-      </span>
-    </figcaption>
-  </figure>
 
   <h4>Category-Seller Matrix (Heatmap) Insights</h4>
   <ul>
@@ -991,19 +1038,42 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h3>Results — Executive Summary Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
-    <img
-      src="images/tableau-analysis-5-dashboard.png"
-      alt="Executive Summary Dashboard showing KPI cards, revenue forecast, order status, top categories, geographic map, delivery gauge, review sparkline, payment methods, and key insight panel"
-      loading="lazy"
-      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
-    >
+    <div class='tableauPlaceholder' id='viz-analysis-5' style='position: relative; width: 100%; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;'>
+      <noscript>
+        <a href='https://public.tableau.com/views/tableau_olist_ops_cx_v1_raw_load/Dashboard5-ExecutiveSummary'>
+          <img alt='Dashboard 5 — Executive Summary' src='images/tableau-analysis-5-dashboard.png' style='border: none; width: 100%;' />
+        </a>
+      </noscript>
+      <object class='tableauViz' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+        <param name='embed_code_version' value='3' />
+        <param name='site_root' value='' />
+        <param name='name' value='tableau_olist_ops_cx_v1_raw_load/Dashboard5-ExecutiveSummary' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='yes' />
+        <param name='animate_transition' value='yes' />
+        <param name='display_static_image' value='yes' />
+        <param name='display_spinner' value='yes' />
+        <param name='display_overlay' value='yes' />
+        <param name='display_count' value='no' />
+        <param name='language' value='en-US' />
+      </object>
+    </div>
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Executive Summary Dashboard consolidating KPIs, revenue forecasting, operational metrics, and interactive filters into a single one-page executive overview.
-      <span style="display:block; margin-top:4px;">
-        <a href="images/tableau-analysis-5-dashboard.png">Open full-size</a>
-      </span>
+      Executive Summary Dashboard consolidating KPIs, revenue forecasting, operational metrics, and interactive filters into a single one-page executive overview. Use the filters to explore the data.
     </figcaption>
   </figure>
+  <script type='text/javascript'>
+    (function() {
+      var divElement = document.getElementById('viz-analysis-5');
+      var vizElement = divElement.getElementsByTagName('object')[0];
+      vizElement.style.width = '100%';
+      vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+      var scriptElement = document.createElement('script');
+      scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v2.js';
+      vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    })();
+  </script>
 
   <h4>KPI Cards (Top Row)</h4>
   <p>
