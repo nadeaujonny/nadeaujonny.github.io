@@ -16,7 +16,6 @@ description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL —
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Overview</h3>
   <p>
@@ -95,7 +94,6 @@ description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL —
   <summary><strong>Analysis 1 — Top Products by Revenue</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which products generate the highest completed-sales revenue?</p>
@@ -151,7 +149,6 @@ LIMIT 10;</code></pre>
   <summary><strong>Analysis 2 — Top Products by Profit</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which products generate the highest total profit from completed purchases?</p>
@@ -207,7 +204,6 @@ LIMIT 10;</code></pre>
   <summary><strong>Analysis 3 — Top Brands by Profit</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which brands generate the highest total profit from completed purchases?</p>
@@ -269,7 +265,6 @@ LIMIT 10;</code></pre>
   <summary><strong>Analysis 4 — Top Products by Profit Margin</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which products are most margin-efficient (profit ÷ revenue), after filtering out low-volume noise?</p>
@@ -350,7 +345,6 @@ LIMIT 10;</code></pre>
   <summary><strong>Analysis 5 — Top Products by Return Rate</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which products have the highest return rates, and what profit is at risk from those returns?</p>
@@ -450,7 +444,6 @@ LIMIT 10;</code></pre>
   <summary><strong>Analysis 6 — Long-Term Trends in Revenue, Profit, and Returns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>How have revenue, profit, and return rates evolved over time, and what structural trends are visible?</p>
@@ -539,7 +532,6 @@ ORDER BY month;</code></pre>
   <summary><strong>Analysis 7 — Seasonal Trends in Revenue, Profit, and Returns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>How do revenue, profit, and return rates vary by month of the year, and which seasons represent peak performance or elevated return risk?</p>
@@ -618,7 +610,6 @@ ORDER BY month_num;</code></pre>
   <summary><strong>Analysis 8 — Customer Lifetime Value (CLV) and Retention Patterns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Business Question</h3>
   <p>Which customers generate the highest lifetime profit, and what purchasing patterns define high-value customers?</p>
@@ -696,7 +687,6 @@ LIMIT 20;</code></pre>
   <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <p>
     This project demonstrates an end-to-end SQL analytics workflow using the BigQuery public

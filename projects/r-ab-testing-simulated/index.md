@@ -15,7 +15,6 @@ title: A/B Testing & Experimentation Analysis (R)
   <summary><strong>Project Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Overview</h3>
   <p>
@@ -94,7 +93,6 @@ title: A/B Testing & Experimentation Analysis (R)
   <summary><strong>Experiment Design &amp; Data Generation</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -139,7 +137,6 @@ df &lt;- tibble(
   <summary><strong>Quality Control &amp; SRM Detection</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -217,7 +214,6 @@ if (chisq$p.value &lt; 0.01) {
   <summary><strong>Primary Metric — Conversion Rate</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -286,7 +282,6 @@ rel_lift &lt;- (p_treat / p_control) - 1</code></pre>
   <summary><strong>Secondary Metric — Time-to-Complete Guardrail</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -360,7 +355,6 @@ boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
   <summary><strong>Bootstrap &amp; Permutation Inference</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -449,7 +443,6 @@ perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
   <summary><strong>Regression-Adjusted Treatment Effects</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -538,7 +531,6 @@ vc_time &lt;- sandwich::vcovHC(m_time, type = "HC3")</code></pre>
   <summary><strong>Power Analysis &amp; MDE</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Approach</h3>
   <p>
@@ -618,7 +610,6 @@ power_curve &lt;- tibble(
   <summary><strong>R Skills &amp; Techniques Demonstrated</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>R Packages Used</h3>
   <table>
@@ -669,7 +660,6 @@ power_curve &lt;- tibble(
   <summary><strong>Conclusion &amp; Project Summary</strong></summary>
 
   <div style="margin-top: 12px;"></div>
-  <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 12px 0 20px 0;">
 
   <h3>Pipeline Summary</h3>
   <p>
