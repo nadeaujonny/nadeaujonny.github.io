@@ -7,7 +7,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 
 <a href="/" class="back-to-projects" aria-label="Back to homepage">&larr; Back to Homepage</a>
 
-# Projects
+<h1 style="text-align: center;">Projects</h1>
 
 <div class="grid">
 
