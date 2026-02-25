@@ -14,6 +14,10 @@ Data Analyst | SQL, Tableau & Excel | Turning Data into Clear Business Insights
 
 ---
 
+<p style="text-align:center; margin:28px 0 10px;">
+  <a href="projects" class="btn btn-primary" style="font-size:1.05rem; padding:10px 28px;">View My Projects</a>
+</p>
+
 ## About Me
 I am a data analyst with a strong background in mathematics and problem-solving. My experience in teaching and tutoring has strengthened my ability to explain complex ideas clearly and communicate insights effectively.
 
