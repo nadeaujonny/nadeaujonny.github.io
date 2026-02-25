@@ -48,3 +48,4 @@ Power Query), Excel Dashboards, KPI Design, Data Storytelling
 - **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)  
 - **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)  
 - **GitHub:** [github.com/nadeaujonny](https://github.com/nadeaujonny)
+- **Resume:** [Jonathan_Nadeau_Data_Analyst_Resume.pdf](/assets/Jonathan_Nadeau_Data_Analyst_Resume.pdf)
