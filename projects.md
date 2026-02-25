@@ -5,7 +5,7 @@ permalink: /projects/
 description: "Portfolio of data analysis projects including SQL query analysis, Excel dashboards, and Tableau visualizations with detailed methodologies and insights."
 ---
 
-<a href="/" class="back-to-projects" aria-label="Back to homepage">&larr; Back to Homepage</a>
+<a href="/" class="back-to-projects btn" aria-label="Back to homepage">&larr; Back to Homepage</a>
 
 <h1 style="text-align: center;">Projects</h1>
 
