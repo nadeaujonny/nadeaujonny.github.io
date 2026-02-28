@@ -82,7 +82,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Julius AI</h2>
         <h3>Health Data Analysis</h3>
-        <p>AI-powered analysis of health and wellness data using Julius AI — exploring biometric trends, sleep patterns, and activity correlations through natural language prompts.</p>
+        <p>AI-powered analysis of the CDC's U.S. Chronic Disease Indicators dataset using Julius AI — exploring diabetes trends, asthma disparities, cardiovascular correlations, and more through natural language prompts.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
