@@ -690,7 +690,8 @@ code, pre {
 .tableau-card,
 .powerbi-card,
 .python-card,
-.r-card {
+.r-card,
+.julius-card {
   position: relative;
   background-size: cover !important;
   background-position: center !important;
@@ -726,13 +727,18 @@ code, pre {
   background-image: url("../r-project-card-image.png") !important;
 }
 
+.julius-card {
+  background-image: url("../julius-project-card-image.png") !important;
+}
+
 /* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
 .tableau-card::before,
 .powerbi-card::before,
 .python-card::before,
-.r-card::before {
+.r-card::before,
+.julius-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -798,6 +804,15 @@ code, pre {
   );
 }
 
+/* Julius AI card – teal/purple overlay */
+.julius-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 130, 130, 0.62) 0%,
+    rgba(90, 50, 160, 0.78) 100%
+  );
+}
+
 /* Slightly lighter overlay on hover */
 .sql-card:hover::before {
   background: linear-gradient(
@@ -847,6 +862,14 @@ code, pre {
   );
 }
 
+.julius-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 130, 130, 0.54) 0%,
+    rgba(90, 50, 160, 0.70) 100%
+  );
+}
+
 /* Content positioning above the overlay */
 .project-card-content {
   position: relative;
@@ -863,12 +886,14 @@ code, pre {
 .powerbi-card .project-card-content,
 .python-card .project-card-content,
 .r-card .project-card-content,
+.julius-card .project-card-content,
 .sql-card .project-card-content *,
 .excel-card .project-card-content *,
 .tableau-card .project-card-content *,
 .powerbi-card .project-card-content *,
 .python-card .project-card-content *,
-.r-card .project-card-content * {
+.r-card .project-card-content *,
+.julius-card .project-card-content * {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
@@ -878,7 +903,8 @@ code, pre {
 .project-card-link.tableau-card .project-card-content h2,
 .project-card-link.powerbi-card .project-card-content h2,
 .project-card-link.python-card .project-card-content h2,
-.project-card-link.r-card .project-card-content h2 {
+.project-card-link.r-card .project-card-content h2,
+.project-card-link.julius-card .project-card-content h2 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -896,7 +922,8 @@ code, pre {
 .project-card-link.tableau-card .project-card-content h3,
 .project-card-link.powerbi-card .project-card-content h3,
 .project-card-link.python-card .project-card-content h3,
-.project-card-link.r-card .project-card-content h3 {
+.project-card-link.r-card .project-card-content h3,
+.project-card-link.julius-card .project-card-content h3 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -914,7 +941,8 @@ code, pre {
 .tableau-card .project-card-content p,
 .powerbi-card .project-card-content p,
 .python-card .project-card-content p,
-.r-card .project-card-content p {
+.r-card .project-card-content p,
+.julius-card .project-card-content p {
   color: rgba(255, 255, 255, 0.90) !important;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -927,7 +955,8 @@ code, pre {
 .tableau-card .project-card-cta,
 .powerbi-card .project-card-cta,
 .python-card .project-card-cta,
-.r-card .project-card-cta {
+.r-card .project-card-cta,
+.julius-card .project-card-cta {
   color: rgba(255, 255, 255, 0.95) !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
@@ -937,7 +966,8 @@ code, pre {
 .tableau-card:hover .project-card-cta,
 .powerbi-card:hover .project-card-cta,
 .python-card:hover .project-card-cta,
-.r-card:hover .project-card-cta {
+.r-card:hover .project-card-cta,
+.julius-card:hover .project-card-cta {
   color: #fff !important;
 }
 
