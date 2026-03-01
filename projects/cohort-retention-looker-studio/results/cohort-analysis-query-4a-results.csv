@@ -1,0 +1,4 @@
+customer_status,customer_count,pct_of_total,avg_orders,avg_days_since_last_order
+Churned,11697,78,1.08,755
+Active,1771,11.81,1.12,44
+At-Risk,1529,10.2,1.13,134
