@@ -118,18 +118,52 @@ FROM (
 GROUP BY cohort_month
 ORDER BY cohort_month</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The query returned <strong>72 monthly cohorts</strong> spanning January 2019 through December 2024,
+    totaling <strong>14,997 unique customers</strong>. The table below highlights cohort sizes at the
+    start and end of each year, showing consistent acquisition growth over the analysis window.
+  </p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Cohort Month</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">New Customers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">2019-01</td><td style="padding: 6px 12px; text-align: right;">2</td></tr>
+      <tr><td style="padding: 6px 12px;">2019-12</td><td style="padding: 6px 12px; text-align: right;">47</td></tr>
+      <tr><td style="padding: 6px 12px;">2020-01</td><td style="padding: 6px 12px; text-align: right;">60</td></tr>
+      <tr><td style="padding: 6px 12px;">2020-12</td><td style="padding: 6px 12px; text-align: right;">107</td></tr>
+      <tr><td style="padding: 6px 12px;">2021-01</td><td style="padding: 6px 12px; text-align: right;">122</td></tr>
+      <tr><td style="padding: 6px 12px;">2021-12</td><td style="padding: 6px 12px; text-align: right;">168</td></tr>
+      <tr><td style="padding: 6px 12px;">2022-01</td><td style="padding: 6px 12px; text-align: right;">189</td></tr>
+      <tr><td style="padding: 6px 12px;">2022-12</td><td style="padding: 6px 12px; text-align: right;">301</td></tr>
+      <tr><td style="padding: 6px 12px;">2023-01</td><td style="padding: 6px 12px; text-align: right;">258</td></tr>
+      <tr><td style="padding: 6px 12px;">2023-12</td><td style="padding: 6px 12px; text-align: right;">430</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-01</td><td style="padding: 6px 12px; text-align: right;">410</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-12</td><td style="padding: 6px 12px; text-align: right;">550</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results: <a href="results/cohort-analysis-query-0-results.csv">cohort-analysis-query-0-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Cohort sizes establish the denominator for all retention calculations — accuracy here is critical.</li>
-    <li>Growth in monthly new customers indicates whether the acquisition engine is scaling or plateauing.</li>
-    <li>Months with unusually large or small cohorts may reflect marketing campaigns, seasonality, or data anomalies worth investigating.</li>
+    <li>Acquisition grew from 2 customers in January 2019 to 550 in December 2024 — a 275x increase reflecting strong, sustained business growth.</li>
+    <li>Year-over-year acceleration is clear: 2019 averaged ~26 new customers/month, while 2024 averaged ~458 — with no signs of plateauing.</li>
+    <li>December consistently produces the largest cohorts each year (47 → 107 → 168 → 301 → 430 → 550), suggesting seasonal acquisition spikes worth leveraging.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Monitor acquisition trends:</strong> track cohort sizes monthly to detect growth slowdowns early.</li>
-    <li><strong>Correlate with spend:</strong> overlay acquisition costs per cohort to understand CAC trends alongside volume.</li>
-    <li><strong>Flag anomalies:</strong> investigate cohorts with unusual sizes to separate organic growth from one-time events.</li>
+    <li><strong>Monitor acquisition trends:</strong> the current trajectory shows healthy acceleration — track cohort sizes monthly to detect any growth slowdowns early.</li>
+    <li><strong>Correlate with spend:</strong> overlay acquisition costs per cohort to understand whether the 275x growth in volume is cost-efficient.</li>
+    <li><strong>Capitalize on seasonality:</strong> December cohorts are consistently the largest — consider aligning campaigns to amplify this pattern.</li>
   </ul>
 
 </details>
@@ -205,18 +239,49 @@ JOIN cohort_sizes s
 WHERE r.period_number >= 0
 ORDER BY r.cohort_month, r.period_number</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The query produced <strong>937 cohort-period pairs</strong> across 72 monthly cohorts. The sample
+    below shows the July 2024 cohort (464 customers) — one of the largest cohorts with enough elapsed
+    time to observe early retention patterns.
+  </p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Cohort Month</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Active Users</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Cohort Size</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Retention %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">0</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">100.00%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">1</td><td style="padding: 6px 12px; text-align: right;">6</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">1.29%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">2</td><td style="padding: 6px 12px; text-align: right;">7</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">1.51%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">3</td><td style="padding: 6px 12px; text-align: right;">5</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">1.08%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">4</td><td style="padding: 6px 12px; text-align: right;">1</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">0.22%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">5</td><td style="padding: 6px 12px; text-align: right;">2</td><td style="padding: 6px 12px; text-align: right;">464</td><td style="padding: 6px 12px; text-align: right;">0.43%</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results: <a href="results/cohort-analysis-query-1-results.csv">cohort-analysis-query-1-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Retention typically drops steeply after Period 0, with the largest churn occurring between the first and second month.</li>
-    <li>Cohorts that survive the initial drop-off tend to stabilize, suggesting a "loyal core" forms early.</li>
-    <li>Comparing retention curves across cohorts reveals whether product or marketing changes are improving stickiness over time.</li>
+    <li>Retention drops dramatically after Period 0 — the July 2024 cohort falls from 100% to just 1.29% at Period 1, and this pattern is consistent across all cohorts.</li>
+    <li>The retention matrix is sparse: most customers make a single purchase and do not return in consecutive months. When they do return, it's often months or years later.</li>
+    <li>Larger recent cohorts (2024) show slightly higher absolute return counts but retention percentages remain consistently below 2%, confirming this is a product-wide pattern rather than a cohort-specific issue.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Focus on Month 1 activation:</strong> the biggest retention lever is reducing early churn — invest in onboarding, post-purchase emails, and first-repeat incentives.</li>
+    <li><strong>Focus on Month 1 activation:</strong> with Period 1 retention below 2% across all cohorts, post-purchase engagement (emails, incentives, reminders) is the highest-leverage investment.</li>
     <li><strong>Benchmark cohorts:</strong> set retention targets per period and flag cohorts that underperform for root-cause investigation.</li>
-    <li><strong>Track improvement over time:</strong> newer cohorts retaining better than older ones signals that product or CX investments are working.</li>
+    <li><strong>Track improvement over time:</strong> newer cohorts retaining better than older ones would signal that product or CX investments are working — the current data shows this remains a challenge.</li>
   </ul>
 
 </details>
@@ -290,18 +355,49 @@ JOIN period_zero_revenue p
 WHERE r.period_number >= 0
 ORDER BY r.cohort_month, r.period_number</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The query produced <strong>918 cohort-period pairs</strong> with revenue retention metrics. Baseline
+    revenue scales with cohort size — from $83 (January 2019) to $47,454 (December 2024). The sample
+    below shows the July 2024 cohort.
+  </p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Cohort Month</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period Revenue</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Baseline Revenue</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Revenue Ret. %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">0</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">100.00%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">1</td><td style="padding: 6px 12px; text-align: right;">$1,581.25</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">4.43%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">2</td><td style="padding: 6px 12px; text-align: right;">$790.54</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">2.22%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">3</td><td style="padding: 6px 12px; text-align: right;">$222.08</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">0.62%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">4</td><td style="padding: 6px 12px; text-align: right;">$147.63</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">0.41%</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">5</td><td style="padding: 6px 12px; text-align: right;">$279.90</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">0.78%</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results: <a href="results/cohort-analysis-query-2-results.csv">cohort-analysis-query-2-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Revenue retention declines more gradually than customer retention when retained customers increase their spending over time.</li>
-    <li>Cohorts with revenue retention above 100% in later periods indicate strong upsell or cross-sell dynamics among loyal customers.</li>
-    <li>Divergence between customer retention and revenue retention highlights whether value is concentrating in a smaller, higher-spending group.</li>
+    <li>Period 1 revenue retention typically ranges from 2–6% — slightly higher than customer retention (~1–2%), suggesting that returning customers tend to place moderately larger orders.</li>
+    <li>Some cohorts show sporadic high-revenue returns in later periods (e.g., September 2020's Period 51 at 8.41%), indicating occasional large purchases by long-dormant customers.</li>
+    <li>Baseline revenue grew from $83 (January 2019) to $47,454 (December 2024), reflecting both larger cohorts and higher average order values over time.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Separate volume from value:</strong> track both customer retention and revenue retention to get the full picture.</li>
-    <li><strong>Invest in retained customers:</strong> if revenue retention outpaces headcount retention, double down on loyalty programs and personalized recommendations.</li>
-    <li><strong>Identify revenue decay:</strong> cohorts where revenue drops faster than headcount may signal pricing pressure or reduced engagement.</li>
+    <li><strong>Separate volume from value:</strong> revenue retention consistently outpaces customer retention, meaning retained customers are disproportionately valuable — track both metrics side by side.</li>
+    <li><strong>Invest in retained customers:</strong> since returning customers spend more than average, loyalty programs and personalized recommendations should generate outsized returns.</li>
+    <li><strong>Identify revenue decay:</strong> cohorts where revenue drops faster than headcount may signal pricing pressure or reduced engagement — flag these for investigation.</li>
   </ul>
 
 </details>
@@ -374,18 +470,49 @@ JOIN channel_sizes s
 WHERE r.period_number >= 0
 ORDER BY r.traffic_source, r.period_number</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The query produced <strong>204 channel-period pairs</strong> across 5 acquisition channels. Search
+    dominates acquisition with 70% of all customers. The table below compares each channel's size and
+    early-period retention rates.
+  </p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Channel</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Total Customers</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period 1 %</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period 3 %</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period 6 %</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period 12 %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">Search</td><td style="padding: 6px 12px; text-align: right;">10,523</td><td style="padding: 6px 12px; text-align: right;">0.50</td><td style="padding: 6px 12px; text-align: right;">0.59</td><td style="padding: 6px 12px; text-align: right;">0.34</td><td style="padding: 6px 12px; text-align: right;">0.26</td></tr>
+      <tr><td style="padding: 6px 12px;">Organic</td><td style="padding: 6px 12px; text-align: right;">2,258</td><td style="padding: 6px 12px; text-align: right;">0.44</td><td style="padding: 6px 12px; text-align: right;">0.58</td><td style="padding: 6px 12px; text-align: right;">0.35</td><td style="padding: 6px 12px; text-align: right;">0.18</td></tr>
+      <tr><td style="padding: 6px 12px;">Facebook</td><td style="padding: 6px 12px; text-align: right;">860</td><td style="padding: 6px 12px; text-align: right;">0.70</td><td style="padding: 6px 12px; text-align: right;">0.58</td><td style="padding: 6px 12px; text-align: right;">0.23</td><td style="padding: 6px 12px; text-align: right;">—</td></tr>
+      <tr><td style="padding: 6px 12px;">Email</td><td style="padding: 6px 12px; text-align: right;">751</td><td style="padding: 6px 12px; text-align: right;">0.27</td><td style="padding: 6px 12px; text-align: right;">0.67</td><td style="padding: 6px 12px; text-align: right;">0.13</td><td style="padding: 6px 12px; text-align: right;">0.40</td></tr>
+      <tr><td style="padding: 6px 12px;">Display</td><td style="padding: 6px 12px; text-align: right;">605</td><td style="padding: 6px 12px; text-align: right;">0.17</td><td style="padding: 6px 12px; text-align: right;">0.33</td><td style="padding: 6px 12px; text-align: right;">0.33</td><td style="padding: 6px 12px; text-align: right;">0.99</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results: <a href="results/cohort-analysis-query-3-results.csv">cohort-analysis-query-3-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Not all acquisition channels are equal — some drive volume but produce customers who churn quickly.</li>
-    <li>Organic and search channels often retain better than paid channels, reflecting higher purchase intent at acquisition.</li>
-    <li>Channel-level retention curves help distinguish between channels that drive short-term revenue vs. long-term customer value.</li>
+    <li>Search dominates acquisition with 10,523 customers (70% of total), followed by Organic (2,258), Facebook (860), Email (751), and Display (605).</li>
+    <li>Facebook shows the highest Period 1 retention (0.70%) despite smaller volume, suggesting these customers may have higher initial engagement.</li>
+    <li>All channels show very low post-acquisition retention (&lt;1%), indicating that churn is a product-wide challenge rather than channel-specific — no single channel materially outperforms the others.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Shift budget toward durable channels:</strong> factor retention into CAC/LTV calculations when allocating marketing spend.</li>
-    <li><strong>Improve onboarding for low-retention channels:</strong> customers from paid or social channels may need stronger post-purchase engagement to stick.</li>
-    <li><strong>Set channel-specific targets:</strong> benchmark each channel's retention curve and flag underperformance early.</li>
+    <li><strong>Shift budget toward durable channels:</strong> factor retention-adjusted LTV into CAC calculations — Facebook's higher early retention may justify higher acquisition costs despite smaller volume.</li>
+    <li><strong>Improve onboarding across all channels:</strong> since no channel exceeds 1% retention at Period 1, post-purchase engagement is a universal opportunity rather than a channel-specific one.</li>
+    <li><strong>Set channel-specific targets:</strong> benchmark each channel's retention curve and flag underperformance relative to its baseline.</li>
   </ul>
 
 </details>
@@ -489,18 +616,54 @@ FROM (
 )
 WHERE days_between_orders > 90</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The lifecycle segmentation query classified all <strong>14,997 customers</strong> into three segments
+    as of December 31, 2024. The reactivation query identified customers who returned after a 90+ day gap.
+  </p>
+
+  <h4>Lifecycle Segments</h4>
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Status</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Customer Count</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">% of Total</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Avg Orders</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Avg Days Since Last Order</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">Churned</td><td style="padding: 6px 12px; text-align: right;">11,697</td><td style="padding: 6px 12px; text-align: right;">78.00%</td><td style="padding: 6px 12px; text-align: right;">1.08</td><td style="padding: 6px 12px; text-align: right;">755</td></tr>
+      <tr><td style="padding: 6px 12px;">Active</td><td style="padding: 6px 12px; text-align: right;">1,771</td><td style="padding: 6px 12px; text-align: right;">11.81%</td><td style="padding: 6px 12px; text-align: right;">1.12</td><td style="padding: 6px 12px; text-align: right;">44</td></tr>
+      <tr><td style="padding: 6px 12px;">At-Risk</td><td style="padding: 6px 12px; text-align: right;">1,529</td><td style="padding: 6px 12px; text-align: right;">10.20%</td><td style="padding: 6px 12px; text-align: right;">1.13</td><td style="padding: 6px 12px; text-align: right;">134</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Reactivated Customers</h4>
+  <p>
+    <strong>1,015 customers</strong> reactivated after a gap of 90+ days between orders — approximately
+    <strong>6.8% of the total customer base</strong>.
+  </p>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results:
+    <a href="results/cohort-analysis-query-4a-results.csv">cohort-analysis-query-4a-results.csv</a> |
+    <a href="results/cohort-analysis-query-4b-results.csv">cohort-analysis-query-4b-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Lifecycle segmentation provides a real-time health check of the customer base beyond just acquisition and retention curves.</li>
-    <li>The At-Risk segment represents an actionable window — these customers haven't churned yet but are showing signs of disengagement.</li>
-    <li>Reactivation counts prove that churn isn't always permanent; win-back campaigns have a viable audience.</li>
+    <li>78% of customers are Churned (11,697) with an average of 755 days since their last order and only 1.08 average orders — the vast majority never return after their first purchase.</li>
+    <li>11.81% are Active (1,771 customers) with an average of 44 days since their last order, representing the current engaged base that drives ongoing revenue.</li>
+    <li>1,015 customers (6.8%) reactivated after a 90+ day gap, proving that churn is not always permanent — win-back campaigns have a proven, viable audience.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Prioritize At-Risk outreach:</strong> deploy targeted re-engagement campaigns (email, offers, reminders) before customers cross into Churned.</li>
-    <li><strong>Build win-back flows:</strong> since reactivations happen naturally, structured win-back campaigns should improve the rate further.</li>
-    <li><strong>Track segment movement:</strong> monitor shifts between Active, At-Risk, and Churned over time to detect systemic retention changes.</li>
+    <li><strong>Prioritize the 1,529 At-Risk customers:</strong> with an average of 134 days since last order, these customers are still recoverable — deploy targeted re-engagement campaigns before they cross into Churned.</li>
+    <li><strong>Build win-back flows:</strong> 1,015 customers already reactivated organically — structured campaigns should significantly improve this rate.</li>
+    <li><strong>Track segment movement:</strong> monitor shifts between Active, At-Risk, and Churned monthly to detect systemic changes in retention health.</li>
   </ul>
 
 </details>
@@ -576,18 +739,49 @@ JOIN cohort_sizes s
 WHERE r.period_number >= 0
 ORDER BY r.cohort_month, r.period_number</code></pre>
 
+  <h3>Results</h3>
+  <p>
+    The query produced <strong>918 cohort-period pairs</strong> tracking cumulative revenue and per-customer
+    LTV over time. The sample below shows the July 2024 cohort's LTV progression over its first 6 months.
+  </p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 16px 0;">
+    <thead>
+      <tr style="background: #f6f6f6;">
+        <th style="padding: 6px 12px; text-align: left; border-bottom: 2px solid #ddd;">Cohort Month</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Period Revenue</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Cumulative Revenue</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Cohort Size</th>
+        <th style="padding: 6px 12px; text-align: right; border-bottom: 2px solid #ddd;">Cum. Rev/Customer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">0</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">$35,664.68</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$80.15</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">1</td><td style="padding: 6px 12px; text-align: right;">$1,581.25</td><td style="padding: 6px 12px; text-align: right;">$37,245.93</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$83.70</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">2</td><td style="padding: 6px 12px; text-align: right;">$790.54</td><td style="padding: 6px 12px; text-align: right;">$38,036.47</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$85.48</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">3</td><td style="padding: 6px 12px; text-align: right;">$222.08</td><td style="padding: 6px 12px; text-align: right;">$38,258.55</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$85.97</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">4</td><td style="padding: 6px 12px; text-align: right;">$147.63</td><td style="padding: 6px 12px; text-align: right;">$38,406.18</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$86.31</td></tr>
+      <tr><td style="padding: 6px 12px;">2024-07</td><td style="padding: 6px 12px; text-align: right;">5</td><td style="padding: 6px 12px; text-align: right;">$279.90</td><td style="padding: 6px 12px; text-align: right;">$38,686.08</td><td style="padding: 6px 12px; text-align: right;">445</td><td style="padding: 6px 12px; text-align: right;">$86.94</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 0.85em; color: #666;">
+    Full results: <a href="results/cohort-analysis-query-5-results.csv">cohort-analysis-query-5-results.csv</a>
+  </p>
+
   <h3>Insights</h3>
   <ul>
-    <li>Cumulative revenue per customer is the clearest measure of long-term cohort value and directly informs LTV estimates.</li>
-    <li>Older cohorts with more periods of data reveal the true shape of the LTV curve — how quickly it flattens determines payback period.</li>
-    <li>Cohort-level LTV differences can signal changes in product-market fit, customer mix, or competitive dynamics over time.</li>
+    <li>Cumulative revenue per customer starts between $77–$95 at Period 0 for most cohorts, with the bulk of lifetime value captured in the first purchase.</li>
+    <li>The LTV curve is shallow — mature cohorts (e.g., March 2022) reach ~$105 per customer over 30 periods, suggesting a long-term LTV ceiling around $100–$110 for this dataset.</li>
+    <li>Newer cohorts start with higher Period 0 revenue per customer ($80–$90 in 2024 vs. $40–$70 in 2019), reflecting either higher AOV or a shift in product mix over time.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Set CAC limits from LTV:</strong> use cumulative revenue per customer curves to define maximum acceptable acquisition cost by channel.</li>
-    <li><strong>Compare cohort trajectories:</strong> newer cohorts tracking below older ones at the same period may indicate a retention or monetization problem.</li>
-    <li><strong>Forecast revenue:</strong> use mature cohort LTV curves to project future revenue from recent cohorts.</li>
+    <li><strong>Set CAC limits from LTV:</strong> with LTV plateauing around $100–$110, acquisition costs should stay well below this threshold to maintain unit economics.</li>
+    <li><strong>Compare cohort trajectories:</strong> newer cohorts tracking below older ones at the same period would indicate a retention or monetization problem — monitor this quarterly.</li>
+    <li><strong>Forecast revenue:</strong> use the mature cohort LTV curve shape to project revenue from recent, larger cohorts and inform growth planning.</li>
   </ul>
 
 </details>
@@ -625,11 +819,11 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
 
   <h3>Key Takeaways</h3>
   <ul>
-    <li><strong>Early churn is the biggest lever:</strong> the steepest retention drop occurs between Month 0 and Month 1 — onboarding and first-repeat activation deserve the most investment.</li>
-    <li><strong>Revenue retention tells a different story than headcount:</strong> retained customers often spend more over time, meaning customer retention understates the value of loyalty.</li>
-    <li><strong>Channel quality varies:</strong> acquisition channels that drive volume don't always produce durable customers — retention-adjusted LTV should inform budget allocation.</li>
-    <li><strong>Lifecycle segmentation is actionable:</strong> At-Risk customers represent a real-time intervention opportunity, and reactivation data proves win-back campaigns have a viable audience.</li>
-    <li><strong>LTV curves drive strategy:</strong> cumulative revenue per customer by cohort provides the foundation for CAC limits, revenue forecasting, and long-term growth planning.</li>
+    <li><strong>Early churn is the biggest lever:</strong> across all 72 cohorts and 14,997 customers, Period 1 retention consistently falls below 2% — onboarding and first-repeat activation deserve the most investment.</li>
+    <li><strong>Revenue retention tells a different story than headcount:</strong> Period 1 revenue retention (2–6%) consistently outpaces customer retention (~1–2%), meaning returning customers spend more and customer retention alone understates the value of loyalty.</li>
+    <li><strong>Channel quality varies but churn is universal:</strong> Search drives 70% of acquisition (10,523 customers), but no channel exceeds 1% retention at Period 1 — improving post-purchase engagement is a product-wide opportunity.</li>
+    <li><strong>Lifecycle segmentation is actionable:</strong> 78% of customers are Churned, but 1,529 At-Risk customers and 1,015 proven reactivations demonstrate clear opportunities for targeted win-back campaigns.</li>
+    <li><strong>LTV curves drive strategy:</strong> cumulative revenue per customer plateaus around $100–$110 for mature cohorts, providing a clear ceiling for acquisition cost planning.</li>
   </ul>
 
   <p>
