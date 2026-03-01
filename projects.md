@@ -78,6 +78,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
+    <a class="project-card-link looker-card" href="/projects/cohort-retention-looker-studio/" aria-label="Open Looker Studio project: Cohort Retention Analysis">
+      <div class="project-card-content">
+        <h2>Looker Studio</h2>
+        <h3>Cohort Retention Analysis</h3>
+        <p>End-to-end cohort retention analysis using BigQuery SQL and an interactive Looker Studio dashboard — covering retention matrices, revenue retention, acquisition channels, lifecycle segmentation, and cumulative LTV.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6">
     <a class="project-card-link julius-card" href="/projects/julius-ai-health-analysis/" aria-label="Open Julius AI project: Health Data Analysis">
       <div class="project-card-content">
         <h2>Julius AI</h2>
