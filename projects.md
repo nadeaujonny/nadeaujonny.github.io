@@ -99,4 +99,15 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
+  <div class="col-6">
+    <a class="project-card-link pipeline-card" href="/projects/analyst-jobs-api-pipeline/" aria-label="Open API Pipeline project: Federal Job Market Analytics Pipeline">
+      <div class="project-card-content">
+        <h2>API Pipeline</h2>
+        <h3>Federal Job Market Analytics Pipeline</h3>
+        <p>Automated ETL pipeline that collects federal job postings daily from the USAJobs API, stores them in SQLite, and visualizes insights through an interactive Streamlit dashboard.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
 </div>
