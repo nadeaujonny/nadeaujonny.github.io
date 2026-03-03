@@ -834,12 +834,14 @@ code, pre {
   );
 }
 
-/* API Pipeline card – red overlay */
+/* API Pipeline card – red top, blue bottom overlay */
 .pipeline-card::before {
   background: linear-gradient(
     to bottom,
     rgba(160, 25, 30, 0.62) 0%,
-    rgba(90, 15, 25, 0.72) 100%
+    rgba(160, 25, 30, 0.62) 50%,
+    rgba(20, 50, 120, 0.72) 50%,
+    rgba(20, 50, 120, 0.72) 100%
   );
 }
 
@@ -912,7 +914,9 @@ code, pre {
   background: linear-gradient(
     to bottom,
     rgba(160, 25, 30, 0.52) 0%,
-    rgba(90, 15, 25, 0.62) 100%
+    rgba(160, 25, 30, 0.52) 50%,
+    rgba(20, 50, 120, 0.62) 50%,
+    rgba(20, 50, 120, 0.62) 100%
   );
 }
 
