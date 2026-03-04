@@ -23,6 +23,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
+    <a class="project-card-link sql-card" href="/projects/sql-housing-data-cleaning-project/" aria-label="Open SQL project: Nashville Housing Data Cleaning & Transformation">
+      <div class="project-card-content">
+        <h2>SQL</h2>
+        <h3>Nashville Housing Data Cleaning & Transformation</h3>
+        <p>End-to-end data cleaning in MySQL — DDL, DML, string functions, type conversions, deduplication, views, indexes, and stored procedures on 56,000+ property records.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6">
     <a class="project-card-link excel-card" href="/projects/excel-superstore-analysis/" aria-label="Open Excel project: Sales Dashboard – Superstore Dataset">
       <div class="project-card-content">
         <h2>Excel</h2>
