@@ -19,11 +19,7 @@ Mathematics Graduate | Google Data Analytics Certified | End-to-end Analytics Pr
 </p>
 
 ## About Me
-I am a data analyst with a strong background in mathematics and problem-solving. My experience in teaching and tutoring has strengthened my ability to explain complex ideas clearly and communicate insights effectively.
-
-Through hands-on projects and professional training, I have developed practical experience in SQL, Excel, Tableau, and BigQuery. I focus on cleaning data, identifying trends, and building dashboards that help teams make informed decisions.
-
-I am currently seeking an entry-level or junior data analyst role where I can apply analytical skills to support data-driven decision-making.
+Since October 24th 2025, I have delved deep into data analytics--getting Google Certified, studying hard skills further from free online YouTube bootcamp videos, and completing independent data analytics projects to build my portfolio. I want to be clear, throughout my data analytics journey I have actively tried to maintain a balance between internalizing critical knowledge, personally developing key skills, and being the creator of authentic and deliberate analytical and procedural decisions; but also using the cutting-edge technology that is becoming more and more publicly available to efficiently produce quality output. I will not hide my use of these revolutionary tools that are without a doubt powerful and effective and can benefit the workflows of professionals virtually everywhere. But at the same time I will try my best to take the time to internalize the work that I have orchestrated into existence and take responsibility for its contents. 
 
 ---
 
