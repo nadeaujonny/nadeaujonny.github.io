@@ -27,7 +27,7 @@ I am currently seeking an entry-level or junior data analyst role where I can ap
 
 ---
 
-## Technical Skils
+## Technical Skills
 - **SQL & Databases:** BigQuery, MySQL, Selecting, Filtering, Operators, Strings, Dates, Ints/Doubles, Sorting, Limits,
 Grouping, Aggregations, Joins, Subqueries, Case Statements, CTEs, Window Functions, DDL, DML
 - **Spreadsheets:** Excel, Google Sheets, Formulas, Data Cleaning, Lookups, Pivot Tables, Charts, Slicers, Filtering,
