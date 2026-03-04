@@ -704,7 +704,7 @@ code, pre {
 
 /* Individual card backgrounds */
 .sql-card {
-  background-image: url("../sql-project-card-image.png") !important;
+  background-image: url("../sql-data-cleaning-project-card-image.png") !important;
 }
 
 .excel-card {
