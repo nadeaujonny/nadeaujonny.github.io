@@ -707,6 +707,10 @@ code, pre {
   background-image: url("../sql-data-cleaning-project-card-image.png") !important;
 }
 
+.sql-ecommerce-card {
+  background-image: url("../sql-project-card-image.png") !important;
+}
+
 .excel-card {
   background-image: url("../excel-project-card-image.png") !important;
 }
