@@ -525,6 +525,53 @@ def transform_raw_file(filepath=None):
 
     return {"inserted": inserted, "skipped": skipped}</code></pre>
 
+  <h3>Streamlit Dashboard with Cached Data and Dynamic Filters (app.py)</h3>
+  <p>The dashboard uses Streamlit's TTL-based caching to load data from SQLite, applies multi-select sidebar filters across all pages, and renders KPI metric cards with interactive Plotly visualizations.</p>
+
+<pre><code class="language-python">@st.cache_data(ttl=3600)
+def load_data():
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql_query("SELECT * FROM job_postings", conn)
+    conn.close()
+    return df
+
+df = load_data()
+
+# --- Sidebar Filters ---
+st.sidebar.title("🔍 Filters")
+
+all_roles = sorted(df["role_category"].dropna().unique())
+selected_roles = st.sidebar.multiselect("Role Category", all_roles, default=all_roles)
+
+all_states = sorted(df["state"].dropna().unique())
+selected_states = st.sidebar.multiselect("State", all_states)
+
+all_depts = sorted(df["department_name"].dropna().unique())
+selected_depts = st.sidebar.multiselect("Department", all_depts)
+
+# Apply filters
+filtered = df.copy()
+if selected_roles:
+    filtered = filtered[filtered["role_category"].isin(selected_roles)]
+if selected_states:
+    filtered = filtered[filtered["state"].isin(selected_states)]
+if selected_depts:
+    filtered = filtered[filtered["department_name"].isin(selected_depts)]
+
+# --- Executive Overview KPI Cards ---
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    st.metric("Total Postings", f"{len(filtered):,}")
+with col2:
+    avg_salary = filtered["salary_mid"].dropna().mean()
+    st.metric("Avg Salary (Mid)", f"${avg_salary:,.0f}" if pd.notna(avg_salary) else "N/A")
+with col3:
+    unique_agencies = filtered["organization_name"].nunique()
+    st.metric("Agencies Hiring", f"{unique_agencies:,}")
+with col4:
+    unique_states = filtered["state"].dropna().nunique()
+    st.metric("States with Postings", f"{unique_states}")</code></pre>
+
   <h3>Source Code</h3>
   <ul>
     <li><a href="code/collect.py">collect.py</a> -- API collection with pagination and retry logic</li>
