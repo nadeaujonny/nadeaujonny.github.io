@@ -865,6 +865,14 @@ code, pre {
   );
 }
 
+.sql-ecommerce-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 75, 155, 0.62) 0%,
+    rgba(30, 75, 155, 0.75) 100%
+  );
+}
+
 .excel-card:hover::before {
   background: linear-gradient(
     to bottom,
