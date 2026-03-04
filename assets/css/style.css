@@ -762,12 +762,12 @@ code, pre {
   transition: background 160ms ease;
 }
 
-/* SQL card – blue overlay */
+/* SQL card – MySQL blue & orange overlay */
 .sql-card::before {
   background: linear-gradient(
     to bottom,
-    rgba(20, 50, 120, 0.58) 0%,
-    rgba(20, 50, 120, 0.73) 100%
+    rgba(0, 117, 143, 0.62) 0%,
+    rgba(242, 145, 17, 0.75) 100%
   );
 }
 
@@ -847,8 +847,8 @@ code, pre {
 .sql-card:hover::before {
   background: linear-gradient(
     to bottom,
-    rgba(20, 50, 120, 0.50) 0%,
-    rgba(20, 50, 120, 0.65) 100%
+    rgba(0, 117, 143, 0.54) 0%,
+    rgba(242, 145, 17, 0.67) 100%
   );
 }
 
