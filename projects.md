@@ -12,7 +12,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 <div class="grid">
 
   <div class="col-6">
-    <a class="project-card-link sql-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Revenue & Returns Analysis">
+    <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Revenue & Returns Analysis">
       <div class="project-card-content">
         <h2>SQL</h2>
         <h3>E-commerce Revenue & Returns Analysis</h3>
