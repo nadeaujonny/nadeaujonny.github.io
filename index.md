@@ -21,7 +21,9 @@ Mathematics Graduate | Google Data Analytics Certified | End-to-end Analytics Pr
 ## About Me
 Since October 24th 2025, I have delved deep into data analytics--getting Google Certified, studying hard skills further from free online YouTube bootcamp videos, and completing independent data analytics projects to build my portfolio. I want to be clear, throughout my data analytics journey I have actively tried to maintain a balance between internalizing critical knowledge, personally developing key skills, and being the origin of authentic and deliberate analytical and procedural decisions; but also using the resources available to me to efficiently produce quality output. 
 
-My background is in Mathematics Education. I have experience in communicating technical information as well as in public speaking. I am a good problem solver and was able solve math problems that none of the other tutors or teachers at the Private School I was employed at could solve on multiple occasions.  
+My background is in Education--Math Education especially. In many instances when I worked as a general tutor at Mr. J's Academy, I had to think on the fly to assist the high school students with any and all of the questions they had--topics spanning from Econ, English, and Government to Earth Science, Graphic Design, and of course Math. I have had formal teacher training where I have given dozens of full length, personally designed Math lectures to rooms full of high school students.
+
+I am also a good problem solver. There were several times at Mr. J's Academy where a given student would need help on a math problem, and every other tutor and teacher who worked there did not know how to solve it. They would then call me in and I would solve it and explain it without difficulty.
 
 ---
 
