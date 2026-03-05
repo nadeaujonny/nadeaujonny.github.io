@@ -23,7 +23,7 @@ Since October 24th 2025, I have delved deep into data analytics--getting Google 
 
 My background is in Education--Math Education especially. In many instances when I worked at Mr. J's Academy, I had to think on the fly to assist the high school students with any and all of the questions they had--topics spanning from Econ, English, and Government to Earth Science, Graphic Design, and of course Math. I have had formal teacher training where I have delivered dozens of full-length, personally designed Math lectures to classrooms full of students and peers.
 
-I am also a good problem solver. There were several times at Mr. J's Academy where a given student would need help on a math problem, and every other tutor and teacher who worked there did not know how to solve it. They would then call me in and I would solve it and explain it without difficulty. I love collaborative problem solving settings, often thriving when working on group projects back in college. The thought of working as a data analyst excites me, and I have worked to develop wherewithal that I would need to be able to bring to the table.
+I am also a good problem solver. There were several times at Mr. J's Academy where a given student would need help on a math problem, and every other tutor and teacher who worked there did not know how to solve it. They would then call me in and I would solve it and explain it without difficulty. I love collaborative problem solving settings, often thriving when working on group projects back in college. The thought of working as a data analyst excites me, and I have worked to develop the wherewithal that I would need to be able to bring to the table.
 
 ---
 
