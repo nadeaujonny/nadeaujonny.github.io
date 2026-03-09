@@ -12,6 +12,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 <div class="grid">
 
   <div class="col-6">
+    <a class="project-card-link supplychain-card" href="/projects/supply-chain-oracle-powerbi/" aria-label="Open Supply Chain project: Demand Forecasting, Inventory Optimization & MRP Simulation">
+      <div class="project-card-content">
+        <h2>Oracle SQL · Excel · Power BI</h2>
+        <h3>Supply Chain Demand Forecasting, Inventory Optimization & MRP Simulation</h3>
+        <p>End-to-end automated supply chain analytics — Oracle stored procedures, MRP net requirements simulation, ABC/XYZ classification, demand forecasting, and a six-page Power BI dashboard with scheduled refresh and data alerts.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="col-6">
     <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Revenue & Returns Analysis">
       <div class="project-card-content">
         <h2>SQL</h2>
