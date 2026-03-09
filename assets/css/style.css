@@ -693,7 +693,8 @@ code, pre {
 .r-card,
 .julius-card,
 .looker-card,
-.pipeline-card {
+.pipeline-card,
+.supplychain-card {
   position: relative;
   background-size: cover !important;
   background-position: center !important;
@@ -745,6 +746,10 @@ code, pre {
   background-image: url("../pipeline-project-card-image.png") !important;
 }
 
+.supplychain-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+}
+
 /* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
@@ -754,7 +759,8 @@ code, pre {
 .r-card::before,
 .julius-card::before,
 .looker-card::before,
-.pipeline-card::before {
+.pipeline-card::before,
+.supplychain-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -956,6 +962,7 @@ code, pre {
 .julius-card .project-card-content,
 .looker-card .project-card-content,
 .pipeline-card .project-card-content,
+.supplychain-card .project-card-content,
 .sql-card .project-card-content *,
 .excel-card .project-card-content *,
 .tableau-card .project-card-content *,
@@ -964,7 +971,8 @@ code, pre {
 .r-card .project-card-content *,
 .julius-card .project-card-content *,
 .looker-card .project-card-content *,
-.pipeline-card .project-card-content * {
+.pipeline-card .project-card-content *,
+.supplychain-card .project-card-content * {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
@@ -977,7 +985,8 @@ code, pre {
 .project-card-link.r-card .project-card-content h2,
 .project-card-link.julius-card .project-card-content h2,
 .project-card-link.pipeline-card .project-card-content h2,
-.project-card-link.looker-card .project-card-content h2 {
+.project-card-link.looker-card .project-card-content h2,
+.project-card-link.supplychain-card .project-card-content h2 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -998,7 +1007,8 @@ code, pre {
 .project-card-link.r-card .project-card-content h3,
 .project-card-link.julius-card .project-card-content h3,
 .project-card-link.pipeline-card .project-card-content h3,
-.project-card-link.looker-card .project-card-content h3 {
+.project-card-link.looker-card .project-card-content h3,
+.project-card-link.supplychain-card .project-card-content h3 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -1019,7 +1029,8 @@ code, pre {
 .r-card .project-card-content p,
 .julius-card .project-card-content p,
 .pipeline-card .project-card-content p,
-.looker-card .project-card-content p {
+.looker-card .project-card-content p,
+.supplychain-card .project-card-content p {
   color: rgba(255, 255, 255, 0.90) !important;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -1035,7 +1046,8 @@ code, pre {
 .r-card .project-card-cta,
 .julius-card .project-card-cta,
 .pipeline-card .project-card-cta,
-.looker-card .project-card-cta {
+.looker-card .project-card-cta,
+.supplychain-card .project-card-cta {
   color: rgba(255, 255, 255, 0.95) !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
@@ -1048,7 +1060,8 @@ code, pre {
 .r-card:hover .project-card-cta,
 .julius-card:hover .project-card-cta,
 .pipeline-card:hover .project-card-cta,
-.looker-card:hover .project-card-cta {
+.looker-card:hover .project-card-cta,
+.supplychain-card:hover .project-card-cta {
   color: #fff !important;
 }
 
