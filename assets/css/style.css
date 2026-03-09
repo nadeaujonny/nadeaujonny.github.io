@@ -747,7 +747,7 @@ code, pre {
 }
 
 .supplychain-card {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  background: linear-gradient(135deg, #4a0e0e 0%, #7a1a1a 40%, #c74634 100%);
 }
 
 /* Colored overlay using pseudo-element */
@@ -862,6 +862,15 @@ code, pre {
   );
 }
 
+/* Supply Chain card – Oracle red overlay */
+.supplychain-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(199, 70, 52, 0.62) 0%,
+    rgba(120, 20, 15, 0.78) 100%
+  );
+}
+
 /* Slightly lighter overlay on hover */
 .sql-card:hover::before {
   background: linear-gradient(
@@ -940,6 +949,14 @@ code, pre {
     to bottom,
     rgba(160, 25, 30, 0.52) 0%,
     rgba(20, 50, 120, 0.62) 100%
+  );
+}
+
+.supplychain-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(199, 70, 52, 0.54) 0%,
+    rgba(120, 20, 15, 0.70) 100%
   );
 }
 
