@@ -28,14 +28,10 @@ My portfolio reflects end-to-end analytical work across SQL, Excel, Tableau, Pow
 ---
 
 ## Technical Skills
-- **SQL & Databases:** BigQuery, MySQL, Selecting, Filtering, Operators, Strings, Dates, Ints/Doubles, Sorting, Limits,
-Grouping, Aggregations, Joins, Subqueries, Case Statements, CTEs, Window Functions, DDL, DML
-- **Spreadsheets:** Excel, Google Sheets, Formulas, Data Cleaning, Lookups, Pivot Tables, Charts, Slicers, Filtering,
-Formatting, Conditional Formatting, Relative/Absolute Cell Referencing, Aggregation Functions, Data Type Management,
-Date Functions, String Functions, Conditional Functions, Logical Functions, Power Query
-- **Visualization & BI:** Tableau (Calculated Fields, KPI Cards, Filters, Charts, Graphs, Maps), Power BI (DAX, Star Schema,
-Power Query), Excel Dashboards, KPI Design, Data Storytelling
-- **Programming:** R (tidyverse, janitor, ggplot2), Jupyter Notebooks, RStudio
+- **SQL & Databases:** BigQuery, MySQL, Joins, CTEs, Window Functions, DDL/DML
+- **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query
+- **Visualization & BI:** Tableau, Power BI (DAX, Star Schema), Data Storytelling
+- **Programming:** Python, R (tidyverse, ggplot2), Jupyter Notebooks
 - **Version Control:** Git, GitHub
 
 ---
