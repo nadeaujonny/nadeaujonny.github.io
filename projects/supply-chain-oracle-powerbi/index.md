@@ -741,6 +741,16 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     </figcaption>
   </figure>
 
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>On-time delivery is critically low at 42.7%</strong>, with a 57.3% late rate &mdash; signaling a systemic fulfillment issue rather than isolated delays.</li>
+      <li><strong>Fishing and Cleats are the top revenue categories</strong>, each exceeding $4M, while Computers and Shop By Sport contribute minimally and may warrant portfolio review.</li>
+      <li><strong>Standard Class dominates shipment volume (59.69%)</strong> and has the highest on-time rate, while First Class and Second Class show significantly worse delivery performance.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> Prioritize a root cause analysis on late deliveries, particularly for First Class and Second Class shipping modes. Consider renegotiating carrier SLAs or consolidating volume toward Standard Class where delivery windows allow.
+  </div>
+
   <h3>Page 2: Demand Analysis &amp; Forecasting</h3>
   <p>
     Monthly demand trends by product category with ETS forecast overlays, confidence intervals, and forecast
@@ -760,6 +770,17 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     </figcaption>
   </figure>
 
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>ETS model achieves a strong 6.6% MAPE overall</strong>, confirming reliable forecast accuracy across the product portfolio.</li>
+      <li><strong>Cardio Equipment is the weakest forecast category</strong> at 9.5% MAPE with a forecast bias of +49.7, indicating significant over-forecasting that could lead to excess inventory.</li>
+      <li><strong>Cleats shows the largest negative forecast bias (&minus;71.2)</strong>, meaning consistent under-forecasting &mdash; a stockout risk if safety stock levels are not adjusted.</li>
+      <li><strong>Camping &amp; Hiking has the best accuracy</strong> (4.3% MAPE, 17.2 MAE) and a near-neutral bias, making it the most predictable category for planning.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> Investigate Cardio Equipment demand drivers to correct the over-forecasting bias, and increase safety stock buffers for Cleats to offset the under-forecasting tendency until the model is retrained.
+  </div>
+
   <h3>Page 3: Inventory Optimization &amp; ABC/XYZ Analysis</h3>
   <p>
     ABC/XYZ classification matrix, inventory health metrics, safety stock levels, and reorder point analysis.
@@ -777,6 +798,17 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
       Page 3: Inventory Optimization &amp; ABC/XYZ Analysis &mdash; classification matrix and inventory health metrics.
     </figcaption>
   </figure>
+
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>Class A items drive 77% of total revenue ($27.12M)</strong>, confirming that a small portion of the catalog generates the majority of sales &mdash; classic Pareto distribution.</li>
+      <li><strong>Camping &amp; Hiking, Fishing, and Water Sports carry excess inventory</strong> with current days of supply (~51 days) far exceeding their targets (~30 days), tying up working capital unnecessarily.</li>
+      <li><strong>All categories show LOW stockout risk</strong>, which is positive, but the three overstocked categories have a recommended action to review for promotion or redistribution.</li>
+      <li><strong>Cleats, Indoor/Outdoor Games, and Women&rsquo;s Apparel are on track</strong> with current days of supply (~17 days) closely aligned to targets, requiring only monitoring.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> Run targeted promotions or redistribute excess stock for Camping &amp; Hiking, Fishing, and Water Sports to free up approximately $597K in tied-up inventory capital. Maintain current replenishment policies for the on-track categories.
+  </div>
 
   <h3>Page 4: Fulfillment &amp; Logistics Performance</h3>
   <p>
@@ -796,6 +828,17 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     </figcaption>
   </figure>
 
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>First Class shipping has the worst late rate (~95%)</strong>, followed by Second Class (~85%) &mdash; premium shipping modes are paradoxically the least reliable, creating customer satisfaction risk.</li>
+      <li><strong>Europe and Latin America carry the most revenue at risk</strong> from late deliveries (~$10M and ~$9M respectively), making them priority regions for fulfillment improvement.</li>
+      <li><strong>On-time rate trend shows persistent volatility</strong> between 40&ndash;45% across all periods with no clear improvement trajectory, suggesting structural rather than seasonal issues.</li>
+      <li><strong>Standard Class has the best late rate (~45%)</strong> despite handling nearly 60% of total shipment volume, indicating it is the most operationally efficient mode.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> Conduct a carrier performance review for First Class and Second Class providers &mdash; the near-total late rates suggest either unrealistic promised delivery windows or underperforming logistics partners. Consider adjusting quoted delivery timelines or switching carriers for high-risk markets (Europe, Latin America).
+  </div>
+
   <h3>Page 5: Supply Plan &amp; MRP Analysis</h3>
   <p>
     Time-phased MRP output showing gross requirements, scheduled receipts, projected on-hand inventory, net
@@ -813,6 +856,17 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
       Page 5: Supply Plan &amp; MRP Analysis &mdash; time-phased MRP output with exception log.
     </figcaption>
   </figure>
+
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>All MRP exception flags are &ldquo;OK&rdquo;</strong> across the 6-month planning horizon (Oct 2017 &ndash; Mar 2018), confirming that planned order receipts adequately cover gross requirements for every category.</li>
+      <li><strong>Gross requirements remain stable at ~48,600 units total</strong> across the planning window, with planned order receipts (~43,000 units) plus projected on-hand (~9,000 units) maintaining coverage.</li>
+      <li><strong>Cleats and Cardio Equipment have the highest gross requirements</strong> (~2,000 and ~1,100 units/month respectively), making them the most critical categories for supply continuity.</li>
+      <li><strong>EOQ lot sizing is maintaining above-safety-stock levels</strong> for all A-class categories, validating that the calculated order quantities from the inventory optimization phase are working correctly.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> The clean MRP run confirms supply plan health. Continue monitoring for demand shifts that could trigger exceptions, and consider tightening lot sizes for lower-volume categories to reduce carrying costs without risking stockouts.
+  </div>
 
   <h3>Page 6: Insights, Recommendations &amp; Closed-Loop Actions</h3>
   <p>
@@ -832,6 +886,16 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
       Page 6: Insights, Recommendations &amp; Closed-Loop Actions &mdash; findings feed back into master data updates.
     </figcaption>
   </figure>
+
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
+    <strong>Key Findings &amp; Insights:</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li><strong>This page consolidates the four major findings</strong> from the analysis: forecast accuracy by category, inventory health gaps, fulfillment risk by shipping mode and market, and MRP plan status.</li>
+      <li><strong>The closed-loop design is the key differentiator</strong> &mdash; insights discovered on this page feed directly back into Oracle master data (lead times, safety stock levels, lot sizing rules) via stored procedures, ensuring continuous improvement.</li>
+      <li><strong>Three actionable priorities emerge:</strong> (1) correct Cardio Equipment over-forecasting, (2) redistribute ~$597K in excess inventory from three overstocked categories, and (3) address the 57.3% late delivery rate driven primarily by First Class shipping.</li>
+    </ul>
+    <strong>Business Recommendation:</strong> Use this page as the operational starting point for weekly supply chain review meetings. The automated refresh pipeline ensures that as master data corrections take effect, their impact is visible in the next dashboard cycle &mdash; enabling data-driven, iterative improvement.
+  </div>
 
   <h3>DAX Measures</h3>
   <p>Key DAX measures created for the dashboard:</p>
