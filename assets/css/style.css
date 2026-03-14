@@ -747,7 +747,7 @@ code, pre {
 }
 
 .supplychain-card {
-  background: linear-gradient(135deg, #4a0e0e 0%, #7a1a1a 40%, #c74634 100%);
+  background-image: url("../supply-chain-project-card-image.png") !important;
 }
 
 /* Colored overlay using pseudo-element */
