@@ -128,6 +128,62 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     Primary keys, foreign keys, and indexes were defined across all tables. Planning parameter columns were added to
     PRODUCTS to enable MRP simulation directly within the Oracle layer.
   </p>
+
+  <h4>PRODUCTS Table with Planning Parameters</h4>
+  <pre><code class="language-sql">CREATE TABLE PRODUCTS (
+    PRODUCT_CARD_ID     NUMBER(10)      NOT NULL,
+    PRODUCT_NAME        VARCHAR2(300)   NOT NULL,
+    CATEGORY_ID         NUMBER(10)      NOT NULL,
+    CATEGORY_NAME       VARCHAR2(150)   NOT NULL,
+    DEPARTMENT_ID       NUMBER(10)      NOT NULL,
+    DEPARTMENT_NAME     VARCHAR2(100)   NOT NULL,
+    PRODUCT_PRICE       NUMBER(12,2)    NOT NULL,
+    PRODUCT_STATUS      NUMBER(1)       DEFAULT 0,
+    -- Planning parameters (populated during inventory optimization phase)
+    LEAD_TIME_DAYS      NUMBER(5)       DEFAULT 7,
+    LOT_SIZING_METHOD   VARCHAR2(20)    DEFAULT 'EOQ',
+    MIN_ORDER_QTY       NUMBER(10)      DEFAULT 1,
+    EOQ                 NUMBER(12,2),
+    SAFETY_STOCK        NUMBER(12,2),
+    REORDER_POINT       NUMBER(12,2),
+    CONSTRAINT PK_PRODUCTS PRIMARY KEY (PRODUCT_CARD_ID)
+);</code></pre>
+
+  <h4>MRP Requirements Table</h4>
+  <pre><code class="language-sql">CREATE TABLE MRP_REQUIREMENTS (
+    MRP_ID              NUMBER(10)      GENERATED ALWAYS AS IDENTITY NOT NULL,
+    CATEGORY_NAME       VARCHAR2(150)   NOT NULL,
+    PLANNING_PERIOD     DATE            NOT NULL,
+    GROSS_REQUIREMENTS  NUMBER(12,2)    DEFAULT 0,
+    SCHEDULED_RECEIPTS  NUMBER(12,2)    DEFAULT 0,
+    PROJECTED_ON_HAND   NUMBER(12,2)    DEFAULT 0,
+    NET_REQUIREMENTS    NUMBER(12,2)    DEFAULT 0,
+    PLANNED_ORDER_QTY   NUMBER(12,2)    DEFAULT 0,
+    PLANNED_RELEASE_DATE DATE,
+    LOT_SIZING_METHOD   VARCHAR2(20),
+    EXCEPTION_FLAG      VARCHAR2(50),
+    EXCEPTION_MESSAGE   VARCHAR2(500),
+    CONSTRAINT PK_MRP_REQUIREMENTS PRIMARY KEY (MRP_ID)
+);</code></pre>
+
+  <h4>Data Normalization &mdash; ROW_NUMBER Deduplication</h4>
+  <pre><code class="language-sql">-- Deduplicate customers from staging (one row per order item → one row per customer)
+INSERT INTO CUSTOMERS (
+    CUSTOMER_ID, FIRST_NAME, LAST_NAME, EMAIL, SEGMENT,
+    CITY, STATE, COUNTRY, STREET, ZIPCODE, LATITUDE, LONGITUDE
+)
+SELECT
+    CUSTOMER_ID, NVL(CUSTOMER_FNAME, 'Unknown'), NVL(CUSTOMER_LNAME, 'Unknown'),
+    CUSTOMER_EMAIL, NVL(CUSTOMER_SEGMENT, 'Unknown'),
+    CUSTOMER_CITY, CUSTOMER_STATE, CUSTOMER_COUNTRY,
+    CUSTOMER_STREET, CUSTOMER_ZIPCODE, LATITUDE, LONGITUDE
+FROM (
+    SELECT s.*,
+        ROW_NUMBER() OVER (PARTITION BY s.CUSTOMER_ID ORDER BY s.ORDER_DATE DESC) AS rn
+    FROM STG_DATACO s
+)
+WHERE rn = 1;</code></pre>
+
   <p>
     <strong>SQL Scripts:</strong>
     <a href="sql/01_schema_ddl.sql">01_schema_ddl.sql</a> &mdash; Schema DDL (8 normalized tables + staging table) |
@@ -143,8 +199,141 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>SQL Query Categories</h3>
   <ul>
-    <li><strong>Demand &amp; Sales Extraction</strong> (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>) &mdash; Monthly and weekly order volume aggregations by category, rolling 3-month and 6-month demand averages using window functions (AVG OVER), month-over-month growth via LAG, cumulative revenue calculations for Pareto analysis, and coefficient of variation for demand variability classification. These queries build the core time series that feeds the Demand Forecasting dashboard (Page 2) and provides inputs for ABC/XYZ classification and MRP planning. SQL techniques include CTEs, window functions (AVG OVER, SUM OVER, LAG, RANK), date truncation, and rolling cumulative calculations across ~180K order items and 50 product categories.</li>
-    <li><strong>Inventory &amp; Fulfillment Analytics</strong> (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>) &mdash; Two query groups covering the full inventory and logistics pipeline. Group A (Inventory &amp; Product Analytics) performs ABC classification by cumulative revenue percentage using Pareto analysis, builds the combined ABC-XYZ matrix with automated policy recommendations per cell, generates the product master summary with planning parameters (lead time, lot size, MOQ, EOQ, safety stock, reorder point), and calculates average daily demand rates. Group B (Fulfillment &amp; Logistics Performance) computes monthly on-time delivery rates, analyzes planned vs. actual lead time variance, ranks late delivery root causes by category/region/shipping mode using RANK and DENSE_RANK, and compares shipping mode performance across all fulfillment dimensions. These queries feed Pages 3 (Inventory Optimization) and 4 (Fulfillment &amp; Logistics) of the Power BI dashboard. SQL techniques include cumulative SUM for Pareto analysis, CASE WHEN classification logic, multi-table JOINs across all five transactional tables, and date arithmetic for lead time calculations.</li>
+    <li><strong>Demand &amp; Sales Extraction</strong> (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>) &mdash; Monthly and weekly order volume aggregations by category, rolling 3-month and 6-month demand averages using window functions (AVG OVER), month-over-month growth via LAG, cumulative revenue calculations for Pareto analysis, and coefficient of variation for demand variability classification. These queries build the core time series that feeds the Demand Forecasting dashboard (Page 2) and provides inputs for ABC/XYZ classification and MRP planning. SQL techniques include CTEs, window functions (AVG OVER, SUM OVER, LAG, RANK), date truncation, and rolling cumulative calculations across ~180K order items and 50 product categories.
+      <details style="margin-top: 8px;">
+        <summary><em>Rolling Averages &amp; Demand Variability (XYZ Classification)</em></summary>
+        <pre><code class="language-sql">-- Rolling 3-month and 6-month demand averages using window functions
+WITH monthly_demand AS (
+    SELECT
+        TRUNC(o.ORDER_DATE, 'MM')       AS ORDER_MONTH,
+        p.CATEGORY_NAME,
+        SUM(oi.QUANTITY)                 AS TOTAL_UNITS,
+        ROUND(SUM(oi.SALES), 2)         AS REVENUE
+    FROM ORDER_ITEMS oi
+    JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
+    JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
+    WHERE o.ORDER_STATUS NOT IN ('CANCELED', 'SUSPECTED_FRAUD')
+    GROUP BY TRUNC(o.ORDER_DATE, 'MM'), p.CATEGORY_NAME
+)
+SELECT
+    ORDER_MONTH, CATEGORY_NAME, TOTAL_UNITS, REVENUE,
+    ROUND(AVG(TOTAL_UNITS) OVER (
+        PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ), 2) AS ROLLING_3M_AVG_UNITS,
+    ROUND(AVG(TOTAL_UNITS) OVER (
+        PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+        ROWS BETWEEN 5 PRECEDING AND CURRENT ROW
+    ), 2) AS ROLLING_6M_AVG_UNITS
+FROM monthly_demand
+ORDER BY CATEGORY_NAME, ORDER_MONTH;</code></pre>
+        <pre><code class="language-sql">-- Demand variability for XYZ classification (coefficient of variation)
+WITH monthly_demand AS ( ... ),
+variability AS (
+    SELECT
+        CATEGORY_NAME,
+        ROUND(AVG(MONTHLY_UNITS), 2)    AS AVG_MONTHLY_DEMAND,
+        ROUND(STDDEV(MONTHLY_UNITS), 2) AS STDDEV_DEMAND,
+        ROUND(STDDEV(MONTHLY_UNITS) / NULLIF(AVG(MONTHLY_UNITS), 0), 4)
+                                         AS COEFF_OF_VARIATION
+    FROM monthly_demand
+    GROUP BY CATEGORY_NAME
+)
+SELECT CATEGORY_NAME, AVG_MONTHLY_DEMAND, COEFF_OF_VARIATION,
+    CASE
+        WHEN COEFF_OF_VARIATION &lt;= 0.5 THEN 'X'   -- Stable demand
+        WHEN COEFF_OF_VARIATION &lt;= 1.0 THEN 'Y'   -- Moderate variability
+        ELSE                                 'Z'    -- Highly volatile
+    END AS XYZ_CLASS
+FROM variability
+ORDER BY COEFF_OF_VARIATION;</code></pre>
+      </details>
+    </li>
+    <li><strong>Inventory &amp; Fulfillment Analytics</strong> (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>) &mdash; Two query groups covering the full inventory and logistics pipeline. Group A (Inventory &amp; Product Analytics) performs ABC classification by cumulative revenue percentage using Pareto analysis, builds the combined ABC-XYZ matrix with automated policy recommendations per cell, generates the product master summary with planning parameters (lead time, lot size, MOQ, EOQ, safety stock, reorder point), and calculates average daily demand rates. Group B (Fulfillment &amp; Logistics Performance) computes monthly on-time delivery rates, analyzes planned vs. actual lead time variance, ranks late delivery root causes by category/region/shipping mode using RANK and DENSE_RANK, and compares shipping mode performance across all fulfillment dimensions. These queries feed Pages 3 (Inventory Optimization) and 4 (Fulfillment &amp; Logistics) of the Power BI dashboard. SQL techniques include cumulative SUM for Pareto analysis, CASE WHEN classification logic, multi-table JOINs across all five transactional tables, and date arithmetic for lead time calculations.
+      <details style="margin-top: 8px;">
+        <summary><em>ABC Classification (Pareto Analysis) &amp; ABC-XYZ Policy Matrix</em></summary>
+        <pre><code class="language-sql">-- ABC Classification by cumulative revenue percentage
+WITH category_revenue AS (
+    SELECT p.CATEGORY_NAME, ROUND(SUM(oi.SALES), 2) AS TOTAL_REVENUE,
+           SUM(oi.QUANTITY) AS TOTAL_UNITS
+    FROM ORDER_ITEMS oi
+    JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
+    JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
+    WHERE o.ORDER_STATUS NOT IN ('CANCELED', 'SUSPECTED_FRAUD')
+    GROUP BY p.CATEGORY_NAME
+),
+ranked AS (
+    SELECT CATEGORY_NAME, TOTAL_REVENUE, TOTAL_UNITS,
+        ROUND(SUM(TOTAL_REVENUE) OVER (
+            ORDER BY TOTAL_REVENUE DESC
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) * 100.0 / SUM(TOTAL_REVENUE) OVER (), 2) AS CUMULATIVE_PCT
+    FROM category_revenue
+)
+SELECT CATEGORY_NAME, TOTAL_REVENUE, CUMULATIVE_PCT,
+    CASE
+        WHEN CUMULATIVE_PCT &lt;= 80 THEN 'A'
+        WHEN CUMULATIVE_PCT &lt;= 95 THEN 'B'
+        ELSE 'C'
+    END AS ABC_CLASS
+FROM ranked
+ORDER BY TOTAL_REVENUE DESC;</code></pre>
+        <pre><code class="language-sql">-- ABC-XYZ matrix with automated inventory policy recommendations
+SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
+    a.ABC_CLASS || '-' || x.XYZ_CLASS AS MATRIX_CELL,
+    CASE
+        WHEN a.ABC_CLASS = 'A' AND x.XYZ_CLASS = 'X'
+            THEN 'JIT/Kanban — low safety stock, frequent small orders'
+        WHEN a.ABC_CLASS = 'A' AND x.XYZ_CLASS = 'Y'
+            THEN 'Moderate safety stock — demand-driven replenishment'
+        WHEN a.ABC_CLASS = 'B' AND x.XYZ_CLASS = 'X'
+            THEN 'Standard replenishment — EOQ with periodic review'
+        WHEN a.ABC_CLASS = 'C' AND x.XYZ_CLASS = 'Z'
+            THEN 'Evaluate for discontinuation — high risk, low reward'
+        ...
+    END AS INVENTORY_POLICY
+FROM abc a
+JOIN xyz x ON a.CATEGORY_NAME = x.CATEGORY_NAME
+ORDER BY a.ABC_CLASS, x.XYZ_CLASS;</code></pre>
+      </details>
+      <details style="margin-top: 8px;">
+        <summary><em>On-Time Delivery Rate &amp; Late Delivery Root Cause Ranking</em></summary>
+        <pre><code class="language-sql">-- Monthly on-time delivery rate
+SELECT
+    TRUNC(o.ORDER_DATE, 'MM') AS ORDER_MONTH,
+    COUNT(s.SHIPMENT_ID) AS TOTAL_SHIPMENTS,
+    ROUND(
+        SUM(CASE WHEN s.DELIVERY_STATUS IN ('Shipping on time', 'Advance shipping')
+            THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(s.SHIPMENT_ID), 0), 2
+    ) AS ON_TIME_PCT,
+    ROUND(
+        SUM(CASE WHEN s.DELIVERY_STATUS = 'Late delivery'
+            THEN 1 ELSE 0 END) * 100.0 / NULLIF(COUNT(s.SHIPMENT_ID), 0), 2
+    ) AS LATE_PCT
+FROM SHIPMENTS s
+JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
+JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
+GROUP BY TRUNC(o.ORDER_DATE, 'MM')
+ORDER BY ORDER_MONTH;</code></pre>
+        <pre><code class="language-sql">-- Late delivery root cause ranking by category using DENSE_RANK
+SELECT p.CATEGORY_NAME,
+    COUNT(s.SHIPMENT_ID) AS TOTAL_SHIPMENTS,
+    SUM(CASE WHEN s.LATE_DELIVERY_RISK = 1 THEN 1 ELSE 0 END) AS LATE_DELIVERIES,
+    ROUND(
+        SUM(CASE WHEN s.LATE_DELIVERY_RISK = 1 THEN 1 ELSE 0 END)
+        * 100.0 / NULLIF(COUNT(s.SHIPMENT_ID), 0), 2
+    ) AS LATE_DELIVERY_PCT,
+    DENSE_RANK() OVER (
+        ORDER BY SUM(CASE WHEN s.LATE_DELIVERY_RISK = 1 THEN 1 ELSE 0 END)
+        * 100.0 / NULLIF(COUNT(s.SHIPMENT_ID), 0) DESC
+    ) AS LATE_RANK
+FROM SHIPMENTS s
+JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
+JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
+GROUP BY p.CATEGORY_NAME
+ORDER BY LATE_DELIVERY_PCT DESC;</code></pre>
+      </details>
+    </li>
     <li><strong>Planned vs. Actual Analysis</strong> &mdash; Lead time variance, on-time delivery rate, late delivery root cause ranking</li>
     <li><strong>MRP &amp; Supply Planning</strong> &mdash; Gross requirements, projected on-hand, net requirements, planned order releases, exception flagging</li>
     <li><strong>Forecast Accuracy</strong> &mdash; Forecast vs. actual comparison, MAE, MAPE, bias detection</li>
@@ -163,6 +352,80 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     <li><strong>VW_MRP_PLAN</strong> &mdash; Complete MRP output by category and period: gross requirements, scheduled receipts, projected on-hand, net requirements, planned orders, exception flags</li>
     <li><strong>VW_FORECAST_VS_ACTUAL</strong> &mdash; Forecast accuracy: planned vs. actual demand by category/period with MAE, MAPE, and bias pre-calculated</li>
   </ul>
+
+  <details style="margin-top: 8px;">
+    <summary><em>VW_DEMAND_TIMESERIES &mdash; Monthly Demand with Rolling Averages &amp; YoY Comparison</em></summary>
+    <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_DEMAND_TIMESERIES AS
+WITH monthly_raw AS (
+    SELECT
+        TRUNC(o.ORDER_DATE, 'MM')       AS ORDER_MONTH,
+        p.CATEGORY_NAME,
+        COUNT(oi.ORDER_ITEM_ID)         AS ITEM_COUNT,
+        SUM(oi.QUANTITY)                 AS TOTAL_UNITS,
+        ROUND(SUM(oi.SALES), 2)         AS REVENUE,
+        COUNT(DISTINCT o.ORDER_ID)      AS ORDER_COUNT
+    FROM ORDER_ITEMS oi
+    JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
+    JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
+    WHERE o.ORDER_STATUS NOT IN ('CANCELED', 'SUSPECTED_FRAUD')
+    GROUP BY TRUNC(o.ORDER_DATE, 'MM'), p.CATEGORY_NAME
+)
+SELECT ORDER_MONTH, CATEGORY_NAME, TOTAL_UNITS, REVENUE,
+    ROUND(AVG(TOTAL_UNITS) OVER (
+        PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ), 2) AS ROLLING_3M_AVG_UNITS,
+    ROUND(AVG(TOTAL_UNITS) OVER (
+        PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+        ROWS BETWEEN 5 PRECEDING AND CURRENT ROW
+    ), 2) AS ROLLING_6M_AVG_UNITS,
+    LAG(TOTAL_UNITS, 12) OVER (
+        PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+    ) AS UNITS_PRIOR_YEAR,
+    CASE
+        WHEN LAG(TOTAL_UNITS, 12) OVER (
+            PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH) > 0 THEN
+            ROUND((TOTAL_UNITS - LAG(TOTAL_UNITS, 12) OVER (
+                PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH
+            )) * 100.0 / LAG(TOTAL_UNITS, 12) OVER (
+                PARTITION BY CATEGORY_NAME ORDER BY ORDER_MONTH), 2)
+        ELSE NULL
+    END AS YOY_CHANGE_PCT
+FROM monthly_raw;</code></pre>
+  </details>
+
+  <details style="margin-top: 8px;">
+    <summary><em>VW_FORECAST_VS_ACTUAL &mdash; Forecast Accuracy with Error Metrics</em></summary>
+    <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_FORECAST_VS_ACTUAL AS
+SELECT
+    f.CATEGORY_NAME, f.FORECAST_PERIOD, f.FORECASTED_QTY,
+    f.FORECAST_METHOD, f.CONFIDENCE_LOWER, f.CONFIDENCE_UPPER,
+    d.ACTUAL_UNITS, d.ACTUAL_REVENUE,
+    ROUND(f.FORECASTED_QTY - d.ACTUAL_UNITS, 2)            AS FORECAST_ERROR,
+    ROUND(ABS(f.FORECASTED_QTY - d.ACTUAL_UNITS), 2)       AS ABS_ERROR,
+    CASE WHEN d.ACTUAL_UNITS > 0 THEN
+        ROUND(ABS(f.FORECASTED_QTY - d.ACTUAL_UNITS) * 100.0
+              / d.ACTUAL_UNITS, 2)
+    ELSE NULL END                                           AS APE,
+    CASE
+        WHEN f.FORECASTED_QTY > d.ACTUAL_UNITS THEN 'OVER'
+        WHEN f.FORECASTED_QTY &lt; d.ACTUAL_UNITS THEN 'UNDER'
+        ELSE 'EXACT'
+    END AS BIAS_DIRECTION
+FROM FORECAST_PLAN f
+LEFT JOIN (
+    SELECT p.CATEGORY_NAME, TRUNC(o.ORDER_DATE, 'MM') AS ORDER_MONTH,
+           SUM(oi.QUANTITY) AS ACTUAL_UNITS,
+           ROUND(SUM(oi.SALES), 2) AS ACTUAL_REVENUE
+    FROM ORDER_ITEMS oi
+    JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
+    JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
+    WHERE o.ORDER_STATUS NOT IN ('CANCELED', 'SUSPECTED_FRAUD')
+    GROUP BY p.CATEGORY_NAME, TRUNC(o.ORDER_DATE, 'MM')
+) d ON f.CATEGORY_NAME = d.CATEGORY_NAME
+    AND f.FORECAST_PERIOD = d.ORDER_MONTH;</code></pre>
+  </details>
+
   <p>
     <strong>SQL Scripts:</strong>
     <a href="sql/03_demand_queries.sql">03_demand_queries.sql</a> &mdash; Demand &amp; sales extraction queries |
@@ -185,6 +448,50 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     <li>Refreshes all six reporting views</li>
     <li>Logs refresh timestamp and row counts for audit trail</li>
   </ol>
+  <details style="margin-top: 8px;">
+    <summary><em>MRP Net Requirements Calculation &mdash; Core Loop</em></summary>
+    <pre><code class="language-sql">-- For each category with forecast data, loop through planning periods
+FOR period_rec IN (
+    SELECT FORECAST_PERIOD, FORECASTED_QTY
+    FROM FORECAST_PLAN
+    WHERE CATEGORY_NAME = v_category
+    ORDER BY FORECAST_PERIOD
+) LOOP
+    v_gross_req    := period_rec.FORECASTED_QTY;
+    v_sched_rcpt   := 0;
+
+    -- Projected On-Hand = prior on-hand - gross + scheduled receipts
+    v_proj_on_hand := v_prior_on_hand - v_gross_req + v_sched_rcpt;
+
+    -- Net Requirements = MAX(0, gross - prior on-hand - sched receipts)
+    v_net_req := GREATEST(0, v_gross_req - v_prior_on_hand - v_sched_rcpt);
+
+    -- Planned Order Qty (apply lot sizing: EOQ, FIXED_LOT, or LOT_FOR_LOT)
+    IF v_net_req > 0 THEN
+        CASE v_lot_method
+            WHEN 'EOQ' THEN
+                v_planned_qty := CEIL(v_net_req / GREATEST(v_lot_size, 1))
+                                 * GREATEST(v_lot_size, 1);
+            WHEN 'LOT_FOR_LOT' THEN
+                v_planned_qty := v_net_req;
+            ...
+        END CASE;
+        v_proj_on_hand := v_proj_on_hand + v_planned_qty;
+    END IF;
+
+    -- Exception Flagging
+    IF v_proj_on_hand &lt; v_safety_stock THEN
+        v_exception := 'EXPEDITE';
+    END IF;
+    IF v_release_date &lt; TRUNC(SYSDATE) THEN
+        v_exception := 'RESCHEDULE';
+    END IF;
+
+    INSERT INTO MRP_REQUIREMENTS (...) VALUES (...);
+    v_prior_on_hand := v_proj_on_hand;  -- carry forward
+END LOOP;</code></pre>
+  </details>
+
   <p>
     <strong>SQL Script:</strong> <a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp.sql</a>
   </p>
@@ -196,6 +503,24 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     ensuring that reporting views and MRP outputs are always current when downstream consumers (Power BI, analysts)
     access the data each morning.
   </p>
+
+  <details style="margin-top: 8px;">
+    <summary><em>DBMS_SCHEDULER Job Creation</em></summary>
+    <pre><code class="language-sql">BEGIN
+    DBMS_SCHEDULER.CREATE_JOB(
+        job_name        => 'JOB_REFRESH_SUPPLY_CHAIN',
+        job_type        => 'STORED_PROCEDURE',
+        job_action      => 'REFRESH_SUPPLY_CHAIN_DATA',
+        start_date      => TRUNC(SYSDATE + 1) + INTERVAL '2' HOUR,  -- Next day 2:00 AM
+        repeat_interval => 'FREQ=DAILY; BYHOUR=2; BYMINUTE=0; BYSECOND=0',
+        enabled         => TRUE,
+        auto_drop       => FALSE,
+        comments        => 'Nightly refresh: inventory snapshot recalculation, '
+                        || 'MRP net requirements calculation, and reporting view '
+                        || 'data update. Runs at 2:00 AM daily.'
+    );
+END;</code></pre>
+  </details>
 
 </details>
 
@@ -256,6 +581,33 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     were formatted for write-back to Oracle's FORECAST_PLAN table
     (see <a href="sql/07_forecast_plan_writeback.sql">07_forecast_plan_writeback.sql</a>).
   </p>
+
+  <details style="margin-top: 8px;">
+    <summary><em>Forecast Write-Back &amp; MRP Cross-Check</em></summary>
+    <pre><code class="language-sql">-- Insert ETS forecast data into Oracle (7 A-class categories x 6 months = 42 rows)
+INSERT INTO FORECAST_PLAN (
+    CATEGORY_NAME, FORECAST_PERIOD, FORECASTED_QTY,
+    CONFIDENCE_LOWER, CONFIDENCE_UPPER,
+    FORECAST_METHOD, MAPE_PCT, NOTES
+) VALUES (
+    'Fishing', DATE '2017-10-01', 505,
+    471.25, 537.65,
+    'ETS', 5.78, 'Auto-seasonality; 6-month horizon'
+);
+-- ... 41 additional INSERT statements for remaining categories/periods
+
+-- Cross-check: Forecast vs MRP Gross Requirements (variance should be 0)
+SELECT
+    fp.CATEGORY_NAME, fp.FORECAST_PERIOD,
+    fp.FORECASTED_QTY                          AS "Forecast Qty",
+    mr.GROSS_REQUIREMENTS                      AS "MRP Gross Req",
+    fp.FORECASTED_QTY - mr.GROSS_REQUIREMENTS  AS "Variance"
+FROM FORECAST_PLAN fp
+LEFT JOIN MRP_REQUIREMENTS mr
+    ON fp.CATEGORY_NAME = mr.CATEGORY_NAME
+    AND fp.FORECAST_PERIOD = mr.PLANNING_PERIOD
+ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
+  </details>
 
   <h3>ABC/XYZ Classification</h3>
   <p>
