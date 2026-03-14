@@ -558,9 +558,8 @@ END;</code></pre>
     (see <a href="sql/07_forecast_plan_writeback.sql">07_forecast_plan_writeback.sql</a>).
   </p>
 
-  <details style="margin-top: 8px;">
-    <summary><em>Forecast Write-Back &amp; MRP Cross-Check</em></summary>
-    <pre><code class="language-sql">-- Insert ETS forecast data into Oracle (7 A-class categories x 6 months = 42 rows)
+  <h4>Forecast Write-Back &amp; MRP Cross-Check</h4>
+  <pre><code class="language-sql">-- Insert ETS forecast data into Oracle (7 A-class categories x 6 months = 42 rows)
 INSERT INTO FORECAST_PLAN (
     CATEGORY_NAME, FORECAST_PERIOD, FORECASTED_QTY,
     CONFIDENCE_LOWER, CONFIDENCE_UPPER,
@@ -583,7 +582,6 @@ LEFT JOIN MRP_REQUIREMENTS mr
     ON fp.CATEGORY_NAME = mr.CATEGORY_NAME
     AND fp.FORECAST_PERIOD = mr.PLANNING_PERIOD
 ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
-  </details>
 
   <h3>ABC/XYZ Classification</h3>
   <p>
