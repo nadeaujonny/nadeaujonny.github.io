@@ -198,11 +198,21 @@ WHERE rn = 1;</code></pre>
   <div style="margin-top: 12px;"></div>
 
   <h3>SQL Query Categories</h3>
+
+  <p>
+    Five query groups extract, transform, and classify supply chain data across ~180K order items and 50 product categories.
+    SQL techniques include CTEs, window functions (AVG OVER, SUM OVER, LAG, RANK, DENSE_RANK), date arithmetic, and cumulative calculations.
+  </p>
   <ul>
-    <li><strong>Demand &amp; Sales Extraction</strong> (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>) &mdash; Monthly and weekly order volume aggregations by category, rolling 3-month and 6-month demand averages using window functions (AVG OVER), month-over-month growth via LAG, cumulative revenue calculations for Pareto analysis, and coefficient of variation for demand variability classification. These queries build the core time series that feeds the Demand Forecasting dashboard (Page 2) and provides inputs for ABC/XYZ classification and MRP planning. SQL techniques include CTEs, window functions (AVG OVER, SUM OVER, LAG, RANK), date truncation, and rolling cumulative calculations across ~180K order items and 50 product categories.
-      <details style="margin-top: 8px;">
-        <summary><em>Rolling Averages &amp; Demand Variability (XYZ Classification)</em></summary>
-        <pre><code class="language-sql">-- Rolling 3-month and 6-month demand averages using window functions
+    <li><strong>Demand &amp; Sales Extraction</strong> (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>) &mdash; Monthly/weekly order volume by category, rolling 3- and 6-month averages, MoM growth via LAG, cumulative revenue for Pareto analysis, and coefficient of variation for XYZ classification</li>
+    <li><strong>Inventory &amp; Fulfillment Analytics</strong> (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>) &mdash; ABC classification via cumulative revenue percentage, ABC-XYZ policy matrix, product master with planning parameters, on-time delivery rates, lead time variance, and late delivery root cause ranking</li>
+    <li><strong>Planned vs. Actual Analysis</strong> &mdash; Lead time variance, on-time delivery rate, late delivery root cause ranking</li>
+    <li><strong>MRP &amp; Supply Planning</strong> &mdash; Gross requirements, projected on-hand, net requirements, planned order releases, exception flagging</li>
+    <li><strong>Forecast Accuracy</strong> &mdash; Forecast vs. actual comparison, MAE, MAPE, bias detection</li>
+  </ul>
+
+  <h4>Rolling Averages &amp; Demand Variability (XYZ Classification)</h4>
+  <pre><code class="language-sql">-- Rolling 3-month and 6-month demand averages using window functions
 WITH monthly_demand AS (
     SELECT
         TRUNC(o.ORDER_DATE, 'MM')       AS ORDER_MONTH,
@@ -227,7 +237,8 @@ SELECT
     ), 2) AS ROLLING_6M_AVG_UNITS
 FROM monthly_demand
 ORDER BY CATEGORY_NAME, ORDER_MONTH;</code></pre>
-        <pre><code class="language-sql">-- Demand variability for XYZ classification (coefficient of variation)
+
+  <pre><code class="language-sql">-- Demand variability for XYZ classification (coefficient of variation)
 WITH monthly_demand AS ( ... ),
 variability AS (
     SELECT
@@ -247,12 +258,9 @@ SELECT CATEGORY_NAME, AVG_MONTHLY_DEMAND, COEFF_OF_VARIATION,
     END AS XYZ_CLASS
 FROM variability
 ORDER BY COEFF_OF_VARIATION;</code></pre>
-      </details>
-    </li>
-    <li><strong>Inventory &amp; Fulfillment Analytics</strong> (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>) &mdash; Two query groups covering the full inventory and logistics pipeline. Group A (Inventory &amp; Product Analytics) performs ABC classification by cumulative revenue percentage using Pareto analysis, builds the combined ABC-XYZ matrix with automated policy recommendations per cell, generates the product master summary with planning parameters (lead time, lot size, MOQ, EOQ, safety stock, reorder point), and calculates average daily demand rates. Group B (Fulfillment &amp; Logistics Performance) computes monthly on-time delivery rates, analyzes planned vs. actual lead time variance, ranks late delivery root causes by category/region/shipping mode using RANK and DENSE_RANK, and compares shipping mode performance across all fulfillment dimensions. These queries feed Pages 3 (Inventory Optimization) and 4 (Fulfillment &amp; Logistics) of the Power BI dashboard. SQL techniques include cumulative SUM for Pareto analysis, CASE WHEN classification logic, multi-table JOINs across all five transactional tables, and date arithmetic for lead time calculations.
-      <details style="margin-top: 8px;">
-        <summary><em>ABC Classification (Pareto Analysis) &amp; ABC-XYZ Policy Matrix</em></summary>
-        <pre><code class="language-sql">-- ABC Classification by cumulative revenue percentage
+
+  <h4>ABC Classification (Pareto Analysis) &amp; ABC-XYZ Policy Matrix</h4>
+  <pre><code class="language-sql">-- ABC Classification by cumulative revenue percentage
 WITH category_revenue AS (
     SELECT p.CATEGORY_NAME, ROUND(SUM(oi.SALES), 2) AS TOTAL_REVENUE,
            SUM(oi.QUANTITY) AS TOTAL_UNITS
@@ -278,7 +286,8 @@ SELECT CATEGORY_NAME, TOTAL_REVENUE, CUMULATIVE_PCT,
     END AS ABC_CLASS
 FROM ranked
 ORDER BY TOTAL_REVENUE DESC;</code></pre>
-        <pre><code class="language-sql">-- ABC-XYZ matrix with automated inventory policy recommendations
+
+  <pre><code class="language-sql">-- ABC-XYZ matrix with automated inventory policy recommendations
 SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
     a.ABC_CLASS || '-' || x.XYZ_CLASS AS MATRIX_CELL,
     CASE
@@ -295,10 +304,9 @@ SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
 FROM abc a
 JOIN xyz x ON a.CATEGORY_NAME = x.CATEGORY_NAME
 ORDER BY a.ABC_CLASS, x.XYZ_CLASS;</code></pre>
-      </details>
-      <details style="margin-top: 8px;">
-        <summary><em>On-Time Delivery Rate &amp; Late Delivery Root Cause Ranking</em></summary>
-        <pre><code class="language-sql">-- Monthly on-time delivery rate
+
+  <h4>On-Time Delivery Rate &amp; Late Delivery Root Cause Ranking</h4>
+  <pre><code class="language-sql">-- Monthly on-time delivery rate
 SELECT
     TRUNC(o.ORDER_DATE, 'MM') AS ORDER_MONTH,
     COUNT(s.SHIPMENT_ID) AS TOTAL_SHIPMENTS,
@@ -315,7 +323,8 @@ JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
 JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
 GROUP BY TRUNC(o.ORDER_DATE, 'MM')
 ORDER BY ORDER_MONTH;</code></pre>
-        <pre><code class="language-sql">-- Late delivery root cause ranking by category using DENSE_RANK
+
+  <pre><code class="language-sql">-- Late delivery root cause ranking by category using DENSE_RANK
 SELECT p.CATEGORY_NAME,
     COUNT(s.SHIPMENT_ID) AS TOTAL_SHIPMENTS,
     SUM(CASE WHEN s.LATE_DELIVERY_RISK = 1 THEN 1 ELSE 0 END) AS LATE_DELIVERIES,
@@ -332,30 +341,20 @@ JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
 JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
 GROUP BY p.CATEGORY_NAME
 ORDER BY LATE_DELIVERY_PCT DESC;</code></pre>
-      </details>
-    </li>
-    <li><strong>Planned vs. Actual Analysis</strong> &mdash; Lead time variance, on-time delivery rate, late delivery root cause ranking</li>
-    <li><strong>MRP &amp; Supply Planning</strong> &mdash; Gross requirements, projected on-hand, net requirements, planned order releases, exception flagging</li>
-    <li><strong>Forecast Accuracy</strong> &mdash; Forecast vs. actual comparison, MAE, MAPE, bias detection</li>
-  </ul>
 
   <h3>Reporting Views</h3>
   <p>
-    Six reporting views pre-aggregate data for downstream consumption by Power Query and Power BI, eliminating
-    repeated complex joins at the dashboard layer.
+    Six views pre-aggregate data for Power Query and Power BI, eliminating repeated complex joins at the dashboard layer:
+    <strong>VW_DEMAND_TIMESERIES</strong> (monthly demand with rolling averages),
+    <strong>VW_FULFILLMENT_KPI</strong> (on-time rate, lead time, late delivery by category/mode),
+    <strong>VW_PRODUCT_MASTER</strong> (SKU-level revenue, demand CV, ABC/XYZ inputs, planning parameters),
+    <strong>VW_PLANNED_VS_ACTUAL</strong> (lead time and delivery date variances),
+    <strong>VW_MRP_PLAN</strong> (gross/net requirements, projected on-hand, planned orders, exceptions),
+    <strong>VW_FORECAST_VS_ACTUAL</strong> (forecast accuracy with MAE, MAPE, bias).
   </p>
-  <ul>
-    <li><strong>VW_DEMAND_TIMESERIES</strong> &mdash; Pre-aggregated monthly demand by category, ready for Excel forecast sheet ingestion</li>
-    <li><strong>VW_FULFILLMENT_KPI</strong> &mdash; Monthly on-time rate, average lead time, late delivery rate, lead time variance by category and shipping mode</li>
-    <li><strong>VW_PRODUCT_MASTER</strong> &mdash; SKU-level summary with total revenue, total units, average demand rate, demand CV, ABC/XYZ classification inputs, and planning parameters</li>
-    <li><strong>VW_PLANNED_VS_ACTUAL</strong> &mdash; Planned vs. actual lead times and delivery dates for variance reporting</li>
-    <li><strong>VW_MRP_PLAN</strong> &mdash; Complete MRP output by category and period: gross requirements, scheduled receipts, projected on-hand, net requirements, planned orders, exception flags</li>
-    <li><strong>VW_FORECAST_VS_ACTUAL</strong> &mdash; Forecast accuracy: planned vs. actual demand by category/period with MAE, MAPE, and bias pre-calculated</li>
-  </ul>
 
-  <details style="margin-top: 8px;">
-    <summary><em>VW_DEMAND_TIMESERIES &mdash; Monthly Demand with Rolling Averages &amp; YoY Comparison</em></summary>
-    <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_DEMAND_TIMESERIES AS
+  <h4>VW_DEMAND_TIMESERIES &mdash; Monthly Demand with Rolling Averages &amp; YoY Comparison</h4>
+  <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_DEMAND_TIMESERIES AS
 WITH monthly_raw AS (
     SELECT
         TRUNC(o.ORDER_DATE, 'MM')       AS ORDER_MONTH,
@@ -392,11 +391,9 @@ SELECT ORDER_MONTH, CATEGORY_NAME, TOTAL_UNITS, REVENUE,
         ELSE NULL
     END AS YOY_CHANGE_PCT
 FROM monthly_raw;</code></pre>
-  </details>
 
-  <details style="margin-top: 8px;">
-    <summary><em>VW_FORECAST_VS_ACTUAL &mdash; Forecast Accuracy with Error Metrics</em></summary>
-    <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_FORECAST_VS_ACTUAL AS
+  <h4>VW_FORECAST_VS_ACTUAL &mdash; Forecast Accuracy with Error Metrics</h4>
+  <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_FORECAST_VS_ACTUAL AS
 SELECT
     f.CATEGORY_NAME, f.FORECAST_PERIOD, f.FORECASTED_QTY,
     f.FORECAST_METHOD, f.CONFIDENCE_LOWER, f.CONFIDENCE_UPPER,
@@ -424,33 +421,23 @@ LEFT JOIN (
     GROUP BY p.CATEGORY_NAME, TRUNC(o.ORDER_DATE, 'MM')
 ) d ON f.CATEGORY_NAME = d.CATEGORY_NAME
     AND f.FORECAST_PERIOD = d.ORDER_MONTH;</code></pre>
-  </details>
 
   <p>
     <strong>SQL Scripts:</strong>
-    <a href="sql/03_demand_queries.sql">03_demand_queries.sql</a> &mdash; Demand &amp; sales extraction queries |
-    <a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a> &mdash; Inventory &amp; fulfillment analytics queries |
-    <a href="sql/05_reporting_views.sql">05_reporting_views.sql</a> &mdash; Six pre-calculated reporting views
+    <a href="sql/03_demand_queries.sql">03_demand_queries.sql</a> |
+    <a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a> |
+    <a href="sql/05_reporting_views.sql">05_reporting_views.sql</a>
   </p>
 
-  <h3>Stored Procedure: REFRESH_SUPPLY_CHAIN_DATA</h3>
+  <h3>Stored Procedure &amp; Scheduling</h3>
   <p>
-    The <code>REFRESH_SUPPLY_CHAIN_DATA</code> procedure packages the full data refresh and MRP calculation pipeline
-    into a single callable command, executed as part of the nightly automation cycle:
+    The <code>REFRESH_SUPPLY_CHAIN_DATA</code> procedure packages the full data refresh and MRP calculation into a single callable command:
+    truncate staging tables, reload transactional data, recalculate derived fields, run MRP net requirements (gross-to-net netting, lot sizing, lead time offsetting, exception flagging),
+    write planned orders to MRP_REQUIREMENTS, refresh all six reporting views, and log audit timestamps. DBMS_SCHEDULER runs this nightly at 2:00 AM.
   </p>
-  <ol>
-    <li>Truncates staging/temp tables to clear stale data</li>
-    <li>Reloads fresh transactional data from source tables</li>
-    <li>Recalculates derived fields (lead time variances, demand aggregations, ABC classification inputs)</li>
-    <li>Reads the latest demand forecast from FORECAST_PLAN</li>
-    <li>Runs MRP net requirements calculation (gross-to-net netting, lot sizing, lead time offsetting, exception flagging)</li>
-    <li>Writes planned order releases to MRP_REQUIREMENTS</li>
-    <li>Refreshes all six reporting views</li>
-    <li>Logs refresh timestamp and row counts for audit trail</li>
-  </ol>
-  <details style="margin-top: 8px;">
-    <summary><em>MRP Net Requirements Calculation &mdash; Core Loop</em></summary>
-    <pre><code class="language-sql">-- For each category with forecast data, loop through planning periods
+
+  <h4>MRP Net Requirements Calculation &mdash; Core Loop</h4>
+  <pre><code class="language-sql">-- For each category with forecast data, loop through planning periods
 FOR period_rec IN (
     SELECT FORECAST_PERIOD, FORECASTED_QTY
     FROM FORECAST_PLAN
@@ -490,23 +477,9 @@ FOR period_rec IN (
     INSERT INTO MRP_REQUIREMENTS (...) VALUES (...);
     v_prior_on_hand := v_proj_on_hand;  -- carry forward
 END LOOP;</code></pre>
-  </details>
 
-  <p>
-    <strong>SQL Script:</strong> <a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp.sql</a>
-  </p>
-
-  <h3>Scheduled Job (DBMS_SCHEDULER)</h3>
-  <p>
-    DBMS_SCHEDULER is configured to run the stored procedure nightly at 2:00 AM &mdash; the same scheduling mechanism
-    used in production Oracle Fusion Cloud environments. This eliminates manual SQL execution from the routine workflow,
-    ensuring that reporting views and MRP outputs are always current when downstream consumers (Power BI, analysts)
-    access the data each morning.
-  </p>
-
-  <details style="margin-top: 8px;">
-    <summary><em>DBMS_SCHEDULER Job Creation</em></summary>
-    <pre><code class="language-sql">BEGIN
+  <h4>DBMS_SCHEDULER Job Creation</h4>
+  <pre><code class="language-sql">BEGIN
     DBMS_SCHEDULER.CREATE_JOB(
         job_name        => 'JOB_REFRESH_SUPPLY_CHAIN',
         job_type        => 'STORED_PROCEDURE',
@@ -520,7 +493,10 @@ END LOOP;</code></pre>
                         || 'data update. Runs at 2:00 AM daily.'
     );
 END;</code></pre>
-  </details>
+
+  <p>
+    <strong>SQL Script:</strong> <a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp.sql</a>
+  </p>
 
 </details>
 
