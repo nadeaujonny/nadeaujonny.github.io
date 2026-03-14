@@ -143,8 +143,8 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>SQL Query Categories</h3>
   <ul>
-    <li><strong>Demand &amp; Sales Extraction</strong> &mdash; Monthly/weekly aggregations, rolling averages, demand variability metrics</li>
-    <li><strong>Inventory &amp; Product Analytics</strong> &mdash; ABC revenue concentration, demand rate, product master summary</li>
+    <li><strong>Demand &amp; Sales Extraction</strong> &mdash; Monthly/weekly aggregations, rolling averages, demand variability metrics (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>)</li>
+    <li><strong>Inventory &amp; Product Analytics</strong> &mdash; ABC revenue concentration, fulfillment KPIs, lead time variance, demand rate, product master summary (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>)</li>
     <li><strong>Planned vs. Actual Analysis</strong> &mdash; Lead time variance, on-time delivery rate, late delivery root cause ranking</li>
     <li><strong>MRP &amp; Supply Planning</strong> &mdash; Gross requirements, projected on-hand, net requirements, planned order releases, exception flagging</li>
     <li><strong>Forecast Accuracy</strong> &mdash; Forecast vs. actual comparison, MAE, MAPE, bias detection</li>
@@ -238,7 +238,9 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     Demand forecasts were built for the top 9 product categories (by ABC classification) using Excel's FORECAST.ETS
     function (exponential triple smoothing), 3-month moving average (MA_3), 6-month moving average (MA_6), and
     3-month weighted moving average (WMA_3). All categories and methods are consolidated in a single structured
-    Demand_Forecast worksheet. SORTBY/FILTER was used to extract and sort category data by date, avoiding the
+    Demand_Forecast worksheet within
+    <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a>.
+    SORTBY/FILTER was used to extract and sort category data by date, avoiding the
     numeric-sort bug that arises from separate SORT/FILTER formulas.
   </p>
   <p>
@@ -298,7 +300,8 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
   <h3>Data Model</h3>
   <p>
     A star schema was built in Power BI with fact and dimension tables, enabling efficient slicing and cross-filtering
-    across all six dashboard pages.
+    across all six dashboard pages. The full report is available for download:
+    <a href="powerbi/SupplyChain_Dashboard_V1.pbix">SupplyChain_Dashboard_V1.pbix</a>.
   </p>
 
   <figure style="margin: 20px 0;">
@@ -493,9 +496,17 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>Repository Structure</h3>
   <ul>
-    <li><strong>sql/</strong> &mdash; All Oracle SQL scripts (01_schema_ddl through 07_forecast_plan_writeback)</li>
-    <li><strong>excel/</strong> &mdash; Excel workbook (SupplyChain_Analysis_V11.xlsx) with Power Query, Power Pivot, forecasting, and optimization</li>
-    <li><strong>powerbi/</strong> &mdash; Power BI file (SupplyChain_Dashboard_V1.pbix)</li>
+    <li><strong>sql/</strong> &mdash; All Oracle SQL scripts:
+      <a href="sql/01_schema_ddl.sql">01_schema_ddl</a>,
+      <a href="sql/02_data_normalization.sql">02_data_normalization</a>,
+      <a href="sql/03_demand_queries.sql">03_demand_queries</a>,
+      <a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries</a>,
+      <a href="sql/05_reporting_views.sql">05_reporting_views</a>,
+      <a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp</a>,
+      <a href="sql/07_forecast_plan_writeback.sql">07_forecast_plan_writeback</a>
+    </li>
+    <li><strong>excel/</strong> &mdash; <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a> &mdash; Excel workbook with Power Query, Power Pivot, forecasting, and optimization</li>
+    <li><strong>powerbi/</strong> &mdash; <a href="powerbi/SupplyChain_Dashboard_V1.pbix">SupplyChain_Dashboard_V1.pbix</a> &mdash; Six-page Power BI dashboard with DAX measures, star schema, and RLS</li>
     <li><strong>images/</strong> &mdash; Dashboard screenshots, star schema, ABC/XYZ matrix</li>
   </ul>
 
