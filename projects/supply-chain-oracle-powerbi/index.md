@@ -148,6 +148,11 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     REORDER_POINT       NUMBER(12,2),
     CONSTRAINT PK_PRODUCTS PRIMARY KEY (PRODUCT_CARD_ID)
 );</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Creates the product master table with both catalog attributes (name, category, price) and supply planning parameters (lead time, lot sizing method, EOQ, safety stock, reorder point).<br>
+    <strong>Why it&rsquo;s included:</strong> Embedding planning parameters directly on the product record allows the MRP stored procedure to read everything it needs from a single table &mdash; no separate planning parameter file or lookup table required.<br>
+    <strong>Why it&rsquo;s written this way:</strong> DEFAULT values (e.g., 7-day lead time, EOQ lot sizing) give every product sensible planning defaults on load, so MRP can run immediately without manual setup. Nullable columns like EOQ and SAFETY_STOCK are left empty until the inventory optimization phase populates them with calculated values.
+  </p>
 
   <h4>MRP Requirements Table</h4>
   <pre><code class="language-sql">CREATE TABLE MRP_REQUIREMENTS (
@@ -165,6 +170,11 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     EXCEPTION_MESSAGE   VARCHAR2(500),
     CONSTRAINT PK_MRP_REQUIREMENTS PRIMARY KEY (MRP_ID)
 );</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Stores the output of every MRP run &mdash; one row per category per planning period &mdash; capturing gross requirements, scheduled receipts, projected on-hand, net requirements, planned order quantities, and any exception flags.<br>
+    <strong>Why it&rsquo;s included:</strong> Persisting MRP output as a table (rather than a transient calculation) enables Power BI to trend MRP results over time, compare successive runs, and surface exception alerts without re-executing the procedure.<br>
+    <strong>Why it&rsquo;s written this way:</strong> The identity column (GENERATED ALWAYS AS IDENTITY) auto-generates a surrogate key so the stored procedure can INSERT without managing sequences. Exception columns (flag + message) support the alerting workflow &mdash; the procedure writes EXPEDITE, RESCHEDULE, or SPLIT flags that Power BI data alerts monitor on each refresh.
+  </p>
 
   <h4>Data Normalization &mdash; ROW_NUMBER Deduplication</h4>
   <pre><code class="language-sql">-- Deduplicate customers from staging (one row per order item → one row per customer)
@@ -183,6 +193,11 @@ FROM (
     FROM STG_DATACO s
 )
 WHERE rn = 1;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Extracts one clean customer record per CUSTOMER_ID from the flat staging table, which contains duplicate customer rows (one per order item).<br>
+    <strong>Why it&rsquo;s included:</strong> The raw DataCo CSV is denormalized &mdash; customer data is repeated on every order line. This INSERT/SELECT normalizes customers into their own table, a prerequisite for building proper foreign key relationships and avoiding redundant storage.<br>
+    <strong>Why it&rsquo;s written this way:</strong> ROW_NUMBER() OVER (PARTITION BY CUSTOMER_ID ORDER BY ORDER_DATE DESC) keeps the most recent address for each customer, handling cases where a customer&rsquo;s details changed across orders. NVL wraps ensure no NULLs slip into required fields, replacing missing names with &lsquo;Unknown&rsquo; rather than failing the insert.
+  </p>
 
   <p>
     <strong>SQL Scripts:</strong>
@@ -237,6 +252,11 @@ SELECT
     ), 2) AS ROLLING_6M_AVG_UNITS
 FROM monthly_demand
 ORDER BY CATEGORY_NAME, ORDER_MONTH;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Aggregates order quantity and revenue by month and category, then calculates 3-month and 6-month rolling averages using window functions.<br>
+    <strong>Why it&rsquo;s included:</strong> Rolling averages smooth out month-to-month noise, giving demand planners a clearer trend signal. The 3-month window captures short-term momentum while the 6-month window reveals broader seasonal patterns &mdash; both are inputs to the forecasting comparison in Excel.<br>
+    <strong>Why it&rsquo;s written this way:</strong> A CTE (monthly_demand) first aggregates the raw order data, then the outer SELECT applies window functions over the pre-aggregated rows. This two-stage approach keeps the window frame simple and avoids mixing aggregation with windowing in the same query. The ROWS BETWEEN clause is explicit rather than using the default RANGE to ensure exactly N prior rows are included regardless of gaps in the date series.
+  </p>
 
   <pre><code class="language-sql">-- Demand variability for XYZ classification (coefficient of variation)
 WITH monthly_demand AS ( ... ),
@@ -258,6 +278,11 @@ SELECT CATEGORY_NAME, AVG_MONTHLY_DEMAND, COEFF_OF_VARIATION,
     END AS XYZ_CLASS
 FROM variability
 ORDER BY COEFF_OF_VARIATION;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Calculates the coefficient of variation (standard deviation / mean) for each category&rsquo;s monthly demand, then classifies it as X (stable, CV &le; 0.5), Y (moderate, CV &le; 1.0), or Z (volatile).<br>
+    <strong>Why it&rsquo;s included:</strong> XYZ classification is the demand-predictability half of the ABC-XYZ inventory matrix. Categories with stable demand (X) can use lean safety stock and automated replenishment, while volatile categories (Z) need larger buffers or manual review &mdash; this directly drives the inventory policy recommendations downstream.<br>
+    <strong>Why it&rsquo;s written this way:</strong> NULLIF(AVG(...), 0) prevents division-by-zero for categories with no demand history. The CASE thresholds (0.5 and 1.0) follow standard supply chain practice for CV-based classification. Stacking two CTEs (monthly_demand &rarr; variability) keeps each calculation layer readable and testable independently.
+  </p>
 
   <h4>ABC Classification (Pareto Analysis) &amp; ABC-XYZ Policy Matrix</h4>
   <pre><code class="language-sql">-- ABC Classification by cumulative revenue percentage
@@ -286,6 +311,11 @@ SELECT CATEGORY_NAME, TOTAL_REVENUE, CUMULATIVE_PCT,
     END AS ABC_CLASS
 FROM ranked
 ORDER BY TOTAL_REVENUE DESC;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Ranks product categories by total revenue, computes a running cumulative revenue percentage, and assigns each category an ABC class: A (top 80% of revenue), B (next 15%), or C (bottom 5%).<br>
+    <strong>Why it&rsquo;s included:</strong> ABC classification is the foundation of Pareto-based inventory management &mdash; it identifies which categories drive the bulk of revenue so the business can allocate planning effort accordingly. A-class items get the tightest controls; C-class items get the lightest touch.<br>
+    <strong>Why it&rsquo;s written this way:</strong> The cumulative percentage is computed with a window SUM ordered by revenue descending, divided by the total SUM across all rows. Using ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ensures a strict running total. Two CTEs (category_revenue &rarr; ranked) separate the aggregation from the cumulative calculation, making the query easier to debug and adapt if classification thresholds change.
+  </p>
 
   <pre><code class="language-sql">-- ABC-XYZ matrix with automated inventory policy recommendations
 SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
@@ -304,6 +334,11 @@ SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
 FROM abc a
 JOIN xyz x ON a.CATEGORY_NAME = x.CATEGORY_NAME
 ORDER BY a.ABC_CLASS, x.XYZ_CLASS;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Joins the ABC and XYZ classification results to build a 3&times;3 matrix, then maps each cell (e.g., A-X, B-Y, C-Z) to a specific inventory policy recommendation.<br>
+    <strong>Why it&rsquo;s included:</strong> The combined ABC-XYZ matrix is the decision framework that turns two separate analytics (revenue rank and demand stability) into actionable replenishment strategies. Without it, the ABC and XYZ classifications exist in isolation and don&rsquo;t translate into concrete operational guidance.<br>
+    <strong>Why it&rsquo;s written this way:</strong> A CASE expression maps each matrix cell to a plain-English policy (JIT/Kanban, EOQ with periodic review, evaluate for discontinuation, etc.) so the output is immediately interpretable by supply chain stakeholders. Concatenating ABC_CLASS || &rsquo;-&rsquo; || XYZ_CLASS into a MATRIX_CELL column provides a compact label for Power BI slicers and conditional formatting.
+  </p>
 
   <h4>On-Time Delivery Rate &amp; Late Delivery Root Cause Ranking</h4>
   <pre><code class="language-sql">-- Monthly on-time delivery rate
@@ -323,6 +358,11 @@ JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
 JOIN ORDERS o ON oi.ORDER_ID = o.ORDER_ID
 GROUP BY TRUNC(o.ORDER_DATE, 'MM')
 ORDER BY ORDER_MONTH;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Calculates the monthly on-time delivery rate and late delivery rate as percentages of total shipments, using conditional aggregation (CASE WHEN inside SUM).<br>
+    <strong>Why it&rsquo;s included:</strong> On-time delivery rate is a core supply chain KPI &mdash; trending it monthly reveals whether fulfillment performance is improving or degrading, and provides the baseline metric for the Power BI fulfillment dashboard page and data alerts.<br>
+    <strong>Why it&rsquo;s written this way:</strong> Conditional CASE expressions inside SUM avoid the need for subqueries or self-joins, keeping the query compact and performant over 180K order items. NULLIF in the denominator guards against division by zero in months with no shipment data. Both on-time and late percentages are computed in the same pass to ensure they&rsquo;re always consistent.
+  </p>
 
   <pre><code class="language-sql">-- Late delivery root cause ranking by category using DENSE_RANK
 SELECT p.CATEGORY_NAME,
@@ -341,6 +381,11 @@ JOIN ORDER_ITEMS oi ON s.ORDER_ITEM_ID = oi.ORDER_ITEM_ID
 JOIN PRODUCTS p ON oi.PRODUCT_CARD_ID = p.PRODUCT_CARD_ID
 GROUP BY p.CATEGORY_NAME
 ORDER BY LATE_DELIVERY_PCT DESC;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Ranks product categories by their late delivery percentage using DENSE_RANK, so operations teams can immediately see which categories have the worst fulfillment performance.<br>
+    <strong>Why it&rsquo;s included:</strong> Identifying the highest-risk categories by late delivery rate enables targeted root cause analysis &mdash; instead of investigating all categories equally, the operations team focuses on the top offenders first. This feeds directly into the fulfillment improvement recommendations.<br>
+    <strong>Why it&rsquo;s written this way:</strong> DENSE_RANK (rather than RANK or ROW_NUMBER) ensures that categories with identical late delivery rates receive the same rank without gaps, giving an honest picture when multiple categories are tied. The ranking is applied as a window function over the aggregated result, avoiding a separate subquery or CTE layer.
+  </p>
 
   <h3>Reporting Views</h3>
   <p>
@@ -391,6 +436,11 @@ SELECT ORDER_MONTH, CATEGORY_NAME, TOTAL_UNITS, REVENUE,
         ELSE NULL
     END AS YOY_CHANGE_PCT
 FROM monthly_raw;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Creates a reporting view that pre-calculates monthly demand by category with rolling 3- and 6-month averages, prior-year units, and year-over-year percentage change &mdash; all in a single queryable object.<br>
+    <strong>Why it&rsquo;s included:</strong> This view is consumed directly by Power BI, eliminating the need to re-join ORDER_ITEMS, ORDERS, and PRODUCTS and re-compute rolling averages on every dashboard refresh. It also gives the demand forecasting page its trend-line and YoY comparison data.<br>
+    <strong>Why it&rsquo;s written this way:</strong> LAG(TOTAL_UNITS, 12) looks back exactly 12 monthly rows per category to find the same month in the prior year. The YoY calculation is wrapped in a CASE to return NULL when there is no prior-year data (instead of dividing by zero). Defining this as a CREATE OR REPLACE VIEW means the stored procedure can rebuild it on every nightly run without needing DROP/CREATE logic.
+  </p>
 
   <h4>VW_FORECAST_VS_ACTUAL &mdash; Forecast Accuracy with Error Metrics</h4>
   <pre><code class="language-sql">CREATE OR REPLACE VIEW VW_FORECAST_VS_ACTUAL AS
@@ -421,6 +471,11 @@ LEFT JOIN (
     GROUP BY p.CATEGORY_NAME, TRUNC(o.ORDER_DATE, 'MM')
 ) d ON f.CATEGORY_NAME = d.CATEGORY_NAME
     AND f.FORECAST_PERIOD = d.ORDER_MONTH;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Creates a reporting view that joins forecasted quantities from FORECAST_PLAN against actual order data, computing the forecast error, absolute error, absolute percentage error (APE), and bias direction (over/under/exact) for each category and period.<br>
+    <strong>Why it&rsquo;s included:</strong> Forecast accuracy metrics (MAE, MAPE, bias) are critical for evaluating and improving demand planning. This view provides the data behind the Power BI forecast accuracy dashboard page and enables data alerts when forecast bias exceeds acceptable thresholds.<br>
+    <strong>Why it&rsquo;s written this way:</strong> A LEFT JOIN from FORECAST_PLAN to actuals ensures forecast periods without matching actuals still appear (e.g., future forecast periods). The actuals subquery filters out canceled and fraud orders so accuracy metrics reflect genuine demand. APE uses a CASE guard on ACTUAL_UNITS &gt; 0 to avoid division by zero for periods with no sales.
+  </p>
 
   <p>
     <strong>SQL Scripts:</strong>
@@ -477,6 +532,11 @@ FOR period_rec IN (
     INSERT INTO MRP_REQUIREMENTS (...) VALUES (...);
     v_prior_on_hand := v_proj_on_hand;  -- carry forward
 END LOOP;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Iterates through each planning period for a product category, performing the classic MRP gross-to-net calculation: projected on-hand = prior on-hand &minus; gross requirements + scheduled receipts, net requirements = max(0, shortfall), then applies lot sizing (EOQ, fixed lot, or lot-for-lot) to determine the planned order quantity.<br>
+    <strong>Why it&rsquo;s included:</strong> This is the core engine of the supply planning simulation &mdash; it translates demand forecasts into actionable planned orders with release dates, and flags exceptions (expedite if below safety stock, reschedule if past due) that surface as alerts in the Power BI dashboard.<br>
+    <strong>Why it&rsquo;s written this way:</strong> A PL/SQL cursor loop (rather than pure SQL) is used because MRP is inherently sequential &mdash; each period&rsquo;s projected on-hand depends on the prior period&rsquo;s result, which cannot be expressed in a single set-based query. The CASE on lot sizing method makes the procedure data-driven: changing a product&rsquo;s LOT_SIZING_METHOD column automatically changes how planned orders are calculated on the next run.
+  </p>
 
   <h4>DBMS_SCHEDULER Job Creation</h4>
   <pre><code class="language-sql">BEGIN
@@ -493,6 +553,11 @@ END LOOP;</code></pre>
                         || 'data update. Runs at 2:00 AM daily.'
     );
 END;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Registers a DBMS_SCHEDULER job that executes the REFRESH_SUPPLY_CHAIN_DATA stored procedure every night at 2:00 AM automatically.<br>
+    <strong>Why it&rsquo;s included:</strong> Scheduling is what turns a manual SQL workflow into an automated pipeline. With this job in place, fresh data, updated MRP results, and rebuilt reporting views are ready before Power BI&rsquo;s 5:00 AM scheduled refresh &mdash; stakeholders see current dashboards without anyone running scripts manually.<br>
+    <strong>Why it&rsquo;s written this way:</strong> DBMS_SCHEDULER is Oracle&rsquo;s built-in job scheduler (the same mechanism used in production Oracle ERP environments like Fusion Cloud), so this mirrors real-world enterprise automation. The start_date uses TRUNC(SYSDATE + 1) + INTERVAL &rsquo;2&rsquo; HOUR to begin the next day at 2 AM, and auto_drop =&gt; FALSE ensures the job persists across database restarts.
+  </p>
 
   <p>
     <strong>SQL Script:</strong> <a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp.sql</a>
@@ -582,6 +647,11 @@ LEFT JOIN MRP_REQUIREMENTS mr
     ON fp.CATEGORY_NAME = mr.CATEGORY_NAME
     AND fp.FORECAST_PERIOD = mr.PLANNING_PERIOD
 ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
+  <p style="font-size: 0.93em; color: #555; margin-top: 6px; margin-bottom: 18px;">
+    <strong>What it does:</strong> Inserts Excel-generated ETS forecast data into Oracle&rsquo;s FORECAST_PLAN table (42 rows: 7 A-class categories &times; 6 forecast months), then runs a cross-check query comparing forecast quantities against MRP gross requirements to verify the two systems are in sync.<br>
+    <strong>Why it&rsquo;s included:</strong> This closes the loop between Excel analysis and Oracle automation &mdash; once forecasts are written back to the database, the nightly stored procedure can read them as MRP gross requirements without any manual handoff. The cross-check query validates that the MRP procedure consumed the forecasts correctly (variance should be zero).<br>
+    <strong>Why it&rsquo;s written this way:</strong> Explicit INSERT VALUES (rather than bulk load) keeps each forecast row auditable and easy to review or modify individually. The cross-check uses a LEFT JOIN so that forecast periods without a matching MRP row surface as NULLs rather than being silently dropped &mdash; a missing MRP row would indicate a procedure failure that needs investigation.
+  </p>
 
   <h3>ABC/XYZ Classification</h3>
   <p>
