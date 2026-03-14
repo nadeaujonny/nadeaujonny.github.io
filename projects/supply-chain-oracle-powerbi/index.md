@@ -143,8 +143,8 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>SQL Query Categories</h3>
   <ul>
-    <li><strong>Demand &amp; Sales Extraction</strong> &mdash; Monthly/weekly aggregations, rolling averages, demand variability metrics</li>
-    <li><strong>Inventory &amp; Product Analytics</strong> &mdash; ABC revenue concentration, demand rate, product master summary</li>
+    <li><strong>Demand &amp; Sales Extraction</strong> (<a href="sql/03_demand_queries.sql">03_demand_queries.sql</a>) &mdash; Monthly and weekly order volume aggregations by category, rolling 3-month and 6-month demand averages using window functions (AVG OVER), month-over-month growth via LAG, cumulative revenue calculations for Pareto analysis, and coefficient of variation for demand variability classification. These queries build the core time series that feeds the Demand Forecasting dashboard (Page 2) and provides inputs for ABC/XYZ classification and MRP planning. SQL techniques include CTEs, window functions (AVG OVER, SUM OVER, LAG, RANK), date truncation, and rolling cumulative calculations across ~180K order items and 50 product categories.</li>
+    <li><strong>Inventory &amp; Fulfillment Analytics</strong> (<a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a>) &mdash; Two query groups covering the full inventory and logistics pipeline. Group A (Inventory &amp; Product Analytics) performs ABC classification by cumulative revenue percentage using Pareto analysis, builds the combined ABC-XYZ matrix with automated policy recommendations per cell, generates the product master summary with planning parameters (lead time, lot size, MOQ, EOQ, safety stock, reorder point), and calculates average daily demand rates. Group B (Fulfillment &amp; Logistics Performance) computes monthly on-time delivery rates, analyzes planned vs. actual lead time variance, ranks late delivery root causes by category/region/shipping mode using RANK and DENSE_RANK, and compares shipping mode performance across all fulfillment dimensions. These queries feed Pages 3 (Inventory Optimization) and 4 (Fulfillment &amp; Logistics) of the Power BI dashboard. SQL techniques include cumulative SUM for Pareto analysis, CASE WHEN classification logic, multi-table JOINs across all five transactional tables, and date arithmetic for lead time calculations.</li>
     <li><strong>Planned vs. Actual Analysis</strong> &mdash; Lead time variance, on-time delivery rate, late delivery root cause ranking</li>
     <li><strong>MRP &amp; Supply Planning</strong> &mdash; Gross requirements, projected on-hand, net requirements, planned order releases, exception flagging</li>
     <li><strong>Forecast Accuracy</strong> &mdash; Forecast vs. actual comparison, MAE, MAPE, bias detection</li>
@@ -164,7 +164,10 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     <li><strong>VW_FORECAST_VS_ACTUAL</strong> &mdash; Forecast accuracy: planned vs. actual demand by category/period with MAE, MAPE, and bias pre-calculated</li>
   </ul>
   <p>
-    <strong>SQL Script:</strong> <a href="sql/05_reporting_views.sql">05_reporting_views.sql</a>
+    <strong>SQL Scripts:</strong>
+    <a href="sql/03_demand_queries.sql">03_demand_queries.sql</a> &mdash; Demand &amp; sales extraction queries |
+    <a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a> &mdash; Inventory &amp; fulfillment analytics queries |
+    <a href="sql/05_reporting_views.sql">05_reporting_views.sql</a> &mdash; Six pre-calculated reporting views
   </p>
 
   <h3>Stored Procedure: REFRESH_SUPPLY_CHAIN_DATA</h3>
@@ -224,6 +227,11 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     and AnalysisEnd &mdash; enabling dynamic switching between analysis windows, Oracle environments, and planning
     horizons (3/6/12 months) without modifying query logic. Query folding was documented for each transformation step,
     identifying which steps fold to Oracle (execute server-side) vs. execute locally in the Power Query engine.
+  </p>
+
+  <p>
+    <strong>Excel Workbook:</strong>
+    <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a> &mdash; Complete Excel workbook containing all Power Query ETL logic with custom M functions, the Power Pivot data model, demand forecasting worksheets (ETS, MA_3, MA_6, WMA_3), ABC/XYZ classification matrix, inventory optimization calculations (EOQ, safety stock, reorder points), MRP simulation and what-if analysis via Goal Seek and Solver, dynamic array lookup tools (FILTER, XLOOKUP, SORT), and the parameter sheet for dynamic analysis switching.
   </p>
 
 </details>
@@ -286,6 +294,11 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     analysis on service levels and planning horizons using Goal Seek and Solver. An Inventory_Tools worksheet offers
     dynamic array-based lookup tools (FILTER, XLOOKUP, SORT) for the Operations team to query inventory status
     by category.
+  </p>
+
+  <p>
+    <strong>Excel Workbook:</strong>
+    <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a> &mdash; Contains all worksheets referenced above: Demand_Forecast (all categories and methods), ABC_XYZ_Matrix (COUNTIFS/SUMIFS classification grids), Inventory_Optimization (EOQ, safety stock, reorder points per category), MRP_Simulation (net requirements calculation), What_If_Analysis (sensitivity analysis via Goal Seek and Solver), Inventory_Tools (dynamic array lookup tools), and the Parameters sheet for dynamic switching.
   </p>
 
 </details>
@@ -443,6 +456,11 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     MRP, and inventory data. Both roles use the same dashboard; Power BI filters automatically based on role assignment.
   </p>
 
+  <p>
+    <strong>Power BI File:</strong>
+    <a href="powerbi/SupplyChain_Dashboard_V1.pbix">SupplyChain_Dashboard_V1.pbix</a> &mdash; Complete Power BI Desktop file containing the six-page interactive dashboard, star schema data model with fact and dimension tables, all DAX measures (YoY growth, on-time rate, MAE, MAPE, inventory turnover, MRP coverage ratio, supply plan adherence), configured data alerts for critical threshold monitoring, and Row-Level Security roles for Marketing and Operations teams. Designed for scheduled refresh integration with Oracle views via the Power BI Service.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
@@ -493,10 +511,20 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>Repository Structure</h3>
   <ul>
-    <li><strong>sql/</strong> &mdash; All Oracle SQL scripts (01_schema_ddl through 07_forecast_plan_writeback)</li>
-    <li><strong>excel/</strong> &mdash; Excel workbook (SupplyChain_Analysis_V11.xlsx) with Power Query, Power Pivot, forecasting, and optimization</li>
-    <li><strong>powerbi/</strong> &mdash; Power BI file (SupplyChain_Dashboard_V1.pbix)</li>
-    <li><strong>images/</strong> &mdash; Dashboard screenshots, star schema, ABC/XYZ matrix</li>
+    <li><strong>sql/</strong> &mdash; Oracle SQL scripts:
+      <ul>
+        <li><a href="sql/01_schema_ddl.sql">01_schema_ddl.sql</a> &mdash; Schema DDL (8 normalized tables + staging table)</li>
+        <li><a href="sql/02_data_normalization.sql">02_data_normalization.sql</a> &mdash; INSERT/SELECT normalization from staging to production tables</li>
+        <li><a href="sql/03_demand_queries.sql">03_demand_queries.sql</a> &mdash; Demand &amp; sales extraction queries (monthly/weekly aggregations, rolling averages, demand variability)</li>
+        <li><a href="sql/04_inventory_fulfillment_queries.sql">04_inventory_fulfillment_queries.sql</a> &mdash; Inventory analytics (ABC/XYZ classification, product master) &amp; fulfillment performance (on-time rates, lead time variance, root cause ranking)</li>
+        <li><a href="sql/05_reporting_views.sql">05_reporting_views.sql</a> &mdash; Six pre-calculated reporting views for Power BI consumption</li>
+        <li><a href="sql/06_stored_procedure_mrp.sql">06_stored_procedure_mrp.sql</a> &mdash; REFRESH_SUPPLY_CHAIN_DATA stored procedure &amp; DBMS_SCHEDULER job</li>
+        <li><a href="sql/07_forecast_plan_writeback.sql">07_forecast_plan_writeback.sql</a> &mdash; Forecast write-back logic from Excel to Oracle</li>
+      </ul>
+    </li>
+    <li><strong>excel/</strong> &mdash; <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a> &mdash; Excel workbook with Power Query ETL, Power Pivot data model, demand forecasting, ABC/XYZ classification, inventory optimization, MRP simulation, and what-if analysis</li>
+    <li><strong>powerbi/</strong> &mdash; <a href="powerbi/SupplyChain_Dashboard_V1.pbix">SupplyChain_Dashboard_V1.pbix</a> &mdash; Six-page interactive Power BI dashboard with star schema, DAX measures, data alerts, and Row-Level Security</li>
+    <li><strong>images/</strong> &mdash; Dashboard screenshots, star schema diagram, ABC/XYZ matrix visualization</li>
   </ul>
 
   <p>
