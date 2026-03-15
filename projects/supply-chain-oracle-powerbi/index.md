@@ -74,8 +74,22 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
     <li><strong>Oracle DBMS_SCHEDULER</strong> executes the <code>REFRESH_SUPPLY_CHAIN_DATA</code> stored procedure at 2:00 AM &mdash; pulls fresh data, recalculates derived fields, reads the latest demand forecast, runs MRP net requirements calculation, writes planned orders, and updates all six reporting views.</li>
     <li><strong>Power BI Service scheduled refresh</strong> triggers at 5:00 AM &mdash; connects to Oracle views, Power Query custom functions and parameters execute automatically against updated data.</li>
     <li><strong>DAX measures</strong> recalculate all KPIs, forecasts, MRP coverage metrics, and classifications. Data alerts evaluate thresholds and send notifications if critical metrics breach targets.</li>
-    <li><strong>By morning</strong>, the dashboard reflects last night's actuals, MRP recommendations are current, and supply plan alerts have been sent for any issues.</li>
+    <li><strong>By morning</strong>, the dashboard would reflect last night&rsquo;s actuals, MRP recommendations would be current, and supply plan alerts would have been sent for any issues &mdash; enabling the analyst to focus on analysis and decision-making rather than data preparation.</li>
   </ol>
+
+  <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #6c757d; border-radius: 4px;">
+    <strong>Portfolio Context:</strong>
+    This project uses the DataCo Smart Supply Chain dataset, which is a static historical dataset (~180,000 orders, Jan 2015&ndash;Jan 2018) &mdash; no new transactions are flowing in. That means the automation infrastructure described above is built and functional, but is not actively processing new data on a nightly cycle. Specifically:
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li>The <strong>stored procedure</strong> (<code>REFRESH_SUPPLY_CHAIN_DATA</code>) executes correctly when called &mdash; it refreshes inventory snapshots, runs the full MRP net requirements calculation, and rebuilds all six reporting views. It has been tested and validated end-to-end.</li>
+      <li>The <strong>DBMS_SCHEDULER job</strong> is configured with a nightly 2:00 AM schedule using the same mechanism as production Oracle Fusion Cloud environments.</li>
+      <li>The <strong>forecast write-back round-trip</strong> works end-to-end &mdash; 42 forecast rows exported from Excel were loaded into Oracle&rsquo;s FORECAST_PLAN table, consumed by the MRP procedure, and validated with zero variance.</li>
+      <li><strong>Power Query transformations</strong> are saved and repeatable &mdash; clicking Refresh All re-executes the full ETL pipeline.</li>
+      <li><strong>DAX measures</strong> auto-recalculate whenever the underlying data model refreshes.</li>
+      <li>The dashboard is not currently published to Power BI Service with a live Oracle gateway, so <strong>scheduled refresh is not actively running</strong> &mdash; but the architecture is in place for it.</li>
+    </ul>
+    In a production environment with live transactional data flowing into Oracle, this entire pipeline would operate autonomously on the configured schedule with no manual intervention for routine reporting cycles. The infrastructure is production-ready; the dataset is what makes this a portfolio demonstration rather than a live system.
+  </div>
 
   <h3>Oracle SQL Automation</h3>
   <ul>
@@ -94,7 +108,7 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 
   <h3>Power BI Automation</h3>
   <ul>
-    <li><strong>Scheduled Refresh:</strong> Aligned to Oracle job schedule via Power BI Service</li>
+    <li><strong>Scheduled Refresh:</strong> Designed to align with the Oracle job schedule via Power BI Service &mdash; architecture is in place, pending live gateway connection</li>
     <li><strong>DAX Measures:</strong> Auto-calculating KPIs &mdash; YoY growth, on-time rate, forecast accuracy (MAE, MAPE), inventory turnover, MRP coverage ratio, supply plan adherence</li>
     <li><strong>Data Alerts:</strong> Threshold notifications for in-stock rate drops, late delivery spikes, MRP stockout projections, forecast bias</li>
     <li><strong>Row-Level Security:</strong> Marketing sees sell-through data; Operations sees production, fulfillment, MRP, and inventory</li>
@@ -1221,11 +1235,13 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
 
   <h3>Weekly Operating Cadence</h3>
   <p>
-    The automated pipeline runs on a nightly schedule: the Oracle stored procedure (REFRESH_SUPPLY_CHAIN_DATA)
-    executes at 2:00 AM, refreshing inventory snapshots, recalculating MRP net requirements against the latest
-    demand forecasts, and rebuilding all six reporting views. Power BI scheduled refresh triggers at 5:00 AM,
-    pulling updated data through Power Query and recalculating all DAX measures. By the time the planning team
-    arrives in the morning, the dashboard reflects last night&rsquo;s actuals and the MRP plan is current.
+    In a production environment with live data, the automated pipeline would run on a nightly schedule: the Oracle
+    stored procedure (REFRESH_SUPPLY_CHAIN_DATA) executes at 2:00 AM, refreshing inventory snapshots, recalculating
+    MRP net requirements against the latest demand forecasts, and rebuilding all six reporting views. Power BI
+    scheduled refresh would trigger at 5:00 AM, pulling updated data through Power Query and recalculating all DAX
+    measures. By the time the planning team arrives in the morning, the dashboard would reflect last night&rsquo;s
+    actuals and the MRP plan would be current. Every component of this pipeline has been built and validated &mdash;
+    connecting it to a live data source is the only step between the current state and full autonomous operation.
   </p>
   <p>
     The analyst&rsquo;s weekly workflow built on top of this automation would look like:
