@@ -1207,42 +1207,100 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Key Findings &amp; Business Recommendations</strong></summary>
+  <summary><strong>How This Pipeline Operates in Production</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
-  <h3>Demand Forecast Highlights</h3>
   <p>
-    All A-class categories exhibit stable (X-class) demand patterns, making them strong candidates for automated ETS
-    forecasting. Seasonal patterns were identified in several categories. Partial-month data artifacts (e.g., October
-    2017) must be excluded from ETS historical ranges to avoid corrupting forecast accuracy.
+    The dashboard pages above show what the analysis found. This section describes how the system would operate
+    on an ongoing basis &mdash; the weekly cadence of reporting, master data maintenance, and supply plan refinement
+    that turns a one-time analysis into a continuous improvement engine. Every step below maps directly to
+    responsibilities described in the Supply Chain Planning Analyst role: planned vs. actual reporting, master data
+    maintenance, inventory health monitoring, and the closed-loop process between reporting and execution.
   </p>
 
-  <h3>Inventory Recommendations</h3>
+  <h3>Weekly Operating Cadence</h3>
   <p>
-    A-X categories (highest revenue, most predictable) should use automated reorder point replenishment with tight
-    safety stock. B-Y and C-Z categories need higher safety stock buffers or periodic manual review. EOQ-based lot
-    sizing reduces ordering costs for high-volume categories.
+    The automated pipeline runs on a nightly schedule: the Oracle stored procedure (REFRESH_SUPPLY_CHAIN_DATA)
+    executes at 2:00 AM, refreshing inventory snapshots, recalculating MRP net requirements against the latest
+    demand forecasts, and rebuilding all six reporting views. Power BI scheduled refresh triggers at 5:00 AM,
+    pulling updated data through Power Query and recalculating all DAX measures. By the time the planning team
+    arrives in the morning, the dashboard reflects last night&rsquo;s actuals and the MRP plan is current.
+  </p>
+  <p>
+    The analyst&rsquo;s weekly workflow built on top of this automation would look like:
   </p>
 
-  <h3>Supply Plan Recommendations</h3>
+  <h4>Monday: Review &amp; Triage</h4>
   <p>
-    The MRP exception log identifies categories where projected on-hand drops below safety stock (expedite action),
-    planned orders exceed capacity (split action), or scheduled receipts are past due (reschedule action). Lead time
-    adjustments are recommended for categories with consistently high variance.
+    Open Page 1 (Executive KPI Overview) for a pulse check on on-time rates, revenue trends, and any KPI cards
+    that have shifted since last week. Check data alert notifications &mdash; any in-stock rate drops below threshold,
+    any MRP exceptions flagged, any forecast bias alerts triggered. Open Page 5 (Supply Plan &amp; MRP Analysis) to
+    review the exception log and confirm planned order releases for the week are still valid. If a large incoming
+    customer order has appeared in the data, flag it to the team immediately &mdash; the MRP gross requirements will
+    reflect it in the next cycle, but lead time offsets may require expedited PO placement.
   </p>
 
-  <h3>Fulfillment Improvements</h3>
+  <h4>Midweek: Analyze &amp; Adjust</h4>
   <p>
-    Late delivery patterns are concentrated in specific regions and shipping modes. Shipping mode optimization
-    opportunities were identified where standard shipping consistently underperforms relative to other modes.
+    Use Page 2 (Demand &amp; Forecasting) to check whether actual demand is tracking within forecast confidence
+    intervals. If a category is consistently over- or under-forecasting, update the forecast method parameters in
+    the Demand_Forecast workbook and re-export to Oracle via the Forecast_Export table &mdash; the next nightly MRP
+    run will consume the revised forecasts automatically. Use Page 3 (Inventory Health) to check days of supply
+    against targets. If any A-class category has drifted above target (as Camping &amp; Hiking, Fishing, and Water
+    Sports did in this analysis at ~51 days vs. a 30-day target), initiate the appropriate action: promotional
+    markdown, redistribution to another channel, or production hold. Update safety stock or reorder point parameters
+    in Oracle master data if the analysis warrants it.
   </p>
 
-  <h3>Closed-Loop Process</h3>
+  <h4>End of Week: Report &amp; Close the Loop</h4>
   <p>
-    Analysis findings feed back into master data updates: revised lead times, adjusted safety stock levels, updated
-    lot sizing rules, and forecast method selections that improve the next MRP cycle &mdash; demonstrating the
-    continuous improvement loop built into the automation architecture.
+    Pull Page 4 (Fulfillment Performance) for the weekly shipping mode performance summary to share with logistics.
+    Use Page 6 (Insights &amp; Closed-Loop Actions) as the starting point for the weekly supply chain review meeting
+    with the VP of Planning &mdash; the page consolidates the top priorities and maps each one to a specific master
+    data update or process change. After the meeting, execute any agreed-upon parameter changes (revised lead times,
+    adjusted lot sizing rules, updated safety stock levels) directly in Oracle. The next nightly refresh cycle
+    picks up those changes, the MRP recalculates, and the following Monday&rsquo;s dashboard reflects the impact.
+    That&rsquo;s the closed loop: report &rarr; analyze &rarr; update master data &rarr; automated refresh &rarr;
+    measure impact &rarr; repeat.
+  </p>
+
+  <h3>Master Data Updates This Analysis Would Trigger</h3>
+  <p>
+    Based on the findings surfaced across the six dashboard pages, the following master data changes would be
+    executed in the first operating cycle:
+  </p>
+  <ul>
+    <li><strong>Forecast method:</strong> Update FORECAST_PLAN parameters to use WMA-3 as the primary method for all
+      A-class categories. Retain ETS as a secondary validation tool for seasonality detection. Re-export the 42-row
+      forecast table to Oracle.</li>
+    <li><strong>Safety stock (Cardio Equipment):</strong> Increase safety stock buffer for Cardio Equipment to
+      compensate for its elevated ETS MAPE (9.51%) &mdash; this category&rsquo;s higher forecast uncertainty warrants
+      a wider buffer relative to the other six A-class categories.</li>
+    <li><strong>Lot sizing (Fishing, Camping &amp; Hiking, Water Sports):</strong> Evaluate switching these three
+      lower-volume categories from EOQ to Fixed Lot or Lot-for-Lot, since their current days of supply (~51 days)
+      significantly exceed the 30-day target. The What-If Analysis lot sizing comparison showed that Lot-for-Lot
+      reduces holding cost substantially at the trade-off of higher ordering frequency &mdash; a viable option for
+      categories with stable, predictable demand (all three are AX-classified).</li>
+    <li><strong>Carrier SLAs (First Class, Second Class):</strong> Flag for logistics team review &mdash; First Class
+      late rates (~95%) and Second Class late rates (~85%) indicate either unrealistic delivery window commitments
+      or underperforming carrier partners. Recommend adjusting quoted delivery timelines in the short term and
+      issuing carrier RFPs for Europe and Latin America (the two highest revenue-at-risk markets).</li>
+    <li><strong>Excess inventory (3 categories):</strong> Initiate promotional or redistribution action for Camping
+      &amp; Hiking, Fishing, and Water Sports to bring days of supply back toward the 30-day target and free up
+      the estimated ~$597K in tied-up working capital.</li>
+  </ul>
+
+  <h3>How the Automation Validates Each Change</h3>
+  <p>
+    Every master data update listed above is self-validating through the automated pipeline. Once a parameter change
+    is made in Oracle, the next nightly stored procedure run recalculates MRP requirements with the updated inputs,
+    the next Power BI refresh surfaces the impact in the dashboard, and the analyst can measure whether the
+    intervention had the intended effect &mdash; without building a single new report or running any manual queries.
+    If Cardio Equipment&rsquo;s increased safety stock prevents a projected stockout that would have triggered an
+    MRP exception, that shows up as a clean exception log on Page 5. If the lot sizing change for Water Sports
+    brings days of supply from 51 down toward 30, that shows up on Page 3&rsquo;s inventory health table. The
+    dashboard doesn&rsquo;t just report &mdash; it closes the loop.
   </p>
 
 </details>
