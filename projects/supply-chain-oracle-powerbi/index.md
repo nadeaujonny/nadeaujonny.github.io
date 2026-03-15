@@ -1267,7 +1267,7 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     </li>
     <li><strong>excel/</strong> &mdash; <a href="excel/SupplyChain_Analysis_V11.xlsx">SupplyChain_Analysis_V11.xlsx</a> &mdash; Excel workbook with Power Query ETL, Power Pivot data model, demand forecasting, ABC/XYZ classification, inventory optimization, MRP simulation, and what-if analysis</li>
     <li><strong>powerbi/</strong> &mdash; <a href="powerbi/SupplyChain_Dashboard_V1.pbix">SupplyChain_Dashboard_V1.pbix</a> &mdash; Six-page interactive Power BI dashboard with star schema, DAX measures, data alerts, and Row-Level Security</li>
-    <li><strong>images/</strong> &mdash; Dashboard screenshots, star schema diagram, ABC/XYZ matrix visualization</li>
+    <li><strong>images/</strong> &mdash; Dashboard screenshots, star schema diagram, Excel sheets screenshots, ABC/XYZ matrix visualization</li>
   </ul>
 
   <p>
