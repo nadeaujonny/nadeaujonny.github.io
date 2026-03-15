@@ -578,6 +578,54 @@ END;</code></pre>
     for downstream analysis: month, quarter, day of week, and fiscal period.
   </p>
 
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-vw-demand-timeseries.png"
+      alt="vw_demand_timeseries table in Excel showing monthly demand data with rolling averages and YoY change calculations"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      vw_demand_timeseries &mdash; monthly demand by category with rolling 3-month and 6-month averages, prior year units, and YoY percent change. This Oracle view serves as the primary input for demand forecasting.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-vw-fulfillment-kpi.png"
+      alt="vw_fulfillment_kpi table in Excel showing order-level fulfillment performance data"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      vw_fulfillment_kpi &mdash; order-level fulfillment data including scheduled vs. actual ship dates, delivery status, and lead time metrics used for on-time delivery analysis.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-vw-product-master.png"
+      alt="vw_product_master table in Excel showing product catalog with ABC/XYZ classification and inventory levels"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      vw_product_master &mdash; product catalog with ABC/XYZ classification, demand statistics, inventory positions (on-hand, in-transit, available), and days of supply per category.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-vw-planned-vs-actual.png"
+      alt="vw_planned_vs_actual table in Excel showing plan versus actual revenue and unit comparisons"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      vw_planned_vs_actual &mdash; plan vs. actual comparison at the category-month level, tracking revenue and unit variance for performance reporting.
+    </figcaption>
+  </figure>
+
   <h3>Custom M Functions</h3>
   <ul>
     <li><strong>fn_CalculateSafetyStock</strong> &mdash; Inputs: avg demand, demand std dev, lead time, service level Z-score</li>
@@ -594,6 +642,18 @@ END;</code></pre>
     horizons (3/6/12 months) without modifying query logic. Query folding was documented for each transformation step,
     identifying which steps fold to Oracle (execute server-side) vs. execute locally in the Power Query engine.
   </p>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-parameters.png"
+      alt="Parameters sheet in Excel showing configurable planning assumptions including service level, planning horizon, and inventory cost inputs"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Parameters sheet &mdash; centralized planning assumptions (service level, Z-score, planning horizon, cost inputs) referenced by all downstream calculations via named ranges. Changing a value here cascades through safety stock, reorder point, EOQ, and MRP formulas automatically.
+    </figcaption>
+  </figure>
 
   <p>
     <strong>Excel Workbook:</strong>
@@ -622,6 +682,18 @@ END;</code></pre>
     were formatted for write-back to Oracle's FORECAST_PLAN table
     (see <a href="sql/07_forecast_plan_writeback.sql">07_forecast_plan_writeback.sql</a>).
   </p>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-demand-forecast.png"
+      alt="Demand_Forecast sheet showing actual units alongside MA_3, MA_6, WMA_3, and ETS forecast columns with error metrics for the Fishing category"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Demand_Forecast &mdash; side-by-side comparison of four forecast methods (MA-3, MA-6, WMA-3, ETS) against actual monthly demand for each A-class category. Error columns (ETS_ERROR, MA3_ERROR, WMA3_ERROR) enable method selection based on MAPE accuracy.
+    </figcaption>
+  </figure>
 
   <h4>Forecast Write-Back &amp; MRP Cross-Check</h4>
   <pre><code class="language-sql">-- Insert ETS forecast data into Oracle (7 A-class categories x 6 months = 42 rows)
@@ -653,6 +725,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     <strong>Why it&rsquo;s written this way:</strong> Explicit INSERT VALUES (rather than bulk load) keeps each forecast row auditable and easy to review or modify individually. The cross-check uses a LEFT JOIN so that forecast periods without a matching MRP row surface as NULLs rather than being silently dropped &mdash; a missing MRP row would indicate a procedure failure that needs investigation.
   </p>
 
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-forecast-export.png"
+      alt="Forecast_Export sheet showing the 42-row flat table formatted for Oracle FORECAST_PLAN write-back with category, period, forecast values, confidence bounds, and MAPE"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Forecast_Export &mdash; 42-row flat table (7 A-class categories &times; 6 forecast periods) structured for direct write-back to the Oracle FORECAST_PLAN table. Includes forecast quantity, confidence bounds, method, MAPE, and timestamp &mdash; completing the demand planning round-trip.
+    </figcaption>
+  </figure>
+
   <h3>ABC/XYZ Classification</h3>
   <p>
     ABC classification was based on cumulative revenue percentage (A = top 80%, B = next 15%, C = bottom 5%).
@@ -683,6 +767,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     worksheet consolidates all metrics per category into a single actionable view.
   </p>
 
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-inventory-optimization.png"
+      alt="Inventory_Optimization sheet showing demand statistics, safety stock calculations, reorder points, ROP status, and EOQ analysis for all seven A-class categories"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Inventory_Optimization &mdash; three-section layout covering demand statistics and inventory positions (top), safety stock and reorder point calculations with ROP status flags (middle), and EOQ analysis with total annual inventory cost (bottom) for all seven A-class categories.
+    </figcaption>
+  </figure>
+
   <h3>MRP Scenario Analysis Workbook</h3>
   <p>
     The MRP_Simulation worksheet performs net requirements calculation (gross requirements minus projected on-hand
@@ -691,6 +787,194 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
     dynamic array-based lookup tools (FILTER, XLOOKUP, SORT) for the Operations team to query inventory status
     by category.
   </p>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-mrp-simulation.png"
+      alt="MRP_Simulation sheet showing time-phased net requirements calculation with gross requirements, scheduled receipts, projected on-hand, planned orders, and exception flags across a 6-month horizon"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      MRP_Simulation &mdash; time-phased net requirements calculation for each A-class category over a 6-month planning horizon (Oct 2017&ndash;Mar 2018). Each category block shows gross requirements from ETS forecasts, scheduled receipts, projected on-hand, net requirements, planned order receipts/releases by EOQ lot size, safety stock floor, and exception flags.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-what-if-analysis.png"
+      alt="What_If_Analysis sheet showing service level sensitivity table and lot sizing method comparison across A-class categories"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      What_If_Analysis &mdash; Section 1 shows safety stock investment across eight service level scenarios (85%&ndash;99.5%) for all A-class categories. Section 2 compares three lot sizing methods (EOQ, Fixed Lot, Lot-for-Lot) on order frequency, holding cost, and total annual inventory cost.
+    </figcaption>
+  </figure>
+
+  <h3>Inventory Tools &amp; Dynamic Arrays</h3>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-inventory-tools.png"
+      alt="Inventory_Tools sheet showing a dynamic Category Lookup tool and A-Class Planned Order Priority Queue built with XLOOKUP and dynamic array formulas"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Inventory_Tools &mdash; self-service tools for the Operations team. Tool 1 is a category lookup (type any category name to pull its full profile via XLOOKUP). Tool 2 is a planned order priority queue pulling next-period orders from MRP_Simulation, sorted by order value descending for PO prioritization.
+    </figcaption>
+  </figure>
+
+  <h3>Power Pivot Data Model</h3>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-pvt-revenue-by-abc.png"
+      alt="Power Pivot table showing quarterly revenue broken out by ABC class (A, B, C) with PivotTable Fields panel visible"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      PVT_Revenue_by_ABC &mdash; quarterly revenue by ABC class, built on the Power Pivot star schema. A-class categories consistently account for ~77% of total revenue, validating the Pareto-driven focus of the forecasting and MRP analysis.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-pvt-demand-aclass.png"
+      alt="Power Pivot table showing quarterly unit demand for all seven A-class categories with year and quarter hierarchy"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      PVT_Demand_A_Class &mdash; quarterly unit demand filtered to A-class categories only, showing seasonal patterns and the Q4 2017 partial-period drop-off at the dataset boundary.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-pvt-yoy-growth.png"
+      alt="Power Pivot table showing year-over-year growth percentages"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      PVT_YoY_Growth &mdash; year-over-year unit and revenue growth rates by category, surfacing which product lines are accelerating or decelerating.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-pvt-ontime-by-ship.png"
+      alt="Power Pivot table showing on-time delivery rates by shipping mode"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      PVT_OnTime_by_Ship &mdash; on-time delivery rate by shipping mode, identifying that Standard Class consistently underperforms relative to other modes.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-pvt-risk-by-region.png"
+      alt="Power Pivot table showing inventory risk metrics by region"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      PVT_Risk_by_Region &mdash; late delivery and suspected fraud rates by market region, highlighting geographic risk concentration.
+    </figcaption>
+  </figure>
+
+  <p>The underlying Power Pivot data model uses a star schema with the following dimension tables feeding into the fact tables above:</p>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-dim-date.png"
+      alt="Dim_Date dimension table in Power Pivot showing date key, month, quarter, year, and fiscal period columns"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Dim_Date &mdash; date dimension with month, quarter, year, and fiscal period attributes for time-based slicing.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-dim-category.png"
+      alt="Dim_Category dimension table in Power Pivot showing category key, name, ABC class, XYZ class, matrix cell, revenue, and units"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Dim_Category &mdash; category dimension carrying ABC/XYZ classification, total revenue, total units, and matrix cell assignments.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-dim-region.png"
+      alt="Dim_Region dimension table in Power Pivot showing region and market attributes"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Dim_Region &mdash; geographic dimension for regional slicing and market-level analysis.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-dim-shipping-mode.png"
+      alt="Dim_ShippingMode dimension table in Power Pivot showing shipping mode key and name"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Dim_ShippingMode &mdash; shipping mode dimension used for delivery performance segmentation.
+    </figcaption>
+  </figure>
+
+  <p>Three fact tables store the transactional and aggregated metrics:</p>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-fact-demand.png"
+      alt="Fact_Demand table in Power Pivot showing monthly demand aggregations by category with item count, units, revenue, and rolling averages"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Fact_Demand &mdash; monthly demand aggregations by category including item count, total units, revenue, rolling averages, and year-over-year comparisons.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-fact-kpi.png"
+      alt="Fact_KPI table in Power Pivot showing planned vs. actual KPI metrics by category and month"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Fact_KPI &mdash; planned vs. actual metrics at the category-month level for variance tracking in the Power BI dashboard.
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="images/excel-fact-fulfillment.png"
+      alt="Fact_Fulfillment table in Power Pivot showing order-level fulfillment records with delivery status and lead time data"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Fact_Fulfillment &mdash; order-level fulfillment records with delivery status, shipping mode, lead time, and on-time flags for performance analysis.
+    </figcaption>
+  </figure>
 
   <p>
     <strong>Excel Workbook:</strong>
