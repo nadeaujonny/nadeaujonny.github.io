@@ -1008,9 +1008,7 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
 
   <h3>Page 1: Executive KPI Overview</h3>
   <p>
-    High-level summary of supply chain health with KPI cards, trend lines, and performance indicators. Provides
-    at-a-glance metrics including total orders, revenue, on-time delivery rate, and YoY growth. Serves as the
-    landing page for executives who need a quick pulse check.
+    This is the leadership landing page, designed to answer one question in under 30 seconds: is the supply chain healthy? Six KPI cards across the top row display Total Orders, Total Revenue, On-Time Delivery Rate, Late Delivery Rate, YoY Growth %, and Average Profit Margin. Below them, a monthly revenue trend line chart tracks performance over the Jan 2015&ndash;Jan 2018 period, a top-10 categories horizontal bar chart ranks revenue contribution, a shipment distribution donut chart breaks down volume by shipping mode, and an on-time rate by shipping mode bar chart highlights where fulfillment is succeeding or failing. Year and ABC Class slicers allow cross-filtering so executives can isolate A-class performance or drill into a specific year. The page answers: &ldquo;Where should we focus attention this cycle?&rdquo; and &ldquo;Are the metrics moving in the right direction?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1028,18 +1026,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>On-time delivery is critically low at 42.7%</strong>, with a 57.3% late rate &mdash; signaling a systemic fulfillment issue rather than isolated delays.</li>
-      <li><strong>Fishing and Cleats are the top revenue categories</strong>, each exceeding $4M, while Computers and Shop By Sport contribute minimally and may warrant portfolio review.</li>
-      <li><strong>Standard Class dominates shipment volume (59.69%)</strong> and has the highest on-time rate, while First Class and Second Class show significantly worse delivery performance.</li>
+      <li><strong>Total revenue across the dataset is ~$35.2M</strong>, with A-class categories driving approximately 77% of it ($27.12M) &mdash; confirming that the seven A-class categories are the revenue engine of the portfolio.</li>
+      <li><strong>On-time delivery is critically low at 42.7%</strong>, with a 57.3% late rate &mdash; this is a systemic issue embedded across all periods, not a seasonal spike or isolated incident.</li>
+      <li><strong>Fishing and Cleats are the top revenue drivers</strong>, each exceeding $4M, while the bottom categories (Computers, Shop By Sport) contribute minimally and may warrant portfolio review or deprioritization.</li>
+      <li><strong>Standard Class handles ~60% of shipment volume and has the best on-time rate</strong>, while First Class and Second Class are paradoxically the worst performers &mdash; the premium tiers that promise the fastest delivery are the least reliable.</li>
+      <li><strong>Monthly revenue trend shows relative stability with no significant growth trajectory</strong> &mdash; flat revenue combined with high late rates suggests margin erosion risk, as fulfillment failures likely drive repeat-purchase attrition.</li>
     </ul>
-    <strong>Business Recommendation:</strong> Prioritize a root cause analysis on late deliveries, particularly for First Class and Second Class shipping modes. Consider renegotiating carrier SLAs or consolidating volume toward Standard Class where delivery windows allow.
+    <strong>Business Recommendation:</strong> Prioritize a carrier performance audit for First Class and Second Class shipping &mdash; the near-total late rates suggest either unrealistic promised delivery windows or underperforming logistics partners. In the short term, consider adjusting quoted delivery timelines to reset customer expectations; in the medium term, renegotiate carrier SLAs or consolidate volume toward Standard Class where delivery windows permit. The flat revenue trend combined with high late rates should trigger a review of whether fulfillment failures are driving customer churn.
   </div>
 
   <h3>Page 2: Demand Analysis &amp; Forecasting</h3>
   <p>
-    Monthly demand trends by product category with ETS forecast overlays, confidence intervals, and forecast
-    accuracy metrics (MAE, MAPE). Enables demand planners to compare forecast methods, identify seasonal patterns,
-    and assess which categories are trending up or down.
+    This page is the analytical centerpiece of the project, directly demonstrating demand planning skills relevant to S&amp;OP and IBP roles. It shows monthly demand trends by category as interactive line charts with ETS forecast overlays and confidence intervals, making it easy to see where actuals diverge from predictions. A forecast accuracy summary displays MAE and MAPE by category so planners can quickly identify which product lines have reliable forecasts and which need attention. A forecast method comparison visual shows side-by-side accuracy of ETS, MA-3, and WMA-3 per A-class category, enabling demand planners to select the best method for each product line. Category-level slicers allow drilling into individual categories for deeper analysis. The page answers: &ldquo;What does demand look like by category?&rdquo;, &ldquo;Which forecast method is most accurate?&rdquo;, and &ldquo;Are any categories trending up or down?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1057,18 +1055,19 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>ETS model achieves a strong 6.6% MAPE overall</strong>, confirming reliable forecast accuracy across the product portfolio.</li>
-      <li><strong>Cardio Equipment is the weakest forecast category</strong> at 9.5% MAPE with a forecast bias of +49.7, indicating significant over-forecasting that could lead to excess inventory.</li>
-      <li><strong>Cleats shows the largest negative forecast bias (&minus;71.2)</strong>, meaning consistent under-forecasting &mdash; a stockout risk if safety stock levels are not adjusted.</li>
-      <li><strong>Camping &amp; Hiking has the best accuracy</strong> (4.3% MAPE, 17.2 MAE) and a near-neutral bias, making it the most predictable category for planning.</li>
+      <li><strong>WMA-3 (weighted moving average, 3-period) outperformed ETS and MA-3 on MAPE</strong> across all 7 A-class categories, making it the recommended production method for short-horizon planning.</li>
+      <li><strong>Fishing has the lowest forecast error (MAPE ~5.3%)</strong>, making it the most predictable A-class category &mdash; suitable for lean, JIT-style replenishment with minimal safety stock buffers.</li>
+      <li><strong>Cardio Equipment has the highest MAPE (~9.5%)</strong>, driven by more volatile demand patterns &mdash; this category requires higher safety stock buffers to compensate for forecast uncertainty.</li>
+      <li><strong>All A-class categories are classified as AX</strong> (high revenue, low demand variability with CoV &lt; 0.20), validating the tight planning approach used in the MRP simulation.</li>
+      <li><strong>Demand is relatively flat across the dataset period</strong> with no strong seasonal peaks detected by ETS &mdash; the auto-seasonality parameter found no significant seasonality in most categories.</li>
+      <li><strong>Oct 2017 is a partial-month artifact</strong> across all categories and was excluded from training ranges to prevent forecast distortion.</li>
     </ul>
-    <strong>Business Recommendation:</strong> Investigate Cardio Equipment demand drivers to correct the over-forecasting bias, and increase safety stock buffers for Cleats to offset the under-forecasting tendency until the model is retrained.
+    <strong>Business Recommendation:</strong> Adopt WMA-3 as the primary short-horizon forecast method for all A-class categories, with ETS retained as a secondary validation tool for detecting emerging seasonality. For Cardio Equipment specifically, increase the safety stock buffer by one standard deviation to account for its elevated forecast error &mdash; the cost is modest (~$3K additional inventory investment at 95% service level) relative to the stockout risk. Forecast accuracy should be re-evaluated quarterly as new demand data accumulates.
   </div>
 
   <h3>Page 3: Inventory Optimization &amp; ABC/XYZ Analysis</h3>
   <p>
-    ABC/XYZ classification matrix, inventory health metrics, safety stock levels, and reorder point analysis.
-    Highlights which categories need inventory policy adjustments and where stockout risk is highest.
+    This page translates the ABC/XYZ classification from the Excel analysis into an interactive Power BI view, making inventory segmentation actionable for planners. It features an ABC-XYZ classification matrix heatmap showing item counts per cell, an inventory health status table with days of supply versus target for each A-class category (with status flags: Healthy, Monitor, or Review), EOQ and safety stock parameters per category, and in-stock rate KPI cards. A service level slicer (90%/95%/99%) and ABC classification filter allow dynamic exploration of how inventory policies change at different service targets. The page answers: &ldquo;Which categories are overstocked or understocked?&rdquo;, &ldquo;Where is working capital tied up unnecessarily?&rdquo;, and &ldquo;What are the recommended inventory policies by segment?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1086,18 +1085,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>Class A items drive 77% of total revenue ($27.12M)</strong>, confirming that a small portion of the catalog generates the majority of sales &mdash; classic Pareto distribution.</li>
-      <li><strong>Camping &amp; Hiking, Fishing, and Water Sports carry excess inventory</strong> with current days of supply (~51 days) far exceeding their targets (~30 days), tying up working capital unnecessarily.</li>
-      <li><strong>All categories show LOW stockout risk</strong>, which is positive, but the three overstocked categories have a recommended action to review for promotion or redistribution.</li>
-      <li><strong>Cleats, Indoor/Outdoor Games, and Women&rsquo;s Apparel are on track</strong> with current days of supply (~17 days) closely aligned to targets, requiring only monitoring.</li>
+      <li><strong>A-class items drive 77% of total revenue ($27.12M out of $35.21M)</strong>, confirming classic Pareto distribution &mdash; the forecasting and MRP focus on these 7 categories is validated by their outsized revenue contribution.</li>
+      <li><strong>Three categories carry significant excess inventory:</strong> Camping &amp; Hiking, Fishing, and Water Sports all show ~51 days of supply against a 30-day target &mdash; representing approximately $597K in tied-up working capital that could be redeployed.</li>
+      <li><strong>Cleats, Indoor/Outdoor Games, and Women&rsquo;s Apparel are closely aligned to target days of supply (~17 days)</strong>, requiring only routine monitoring &mdash; their replenishment policies are working as designed.</li>
+      <li><strong>All seven A-class categories show LOW stockout risk</strong> with current available quantity well above reorder points &mdash; the safety stock calculations from the Inventory_Optimization sheet are working as designed.</li>
+      <li><strong>At the current 95% service level, total safety stock investment across all A-class categories is ~824 units ($167,826)</strong> &mdash; the What-If Analysis showed that dropping to 90% would save ~$62K but increase stockout probability, while moving to 99% would add ~$70K with diminishing reliability gains.</li>
     </ul>
-    <strong>Business Recommendation:</strong> Run targeted promotions or redistribute excess stock for Camping &amp; Hiking, Fishing, and Water Sports to free up approximately $597K in tied-up inventory capital. Maintain current replenishment policies for the on-track categories.
+    <strong>Business Recommendation:</strong> Run targeted promotions or negotiate redistribution agreements for the three overstocked categories (Camping &amp; Hiking, Fishing, Water Sports) to free up ~$597K in working capital. Maintain the 95% service level as the cost-optimized target &mdash; the What-If sensitivity analysis shows it sits at the sweet spot between inventory investment and stockout protection. For Cleats (the highest-volume A-class category at ~2,076 units/month), consider establishing a dedicated replenishment review cadence given its outsized impact on fill rates.
   </div>
 
   <h3>Page 4: Fulfillment &amp; Logistics Performance</h3>
   <p>
-    On-time delivery rates, lead time variance analysis, shipping mode performance comparison, and late delivery
-    root cause ranking by category, region, and shipping mode. Helps operations teams pinpoint fulfillment bottlenecks.
+    This page provides a deep dive into outbound delivery performance, designed for operations teams to identify and resolve fulfillment bottlenecks. It includes on-time vs. late delivery rate trends over time as a stacked bar chart, lead time variance analysis comparing planned vs. actual delivery by shipping mode, a shipping mode performance comparison matrix, regional delivery performance with revenue-at-risk calculations, and a late delivery root cause breakdown. Geographic filters and shipping mode slicers enable targeted drill-down into specific markets or carrier types. The page answers: &ldquo;Which shipping modes and regions are underperforming?&rdquo;, &ldquo;What is the revenue at risk from late deliveries?&rdquo;, and &ldquo;Are fulfillment issues structural or seasonal?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1115,18 +1114,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>First Class shipping has the worst late rate (~95%)</strong>, followed by Second Class (~85%) &mdash; premium shipping modes are paradoxically the least reliable, creating customer satisfaction risk.</li>
-      <li><strong>Europe and Latin America carry the most revenue at risk</strong> from late deliveries (~$10M and ~$9M respectively), making them priority regions for fulfillment improvement.</li>
-      <li><strong>On-time rate trend shows persistent volatility</strong> between 40&ndash;45% across all periods with no clear improvement trajectory, suggesting structural rather than seasonal issues.</li>
-      <li><strong>Standard Class has the best late rate (~45%)</strong> despite handling nearly 60% of total shipment volume, indicating it is the most operationally efficient mode.</li>
+      <li><strong>First Class shipping has the worst late delivery rate at approximately 95%</strong>, followed by Second Class at ~85% &mdash; the premium shipping tiers that promise the fastest delivery are paradoxically the least reliable, creating a direct customer satisfaction and trust issue.</li>
+      <li><strong>Europe and Latin America carry the highest revenue at risk</strong> from late deliveries (~$10M and ~$9M respectively), making them priority regions for carrier and logistics partner review.</li>
+      <li><strong>Standard Class, despite handling nearly 60% of total shipment volume, maintains the best on-time rate (~55%)</strong> &mdash; it is the most operationally efficient and scalable mode in the current carrier network.</li>
+      <li><strong>The on-time rate trend shows persistent volatility between 40&ndash;45% across all periods</strong> with no clear improvement trajectory, confirming that this is a structural issue embedded in carrier performance or delivery window commitments &mdash; not a seasonal or one-time problem.</li>
+      <li><strong>Same Day shipping handles the smallest volume but has a moderate late rate (~48%)</strong>, suggesting it may be capacity-constrained or only offered in select regions.</li>
     </ul>
-    <strong>Business Recommendation:</strong> Conduct a carrier performance review for First Class and Second Class providers &mdash; the near-total late rates suggest either unrealistic promised delivery windows or underperforming logistics partners. Consider adjusting quoted delivery timelines or switching carriers for high-risk markets (Europe, Latin America).
+    <strong>Business Recommendation:</strong> Conduct a formal carrier performance review for First Class and Second Class shipping providers &mdash; the near-total late rates suggest either unrealistic promised delivery windows that were set without operational validation, or systematically underperforming logistics partners. In the short term, adjust quoted delivery timelines for these modes to reset customer expectations and reduce satisfaction risk. In the medium term, issue RFPs for alternative carriers in the two highest-risk markets (Europe, Latin America) where revenue exposure exceeds $9M each. Standard Class should be positioned as the default shipping recommendation in the order flow given its superior reliability at scale.
   </div>
 
   <h3>Page 5: Supply Plan &amp; MRP Analysis</h3>
   <p>
-    Time-phased MRP output showing gross requirements, scheduled receipts, projected on-hand inventory, net
-    requirements, and planned order releases. Includes MRP exception log and planned order timeline for supply planners.
+    This page visualizes the MRP simulation output, making it the most technically distinctive page in the dashboard. It displays time-phased net requirements across the 6-month planning horizon (Oct 2017&ndash;Mar 2018) for all A-class categories, showing gross requirements from ETS demand forecasts, scheduled receipts, projected on-hand inventory, net requirements, and planned order receipts/releases calculated using EOQ lot sizing. An MRP exception log surfaces any categories where projected on-hand falls below safety stock. KPI cards show total planned orders, MRP coverage ratio, number of exceptions, and average days of supply. The page answers: &ldquo;Is the supply plan covering forecasted demand?&rdquo;, &ldquo;Are there any exceptions that need analyst intervention?&rdquo;, and &ldquo;Where should we release purchase orders this cycle?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1144,19 +1143,18 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>All MRP exception flags are &ldquo;OK&rdquo;</strong> across the 6-month planning horizon (Oct 2017 &ndash; Mar 2018), confirming that planned order receipts adequately cover gross requirements for every category.</li>
-      <li><strong>Gross requirements remain stable at ~48,600 units total</strong> across the planning window, with planned order receipts (~43,000 units) plus projected on-hand (~9,000 units) maintaining coverage.</li>
-      <li><strong>Cleats and Cardio Equipment have the highest gross requirements</strong> (~2,000 and ~1,100 units/month respectively), making them the most critical categories for supply continuity.</li>
-      <li><strong>EOQ lot sizing is maintaining above-safety-stock levels</strong> for all A-class categories, validating that the calculated order quantities from the inventory optimization phase are working correctly.</li>
+      <li><strong>All MRP exception flags are &ldquo;OK&rdquo; across the entire 6-month planning horizon</strong> for all 7 A-class categories &mdash; confirming that the EOQ lot sizes calculated in the Inventory_Optimization phase generate sufficient planned order receipts to cover gross requirements without breaching safety stock floors.</li>
+      <li><strong>Total gross requirements across the planning window are ~48,600 units</strong>, with planned order receipts (~43,000 units) plus carried projected on-hand (~9,000 units from opening balances) maintaining full coverage.</li>
+      <li><strong>Cleats dominate the supply plan with the largest planned orders (~1,880&ndash;2,115 units/month at EOQ of 235)</strong>, followed by Women&rsquo;s Apparel (~1,770&ndash;1,880 units/month at EOQ of 186) &mdash; these two categories alone account for over 50% of total planned order volume.</li>
+      <li><strong>The MRP correctly offsets planned order releases by the average lead time (~3.5 days)</strong> for all categories, meaning purchase orders would need to be placed approximately half a week before the planned receipt date.</li>
+      <li><strong>EOQ lot sizing is producing order quantities that maintain projected on-hand well above safety stock in every period</strong> &mdash; this validates the lot sizing optimization from the What-If Analysis but also suggests there may be room to tighten lot sizes for lower-volume categories (Fishing, Camping &amp; Hiking, Water Sports) to reduce carrying costs.</li>
     </ul>
-    <strong>Business Recommendation:</strong> The clean MRP run confirms supply plan health. Continue monitoring for demand shifts that could trigger exceptions, and consider tightening lot sizes for lower-volume categories to reduce carrying costs without risking stockouts.
+    <strong>Business Recommendation:</strong> The clean MRP run validates the end-to-end planning pipeline: demand forecasts flow correctly into gross requirements, inventory parameters produce appropriate safety stock floors, and EOQ lot sizing generates viable planned orders. For ongoing operations, monitor for demand shifts (particularly in Cardio Equipment, which had the highest forecast error) that could trigger MRP exceptions in future cycles. Consider tightening lot sizes for the three lower-volume categories (Fishing, Camping &amp; Hiking, Water Sports) where current days of supply already exceed targets &mdash; switching from EOQ to Fixed Lot or Lot-for-Lot for these categories could reduce carrying costs without risking stockouts, as validated in the What-If Analysis lot sizing comparison.
   </div>
 
   <h3>Page 6: Insights, Recommendations &amp; Closed-Loop Actions</h3>
   <p>
-    Consolidated findings and actionable business recommendations. Demonstrates the closed-loop process: analysis
-    findings feed back into master data updates (lead times, safety stock levels, lot sizing rules) that take effect
-    in the next automated refresh cycle.
+    This page synthesizes findings from all five preceding dashboard pages into a consolidated executive-ready view. It features insight cards summarizing the four major analysis areas (demand forecasting accuracy, inventory health, fulfillment performance, and MRP plan status), each with supporting data and trend indicators. The key differentiator is the closed-loop design: recommendations on this page map directly to master data updates in Oracle (revised lead times, adjusted safety stock levels, updated lot sizing rules, forecast method selections) that take effect in the next automated refresh cycle via the REFRESH_SUPPLY_CHAIN_DATA stored procedure. This page answers: &ldquo;What are the top 3&ndash;5 priorities for the supply chain team this cycle?&rdquo; and &ldquo;How do analysis findings translate into operational changes?&rdquo;
   </p>
 
   <figure style="margin: 20px 0;">
@@ -1174,11 +1172,12 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
   <div style="margin: 16px 0 24px 0; padding: 14px 18px; background: #f8f9fa; border-left: 4px solid #0078d4; border-radius: 4px;">
     <strong>Key Findings &amp; Insights:</strong>
     <ul style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li><strong>This page consolidates the four major findings</strong> from the analysis: forecast accuracy by category, inventory health gaps, fulfillment risk by shipping mode and market, and MRP plan status.</li>
-      <li><strong>The closed-loop design is the key differentiator</strong> &mdash; insights discovered on this page feed directly back into Oracle master data (lead times, safety stock levels, lot sizing rules) via stored procedures, ensuring continuous improvement.</li>
-      <li><strong>Three actionable priorities emerge:</strong> (1) correct Cardio Equipment over-forecasting, (2) redistribute ~$597K in excess inventory from three overstocked categories, and (3) address the 57.3% late delivery rate driven primarily by First Class shipping.</li>
+      <li><strong>The page consolidates four cross-cutting findings:</strong> (1) WMA-3 is the recommended forecast method across all A-class categories based on MAPE performance, (2) three categories carry ~$597K in excess inventory above target days of supply, (3) First Class and Second Class shipping have structurally unsustainable late delivery rates (95% and 85%), and (4) the MRP plan is clean with zero exceptions across the 6-month horizon.</li>
+      <li><strong>The closed-loop architecture is the key differentiator of this project</strong> &mdash; insights are not just reported but feed directly back into Oracle master data via stored procedures. When a safety stock adjustment is made based on this page&rsquo;s recommendations, the next nightly DBMS_SCHEDULER run recalculates MRP requirements with the updated parameters, and the next Power BI scheduled refresh surfaces the impact automatically.</li>
+      <li><strong>Three actionable priorities emerge with clear ownership:</strong> (1) Demand Planning team should update forecast method parameters to WMA-3 and increase Cardio Equipment safety stock buffer, (2) Inventory team should initiate promotion or redistribution for overstocked categories, (3) Logistics team should conduct carrier audit for premium shipping modes.</li>
+      <li><strong>The automated pipeline means these recommendations are self-validating</strong> &mdash; once master data corrections are made, the dashboard will show their impact in the next refresh cycle without any manual reporting effort.</li>
     </ul>
-    <strong>Business Recommendation:</strong> Use this page as the operational starting point for weekly supply chain review meetings. The automated refresh pipeline ensures that as master data corrections take effect, their impact is visible in the next dashboard cycle &mdash; enabling data-driven, iterative improvement.
+    <strong>Business Recommendation:</strong> Use this page as the operational starting point for weekly supply chain review meetings. Assign each of the three priority actions to specific team leads with deadlines, and use the next dashboard refresh cycle to measure whether the interventions are having the intended effect. The automated pipeline ensures accountability: if excess inventory hasn&rsquo;t decreased after the promotion cycle, or if First Class late rates haven&rsquo;t improved after carrier renegotiation, the data will reflect that immediately. This closed-loop cadence &mdash; analyze, recommend, execute, measure &mdash; is what transforms a reporting dashboard into a continuous improvement system.
   </div>
 
   <h3>DAX Measures</h3>
