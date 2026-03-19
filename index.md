@@ -27,7 +27,7 @@ My portfolio reflects end-to-end analytical work across SQL, Excel, Tableau, Pow
 
 ---
 
-## Technical Skills
+## Tools Used
 - **SQL & Databases:** BigQuery, MySQL, Joins, CTEs, Window Functions, DDL/DML
 - **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query
 - **Visualization & BI:** Tableau, Power BI (DAX, Star Schema), Data Storytelling
