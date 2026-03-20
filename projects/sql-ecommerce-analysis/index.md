@@ -1,14 +1,14 @@
 ---
 layout: default
-title: E-commerce Revenue & Returns Analysis (SQL)
-description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL — CTEs, window functions, and time-series logic — to identify revenue drivers, return risk, and profit opportunities."
+title: E-commerce Sales Analysis (SQL)
+description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL — CTEs, window functions, and time-series logic — to examine products, brands, categories, trends, and customers."
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
-# E-commerce Revenue & Returns Analysis (SQL)
+# E-commerce Sales Analysis (SQL)
 
-> This project analyzes sales and returns activity from the BigQuery **thelook_ecommerce** dataset to identify revenue drivers, profit concentration, return-risk patterns, and actionable operational insights using advanced SQL.
+> This project analyzes the BigQuery **thelook_ecommerce** dataset to identify ways to optimize the company using advanced SQL.
 
 ---
 
