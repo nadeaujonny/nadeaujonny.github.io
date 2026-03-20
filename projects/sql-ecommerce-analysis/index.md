@@ -714,6 +714,29 @@ FROM metrics
 ORDER BY revenue_rank ASC
 LIMIT 10;</code></pre>
 
+  <h4>Result Table</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>product_name</th>
+        <th>revenue</th>
+        <th>revenue_rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Canada Goose Men's The Chateau Jacket</td><td>8965.0</td><td>1</td></tr>
+      <tr><td>Darla</td><td>5994.0</td><td>2</td></tr>
+      <tr><td>Men's Moncler Down Vest Tib</td><td>3850.0</td><td>3</td></tr>
+      <tr><td>The North Face Apex Bionic Soft Shell Jacket - Men's</td><td>3612.0</td><td>4</td></tr>
+      <tr><td>NIKE WOMEN'S PRO COMPRESSION SPORTS BRA *Outstanding Support and Comfort*</td><td>3612.0</td><td>4</td></tr>
+      <tr><td>Canada Goose Women's Solaris</td><td>2780.0</td><td>6</td></tr>
+      <tr><td>The North Face Denali Down Mens Jacket 2013</td><td>2709.0</td><td>7</td></tr>
+      <tr><td>JORDAN DURASHEEN SHORT MENS 404309-109</td><td>2709.0</td><td>7</td></tr>
+      <tr><td>Quiksilver Men's Rockefeller Walkshort</td><td>2709.0</td><td>7</td></tr>
+      <tr><td>The North Face Nuptse 2 Jacket Deep Water Blue Mens</td><td>2709.0</td><td>7</td></tr>
+    </tbody>
+  </table>
+
   <h4>Top Products by Profit</h4>
   <pre><code class="language-sql">WITH metrics AS (
   SELECT
