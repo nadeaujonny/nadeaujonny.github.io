@@ -711,7 +711,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank DESC
+ORDER BY revenue_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Products by Profit</h4>
@@ -731,7 +731,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank DESC
+ORDER BY profit_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Products by Profit Margin</h4>
@@ -772,7 +772,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank DESC
+ORDER BY volume_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Products by Return Rate</h4>
@@ -812,7 +812,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank ASC
+ORDER BY revenue_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Products by Profit</h4>
@@ -832,7 +832,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank ASC
+ORDER BY profit_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Products by Profit Margin</h4>
@@ -873,7 +873,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank ASC
+ORDER BY volume_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Products by Return Rate</h4>
@@ -915,7 +915,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank DESC
+ORDER BY revenue_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Brands by Profit</h4>
@@ -935,7 +935,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank DESC
+ORDER BY profit_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Brands by Profit Margin</h4>
@@ -976,7 +976,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank DESC
+ORDER BY volume_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Brands by Return Rate</h4>
@@ -1016,7 +1016,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank ASC
+ORDER BY revenue_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Brands by Profit</h4>
@@ -1036,7 +1036,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank ASC
+ORDER BY profit_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Brands by Profit Margin</h4>
@@ -1077,7 +1077,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank ASC
+ORDER BY volume_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Brands by Return Rate</h4>
@@ -1119,7 +1119,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank DESC
+ORDER BY revenue_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Categories by Profit</h4>
@@ -1139,7 +1139,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank DESC
+ORDER BY profit_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Categories by Profit Margin</h4>
@@ -1180,7 +1180,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank DESC
+ORDER BY volume_rank ASC
 LIMIT 10;</code></pre>
 
   <h4>Top Categories by Return Rate</h4>
@@ -1220,7 +1220,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
 FROM metrics
-ORDER BY revenue_rank ASC
+ORDER BY revenue_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Categories by Profit</h4>
@@ -1240,7 +1240,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY profit DESC) AS profit_rank
 FROM metrics
-ORDER BY profit_rank ASC
+ORDER BY profit_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Categories by Profit Margin</h4>
@@ -1281,7 +1281,7 @@ SELECT
   *,
   RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
 FROM metrics
-ORDER BY volume_rank ASC
+ORDER BY volume_rank DESC
 LIMIT 10;</code></pre>
 
   <h4>Bottom Categories by Return Rate</h4>
