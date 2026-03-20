@@ -4273,6 +4273,2036 @@ LIMIT 15;</code></pre>
 
   <div style="margin-top: 12px;"></div>
 
+<h3>Top brands by Revenue</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  revenue_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Orvis</td><td>128.92</td><td>60.07</td><td>25260.0</td><td>13494.35</td><td>721</td><td>186</td><td>65</td><td>102</td><td>368</td><td>21012.0</td><td>11275.59</td><td>0.5342</td><td>0.259</td><td>0.3005</td><td>0.1415</td><td>0.6643</td><td>0.0093573</td><td>0.0096442</td><td>0.0039774</td><td>239</td><td>245</td><td>10</td><td>12</td><td>39</td><td>39</td><td>47</td><td>44</td><td>38</td><td>17</td><td>17</td><td>1110</td><td>1416</td><td>1228</td><td>1453</td><td>1519</td></tr>
+    <tr><td>The North Face</td><td>440.81</td><td>197.82</td><td>25174.88</td><td>13719.13</td><td>233</td><td>61</td><td>20</td><td>36</td><td>116</td><td>21048.75</td><td>11669.08</td><td>0.545</td><td>0.2469</td><td>0.3096</td><td>0.1545</td><td>0.6554</td><td>0.0093258</td><td>0.0098049</td><td>0.0012853</td><td>9</td><td>9</td><td>11</td><td>10</td><td>153</td><td>152</td><td>182</td><td>151</td><td>153</td><td>16</td><td>16</td><td>962</td><td>1608</td><td>1153</td><td>1181</td><td>1574</td></tr>
+    <tr><td>Joe&#x27;s Jeans</td><td>152.81</td><td>80.23</td><td>25134.81</td><td>11891.96</td><td>697</td><td>169</td><td>76</td><td>99</td><td>353</td><td>27326.02</td><td>13164.83</td><td>0.4731</td><td>0.3102</td><td>0.2826</td><td>0.142</td><td>0.6762</td><td>0.009311</td><td>0.008499</td><td>0.003845</td><td>163</td><td>133</td><td>12</td><td>15</td><td>41</td><td>42</td><td>38</td><td>47</td><td>41</td><td>7</td><td>9</td><td>1850</td><td>1094</td><td>1486</td><td>1448</td><td>1239</td></tr>
+    <tr><td>Jones New York</td><td>100.52</td><td>45.47</td><td>24723.78</td><td>13604.24</td><td>846</td><td>230</td><td>96</td><td>114</td><td>406</td><td>20262.41</td><td>10960.83</td><td>0.5502</td><td>0.2945</td><td>0.3142</td><td>0.1348</td><td>0.6384</td><td>0.0091587</td><td>0.0097228</td><td>0.004667</td><td>361</td><td>403</td><td>13</td><td>11</td><td>32</td><td>27</td><td>27</td><td>34</td><td>33</td><td>18</td><td>18</td><td>876</td><td>1178</td><td>1106</td><td>1532</td><td>1701</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Ray-Ban</td><td>118.89</td><td>50.08</td><td>23852.78</td><td>13833.41</td><td>798</td><td>206</td><td>78</td><td>131</td><td>383</td><td>25134.08</td><td>14434.77</td><td>0.5799</td><td>0.2746</td><td>0.3088</td><td>0.1642</td><td>0.6503</td><td>0.008836</td><td>0.0098866</td><td>0.0044022</td><td>278</td><td>346</td><td>15</td><td>9</td><td>34</td><td>32</td><td>35</td><td>30</td><td>37</td><td>11</td><td>8</td><td>437</td><td>1317</td><td>1160</td><td>1073</td><td>1612</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Profit</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  profit_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Ray-Ban</td><td>118.89</td><td>50.08</td><td>23852.78</td><td>13833.41</td><td>798</td><td>206</td><td>78</td><td>131</td><td>383</td><td>25134.08</td><td>14434.77</td><td>0.5799</td><td>0.2746</td><td>0.3088</td><td>0.1642</td><td>0.6503</td><td>0.008836</td><td>0.0098866</td><td>0.0044022</td><td>278</td><td>346</td><td>15</td><td>9</td><td>34</td><td>32</td><td>35</td><td>30</td><td>37</td><td>11</td><td>8</td><td>437</td><td>1317</td><td>1160</td><td>1073</td><td>1612</td></tr>
+    <tr><td>The North Face</td><td>440.81</td><td>197.82</td><td>25174.88</td><td>13719.13</td><td>233</td><td>61</td><td>20</td><td>36</td><td>116</td><td>21048.75</td><td>11669.08</td><td>0.545</td><td>0.2469</td><td>0.3096</td><td>0.1545</td><td>0.6554</td><td>0.0093258</td><td>0.0098049</td><td>0.0012853</td><td>9</td><td>9</td><td>11</td><td>10</td><td>153</td><td>152</td><td>182</td><td>151</td><td>153</td><td>16</td><td>16</td><td>962</td><td>1608</td><td>1153</td><td>1181</td><td>1574</td></tr>
+    <tr><td>Jones New York</td><td>100.52</td><td>45.47</td><td>24723.78</td><td>13604.24</td><td>846</td><td>230</td><td>96</td><td>114</td><td>406</td><td>20262.41</td><td>10960.83</td><td>0.5502</td><td>0.2945</td><td>0.3142</td><td>0.1348</td><td>0.6384</td><td>0.0091587</td><td>0.0097228</td><td>0.004667</td><td>361</td><td>403</td><td>13</td><td>11</td><td>32</td><td>27</td><td>27</td><td>34</td><td>33</td><td>18</td><td>18</td><td>876</td><td>1178</td><td>1106</td><td>1532</td><td>1701</td></tr>
+    <tr><td>Orvis</td><td>128.92</td><td>60.07</td><td>25260.0</td><td>13494.35</td><td>721</td><td>186</td><td>65</td><td>102</td><td>368</td><td>21012.0</td><td>11275.59</td><td>0.5342</td><td>0.259</td><td>0.3005</td><td>0.1415</td><td>0.6643</td><td>0.0093573</td><td>0.0096442</td><td>0.0039774</td><td>239</td><td>245</td><td>10</td><td>12</td><td>39</td><td>39</td><td>47</td><td>44</td><td>38</td><td>17</td><td>17</td><td>1110</td><td>1416</td><td>1228</td><td>1453</td><td>1519</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Joe&#x27;s Jeans</td><td>152.81</td><td>80.23</td><td>25134.81</td><td>11891.96</td><td>697</td><td>169</td><td>76</td><td>99</td><td>353</td><td>27326.02</td><td>13164.83</td><td>0.4731</td><td>0.3102</td><td>0.2826</td><td>0.142</td><td>0.6762</td><td>0.009311</td><td>0.008499</td><td>0.003845</td><td>163</td><td>133</td><td>12</td><td>15</td><td>41</td><td>42</td><td>38</td><td>47</td><td>41</td><td>7</td><td>9</td><td>1850</td><td>1094</td><td>1486</td><td>1448</td><td>1239</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Profit Margin</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+, third_layer AS (
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+)
+SELECT
+	*
+FROM third_layer
+WHERE revenue_rank &lt;= 30
+ORDER BY
+  profit_margin_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Ray-Ban</td><td>118.89</td><td>50.08</td><td>23852.78</td><td>13833.41</td><td>798</td><td>206</td><td>78</td><td>131</td><td>383</td><td>25134.08</td><td>14434.77</td><td>0.5799</td><td>0.2746</td><td>0.3088</td><td>0.1642</td><td>0.6503</td><td>0.008836</td><td>0.0098866</td><td>0.0044022</td><td>278</td><td>346</td><td>15</td><td>9</td><td>34</td><td>32</td><td>35</td><td>30</td><td>37</td><td>11</td><td>8</td><td>437</td><td>1317</td><td>1160</td><td>1073</td><td>1612</td></tr>
+    <tr><td>Paul Fredrick</td><td>150.52</td><td>65.49</td><td>17954.0</td><td>10251.08</td><td>445</td><td>112</td><td>42</td><td>56</td><td>235</td><td>15161.0</td><td>8567.86</td><td>0.571</td><td>0.2727</td><td>0.2879</td><td>0.1258</td><td>0.6772</td><td>0.0066509</td><td>0.0073263</td><td>0.0024548</td><td>171</td><td>209</td><td>24</td><td>18</td><td>68</td><td>70</td><td>84</td><td>91</td><td>65</td><td>28</td><td>26</td><td>538</td><td>1322</td><td>1379</td><td>1628</td><td>1232</td></tr>
+    <tr><td>Jones New York</td><td>100.52</td><td>45.47</td><td>24723.78</td><td>13604.24</td><td>846</td><td>230</td><td>96</td><td>114</td><td>406</td><td>20262.41</td><td>10960.83</td><td>0.5502</td><td>0.2945</td><td>0.3142</td><td>0.1348</td><td>0.6384</td><td>0.0091587</td><td>0.0097228</td><td>0.004667</td><td>361</td><td>403</td><td>13</td><td>11</td><td>32</td><td>27</td><td>27</td><td>34</td><td>33</td><td>18</td><td>18</td><td>876</td><td>1178</td><td>1106</td><td>1532</td><td>1701</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Mountain Hardwear</td><td>170.78</td><td>76.25</td><td>19859.63</td><td>10859.12</td><td>425</td><td>116</td><td>34</td><td>64</td><td>211</td><td>16634.22</td><td>9313.3</td><td>0.5468</td><td>0.2267</td><td>0.3213</td><td>0.1506</td><td>0.6453</td><td>0.0073568</td><td>0.0077609</td><td>0.0023445</td><td>131</td><td>154</td><td>17</td><td>17</td><td>77</td><td>66</td><td>106</td><td>76</td><td>72</td><td>24</td><td>22</td><td>934</td><td>1666</td><td>1047</td><td>1241</td><td>1651</td></tr>
+    <tr><td>Arc&#x27;teryx</td><td>323.7</td><td>146.18</td><td>18141.7</td><td>9908.14</td><td>271</td><td>56</td><td>22</td><td>41</td><td>152</td><td>22880.85</td><td>12500.89</td><td>0.5462</td><td>0.2821</td><td>0.2435</td><td>0.1513</td><td>0.7308</td><td>0.0067204</td><td>0.0070812</td><td>0.001495</td><td>22</td><td>20</td><td>22</td><td>19</td><td>132</td><td>169</td><td>161</td><td>132</td><td>118</td><td>13</td><td>13</td><td>943</td><td>1281</td><td>1928</td><td>1234</td><td>808</td></tr>
+    <tr><td>The North Face</td><td>440.81</td><td>197.82</td><td>25174.88</td><td>13719.13</td><td>233</td><td>61</td><td>20</td><td>36</td><td>116</td><td>21048.75</td><td>11669.08</td><td>0.545</td><td>0.2469</td><td>0.3096</td><td>0.1545</td><td>0.6554</td><td>0.0093258</td><td>0.0098049</td><td>0.0012853</td><td>9</td><td>9</td><td>11</td><td>10</td><td>153</td><td>152</td><td>182</td><td>151</td><td>153</td><td>16</td><td>16</td><td>962</td><td>1608</td><td>1153</td><td>1181</td><td>1574</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Kenneth Cole</td><td>84.27</td><td>39.03</td><td>15734.23</td><td>8442.44</td><td>775</td><td>189</td><td>79</td><td>111</td><td>396</td><td>15627.95</td><td>8304.84</td><td>0.5366</td><td>0.2948</td><td>0.2846</td><td>0.1432</td><td>0.6769</td><td>0.0058286</td><td>0.0060337</td><td>0.0042753</td><td>499</td><td>528</td><td>27</td><td>26</td><td>36</td><td>36</td><td>34</td><td>35</td><td>35</td><td>27</td><td>27</td><td>1079</td><td>1177</td><td>1464</td><td>1333</td><td>1235</td></tr>
+    <tr><td>Orvis</td><td>128.92</td><td>60.07</td><td>25260.0</td><td>13494.35</td><td>721</td><td>186</td><td>65</td><td>102</td><td>368</td><td>21012.0</td><td>11275.59</td><td>0.5342</td><td>0.259</td><td>0.3005</td><td>0.1415</td><td>0.6643</td><td>0.0093573</td><td>0.0096442</td><td>0.0039774</td><td>239</td><td>245</td><td>10</td><td>12</td><td>39</td><td>39</td><td>47</td><td>44</td><td>38</td><td>17</td><td>17</td><td>1110</td><td>1416</td><td>1228</td><td>1453</td><td>1519</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Ralph Lauren</td><td>86.37</td><td>40.49</td><td>16195.65</td><td>8604.78</td><td>760</td><td>188</td><td>67</td><td>107</td><td>398</td><td>15089.08</td><td>8150.14</td><td>0.5313</td><td>0.2627</td><td>0.2879</td><td>0.1408</td><td>0.6792</td><td>0.0059995</td><td>0.0061497</td><td>0.0041925</td><td>487</td><td>491</td><td>26</td><td>24</td><td>37</td><td>37</td><td>44</td><td>38</td><td>34</td><td>29</td><td>29</td><td>1150</td><td>1396</td><td>1379</td><td>1459</td><td>1221</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Unit Orders</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  unit_orders_placed_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+    <tr><td>American Apparel</td><td>37.49</td><td>18.04</td><td>10780.0</td><td>5628.61</td><td>1204</td><td>290</td><td>120</td><td>191</td><td>603</td><td>11807.99</td><td>6094.43</td><td>0.5221</td><td>0.2927</td><td>0.2863</td><td>0.1586</td><td>0.6753</td><td>0.0039934</td><td>0.0040227</td><td>0.0066419</td><td>1437</td><td>1442</td><td>47</td><td>46</td><td>15</td><td>16</td><td>16</td><td>15</td><td>15</td><td>46</td><td>43</td><td>1265</td><td>1194</td><td>1389</td><td>1126</td><td>1247</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Average Sale Price</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  avg_product_sale_price_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Nobis</td><td>830.0</td><td>364.74</td><td>3210.0</td><td>1698.17</td><td>28</td><td>4</td><td>2</td><td>4</td><td>18</td><td>4865.0</td><td>2693.66</td><td>0.529</td><td>0.3333</td><td>0.1667</td><td>0.1429</td><td>0.8182</td><td>0.0011891</td><td>0.0012137</td><td>0.0001545</td><td>1</td><td>1</td><td>168</td><td>169</td><td>975</td><td>1282</td><td>1096</td><td>936</td><td>811</td><td>109</td><td>98</td><td>1172</td><td>813</td><td>2308</td><td>1334</td><td>360</td></tr>
+    <tr><td>Bergama</td><td>749.99</td><td>306.75</td><td>2999.96</td><td>1772.98</td><td>10</td><td>4</td><td>1</td><td>0</td><td>5</td><td>749.99</td><td>443.24</td><td>0.591</td><td>0.2</td><td>0.4</td><td>0.0</td><td>0.5556</td><td>0.0011113</td><td>0.0012671</td><td>5.52e-05</td><td>2</td><td>2</td><td>186</td><td>156</td><td>1691</td><td>1282</td><td>1458</td><td>2294</td><td>1643</td><td>603</td><td>550</td><td>319</td><td>1728</td><td>437</td><td>2294</td><td>2215</td></tr>
+    <tr><td>The Harris Tweed Of Scotland</td><td>600.0</td><td>256.2</td><td>600.0</td><td>343.8</td><td>5</td><td>1</td><td>2</td><td>0</td><td>2</td><td>1200.0</td><td>687.6</td><td>0.573</td><td>0.6667</td><td>0.2</td><td>0.0</td><td>0.6667</td><td>0.0002223</td><td>0.0002457</td><td>2.76e-05</td><td>3</td><td>4</td><td>703</td><td>660</td><td>2360</td><td>2144</td><td>1096</td><td>2294</td><td>2343</td><td>435</td><td>405</td><td>517</td><td>116</td><td>2132</td><td>2294</td><td>1291</td></tr>
+    <tr><td>Canada Goose</td><td>577.82</td><td>249.06</td><td>12909.93</td><td>7257.7</td><td>115</td><td>22</td><td>15</td><td>21</td><td>57</td><td>22479.93</td><td>12816.81</td><td>0.5622</td><td>0.4054</td><td>0.234</td><td>0.1826</td><td>0.7215</td><td>0.0047824</td><td>0.005187</td><td>0.0006344</td><td>4</td><td>5</td><td>36</td><td>34</td><td>337</td><td>412</td><td>261</td><td>265</td><td>329</td><td>14</td><td>11</td><td>672</td><td>572</td><td>1980</td><td>814</td><td>871</td></tr>
+    <tr><td>Jordan</td><td>569.34</td><td>288.65</td><td>5818.48</td><td>2896.09</td><td>40</td><td>12</td><td>4</td><td>3</td><td>21</td><td>4655.25</td><td>2421.06</td><td>0.4977</td><td>0.25</td><td>0.3243</td><td>0.075</td><td>0.6364</td><td>0.0021554</td><td>0.0020698</td><td>0.0002207</td><td>5</td><td>3</td><td>91</td><td>92</td><td>759</td><td>663</td><td>744</td><td>1116</td><td>725</td><td>115</td><td>113</td><td>1567</td><td>1436</td><td>1022</td><td>2164</td><td>1709</td></tr>
+    <tr><td>Moncler</td><td>550.0</td><td>238.15</td><td>0.0</td><td>0.0</td><td>7</td><td>0</td><td>1</td><td>2</td><td>4</td><td>1650.0</td><td>935.55</td><td></td><td>1.0</td><td>0.0</td><td>0.2857</td><td>1.0</td><td>0.0</td><td>0.0</td><td>3.86e-05</td><td>6</td><td>6</td><td>2543</td><td>2543</td><td>2030</td><td>2543</td><td>1458</td><td>1375</td><td>1842</td><td>341</td><td>318</td><td>2543</td><td>1</td><td>2543</td><td>248</td><td>1</td></tr>
+    <tr><td>Sandals Cay</td><td>499.99</td><td>217.0</td><td>499.99</td><td>282.99</td><td>10</td><td>1</td><td>0</td><td>1</td><td>8</td><td>499.99</td><td>282.99</td><td>0.566</td><td>0.0</td><td>0.1111</td><td>0.1</td><td>0.8889</td><td>0.0001852</td><td>0.0002022</td><td>5.52e-05</td><td>7</td><td>7</td><td>794</td><td>747</td><td>1691</td><td>2144</td><td>2057</td><td>1743</td><td>1317</td><td>787</td><td>744</td><td>606</td><td>2057</td><td>2485</td><td>1944</td><td>223</td></tr>
+    <tr><td>Andrew Marc</td><td>479.0</td><td>205.97</td><td>958.0</td><td>546.06</td><td>4</td><td>2</td><td>0</td><td>1</td><td>1</td><td>479.0</td><td>273.03</td><td>0.57</td><td>0.0</td><td>0.6667</td><td>0.25</td><td>0.3333</td><td>0.0003549</td><td>0.0003903</td><td>2.21e-05</td><td>8</td><td>8</td><td>511</td><td>480</td><td>2496</td><td>1775</td><td>2057</td><td>1743</td><td>2563</td><td>809</td><td>765</td><td>555</td><td>2057</td><td>45</td><td>321</td><td>2597</td></tr>
+    <tr><td>The North Face</td><td>440.81</td><td>197.82</td><td>25174.88</td><td>13719.13</td><td>233</td><td>61</td><td>20</td><td>36</td><td>116</td><td>21048.75</td><td>11669.08</td><td>0.545</td><td>0.2469</td><td>0.3096</td><td>0.1545</td><td>0.6554</td><td>0.0093258</td><td>0.0098049</td><td>0.0012853</td><td>9</td><td>9</td><td>11</td><td>10</td><td>153</td><td>152</td><td>182</td><td>151</td><td>153</td><td>16</td><td>16</td><td>962</td><td>1608</td><td>1153</td><td>1181</td><td>1574</td></tr>
+    <tr><td>NAU</td><td>414.95</td><td>146.89</td><td>414.95</td><td>268.06</td><td>6</td><td>1</td><td>0</td><td>0</td><td>5</td><td>0.0</td><td>0.0</td><td>0.646</td><td>0.0</td><td>0.1667</td><td>0.0</td><td>0.8333</td><td>0.0001537</td><td>0.0001916</td><td>3.31e-05</td><td>10</td><td>19</td><td>875</td><td>773</td><td>2181</td><td>2144</td><td>2057</td><td>2294</td><td>1643</td><td>2548</td><td>2548</td><td>19</td><td>2057</td><td>2308</td><td>2294</td><td>301</td></tr>
+    <tr><td>Spyder</td><td>397.8</td><td>180.45</td><td>4049.8</td><td>2209.64</td><td>23</td><td>9</td><td>5</td><td>0</td><td>9</td><td>2749.95</td><td>1494.97</td><td>0.5456</td><td>0.3571</td><td>0.3913</td><td>0.0</td><td>0.5</td><td>0.0015002</td><td>0.0015792</td><td>0.0001269</td><td>11</td><td>11</td><td>124</td><td>120</td><td>1085</td><td>805</td><td>632</td><td>2294</td><td>1236</td><td>210</td><td>203</td><td>955</td><td>752</td><td>545</td><td>2294</td><td>2310</td></tr>
+    <tr><td>Unicorn London</td><td>396.99</td><td>158.4</td><td>1190.97</td><td>715.77</td><td>9</td><td>3</td><td>0</td><td>2</td><td>4</td><td>793.98</td><td>477.18</td><td>0.601</td><td>0.0</td><td>0.4286</td><td>0.2222</td><td>0.5714</td><td>0.0004412</td><td>0.0005116</td><td>4.96e-05</td><td>12</td><td>16</td><td>445</td><td>389</td><td>1795</td><td>1484</td><td>2057</td><td>1375</td><td>1842</td><td>583</td><td>524</td><td>233</td><td>2057</td><td>367</td><td>512</td><td>2151</td></tr>
+    <tr><td>Magaschoni</td><td>395.0</td><td>172.26</td><td>3824.0</td><td>2101.08</td><td>38</td><td>11</td><td>3</td><td>6</td><td>18</td><td>4260.0</td><td>2511.17</td><td>0.5494</td><td>0.2143</td><td>0.3438</td><td>0.1579</td><td>0.6207</td><td>0.0014166</td><td>0.0015016</td><td>0.0002096</td><td>13</td><td>14</td><td>130</td><td>127</td><td>782</td><td>707</td><td>888</td><td>727</td><td>811</td><td>122</td><td>109</td><td>891</td><td>1701</td><td>773</td><td>1135</td><td>1857</td></tr>
+    <tr><td>Halston Heritage</td><td>378.45</td><td>172.58</td><td>4260.81</td><td>2307.75</td><td>43</td><td>12</td><td>2</td><td>6</td><td>23</td><td>3089.83</td><td>1680.27</td><td>0.5416</td><td>0.1429</td><td>0.3243</td><td>0.1395</td><td>0.6571</td><td>0.0015784</td><td>0.0016493</td><td>0.0002372</td><td>14</td><td>13</td><td>119</td><td>114</td><td>715</td><td>663</td><td>1096</td><td>727</td><td>681</td><td>181</td><td>170</td><td>1003</td><td>1948</td><td>1022</td><td>1471</td><td>1564</td></tr>
+    <tr><td>Rebecca Taylor</td><td>377.83</td><td>176.62</td><td>1495.0</td><td>787.67</td><td>23</td><td>4</td><td>1</td><td>4</td><td>14</td><td>1960.0</td><td>1045.27</td><td>0.5269</td><td>0.2</td><td>0.2105</td><td>0.1739</td><td>0.7778</td><td>0.0005538</td><td>0.0005629</td><td>0.0001269</td><td>15</td><td>12</td><td>367</td><td>362</td><td>1085</td><td>1282</td><td>1458</td><td>936</td><td>953</td><td>291</td><td>290</td><td>1204</td><td>1728</td><td>2106</td><td>898</td><td>511</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Average Cost</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  avg_product_cost_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Nobis</td><td>830.0</td><td>364.74</td><td>3210.0</td><td>1698.17</td><td>28</td><td>4</td><td>2</td><td>4</td><td>18</td><td>4865.0</td><td>2693.66</td><td>0.529</td><td>0.3333</td><td>0.1667</td><td>0.1429</td><td>0.8182</td><td>0.0011891</td><td>0.0012137</td><td>0.0001545</td><td>1</td><td>1</td><td>168</td><td>169</td><td>975</td><td>1282</td><td>1096</td><td>936</td><td>811</td><td>109</td><td>98</td><td>1172</td><td>813</td><td>2308</td><td>1334</td><td>360</td></tr>
+    <tr><td>Bergama</td><td>749.99</td><td>306.75</td><td>2999.96</td><td>1772.98</td><td>10</td><td>4</td><td>1</td><td>0</td><td>5</td><td>749.99</td><td>443.24</td><td>0.591</td><td>0.2</td><td>0.4</td><td>0.0</td><td>0.5556</td><td>0.0011113</td><td>0.0012671</td><td>5.52e-05</td><td>2</td><td>2</td><td>186</td><td>156</td><td>1691</td><td>1282</td><td>1458</td><td>2294</td><td>1643</td><td>603</td><td>550</td><td>319</td><td>1728</td><td>437</td><td>2294</td><td>2215</td></tr>
+    <tr><td>Jordan</td><td>569.34</td><td>288.65</td><td>5818.48</td><td>2896.09</td><td>40</td><td>12</td><td>4</td><td>3</td><td>21</td><td>4655.25</td><td>2421.06</td><td>0.4977</td><td>0.25</td><td>0.3243</td><td>0.075</td><td>0.6364</td><td>0.0021554</td><td>0.0020698</td><td>0.0002207</td><td>5</td><td>3</td><td>91</td><td>92</td><td>759</td><td>663</td><td>744</td><td>1116</td><td>725</td><td>115</td><td>113</td><td>1567</td><td>1436</td><td>1022</td><td>2164</td><td>1709</td></tr>
+    <tr><td>The Harris Tweed Of Scotland</td><td>600.0</td><td>256.2</td><td>600.0</td><td>343.8</td><td>5</td><td>1</td><td>2</td><td>0</td><td>2</td><td>1200.0</td><td>687.6</td><td>0.573</td><td>0.6667</td><td>0.2</td><td>0.0</td><td>0.6667</td><td>0.0002223</td><td>0.0002457</td><td>2.76e-05</td><td>3</td><td>4</td><td>703</td><td>660</td><td>2360</td><td>2144</td><td>1096</td><td>2294</td><td>2343</td><td>435</td><td>405</td><td>517</td><td>116</td><td>2132</td><td>2294</td><td>1291</td></tr>
+    <tr><td>Canada Goose</td><td>577.82</td><td>249.06</td><td>12909.93</td><td>7257.7</td><td>115</td><td>22</td><td>15</td><td>21</td><td>57</td><td>22479.93</td><td>12816.81</td><td>0.5622</td><td>0.4054</td><td>0.234</td><td>0.1826</td><td>0.7215</td><td>0.0047824</td><td>0.005187</td><td>0.0006344</td><td>4</td><td>5</td><td>36</td><td>34</td><td>337</td><td>412</td><td>261</td><td>265</td><td>329</td><td>14</td><td>11</td><td>672</td><td>572</td><td>1980</td><td>814</td><td>871</td></tr>
+    <tr><td>Moncler</td><td>550.0</td><td>238.15</td><td>0.0</td><td>0.0</td><td>7</td><td>0</td><td>1</td><td>2</td><td>4</td><td>1650.0</td><td>935.55</td><td></td><td>1.0</td><td>0.0</td><td>0.2857</td><td>1.0</td><td>0.0</td><td>0.0</td><td>3.86e-05</td><td>6</td><td>6</td><td>2543</td><td>2543</td><td>2030</td><td>2543</td><td>1458</td><td>1375</td><td>1842</td><td>341</td><td>318</td><td>2543</td><td>1</td><td>2543</td><td>248</td><td>1</td></tr>
+    <tr><td>Sandals Cay</td><td>499.99</td><td>217.0</td><td>499.99</td><td>282.99</td><td>10</td><td>1</td><td>0</td><td>1</td><td>8</td><td>499.99</td><td>282.99</td><td>0.566</td><td>0.0</td><td>0.1111</td><td>0.1</td><td>0.8889</td><td>0.0001852</td><td>0.0002022</td><td>5.52e-05</td><td>7</td><td>7</td><td>794</td><td>747</td><td>1691</td><td>2144</td><td>2057</td><td>1743</td><td>1317</td><td>787</td><td>744</td><td>606</td><td>2057</td><td>2485</td><td>1944</td><td>223</td></tr>
+    <tr><td>Andrew Marc</td><td>479.0</td><td>205.97</td><td>958.0</td><td>546.06</td><td>4</td><td>2</td><td>0</td><td>1</td><td>1</td><td>479.0</td><td>273.03</td><td>0.57</td><td>0.0</td><td>0.6667</td><td>0.25</td><td>0.3333</td><td>0.0003549</td><td>0.0003903</td><td>2.21e-05</td><td>8</td><td>8</td><td>511</td><td>480</td><td>2496</td><td>1775</td><td>2057</td><td>1743</td><td>2563</td><td>809</td><td>765</td><td>555</td><td>2057</td><td>45</td><td>321</td><td>2597</td></tr>
+    <tr><td>The North Face</td><td>440.81</td><td>197.82</td><td>25174.88</td><td>13719.13</td><td>233</td><td>61</td><td>20</td><td>36</td><td>116</td><td>21048.75</td><td>11669.08</td><td>0.545</td><td>0.2469</td><td>0.3096</td><td>0.1545</td><td>0.6554</td><td>0.0093258</td><td>0.0098049</td><td>0.0012853</td><td>9</td><td>9</td><td>11</td><td>10</td><td>153</td><td>152</td><td>182</td><td>151</td><td>153</td><td>16</td><td>16</td><td>962</td><td>1608</td><td>1153</td><td>1181</td><td>1574</td></tr>
+    <tr><td>Evisu</td><td>349.17</td><td>180.52</td><td>349.17</td><td>168.65</td><td>4</td><td>1</td><td>2</td><td>0</td><td>1</td><td>698.34</td><td>337.3</td><td>0.483</td><td>0.6667</td><td>0.25</td><td>0.0</td><td>0.5</td><td>0.0001293</td><td>0.0001205</td><td>2.21e-05</td><td>18</td><td>10</td><td>959</td><td>986</td><td>2496</td><td>2144</td><td>1096</td><td>2294</td><td>2563</td><td>639</td><td>662</td><td>1728</td><td>116</td><td>1726</td><td>2294</td><td>2310</td></tr>
+    <tr><td>Spyder</td><td>397.8</td><td>180.45</td><td>4049.8</td><td>2209.64</td><td>23</td><td>9</td><td>5</td><td>0</td><td>9</td><td>2749.95</td><td>1494.97</td><td>0.5456</td><td>0.3571</td><td>0.3913</td><td>0.0</td><td>0.5</td><td>0.0015002</td><td>0.0015792</td><td>0.0001269</td><td>11</td><td>11</td><td>124</td><td>120</td><td>1085</td><td>805</td><td>632</td><td>2294</td><td>1236</td><td>210</td><td>203</td><td>955</td><td>752</td><td>545</td><td>2294</td><td>2310</td></tr>
+    <tr><td>Rebecca Taylor</td><td>377.83</td><td>176.62</td><td>1495.0</td><td>787.67</td><td>23</td><td>4</td><td>1</td><td>4</td><td>14</td><td>1960.0</td><td>1045.27</td><td>0.5269</td><td>0.2</td><td>0.2105</td><td>0.1739</td><td>0.7778</td><td>0.0005538</td><td>0.0005629</td><td>0.0001269</td><td>15</td><td>12</td><td>367</td><td>362</td><td>1085</td><td>1282</td><td>1458</td><td>936</td><td>953</td><td>291</td><td>290</td><td>1204</td><td>1728</td><td>2106</td><td>898</td><td>511</td></tr>
+    <tr><td>Halston Heritage</td><td>378.45</td><td>172.58</td><td>4260.81</td><td>2307.75</td><td>43</td><td>12</td><td>2</td><td>6</td><td>23</td><td>3089.83</td><td>1680.27</td><td>0.5416</td><td>0.1429</td><td>0.3243</td><td>0.1395</td><td>0.6571</td><td>0.0015784</td><td>0.0016493</td><td>0.0002372</td><td>14</td><td>13</td><td>119</td><td>114</td><td>715</td><td>663</td><td>1096</td><td>727</td><td>681</td><td>181</td><td>170</td><td>1003</td><td>1948</td><td>1022</td><td>1471</td><td>1564</td></tr>
+    <tr><td>Magaschoni</td><td>395.0</td><td>172.26</td><td>3824.0</td><td>2101.08</td><td>38</td><td>11</td><td>3</td><td>6</td><td>18</td><td>4260.0</td><td>2511.17</td><td>0.5494</td><td>0.2143</td><td>0.3438</td><td>0.1579</td><td>0.6207</td><td>0.0014166</td><td>0.0015016</td><td>0.0002096</td><td>13</td><td>14</td><td>130</td><td>127</td><td>782</td><td>707</td><td>888</td><td>727</td><td>811</td><td>122</td><td>109</td><td>891</td><td>1701</td><td>773</td><td>1135</td><td>1857</td></tr>
+    <tr><td>Overland Sheepskin Co</td><td>371.2</td><td>169.6</td><td>3925.0</td><td>2159.72</td><td>40</td><td>11</td><td>4</td><td>6</td><td>19</td><td>3696.0</td><td>1989.97</td><td>0.5502</td><td>0.2667</td><td>0.3235</td><td>0.15</td><td>0.6333</td><td>0.001454</td><td>0.0015435</td><td>0.0002207</td><td>16</td><td>15</td><td>126</td><td>123</td><td>759</td><td>707</td><td>744</td><td>727</td><td>777</td><td>138</td><td>139</td><td>876</td><td>1364</td><td>1029</td><td>1245</td><td>1749</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Completion Rate</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+, third_layer AS (
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+)
+SELECT
+	*
+FROM third_layer
+WHERE unit_orders_placed_rank &lt;= 30
+ORDER BY
+  completion_rate_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>DC</td><td>50.44</td><td>25.74</td><td>13881.94</td><td>6768.3</td><td>950</td><td>266</td><td>100</td><td>140</td><td>444</td><td>12138.03</td><td>5895.25</td><td>0.4876</td><td>0.2732</td><td>0.3284</td><td>0.1474</td><td>0.6254</td><td>0.0051424</td><td>0.0048372</td><td>0.0052407</td><td>1052</td><td>989</td><td>32</td><td>37</td><td>25</td><td>21</td><td>24</td><td>26</td><td>26</td><td>44</td><td>46</td><td>1673</td><td>1321</td><td>1007</td><td>1293</td><td>1787</td></tr>
+    <tr><td>SmartWool</td><td>52.45</td><td>25.25</td><td>14631.58</td><td>7604.44</td><td>1026</td><td>282</td><td>100</td><td>140</td><td>504</td><td>12160.44</td><td>6170.81</td><td>0.5197</td><td>0.2618</td><td>0.3183</td><td>0.1365</td><td>0.6412</td><td>0.0054201</td><td>0.0054348</td><td>0.0056599</td><td>993</td><td>1015</td><td>30</td><td>33</td><td>22</td><td>17</td><td>24</td><td>26</td><td>22</td><td>43</td><td>41</td><td>1284</td><td>1404</td><td>1069</td><td>1507</td><td>1685</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>FineBrandShop</td><td>21.28</td><td>9.66</td><td>5198.85</td><td>2814.5</td><td>990</td><td>255</td><td>106</td><td>156</td><td>473</td><td>5944.2</td><td>3265.8</td><td>0.5414</td><td>0.2936</td><td>0.3058</td><td>0.1576</td><td>0.6497</td><td>0.0019259</td><td>0.0020115</td><td>0.0054613</td><td>2119</td><td>2178</td><td>101</td><td>97</td><td>24</td><td>23</td><td>20</td><td>23</td><td>23</td><td>87</td><td>81</td><td>1007</td><td>1191</td><td>1191</td><td>1148</td><td>1622</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>O&#x27;Neill</td><td>49.54</td><td>26.78</td><td>12231.28</td><td>5601.92</td><td>1000</td><td>246</td><td>99</td><td>186</td><td>469</td><td>14381.28</td><td>6653.61</td><td>0.458</td><td>0.287</td><td>0.3022</td><td>0.186</td><td>0.6559</td><td>0.004531</td><td>0.0040036</td><td>0.0055165</td><td>1102</td><td>935</td><td>39</td><td>47</td><td>23</td><td>25</td><td>26</td><td>18</td><td>24</td><td>33</td><td>37</td><td>2033</td><td>1217</td><td>1218</td><td>797</td><td>1572</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Speedo</td><td>51.0</td><td>24.98</td><td>15357.4</td><td>7698.19</td><td>1176</td><td>302</td><td>135</td><td>174</td><td>565</td><td>15950.94</td><td>8214.56</td><td>0.5013</td><td>0.3089</td><td>0.3014</td><td>0.148</td><td>0.6517</td><td>0.005689</td><td>0.0055018</td><td>0.0064874</td><td>1034</td><td>1038</td><td>28</td><td>31</td><td>16</td><td>14</td><td>13</td><td>20</td><td>17</td><td>26</td><td>28</td><td>1514</td><td>1099</td><td>1223</td><td>1287</td><td>1606</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Fox</td><td>52.92</td><td>27.56</td><td>11484.98</td><td>5467.43</td><td>876</td><td>217</td><td>88</td><td>148</td><td>423</td><td>12247.57</td><td>5918.66</td><td>0.4761</td><td>0.2885</td><td>0.2981</td><td>0.1689</td><td>0.6609</td><td>0.0042545</td><td>0.0039075</td><td>0.0048325</td><td>983</td><td>911</td><td>43</td><td>49</td><td>28</td><td>30</td><td>31</td><td>24</td><td>31</td><td>42</td><td>45</td><td>1812</td><td>1213</td><td>1283</td><td>941</td><td>1543</td></tr>
+    <tr><td>Motherhood Maternity</td><td>30.41</td><td>13.46</td><td>7912.62</td><td>4410.77</td><td>1110</td><td>273</td><td>111</td><td>192</td><td>534</td><td>9477.12</td><td>5279.86</td><td>0.5574</td><td>0.2891</td><td>0.2974</td><td>0.173</td><td>0.6617</td><td>0.0029312</td><td>0.0031523</td><td>0.0061233</td><td>1673</td><td>1806</td><td>70</td><td>65</td><td>19</td><td>19</td><td>18</td><td>14</td><td>21</td><td>58</td><td>53</td><td>743</td><td>1211</td><td>1287</td><td>906</td><td>1537</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Return Rate</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+, third_layer AS (
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+)
+SELECT
+	*
+FROM third_layer
+WHERE unit_orders_placed_rank &lt;= 30
+ORDER BY
+  return_rate_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Fruit of the Loom</td><td>17.8</td><td>8.71</td><td>3598.46</td><td>1822.47</td><td>858</td><td>204</td><td>93</td><td>137</td><td>424</td><td>4113.8</td><td>2115.63</td><td>0.5065</td><td>0.3131</td><td>0.2829</td><td>0.1597</td><td>0.6752</td><td>0.001333</td><td>0.0013025</td><td>0.0047332</td><td>2284</td><td>2262</td><td>145</td><td>152</td><td>30</td><td>33</td><td>29</td><td>28</td><td>29</td><td>127</td><td>132</td><td>1465</td><td>1078</td><td>1482</td><td>1116</td><td>1249</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Speedo</td><td>51.0</td><td>24.98</td><td>15357.4</td><td>7698.19</td><td>1176</td><td>302</td><td>135</td><td>174</td><td>565</td><td>15950.94</td><td>8214.56</td><td>0.5013</td><td>0.3089</td><td>0.3014</td><td>0.148</td><td>0.6517</td><td>0.005689</td><td>0.0055018</td><td>0.0064874</td><td>1034</td><td>1038</td><td>28</td><td>31</td><td>16</td><td>14</td><td>13</td><td>20</td><td>17</td><td>26</td><td>28</td><td>1514</td><td>1099</td><td>1223</td><td>1287</td><td>1606</td></tr>
+    <tr><td>HUGO BOSS</td><td>41.95</td><td>18.49</td><td>9749.08</td><td>5443.79</td><td>928</td><td>235</td><td>102</td><td>130</td><td>461</td><td>10857.69</td><td>6091.93</td><td>0.5584</td><td>0.3027</td><td>0.2945</td><td>0.1401</td><td>0.6624</td><td>0.0036115</td><td>0.0038906</td><td>0.0051193</td><td>1300</td><td>1413</td><td>54</td><td>53</td><td>26</td><td>26</td><td>22</td><td>31</td><td>25</td><td>48</td><td>44</td><td>723</td><td>1124</td><td>1313</td><td>1468</td><td>1530</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Dickies</td><td>40.19</td><td>19.51</td><td>11280.31</td><td>5811.09</td><td>1139</td><td>276</td><td>118</td><td>187</td><td>558</td><td>11942.83</td><td>6160.0</td><td>0.5152</td><td>0.2995</td><td>0.2899</td><td>0.1642</td><td>0.6691</td><td>0.0041787</td><td>0.0041531</td><td>0.0062833</td><td>1331</td><td>1360</td><td>44</td><td>42</td><td>17</td><td>18</td><td>17</td><td>17</td><td>18</td><td>45</td><td>42</td><td>1355</td><td>1163</td><td>1362</td><td>1073</td><td>1284</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>FineBrandShop</td><td>21.28</td><td>9.66</td><td>5198.85</td><td>2814.5</td><td>990</td><td>255</td><td>106</td><td>156</td><td>473</td><td>5944.2</td><td>3265.8</td><td>0.5414</td><td>0.2936</td><td>0.3058</td><td>0.1576</td><td>0.6497</td><td>0.0019259</td><td>0.0020115</td><td>0.0054613</td><td>2119</td><td>2178</td><td>101</td><td>97</td><td>24</td><td>23</td><td>20</td><td>23</td><td>23</td><td>87</td><td>81</td><td>1007</td><td>1191</td><td>1191</td><td>1148</td><td>1622</td></tr>
+    <tr><td>American Apparel</td><td>37.49</td><td>18.04</td><td>10780.0</td><td>5628.61</td><td>1204</td><td>290</td><td>120</td><td>191</td><td>603</td><td>11807.99</td><td>6094.43</td><td>0.5221</td><td>0.2927</td><td>0.2863</td><td>0.1586</td><td>0.6753</td><td>0.0039934</td><td>0.0040227</td><td>0.0066419</td><td>1437</td><td>1442</td><td>47</td><td>46</td><td>15</td><td>16</td><td>16</td><td>15</td><td>15</td><td>46</td><td>43</td><td>1265</td><td>1194</td><td>1389</td><td>1126</td><td>1247</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Cancellation Rate</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+, third_layer AS (
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+)
+SELECT
+	*
+FROM third_layer
+WHERE unit_orders_placed_rank &lt;= 30
+ORDER BY
+  cancellation_rate_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>O&#x27;Neill</td><td>49.54</td><td>26.78</td><td>12231.28</td><td>5601.92</td><td>1000</td><td>246</td><td>99</td><td>186</td><td>469</td><td>14381.28</td><td>6653.61</td><td>0.458</td><td>0.287</td><td>0.3022</td><td>0.186</td><td>0.6559</td><td>0.004531</td><td>0.0040036</td><td>0.0055165</td><td>1102</td><td>935</td><td>39</td><td>47</td><td>23</td><td>25</td><td>26</td><td>18</td><td>24</td><td>33</td><td>37</td><td>2033</td><td>1217</td><td>1218</td><td>797</td><td>1572</td></tr>
+    <tr><td>Motherhood Maternity</td><td>30.41</td><td>13.46</td><td>7912.62</td><td>4410.77</td><td>1110</td><td>273</td><td>111</td><td>192</td><td>534</td><td>9477.12</td><td>5279.86</td><td>0.5574</td><td>0.2891</td><td>0.2974</td><td>0.173</td><td>0.6617</td><td>0.0029312</td><td>0.0031523</td><td>0.0061233</td><td>1673</td><td>1806</td><td>70</td><td>65</td><td>19</td><td>19</td><td>18</td><td>14</td><td>21</td><td>58</td><td>53</td><td>743</td><td>1211</td><td>1287</td><td>906</td><td>1537</td></tr>
+    <tr><td>Fox</td><td>52.92</td><td>27.56</td><td>11484.98</td><td>5467.43</td><td>876</td><td>217</td><td>88</td><td>148</td><td>423</td><td>12247.57</td><td>5918.66</td><td>0.4761</td><td>0.2885</td><td>0.2981</td><td>0.1689</td><td>0.6609</td><td>0.0042545</td><td>0.0039075</td><td>0.0048325</td><td>983</td><td>911</td><td>43</td><td>49</td><td>28</td><td>30</td><td>31</td><td>24</td><td>31</td><td>42</td><td>45</td><td>1812</td><td>1213</td><td>1283</td><td>941</td><td>1543</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>Dickies</td><td>40.19</td><td>19.51</td><td>11280.31</td><td>5811.09</td><td>1139</td><td>276</td><td>118</td><td>187</td><td>558</td><td>11942.83</td><td>6160.0</td><td>0.5152</td><td>0.2995</td><td>0.2899</td><td>0.1642</td><td>0.6691</td><td>0.0041787</td><td>0.0041531</td><td>0.0062833</td><td>1331</td><td>1360</td><td>44</td><td>42</td><td>17</td><td>18</td><td>17</td><td>17</td><td>18</td><td>45</td><td>42</td><td>1355</td><td>1163</td><td>1362</td><td>1073</td><td>1284</td></tr>
+    <tr><td>Fruit of the Loom</td><td>17.8</td><td>8.71</td><td>3598.46</td><td>1822.47</td><td>858</td><td>204</td><td>93</td><td>137</td><td>424</td><td>4113.8</td><td>2115.63</td><td>0.5065</td><td>0.3131</td><td>0.2829</td><td>0.1597</td><td>0.6752</td><td>0.001333</td><td>0.0013025</td><td>0.0047332</td><td>2284</td><td>2262</td><td>145</td><td>152</td><td>30</td><td>33</td><td>29</td><td>28</td><td>29</td><td>127</td><td>132</td><td>1465</td><td>1078</td><td>1482</td><td>1116</td><td>1249</td></tr>
+    <tr><td>American Apparel</td><td>37.49</td><td>18.04</td><td>10780.0</td><td>5628.61</td><td>1204</td><td>290</td><td>120</td><td>191</td><td>603</td><td>11807.99</td><td>6094.43</td><td>0.5221</td><td>0.2927</td><td>0.2863</td><td>0.1586</td><td>0.6753</td><td>0.0039934</td><td>0.0040227</td><td>0.0066419</td><td>1437</td><td>1442</td><td>47</td><td>46</td><td>15</td><td>16</td><td>16</td><td>15</td><td>15</td><td>46</td><td>43</td><td>1265</td><td>1194</td><td>1389</td><td>1126</td><td>1247</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>FineBrandShop</td><td>21.28</td><td>9.66</td><td>5198.85</td><td>2814.5</td><td>990</td><td>255</td><td>106</td><td>156</td><td>473</td><td>5944.2</td><td>3265.8</td><td>0.5414</td><td>0.2936</td><td>0.3058</td><td>0.1576</td><td>0.6497</td><td>0.0019259</td><td>0.0020115</td><td>0.0054613</td><td>2119</td><td>2178</td><td>101</td><td>97</td><td>24</td><td>23</td><td>20</td><td>23</td><td>23</td><td>87</td><td>81</td><td>1007</td><td>1191</td><td>1191</td><td>1148</td><td>1622</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by En Route Rate</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+, third_layer AS (
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+)
+SELECT
+	*
+FROM third_layer
+WHERE unit_orders_placed_rank &lt;= 30
+ORDER BY
+  en_route_rate_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+    <tr><td>Champion</td><td>36.41</td><td>16.53</td><td>10042.12</td><td>5452.31</td><td>1131</td><td>271</td><td>103</td><td>170</td><td>587</td><td>10143.96</td><td>5501.41</td><td>0.5429</td><td>0.2754</td><td>0.282</td><td>0.1503</td><td>0.6841</td><td>0.00372</td><td>0.0038967</td><td>0.0062392</td><td>1461</td><td>1554</td><td>51</td><td>52</td><td>18</td><td>20</td><td>21</td><td>21</td><td>16</td><td>50</td><td>51</td><td>991</td><td>1312</td><td>1493</td><td>1242</td><td>1180</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>Lucky Brand</td><td>72.83</td><td>37.74</td><td>18965.48</td><td>9055.67</td><td>1062</td><td>256</td><td>101</td><td>158</td><td>547</td><td>18207.86</td><td>8748.95</td><td>0.4775</td><td>0.2829</td><td>0.2832</td><td>0.1488</td><td>0.6812</td><td>0.0070256</td><td>0.006472</td><td>0.0058585</td><td>632</td><td>559</td><td>18</td><td>22</td><td>21</td><td>22</td><td>23</td><td>22</td><td>19</td><td>23</td><td>24</td><td>1800</td><td>1277</td><td>1478</td><td>1265</td><td>1208</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>American Apparel</td><td>37.49</td><td>18.04</td><td>10780.0</td><td>5628.61</td><td>1204</td><td>290</td><td>120</td><td>191</td><td>603</td><td>11807.99</td><td>6094.43</td><td>0.5221</td><td>0.2927</td><td>0.2863</td><td>0.1586</td><td>0.6753</td><td>0.0039934</td><td>0.0040227</td><td>0.0066419</td><td>1437</td><td>1442</td><td>47</td><td>46</td><td>15</td><td>16</td><td>16</td><td>15</td><td>15</td><td>46</td><td>43</td><td>1265</td><td>1194</td><td>1389</td><td>1126</td><td>1247</td></tr>
+    <tr><td>Fruit of the Loom</td><td>17.8</td><td>8.71</td><td>3598.46</td><td>1822.47</td><td>858</td><td>204</td><td>93</td><td>137</td><td>424</td><td>4113.8</td><td>2115.63</td><td>0.5065</td><td>0.3131</td><td>0.2829</td><td>0.1597</td><td>0.6752</td><td>0.001333</td><td>0.0013025</td><td>0.0047332</td><td>2284</td><td>2262</td><td>145</td><td>152</td><td>30</td><td>33</td><td>29</td><td>28</td><td>29</td><td>127</td><td>132</td><td>1465</td><td>1078</td><td>1482</td><td>1116</td><td>1249</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Dickies</td><td>40.19</td><td>19.51</td><td>11280.31</td><td>5811.09</td><td>1139</td><td>276</td><td>118</td><td>187</td><td>558</td><td>11942.83</td><td>6160.0</td><td>0.5152</td><td>0.2995</td><td>0.2899</td><td>0.1642</td><td>0.6691</td><td>0.0041787</td><td>0.0041531</td><td>0.0062833</td><td>1331</td><td>1360</td><td>44</td><td>42</td><td>17</td><td>18</td><td>17</td><td>17</td><td>18</td><td>45</td><td>42</td><td>1355</td><td>1163</td><td>1362</td><td>1073</td><td>1284</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Units Completed</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  units_completed_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Speedo</td><td>51.0</td><td>24.98</td><td>15357.4</td><td>7698.19</td><td>1176</td><td>302</td><td>135</td><td>174</td><td>565</td><td>15950.94</td><td>8214.56</td><td>0.5013</td><td>0.3089</td><td>0.3014</td><td>0.148</td><td>0.6517</td><td>0.005689</td><td>0.0055018</td><td>0.0064874</td><td>1034</td><td>1038</td><td>28</td><td>31</td><td>16</td><td>14</td><td>13</td><td>20</td><td>17</td><td>26</td><td>28</td><td>1514</td><td>1099</td><td>1223</td><td>1287</td><td>1606</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Units Returned</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  units_returned_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Speedo</td><td>51.0</td><td>24.98</td><td>15357.4</td><td>7698.19</td><td>1176</td><td>302</td><td>135</td><td>174</td><td>565</td><td>15950.94</td><td>8214.56</td><td>0.5013</td><td>0.3089</td><td>0.3014</td><td>0.148</td><td>0.6517</td><td>0.005689</td><td>0.0055018</td><td>0.0064874</td><td>1034</td><td>1038</td><td>28</td><td>31</td><td>16</td><td>14</td><td>13</td><td>20</td><td>17</td><td>26</td><td>28</td><td>1514</td><td>1099</td><td>1223</td><td>1287</td><td>1606</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Units Cancelled</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  units_cancelled_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Motherhood Maternity</td><td>30.41</td><td>13.46</td><td>7912.62</td><td>4410.77</td><td>1110</td><td>273</td><td>111</td><td>192</td><td>534</td><td>9477.12</td><td>5279.86</td><td>0.5574</td><td>0.2891</td><td>0.2974</td><td>0.173</td><td>0.6617</td><td>0.0029312</td><td>0.0031523</td><td>0.0061233</td><td>1673</td><td>1806</td><td>70</td><td>65</td><td>19</td><td>19</td><td>18</td><td>14</td><td>21</td><td>58</td><td>53</td><td>743</td><td>1211</td><td>1287</td><td>906</td><td>1537</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Units En Route</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  units_en_route_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Hanes</td><td>20.0</td><td>9.63</td><td>9350.02</td><td>4878.18</td><td>1966</td><td>473</td><td>225</td><td>275</td><td>993</td><td>10001.01</td><td>5127.51</td><td>0.5217</td><td>0.3223</td><td>0.2797</td><td>0.1399</td><td>0.6774</td><td>0.0034636</td><td>0.0034864</td><td>0.0108455</td><td>2145</td><td>2182</td><td>59</td><td>58</td><td>4</td><td>5</td><td>4</td><td>6</td><td>4</td><td>54</td><td>56</td><td>1270</td><td>1053</td><td>1511</td><td>1469</td><td>1230</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Nautica</td><td>41.7</td><td>20.24</td><td>18412.72</td><td>9492.15</td><td>1827</td><td>451</td><td>185</td><td>266</td><td>925</td><td>18833.69</td><td>9728.4</td><td>0.5155</td><td>0.2909</td><td>0.2889</td><td>0.1456</td><td>0.6722</td><td>0.0068208</td><td>0.0067839</td><td>0.0100787</td><td>1306</td><td>1314</td><td>19</td><td>20</td><td>7</td><td>7</td><td>6</td><td>7</td><td>6</td><td>22</td><td>19</td><td>1351</td><td>1204</td><td>1371</td><td>1315</td><td>1272</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Hurley</td><td>50.65</td><td>26.84</td><td>18145.13</td><td>8556.32</td><td>1546</td><td>361</td><td>149</td><td>223</td><td>813</td><td>19565.08</td><td>9135.89</td><td>0.4715</td><td>0.2922</td><td>0.2729</td><td>0.1442</td><td>0.6925</td><td>0.0067217</td><td>0.0061151</td><td>0.0085285</td><td>1044</td><td>932</td><td>21</td><td>25</td><td>10</td><td>12</td><td>11</td><td>12</td><td>8</td><td>19</td><td>23</td><td>1875</td><td>1197</td><td>1555</td><td>1327</td><td>1091</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Levi&#x27;s</td><td>49.38</td><td>25.11</td><td>18282.06</td><td>8881.53</td><td>1555</td><td>380</td><td>170</td><td>226</td><td>779</td><td>19255.96</td><td>9460.87</td><td>0.4858</td><td>0.3091</td><td>0.2859</td><td>0.1453</td><td>0.6721</td><td>0.0067724</td><td>0.0063475</td><td>0.0085782</td><td>1107</td><td>1028</td><td>20</td><td>23</td><td>9</td><td>9</td><td>8</td><td>11</td><td>10</td><td>20</td><td>21</td><td>1691</td><td>1097</td><td>1390</td><td>1318</td><td>1273</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Dockers</td><td>41.44</td><td>19.27</td><td>14602.39</td><td>7836.27</td><td>1499</td><td>358</td><td>164</td><td>234</td><td>743</td><td>16357.14</td><td>8732.29</td><td>0.5366</td><td>0.3142</td><td>0.283</td><td>0.1561</td><td>0.6748</td><td>0.0054093</td><td>0.0056005</td><td>0.0082692</td><td>1312</td><td>1369</td><td>31</td><td>29</td><td>12</td><td>13</td><td>9</td><td>10</td><td>12</td><td>25</td><td>25</td><td>1079</td><td>1077</td><td>1480</td><td>1167</td><td>1254</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Wrangler</td><td>42.55</td><td>22.53</td><td>12679.57</td><td>5981.86</td><td>1287</td><td>301</td><td>128</td><td>191</td><td>667</td><td>13499.91</td><td>6413.97</td><td>0.4718</td><td>0.2984</td><td>0.2746</td><td>0.1484</td><td>0.689</td><td>0.004697</td><td>0.0042752</td><td>0.0070997</td><td>1285</td><td>1187</td><td>37</td><td>41</td><td>14</td><td>15</td><td>15</td><td>15</td><td>14</td><td>35</td><td>39</td><td>1871</td><td>1167</td><td>1548</td><td>1267</td><td>1132</td></tr>
+    <tr><td>American Apparel</td><td>37.49</td><td>18.04</td><td>10780.0</td><td>5628.61</td><td>1204</td><td>290</td><td>120</td><td>191</td><td>603</td><td>11807.99</td><td>6094.43</td><td>0.5221</td><td>0.2927</td><td>0.2863</td><td>0.1586</td><td>0.6753</td><td>0.0039934</td><td>0.0040227</td><td>0.0066419</td><td>1437</td><td>1442</td><td>47</td><td>46</td><td>15</td><td>16</td><td>16</td><td>15</td><td>15</td><td>46</td><td>43</td><td>1265</td><td>1194</td><td>1389</td><td>1126</td><td>1247</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Lost Revenue</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  lost_revenue_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Joe&#x27;s Jeans</td><td>152.81</td><td>80.23</td><td>25134.81</td><td>11891.96</td><td>697</td><td>169</td><td>76</td><td>99</td><td>353</td><td>27326.02</td><td>13164.83</td><td>0.4731</td><td>0.3102</td><td>0.2826</td><td>0.142</td><td>0.6762</td><td>0.009311</td><td>0.008499</td><td>0.003845</td><td>163</td><td>133</td><td>12</td><td>15</td><td>41</td><td>42</td><td>38</td><td>47</td><td>41</td><td>7</td><td>9</td><td>1850</td><td>1094</td><td>1486</td><td>1448</td><td>1239</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Ray-Ban</td><td>118.89</td><td>50.08</td><td>23852.78</td><td>13833.41</td><td>798</td><td>206</td><td>78</td><td>131</td><td>383</td><td>25134.08</td><td>14434.77</td><td>0.5799</td><td>0.2746</td><td>0.3088</td><td>0.1642</td><td>0.6503</td><td>0.008836</td><td>0.0098866</td><td>0.0044022</td><td>278</td><td>346</td><td>15</td><td>9</td><td>34</td><td>32</td><td>35</td><td>30</td><td>37</td><td>11</td><td>8</td><td>437</td><td>1317</td><td>1160</td><td>1073</td><td>1612</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Arc&#x27;teryx</td><td>323.7</td><td>146.18</td><td>18141.7</td><td>9908.14</td><td>271</td><td>56</td><td>22</td><td>41</td><td>152</td><td>22880.85</td><td>12500.89</td><td>0.5462</td><td>0.2821</td><td>0.2435</td><td>0.1513</td><td>0.7308</td><td>0.0067204</td><td>0.0070812</td><td>0.001495</td><td>22</td><td>20</td><td>22</td><td>19</td><td>132</td><td>169</td><td>161</td><td>132</td><td>118</td><td>13</td><td>13</td><td>943</td><td>1281</td><td>1928</td><td>1234</td><td>808</td></tr>
+    <tr><td>Canada Goose</td><td>577.82</td><td>249.06</td><td>12909.93</td><td>7257.7</td><td>115</td><td>22</td><td>15</td><td>21</td><td>57</td><td>22479.93</td><td>12816.81</td><td>0.5622</td><td>0.4054</td><td>0.234</td><td>0.1826</td><td>0.7215</td><td>0.0047824</td><td>0.005187</td><td>0.0006344</td><td>4</td><td>5</td><td>36</td><td>34</td><td>337</td><td>412</td><td>261</td><td>265</td><td>329</td><td>14</td><td>11</td><td>672</td><td>572</td><td>1980</td><td>814</td><td>871</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top brands by Lost Profit</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+SELECT
+  p.brand AS product_brand,
+  ROUND(AVG(oi.sale_price), 2) AS avg_product_sale_price,
+  ROUND(AVG(p.cost), 2) AS avg_product_cost,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS
+revenue,
+ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0
+END), 2) AS profit,
+COUNT(*) AS unit_orders_placed,
+SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
+SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
+SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
+ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+GROUP BY product_brand
+),
+second_layer AS (
+SELECT
+  *,
+  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
+  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
+  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
+  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
+  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
+  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
+  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
+  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
+FROM first_layer
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY avg_product_sale_price DESC) AS avg_product_sale_price_rank,
+  RANK() OVER(ORDER BY avg_product_cost DESC) AS avg_product_cost_rank,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
+  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
+  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
+  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
+  RANK() OVER(ORDER BY units_cancelled DESC) AS units_cancelled_rank,
+  RANK() OVER(ORDER BY units_en_route DESC) AS units_en_route_rank,
+  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
+  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
+  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
+  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+  RANK() OVER(ORDER BY completion_rate DESC) AS completion_rate_rank,
+  RANK() OVER(ORDER BY cancellation_rate DESC) AS cancellation_rate_rank,
+  RANK() OVER(ORDER BY en_route_rate DESC) AS en_route_rate_rank
+FROM second_layer
+ORDER BY
+  lost_profit_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>product_brand</th>
+      <th>avg_product_sale_price</th>
+      <th>avg_product_cost</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>unit_orders_placed</th>
+      <th>units_completed</th>
+      <th>units_returned</th>
+      <th>units_cancelled</th>
+      <th>units_en_route</th>
+      <th>lost_revenue</th>
+      <th>lost_profit</th>
+      <th>profit_margin</th>
+      <th>return_rate</th>
+      <th>completion_rate</th>
+      <th>cancellation_rate</th>
+      <th>en_route_rate</th>
+      <th>revenue_share</th>
+      <th>profit_share</th>
+      <th>unit_orders_placed_share</th>
+      <th>avg_product_sale_price_rank</th>
+      <th>avg_product_cost_rank</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>unit_orders_placed_rank</th>
+      <th>units_completed_rank</th>
+      <th>units_returned_rank</th>
+      <th>units_cancelled_rank</th>
+      <th>units_en_route_rank</th>
+      <th>lost_revenue_rank</th>
+      <th>lost_profit_rank</th>
+      <th>profit_margin_rank</th>
+      <th>return_rate_rank</th>
+      <th>completion_rate_rank</th>
+      <th>cancellation_rate_rank</th>
+      <th>en_route_rate_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Calvin Klein</td><td>62.49</td><td>29.31</td><td>53041.76</td><td>28267.04</td><td>3180</td><td>820</td><td>322</td><td>471</td><td>1567</td><td>48698.1</td><td>25795.42</td><td>0.5329</td><td>0.282</td><td>0.3027</td><td>0.1481</td><td>0.6565</td><td>0.0196488</td><td>0.0202021</td><td>0.0175425</td><td>805</td><td>836</td><td>2</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>1</td><td>1128</td><td>1282</td><td>1212</td><td>1270</td><td>1568</td></tr>
+    <tr><td>Diesel</td><td>138.24</td><td>68.92</td><td>53774.81</td><td>27000.8</td><td>1466</td><td>378</td><td>143</td><td>213</td><td>732</td><td>49754.6</td><td>24735.41</td><td>0.5021</td><td>0.2745</td><td>0.3017</td><td>0.1453</td><td>0.6595</td><td>0.0199204</td><td>0.0192971</td><td>0.0080872</td><td>205</td><td>184</td><td>1</td><td>2</td><td>13</td><td>10</td><td>12</td><td>13</td><td>13</td><td>1</td><td>2</td><td>1502</td><td>1319</td><td>1221</td><td>1318</td><td>1552</td></tr>
+    <tr><td>Carhartt</td><td>68.41</td><td>32.02</td><td>44947.96</td><td>23945.23</td><td>2509</td><td>663</td><td>251</td><td>366</td><td>1229</td><td>41134.22</td><td>22022.28</td><td>0.5327</td><td>0.2746</td><td>0.3094</td><td>0.1459</td><td>0.6496</td><td>0.0166506</td><td>0.0171134</td><td>0.0138409</td><td>703</td><td>724</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>3</td><td>1132</td><td>1317</td><td>1155</td><td>1311</td><td>1623</td></tr>
+    <tr><td>7 For All Mankind</td><td>155.67</td><td>81.33</td><td>39429.55</td><td>18708.21</td><td>1086</td><td>254</td><td>108</td><td>179</td><td>545</td><td>44113.73</td><td>21179.32</td><td>0.4745</td><td>0.2983</td><td>0.28</td><td>0.1648</td><td>0.6821</td><td>0.0146063</td><td>0.0133705</td><td>0.0059909</td><td>156</td><td>123</td><td>5</td><td>5</td><td>20</td><td>24</td><td>19</td><td>19</td><td>20</td><td>3</td><td>4</td><td>1826</td><td>1168</td><td>1503</td><td>1067</td><td>1192</td></tr>
+    <tr><td>True Religion</td><td>196.17</td><td>101.7</td><td>43598.78</td><td>21127.8</td><td>879</td><td>225</td><td>84</td><td>146</td><td>424</td><td>43136.54</td><td>20619.76</td><td>0.4846</td><td>0.2718</td><td>0.307</td><td>0.1661</td><td>0.6533</td><td>0.0161508</td><td>0.0150998</td><td>0.004849</td><td>91</td><td>64</td><td>4</td><td>4</td><td>27</td><td>28</td><td>33</td><td>25</td><td>29</td><td>4</td><td>5</td><td>1705</td><td>1347</td><td>1186</td><td>1064</td><td>1592</td></tr>
+    <tr><td>Tommy Hilfiger</td><td>71.62</td><td>32.46</td><td>26074.49</td><td>14100.38</td><td>1615</td><td>404</td><td>162</td><td>254</td><td>795</td><td>29731.26</td><td>16179.42</td><td>0.5408</td><td>0.2862</td><td>0.2968</td><td>0.1573</td><td>0.6631</td><td>0.0096591</td><td>0.0100774</td><td>0.0089092</td><td>649</td><td>706</td><td>9</td><td>7</td><td>8</td><td>8</td><td>10</td><td>8</td><td>9</td><td>6</td><td>6</td><td>1021</td><td>1218</td><td>1294</td><td>1152</td><td>1525</td></tr>
+    <tr><td>Columbia</td><td>69.37</td><td>31.72</td><td>26587.28</td><td>14439.48</td><td>1529</td><td>374</td><td>135</td><td>252</td><td>768</td><td>26842.48</td><td>14585.03</td><td>0.5431</td><td>0.2652</td><td>0.2929</td><td>0.1648</td><td>0.6725</td><td>0.009849</td><td>0.0103197</td><td>0.0084347</td><td>687</td><td>737</td><td>8</td><td>6</td><td>11</td><td>11</td><td>13</td><td>9</td><td>11</td><td>8</td><td>7</td><td>987</td><td>1379</td><td>1340</td><td>1067</td><td>1270</td></tr>
+    <tr><td>Ray-Ban</td><td>118.89</td><td>50.08</td><td>23852.78</td><td>13833.41</td><td>798</td><td>206</td><td>78</td><td>131</td><td>383</td><td>25134.08</td><td>14434.77</td><td>0.5799</td><td>0.2746</td><td>0.3088</td><td>0.1642</td><td>0.6503</td><td>0.008836</td><td>0.0098866</td><td>0.0044022</td><td>278</td><td>346</td><td>15</td><td>9</td><td>34</td><td>32</td><td>35</td><td>30</td><td>37</td><td>11</td><td>8</td><td>437</td><td>1317</td><td>1160</td><td>1073</td><td>1612</td></tr>
+    <tr><td>Joe&#x27;s Jeans</td><td>152.81</td><td>80.23</td><td>25134.81</td><td>11891.96</td><td>697</td><td>169</td><td>76</td><td>99</td><td>353</td><td>27326.02</td><td>13164.83</td><td>0.4731</td><td>0.3102</td><td>0.2826</td><td>0.142</td><td>0.6762</td><td>0.009311</td><td>0.008499</td><td>0.003845</td><td>163</td><td>133</td><td>12</td><td>15</td><td>41</td><td>42</td><td>38</td><td>47</td><td>41</td><td>7</td><td>9</td><td>1850</td><td>1094</td><td>1486</td><td>1448</td><td>1239</td></tr>
+    <tr><td>Volcom</td><td>58.67</td><td>29.91</td><td>28804.39</td><td>14059.0</td><td>1893</td><td>482</td><td>182</td><td>294</td><td>935</td><td>26458.99</td><td>12887.05</td><td>0.4881</td><td>0.2741</td><td>0.3014</td><td>0.1553</td><td>0.6598</td><td>0.0106703</td><td>0.0100478</td><td>0.0104428</td><td>877</td><td>805</td><td>6</td><td>8</td><td>5</td><td>4</td><td>7</td><td>5</td><td>5</td><td>9</td><td>10</td><td>1663</td><td>1320</td><td>1223</td><td>1174</td><td>1547</td></tr>
+    <tr><td>Canada Goose</td><td>577.82</td><td>249.06</td><td>12909.93</td><td>7257.7</td><td>115</td><td>22</td><td>15</td><td>21</td><td>57</td><td>22479.93</td><td>12816.81</td><td>0.5622</td><td>0.4054</td><td>0.234</td><td>0.1826</td><td>0.7215</td><td>0.0047824</td><td>0.005187</td><td>0.0006344</td><td>4</td><td>5</td><td>36</td><td>34</td><td>337</td><td>412</td><td>261</td><td>265</td><td>329</td><td>14</td><td>11</td><td>672</td><td>572</td><td>1980</td><td>814</td><td>871</td></tr>
+    <tr><td>Oakley</td><td>110.41</td><td>49.26</td><td>24423.2</td><td>13410.52</td><td>866</td><td>225</td><td>90</td><td>118</td><td>433</td><td>23073.48</td><td>12801.68</td><td>0.5491</td><td>0.2857</td><td>0.3008</td><td>0.1363</td><td>0.6581</td><td>0.0090474</td><td>0.0095843</td><td>0.0047773</td><td>316</td><td>355</td><td>14</td><td>13</td><td>29</td><td>28</td><td>30</td><td>33</td><td>27</td><td>12</td><td>12</td><td>896</td><td>1219</td><td>1227</td><td>1522</td><td>1556</td></tr>
+    <tr><td>Arc&#x27;teryx</td><td>323.7</td><td>146.18</td><td>18141.7</td><td>9908.14</td><td>271</td><td>56</td><td>22</td><td>41</td><td>152</td><td>22880.85</td><td>12500.89</td><td>0.5462</td><td>0.2821</td><td>0.2435</td><td>0.1513</td><td>0.7308</td><td>0.0067204</td><td>0.0070812</td><td>0.001495</td><td>22</td><td>20</td><td>22</td><td>19</td><td>132</td><td>169</td><td>161</td><td>132</td><td>118</td><td>13</td><td>13</td><td>943</td><td>1281</td><td>1928</td><td>1234</td><td>808</td></tr>
+    <tr><td>Quiksilver</td><td>57.01</td><td>30.91</td><td>27609.19</td><td>12579.68</td><td>1873</td><td>471</td><td>202</td><td>297</td><td>903</td><td>26410.17</td><td>12067.7</td><td>0.4556</td><td>0.3001</td><td>0.2989</td><td>0.1586</td><td>0.6572</td><td>0.0102276</td><td>0.0089905</td><td>0.0103324</td><td>903</td><td>764</td><td>7</td><td>14</td><td>6</td><td>6</td><td>5</td><td>4</td><td>7</td><td>10</td><td>14</td><td>2066</td><td>1129</td><td>1275</td><td>1126</td><td>1563</td></tr>
+    <tr><td>Allegra K</td><td>14.35</td><td>6.76</td><td>20908.12</td><td>11061.0</td><td>6057</td><td>1467</td><td>610</td><td>943</td><td>3037</td><td>22396.3</td><td>11874.9</td><td>0.529</td><td>0.2937</td><td>0.2869</td><td>0.1557</td><td>0.6743</td><td>0.0077452</td><td>0.0079052</td><td>0.0334135</td><td>2442</td><td>2434</td><td>16</td><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>15</td><td>15</td><td>1172</td><td>1190</td><td>1384</td><td>1170</td><td>1255</td></tr>
+  </tbody>
+</table>
+
+</div>
+
 </details>
 <details>
   <summary><strong>Bottom Brands</strong></summary>
