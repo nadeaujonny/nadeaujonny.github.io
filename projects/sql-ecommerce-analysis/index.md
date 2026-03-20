@@ -684,6 +684,912 @@ LIMIT 20;</code></pre>
 
 </details>
 <details>
+  <summary><strong>Appendix — Concise Query Reference</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+
+  <p>
+    Below are streamlined versions of the queries used throughout this project. These versions are more concise, direct, and simple — designed for quick reference, reuse, or adaptation. Each query focuses on a single metric and avoids additional filtering, tiering, or secondary calculations.
+  </p>
+
+  <h3>Products</h3>
+
+  <h4>Top Products by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Products by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Products by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Products by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Products by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_name
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate DESC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Products by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Products by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Products by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Products by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_name
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Products by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.name AS product_name,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_name
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate ASC
+LIMIT 10;</code></pre>
+
+  <h3>Brands</h3>
+
+  <h4>Top Brands by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Brands by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Brands by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Brands by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Brands by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate DESC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Brands by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Brands by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Brands by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Brands by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Brands by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.brand AS product_brand,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_brand
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate ASC
+LIMIT 10;</code></pre>
+
+  <h3>Categories</h3>
+
+  <h4>Top Categories by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Categories by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Categories by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Categories by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Categories by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_category
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate DESC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Categories by Revenue</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank
+FROM metrics
+ORDER BY revenue_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Categories by Profit</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY profit DESC) AS profit_rank
+FROM metrics
+ORDER BY profit_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Categories by Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS profit,
+    ROUND(SUM(oi.sale_price), 2) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY profit_margin ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Categories by Units Sold</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    COUNT(*) AS units_sold
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY product_category
+)
+SELECT
+  *,
+  RANK() OVER(ORDER BY units_sold DESC) AS volume_rank
+FROM metrics
+ORDER BY volume_rank ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Categories by Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    p.category AS product_category,
+    COUNT(*) AS total_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS return_count,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE oi.status IN ('Complete', 'Returned')
+  GROUP BY product_category
+)
+SELECT
+  *,
+  ROUND(return_count / total_count, 4) AS return_rate
+FROM metrics
+ORDER BY return_rate ASC
+LIMIT 10;</code></pre>
+
+  <h3>Trends — Long Term</h3>
+
+  <h4>Long Term Trend for Revenue</h4>
+  <pre><code class="language-sql">SELECT
+  DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+  SUM(oi.sale_price) AS revenue
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Long Term Trend for Profit</h4>
+  <pre><code class="language-sql">SELECT
+  DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+  SUM(oi.sale_price - p.cost) AS profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+  ON oi.product_id = p.id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Long Term Trend for Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+    SUM(oi.sale_price - p.cost) AS profit,
+    SUM(oi.sale_price) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY month
+)
+SELECT
+  month,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY month;</code></pre>
+
+  <h4>Long Term Trend for Units Sold</h4>
+  <pre><code class="language-sql">SELECT
+  DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+  COUNT(*) AS units_sold
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Long Term Trend for Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_item_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS returned_item_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  GROUP BY month
+)
+SELECT
+  month,
+  ROUND(returned_item_count / (complete_item_count + returned_item_count), 4) AS return_rate
+FROM metrics
+ORDER BY month;</code></pre>
+
+  <h3>Trends — Seasonal</h3>
+
+  <h4>Seasonal Trend for Revenue</h4>
+  <pre><code class="language-sql">SELECT
+  EXTRACT(MONTH FROM o.created_at) AS month,
+  SUM(oi.sale_price) AS revenue
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Seasonal Trend for Profit</h4>
+  <pre><code class="language-sql">SELECT
+  EXTRACT(MONTH FROM o.created_at) AS month,
+  SUM(oi.sale_price - p.cost) AS profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+  ON oi.product_id = p.id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Seasonal Trend for Profit Margin</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    EXTRACT(MONTH FROM o.created_at) AS month,
+    SUM(oi.sale_price - p.cost) AS profit,
+    SUM(oi.sale_price) AS revenue
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+    ON oi.product_id = p.id
+  WHERE o.status = 'Complete'
+  GROUP BY month
+)
+SELECT
+  month,
+  ROUND(profit / revenue, 4) AS profit_margin
+FROM metrics
+ORDER BY month;</code></pre>
+
+  <h4>Seasonal Trend for Units Sold</h4>
+  <pre><code class="language-sql">SELECT
+  EXTRACT(MONTH FROM o.created_at) AS month,
+  COUNT(*) AS units_sold
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+  <h4>Seasonal Trend for Return Rate</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    EXTRACT(MONTH FROM o.created_at) AS month,
+    SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_item_count,
+    SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS returned_item_count
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  GROUP BY month
+)
+SELECT
+  month,
+  ROUND(returned_item_count / (complete_item_count + returned_item_count), 4) AS return_rate
+FROM metrics
+ORDER BY month;</code></pre>
+
+  <h3>Customers</h3>
+
+  <h4>Top Customers by Generated Revenue</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  ROUND(SUM(oi.sale_price), 2) AS generated_revenue
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY generated_revenue DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Customers by Generated Profit</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  ROUND(SUM(oi.sale_price - p.cost), 2) AS generated_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+  ON oi.product_id = p.id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY generated_profit DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Customers by Number of Items Ordered</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  COUNT(*) AS number_of_items_ordered
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY number_of_items_ordered DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Customers by Number of Orders</h4>
+  <pre><code class="language-sql">SELECT
+  user_id AS customer_id,
+  COUNT(*) AS number_of_orders
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+WHERE status = 'Complete'
+GROUP BY customer_id
+ORDER BY number_of_orders DESC
+LIMIT 10;</code></pre>
+
+  <h4>Top Customers by Average Order Value</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    o.user_id AS customer_id,
+    SUM(oi.sale_price) AS generated_revenue,
+    COUNT(DISTINCT o.order_id) AS number_of_orders
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  WHERE o.status = 'Complete'
+  GROUP BY customer_id
+)
+SELECT
+  customer_id,
+  ROUND(generated_revenue / number_of_orders, 2) AS aov
+FROM metrics
+ORDER BY aov DESC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Customers by Generated Revenue</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  ROUND(SUM(oi.sale_price), 2) AS generated_revenue
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY generated_revenue ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Customers by Generated Profit</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  ROUND(SUM(oi.sale_price - p.cost), 2) AS generated_profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+  ON oi.product_id = p.id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY generated_profit ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Customers by Number of Items Ordered</h4>
+  <pre><code class="language-sql">SELECT
+  o.user_id AS customer_id,
+  COUNT(*) AS number_of_items_ordered
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+  ON oi.order_id = o.order_id
+WHERE o.status = 'Complete'
+GROUP BY customer_id
+ORDER BY number_of_items_ordered ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Customers by Number of Orders</h4>
+  <pre><code class="language-sql">SELECT
+  user_id AS customer_id,
+  COUNT(*) AS number_of_orders
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+WHERE status = 'Complete'
+GROUP BY customer_id
+ORDER BY number_of_orders ASC
+LIMIT 10;</code></pre>
+
+  <h4>Bottom Customers by Average Order Value</h4>
+  <pre><code class="language-sql">WITH metrics AS (
+  SELECT
+    o.user_id AS customer_id,
+    SUM(oi.sale_price) AS generated_revenue,
+    COUNT(DISTINCT o.order_id) AS number_of_orders
+  FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+  JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+    ON oi.order_id = o.order_id
+  WHERE o.status = 'Complete'
+  GROUP BY customer_id
+)
+SELECT
+  customer_id,
+  ROUND(generated_revenue / number_of_orders, 2) AS aov
+FROM metrics
+ORDER BY aov ASC
+LIMIT 10;</code></pre>
+
+</details>
+<details>
   <summary><strong>Conclusion</strong></summary>
 
   <div style="margin-top: 12px;"></div>
