@@ -19,19 +19,37 @@ description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL —
 
 </details>
 <details>
-  <summary><strong>Products</strong></summary>
+  <summary><strong>Top Products</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
 </details>
 <details>
-  <summary><strong>Brands</strong></summary>
+  <summary><strong>Bottom Products</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
 </details>
 <details>
-  <summary><strong>Categories</strong></summary>
+  <summary><strong>Top Brands</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+
+</details>
+<details>
+  <summary><strong>Bottom Brands</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+
+</details>
+<details>
+  <summary><strong>Top Categories</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+
+</details>
+<details>
+  <summary><strong>Bottom Categories</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -49,7 +67,13 @@ description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL —
 
 </details>
 <details>
-  <summary><strong>Customers</strong></summary>
+  <summary><strong>Top Customers</strong></summary>
+
+  <div style="margin-top: 12px;"></div>
+
+</details>
+<details>
+  <summary><strong>Bottom Customers</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
