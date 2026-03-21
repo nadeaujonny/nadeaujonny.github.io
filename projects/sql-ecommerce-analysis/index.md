@@ -5447,11 +5447,267 @@ LIMIT 15;</code></pre>
 
   <div style="margin-top: 12px;"></div>
 
+<h3>Long Term Trend: Total Revenue and Profit</h3>
+
+<pre><code class="language-sql">SELECT
+	DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+	SUM(oi.sale_price) AS revenue,
+	SUM(oi.sale_price - p.cost) AS profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+WHERE oi.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Long term trend for total revenue and profit.png"
+    alt="Long term trend chart showing monthly total revenue and profit over time"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Monthly total revenue and profit over the full date range.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Long term trend for total revenue and profit.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Long Term Trend: Units Sold</h3>
+
+<pre><code class="language-sql">SELECT
+	DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+	COUNT(*) AS units_sold
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+WHERE oi.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Long term trend for units sold.png"
+    alt="Long term trend chart showing monthly units sold over time"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Monthly units sold over the full date range.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Long term trend for units sold.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Long Term Trend: Profit Margin</h3>
+
+<pre><code class="language-sql">WITH metrics AS (
+	SELECT
+		DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+		SUM(oi.sale_price - p.cost) AS profit,
+		SUM(oi.sale_price) AS revenue
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+WHERE oi.status = 'Complete'
+GROUP BY month
+)
+SELECT
+	month,
+	ROUND(profit/NULLIF(revenue, 0), 4) AS profit_margin
+FROM
+	metrics
+ORDER BY
+	month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Long term trend for profit margin.png"
+    alt="Long term trend chart showing monthly profit margin over time"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Monthly profit margin over the full date range.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Long term trend for profit margin.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Long Term Trend: Return Rate</h3>
+
+<pre><code class="language-sql">WITH metrics AS (
+SELECT
+	DATE_TRUNC(DATE(o.created_at), MONTH) AS month,
+	SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_item_count,
+	SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS returned_item_count
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+GROUP BY month
+)
+SELECT
+	month,
+	ROUND(returned_item_count / NULLIF((complete_item_count + returned_item_count),
+0), 4) AS return_rate
+FROM metrics
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Long term trend for return rate.png"
+    alt="Long term trend chart showing monthly return rate over time"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Monthly return rate over the full date range.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Long term trend for return rate.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
 </details>
 <details>
   <summary><strong>Seasonal Trends</strong></summary>
 
   <div style="margin-top: 12px;"></div>
+
+<h3>Seasonal Trend: Revenue and Profit</h3>
+
+<pre><code class="language-sql">SELECT
+	EXTRACT(MONTH FROM o.created_at) AS month,
+	SUM(oi.sale_price) AS revenue,
+	SUM(oi.sale_price - p.cost) AS profit
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+WHERE oi.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Seasonal trend for revenue and profit.png"
+    alt="Seasonal trend chart showing revenue and profit by month of year"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Revenue and profit aggregated by month of year to reveal seasonal patterns.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Seasonal trend for revenue and profit.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Seasonal Trend: Units Sold</h3>
+
+<pre><code class="language-sql">SELECT
+	EXTRACT(MONTH FROM o.created_at) AS month,
+	COUNT(*) AS units_sold
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+WHERE oi.status = 'Complete'
+GROUP BY month
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Seasonal trend for units sold.png"
+    alt="Seasonal trend chart showing units sold by month of year"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Units sold aggregated by month of year to reveal seasonal patterns.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Seasonal trend for units sold.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Seasonal Trend: Profit Margin</h3>
+
+<pre><code class="language-sql">WITH metrics AS (
+	SELECT
+		EXTRACT(MONTH FROM o.created_at) AS month,
+		SUM(oi.sale_price - p.cost) AS profit,
+		SUM(oi.sale_price) AS revenue
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id
+WHERE oi.status = 'Complete'
+GROUP BY month
+)
+SELECT
+	month,
+	ROUND(profit/NULLIF(revenue, 0), 4) AS profit_margin
+FROM metrics
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Seasonal trend for profit margin.png"
+    alt="Seasonal trend chart showing profit margin by month of year"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Profit margin aggregated by month of year to reveal seasonal patterns.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Seasonal trend for profit margin.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
+
+<h3>Seasonal Trend: Return Rate</h3>
+
+<pre><code class="language-sql">WITH metrics AS (
+SELECT
+	EXTRACT(MONTH FROM o.created_at) AS month,
+	SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS complete_item_count,
+	SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS returned_item_count
+FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+GROUP BY month
+)
+SELECT
+	month,
+	ROUND(returned_item_count / NULLIF((complete_item_count + returned_item_count),
+0), 4) AS return_rate
+FROM metrics
+ORDER BY month;</code></pre>
+
+<figure style="margin: 20px 0;">
+  <img
+    src="csv-return-tables/Seasonal trend for return rate.png"
+    alt="Seasonal trend chart showing return rate by month of year"
+    loading="lazy"
+    style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+  >
+  <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+    Return rate aggregated by month of year to reveal seasonal patterns.
+    <span style="display:block; margin-top:4px;">
+      <a href="csv-return-tables/Seasonal trend for return rate.png">Open full-size</a>
+    </span>
+  </figcaption>
+</figure>
 
 </details>
 <details>
