@@ -5715,6 +5715,991 @@ ORDER BY month;</code></pre>
 
   <div style="margin-top: 12px;"></div>
 
+<h3>Top customers by generated Revenue</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY revenue_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>41791</td><td>1487.0</td><td>884.96</td><td>3</td><td>1</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2022-09-28 04:15:35.000000 UTC</td><td>2022-09-28 04:15:35.000000 UTC</td><td>1487.0</td><td>3.0</td><td>0.0</td><td>0</td><td>1</td><td>1</td><td>15410</td><td>30074</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>62938</td><td>70428</td><td>1</td><td>2670</td><td>12023</td><td>29774</td></tr>
+    <tr><td>9608</td><td>1348.98</td><td>703.94</td><td>9</td><td>4</td><td>0</td><td>4</td><td>4</td><td>2</td><td>2022-06-02 13:50:09.000000 UTC</td><td>2025-04-28 20:40:37.000000 UTC</td><td>674.49</td><td>2.25</td><td>0.0</td><td>1061</td><td>2</td><td>3</td><td>148</td><td>1</td><td>12023</td><td>435</td><td>164</td><td>299</td><td>65844</td><td>37422</td><td>96</td><td>7921</td><td>12023</td><td>4750</td></tr>
+    <tr><td>58672</td><td>1327.33</td><td>688.92</td><td>6</td><td>2</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2021-12-10 12:12:04.000000 UTC</td><td>2025-09-11 22:33:43.000000 UTC</td><td>1327.33</td><td>3.0</td><td>0.0</td><td>1371</td><td>3</td><td>4</td><td>2025</td><td>10016</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>69626</td><td>27098</td><td>2</td><td>2670</td><td>12023</td><td>2338</td></tr>
+    <tr><td>6721</td><td>1303.55</td><td>708.33</td><td>6</td><td>3</td><td>0</td><td>5</td><td>0</td><td>2</td><td>2025-06-17 16:41:11.000000 UTC</td><td>2026-02-18 00:34:38.000000 UTC</td><td>651.77</td><td>2.0</td><td>0.0</td><td>246</td><td>4</td><td>2</td><td>2025</td><td>5093</td><td>12023</td><td>144</td><td>17392</td><td>299</td><td>23890</td><td>8652</td><td>100</td><td>8103</td><td>12023</td><td>18441</td></tr>
+    <tr><td>41139</td><td>1170.01</td><td>645.44</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-08-23 10:04:29.000000 UTC</td><td>2025-08-23 10:04:29.000000 UTC</td><td>1170.01</td><td>4.0</td><td>0.0</td><td>0</td><td>5</td><td>5</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>19645</td><td>28833</td><td>3</td><td>1</td><td>12023</td><td>29774</td></tr>
+    <tr><td>96233</td><td>1142.38</td><td>614.03</td><td>7</td><td>3</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-09-02 02:54:09.000000 UTC</td><td>2025-10-28 15:36:32.000000 UTC</td><td>1142.38</td><td>2.33</td><td>0.0</td><td>56</td><td>6</td><td>8</td><td>887</td><td>5093</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>19003</td><td>22776</td><td>4</td><td>7675</td><td>12023</td><td>25645</td></tr>
+    <tr><td>10218</td><td>1120.4</td><td>468.69</td><td>6</td><td>3</td><td>1</td><td>5</td><td>0</td><td>2</td><td>2026-02-22 01:11:21.000000 UTC</td><td>2026-03-16 03:41:47.000000 UTC</td><td>560.2</td><td>2.0</td><td>0.1667</td><td>22</td><td>7</td><td>67</td><td>2025</td><td>5093</td><td>4008</td><td>144</td><td>17392</td><td>299</td><td>5328</td><td>3464</td><td>128</td><td>8103</td><td>11983</td><td>27583</td></tr>
+    <tr><td>89840</td><td>1103.0</td><td>576.93</td><td>4</td><td>2</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2024-12-07 22:57:33.000000 UTC</td><td>2026-02-12 19:45:20.000000 UTC</td><td>1103.0</td><td>2.0</td><td>0.0</td><td>432</td><td>8</td><td>14</td><td>8057</td><td>10016</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>34223</td><td>9545</td><td>5</td><td>8103</td><td>12023</td><td>13731</td></tr>
+    <tr><td>99402</td><td>1095.49</td><td>605.27</td><td>4</td><td>2</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2024-06-22 08:20:14.000000 UTC</td><td>2025-07-10 07:07:30.000000 UTC</td><td>1095.49</td><td>2.0</td><td>0.0</td><td>383</td><td>9</td><td>9</td><td>8057</td><td>10016</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>41884</td><td>32315</td><td>6</td><td>8103</td><td>12023</td><td>14818</td></tr>
+    <tr><td>72421</td><td>1090.96</td><td>566.27</td><td>5</td><td>2</td><td>0</td><td>4</td><td>1</td><td>1</td><td>2023-09-13 12:47:43.000000 UTC</td><td>2025-10-01 00:04:09.000000 UTC</td><td>1090.96</td><td>2.5</td><td>0.0</td><td>749</td><td>10</td><td>16</td><td>4060</td><td>10016</td><td>12023</td><td>435</td><td>6078</td><td>3350</td><td>52560</td><td>25388</td><td>7</td><td>5779</td><td>12023</td><td>8282</td></tr>
+    <tr><td>31261</td><td>1079.88</td><td>634.52</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-11-10 19:44:29.000000 UTC</td><td>2025-11-10 19:44:29.000000 UTC</td><td>1079.88</td><td>4.0</td><td>0.0</td><td>0</td><td>11</td><td>6</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>14129</td><td>21355</td><td>8</td><td>1</td><td>12023</td><td>29774</td></tr>
+    <tr><td>92743</td><td>1072.99</td><td>563.61</td><td>2</td><td>1</td><td>0</td><td>2</td><td>0</td><td>1</td><td>2019-05-26 14:46:36.000000 UTC</td><td>2019-05-26 14:46:36.000000 UTC</td><td>1072.99</td><td>2.0</td><td>0.0</td><td>0</td><td>12</td><td>17</td><td>25303</td><td>30074</td><td>12023</td><td>4241</td><td>17392</td><td>3350</td><td>79749</td><td>79862</td><td>9</td><td>8103</td><td>12023</td><td>29774</td></tr>
+    <tr><td>58269</td><td>1061.94</td><td>515.49</td><td>5</td><td>3</td><td>0</td><td>4</td><td>1</td><td>2</td><td>2023-10-25 12:15:17.000000 UTC</td><td>2025-10-24 12:12:28.000000 UTC</td><td>530.97</td><td>1.67</td><td>0.0</td><td>730</td><td>13</td><td>42</td><td>4060</td><td>5093</td><td>12023</td><td>435</td><td>6078</td><td>299</td><td>51108</td><td>23151</td><td>143</td><td>21954</td><td>12023</td><td>8531</td></tr>
+    <tr><td>31221</td><td>1046.99</td><td>467.51</td><td>5</td><td>2</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2023-09-22 16:05:02.000000 UTC</td><td>2024-09-30 17:07:31.000000 UTC</td><td>1046.99</td><td>2.5</td><td>0.0</td><td>374</td><td>14</td><td>68</td><td>4060</td><td>10016</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>52246</td><td>49093</td><td>10</td><td>5779</td><td>12023</td><td>15040</td></tr>
+    <tr><td>90530</td><td>1039.66</td><td>618.49</td><td>7</td><td>4</td><td>0</td><td>4</td><td>1</td><td>1</td><td>2025-01-12 02:14:23.000000 UTC</td><td>2025-11-14 14:49:28.000000 UTC</td><td>1039.66</td><td>1.75</td><td>0.0</td><td>306</td><td>15</td><td>7</td><td>887</td><td>1</td><td>12023</td><td>435</td><td>6078</td><td>3350</td><td>32497</td><td>20944</td><td>11</td><td>21174</td><td>12023</td><td>16753</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by generated Profit</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY profit_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>41791</td><td>1487.0</td><td>884.96</td><td>3</td><td>1</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2022-09-28 04:15:35.000000 UTC</td><td>2022-09-28 04:15:35.000000 UTC</td><td>1487.0</td><td>3.0</td><td>0.0</td><td>0</td><td>1</td><td>1</td><td>15410</td><td>30074</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>62938</td><td>70428</td><td>1</td><td>2670</td><td>12023</td><td>29774</td></tr>
+    <tr><td>6721</td><td>1303.55</td><td>708.33</td><td>6</td><td>3</td><td>0</td><td>5</td><td>0</td><td>2</td><td>2025-06-17 16:41:11.000000 UTC</td><td>2026-02-18 00:34:38.000000 UTC</td><td>651.77</td><td>2.0</td><td>0.0</td><td>246</td><td>4</td><td>2</td><td>2025</td><td>5093</td><td>12023</td><td>144</td><td>17392</td><td>299</td><td>23890</td><td>8652</td><td>100</td><td>8103</td><td>12023</td><td>18441</td></tr>
+    <tr><td>9608</td><td>1348.98</td><td>703.94</td><td>9</td><td>4</td><td>0</td><td>4</td><td>4</td><td>2</td><td>2022-06-02 13:50:09.000000 UTC</td><td>2025-04-28 20:40:37.000000 UTC</td><td>674.49</td><td>2.25</td><td>0.0</td><td>1061</td><td>2</td><td>3</td><td>148</td><td>1</td><td>12023</td><td>435</td><td>164</td><td>299</td><td>65844</td><td>37422</td><td>96</td><td>7921</td><td>12023</td><td>4750</td></tr>
+    <tr><td>58672</td><td>1327.33</td><td>688.92</td><td>6</td><td>2</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2021-12-10 12:12:04.000000 UTC</td><td>2025-09-11 22:33:43.000000 UTC</td><td>1327.33</td><td>3.0</td><td>0.0</td><td>1371</td><td>3</td><td>4</td><td>2025</td><td>10016</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>69626</td><td>27098</td><td>2</td><td>2670</td><td>12023</td><td>2338</td></tr>
+    <tr><td>41139</td><td>1170.01</td><td>645.44</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-08-23 10:04:29.000000 UTC</td><td>2025-08-23 10:04:29.000000 UTC</td><td>1170.01</td><td>4.0</td><td>0.0</td><td>0</td><td>5</td><td>5</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>19645</td><td>28833</td><td>3</td><td>1</td><td>12023</td><td>29774</td></tr>
+    <tr><td>31261</td><td>1079.88</td><td>634.52</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-11-10 19:44:29.000000 UTC</td><td>2025-11-10 19:44:29.000000 UTC</td><td>1079.88</td><td>4.0</td><td>0.0</td><td>0</td><td>11</td><td>6</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>14129</td><td>21355</td><td>8</td><td>1</td><td>12023</td><td>29774</td></tr>
+    <tr><td>90530</td><td>1039.66</td><td>618.49</td><td>7</td><td>4</td><td>0</td><td>4</td><td>1</td><td>1</td><td>2025-01-12 02:14:23.000000 UTC</td><td>2025-11-14 14:49:28.000000 UTC</td><td>1039.66</td><td>1.75</td><td>0.0</td><td>306</td><td>15</td><td>7</td><td>887</td><td>1</td><td>12023</td><td>435</td><td>6078</td><td>3350</td><td>32497</td><td>20944</td><td>11</td><td>21174</td><td>12023</td><td>16753</td></tr>
+    <tr><td>96233</td><td>1142.38</td><td>614.03</td><td>7</td><td>3</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-09-02 02:54:09.000000 UTC</td><td>2025-10-28 15:36:32.000000 UTC</td><td>1142.38</td><td>2.33</td><td>0.0</td><td>56</td><td>6</td><td>8</td><td>887</td><td>5093</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>19003</td><td>22776</td><td>4</td><td>7675</td><td>12023</td><td>25645</td></tr>
+    <tr><td>99402</td><td>1095.49</td><td>605.27</td><td>4</td><td>2</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2024-06-22 08:20:14.000000 UTC</td><td>2025-07-10 07:07:30.000000 UTC</td><td>1095.49</td><td>2.0</td><td>0.0</td><td>383</td><td>9</td><td>9</td><td>8057</td><td>10016</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>41884</td><td>32315</td><td>6</td><td>8103</td><td>12023</td><td>14818</td></tr>
+    <tr><td>84673</td><td>1025.41</td><td>599.53</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-08-04 04:24:13.000000 UTC</td><td>2025-08-04 04:24:13.000000 UTC</td><td>1025.41</td><td>4.0</td><td>0.0</td><td>0</td><td>21</td><td>10</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>20891</td><td>30370</td><td>16</td><td>1</td><td>12023</td><td>29774</td></tr>
+    <tr><td>3450</td><td>999.0</td><td>594.4</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2026-03-15 16:39:41.000000 UTC</td><td>2026-03-15 16:39:41.000000 UTC</td><td>999.0</td><td>1.0</td><td>0.0</td><td>0</td><td>26</td><td>11</td><td>44959</td><td>30074</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>2807</td><td>3594</td><td>21</td><td>32299</td><td>12023</td><td>29774</td></tr>
+    <tr><td>95653</td><td>999.0</td><td>594.4</td><td>5</td><td>4</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2026-03-06 10:36:13.000000 UTC</td><td>2026-03-19 12:12:08.000000 UTC</td><td>999.0</td><td>1.25</td><td>0.0</td><td>13</td><td>26</td><td>11</td><td>4060</td><td>1</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>3948</td><td>1914</td><td>21</td><td>30873</td><td>12023</td><td>28153</td></tr>
+    <tr><td>83506</td><td>981.99</td><td>577.49</td><td>3</td><td>1</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2026-03-10 22:20:15.000000 UTC</td><td>2026-03-10 22:20:15.000000 UTC</td><td>981.99</td><td>3.0</td><td>0.0</td><td>0</td><td>33</td><td>13</td><td>15410</td><td>30074</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>3422</td><td>4690</td><td>27</td><td>2670</td><td>12023</td><td>29774</td></tr>
+    <tr><td>89840</td><td>1103.0</td><td>576.93</td><td>4</td><td>2</td><td>0</td><td>3</td><td>0</td><td>1</td><td>2024-12-07 22:57:33.000000 UTC</td><td>2026-02-12 19:45:20.000000 UTC</td><td>1103.0</td><td>2.0</td><td>0.0</td><td>432</td><td>8</td><td>14</td><td>8057</td><td>10016</td><td>12023</td><td>2050</td><td>17392</td><td>3350</td><td>34223</td><td>9545</td><td>5</td><td>8103</td><td>12023</td><td>13731</td></tr>
+    <tr><td>31643</td><td>1001.52</td><td>572.46</td><td>4</td><td>1</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-10-07 02:30:03.000000 UTC</td><td>2025-10-07 02:30:03.000000 UTC</td><td>1001.52</td><td>4.0</td><td>0.0</td><td>0</td><td>25</td><td>15</td><td>8057</td><td>30074</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>16629</td><td>24783</td><td>20</td><td>1</td><td>12023</td><td>29774</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by number of Orders</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY num_orders_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>82006</td><td>41.57</td><td>19.76</td><td>7</td><td>4</td><td>4</td><td>2</td><td>1</td><td>2</td><td>2019-12-22 03:50:49.000000 UTC</td><td>2023-11-25 09:42:04.000000 UTC</td><td>20.79</td><td>1.75</td><td>0.6667</td><td>1434</td><td>18224</td><td>18704</td><td>887</td><td>1</td><td>77</td><td>4241</td><td>6078</td><td>299</td><td>78818</td><td>60612</td><td>23868</td><td>21174</td><td>9573</td><td>2016</td></tr>
+    <tr><td>5570</td><td>127.5</td><td>70.16</td><td>8</td><td>4</td><td>0</td><td>2</td><td>4</td><td>1</td><td>2020-09-24 16:25:48.000000 UTC</td><td>2025-09-29 08:49:48.000000 UTC</td><td>127.5</td><td>2.0</td><td>0.0</td><td>1831</td><td>6924</td><td>6273</td><td>364</td><td>1</td><td>12023</td><td>4241</td><td>164</td><td>3350</td><td>76388</td><td>25511</td><td>5631</td><td>8103</td><td>12023</td><td>618</td></tr>
+    <tr><td>81271</td><td>184.49</td><td>100.8</td><td>5</td><td>4</td><td>0</td><td>2</td><td>0</td><td>2</td><td>2020-09-29 15:33:54.000000 UTC</td><td>2024-06-11 15:18:03.000000 UTC</td><td>92.25</td><td>1.25</td><td>0.0</td><td>1351</td><td>3875</td><td>3473</td><td>4060</td><td>1</td><td>12023</td><td>4241</td><td>17392</td><td>299</td><td>76326</td><td>53853</td><td>8564</td><td>30873</td><td>12023</td><td>2453</td></tr>
+    <tr><td>24922</td><td>79.95</td><td>51.25</td><td>4</td><td>4</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2021-11-19 18:54:38.000000 UTC</td><td>2026-03-04 07:51:19.000000 UTC</td><td>79.95</td><td>1.0</td><td>0.5</td><td>1566</td><td>11314</td><td>9090</td><td>8057</td><td>1</td><td>4008</td><td>10609</td><td>6078</td><td>3350</td><td>70031</td><td>6028</td><td>10026</td><td>32299</td><td>10028</td><td>1415</td></tr>
+    <tr><td>1284</td><td>29.5</td><td>14.63</td><td>4</td><td>4</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2021-01-29 14:45:09.000000 UTC</td><td>2025-11-30 15:17:14.000000 UTC</td><td>29.5</td><td>1.0</td><td>0.0</td><td>1766</td><td>21440</td><td>21450</td><td>8057</td><td>1</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>74863</td><td>19192</td><td>21079</td><td>32299</td><td>12023</td><td>774</td></tr>
+    <tr><td>45906</td><td>116.63</td><td>58.69</td><td>5</td><td>4</td><td>1</td><td>2</td><td>0</td><td>1</td><td>2021-04-09 07:04:02.000000 UTC</td><td>2025-03-19 13:36:35.000000 UTC</td><td>116.63</td><td>1.25</td><td>0.3333</td><td>1440</td><td>7725</td><td>7846</td><td>4060</td><td>1</td><td>4008</td><td>4241</td><td>17392</td><td>3350</td><td>73869</td><td>39969</td><td>6426</td><td>30873</td><td>11257</td><td>1988</td></tr>
+    <tr><td>33893</td><td>129.7</td><td>70.76</td><td>6</td><td>4</td><td>0</td><td>3</td><td>1</td><td>1</td><td>2022-02-17 10:57:23.000000 UTC</td><td>2024-11-25 03:46:52.000000 UTC</td><td>129.7</td><td>1.5</td><td>0.0</td><td>1012</td><td>6740</td><td>6200</td><td>2025</td><td>1</td><td>12023</td><td>2050</td><td>6078</td><td>3350</td><td>68156</td><td>46375</td><td>5457</td><td>22716</td><td>12023</td><td>5193</td></tr>
+    <tr><td>1199</td><td>0.0</td><td>0.0</td><td>5</td><td>4</td><td>2</td><td>0</td><td>0</td><td>0</td><td>2023-02-19 09:15:41.000000 UTC</td><td>2025-12-06 06:12:55.000000 UTC</td><td></td><td>1.25</td><td>1.0</td><td>1021</td><td>27532</td><td>27532</td><td>4060</td><td>1</td><td>1439</td><td>27532</td><td>17392</td><td>27532</td><td>59011</td><td>18552</td><td>27532</td><td>30873</td><td>1</td><td>5110</td></tr>
+    <tr><td>30389</td><td>0.0</td><td>0.0</td><td>4</td><td>4</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2021-10-27 07:13:37.000000 UTC</td><td>2024-10-12 17:03:14.000000 UTC</td><td></td><td>1.0</td><td>1.0</td><td>1081</td><td>27532</td><td>27532</td><td>8057</td><td>1</td><td>4008</td><td>27532</td><td>6078</td><td>27532</td><td>70474</td><td>48470</td><td>27532</td><td>32299</td><td>1</td><td>4566</td></tr>
+    <tr><td>24237</td><td>0.0</td><td>0.0</td><td>6</td><td>4</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2020-02-04 20:12:52.000000 UTC</td><td>2024-09-19 22:46:09.000000 UTC</td><td></td><td>1.5</td><td>1.0</td><td>1689</td><td>27532</td><td>27532</td><td>2025</td><td>1</td><td>4008</td><td>27532</td><td>17392</td><td>27532</td><td>78551</td><td>49576</td><td>27532</td><td>22716</td><td>1</td><td>988</td></tr>
+    <tr><td>43298</td><td>0.0</td><td>0.0</td><td>7</td><td>4</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2021-10-22 16:09:02.000000 UTC</td><td>2026-01-14 12:24:02.000000 UTC</td><td></td><td>1.75</td><td>1.0</td><td>1545</td><td>27532</td><td>27532</td><td>887</td><td>1</td><td>4008</td><td>27532</td><td>17392</td><td>27532</td><td>70578</td><td>13821</td><td>27532</td><td>21174</td><td>1</td><td>1512</td></tr>
+    <tr><td>95470</td><td>222.43</td><td>129.79</td><td>7</td><td>4</td><td>0</td><td>5</td><td>0</td><td>2</td><td>2022-12-12 18:47:31.000000 UTC</td><td>2025-10-19 12:15:13.000000 UTC</td><td>111.22</td><td>1.75</td><td>0.0</td><td>1042</td><td>2602</td><td>2039</td><td>887</td><td>1</td><td>12023</td><td>144</td><td>17392</td><td>299</td><td>60971</td><td>23635</td><td>6746</td><td>21174</td><td>12023</td><td>4931</td></tr>
+    <tr><td>18930</td><td>41.99</td><td>21.79</td><td>5</td><td>4</td><td>1</td><td>1</td><td>0</td><td>1</td><td>2019-12-27 22:41:54.000000 UTC</td><td>2025-10-23 08:27:54.000000 UTC</td><td>41.99</td><td>1.25</td><td>0.5</td><td>2127</td><td>18130</td><td>17718</td><td>4060</td><td>1</td><td>4008</td><td>10609</td><td>17392</td><td>3350</td><td>78792</td><td>23269</td><td>17443</td><td>30873</td><td>10028</td><td>162</td></tr>
+    <tr><td>40252</td><td>53.45</td><td>25.85</td><td>4</td><td>4</td><td>0</td><td>2</td><td>0</td><td>2</td><td>2020-01-27 14:41:04.000000 UTC</td><td>2025-08-20 18:07:50.000000 UTC</td><td>26.73</td><td>1.0</td><td>0.0</td><td>2032</td><td>15634</td><td>15962</td><td>8057</td><td>1</td><td>12023</td><td>4241</td><td>17392</td><td>299</td><td>78608</td><td>29053</td><td>21737</td><td>32299</td><td>12023</td><td>259</td></tr>
+    <tr><td>43911</td><td>0.0</td><td>0.0</td><td>5</td><td>4</td><td>0</td><td>0</td><td>1</td><td>0</td><td>2020-11-19 03:44:57.000000 UTC</td><td>2024-12-06 15:26:31.000000 UTC</td><td></td><td>1.25</td><td></td><td>1478</td><td>27532</td><td>27532</td><td>4060</td><td>1</td><td>12023</td><td>27532</td><td>6078</td><td>27532</td><td>75771</td><td>45798</td><td>27532</td><td>30873</td><td>36927</td><td>1821</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by number of ordered Items</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY num_items_ordered_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>50358</td><td>0.0</td><td>0.0</td><td>13</td><td>4</td><td>0</td><td>0</td><td>4</td><td>0</td><td>2020-04-06 11:47:15.000000 UTC</td><td>2024-06-20 12:43:58.000000 UTC</td><td></td><td>3.25</td><td></td><td>1536</td><td>27532</td><td>27532</td><td>1</td><td>1</td><td>12023</td><td>27532</td><td>164</td><td>27532</td><td>78071</td><td>53463</td><td>27532</td><td>2669</td><td>36927</td><td>1564</td></tr>
+    <tr><td>26807</td><td>289.42</td><td>151.0</td><td>12</td><td>4</td><td>0</td><td>8</td><td>2</td><td>2</td><td>2025-07-01 22:52:38.000000 UTC</td><td>2026-02-28 04:27:15.000000 UTC</td><td>144.71</td><td>3.0</td><td>0.0</td><td>242</td><td>1351</td><td>1411</td><td>2</td><td>1</td><td>12023</td><td>3</td><td>2345</td><td>299</td><td>23029</td><td>6821</td><td>4585</td><td>2670</td><td>12023</td><td>18572</td></tr>
+    <tr><td>49539</td><td>142.97</td><td>69.84</td><td>12</td><td>4</td><td>0</td><td>4</td><td>5</td><td>1</td><td>2022-12-29 08:39:56.000000 UTC</td><td>2025-12-30 08:46:59.000000 UTC</td><td>142.97</td><td>3.0</td><td>0.0</td><td>1097</td><td>5871</td><td>6315</td><td>2</td><td>1</td><td>12023</td><td>435</td><td>47</td><td>3350</td><td>60512</td><td>15764</td><td>4653</td><td>2670</td><td>12023</td><td>4394</td></tr>
+    <tr><td>19412</td><td>15.0</td><td>7.44</td><td>12</td><td>4</td><td>4</td><td>1</td><td>0</td><td>1</td><td>2024-01-14 18:04:56.000000 UTC</td><td>2025-12-19 17:16:33.000000 UTC</td><td>15.0</td><td>3.0</td><td>0.8</td><td>705</td><td>25366</td><td>25547</td><td>2</td><td>1</td><td>77</td><td>10609</td><td>17392</td><td>3350</td><td>48138</td><td>16998</td><td>25322</td><td>2670</td><td>9402</td><td>8870</td></tr>
+    <tr><td>26964</td><td>219.97</td><td>120.47</td><td>12</td><td>4</td><td>3</td><td>5</td><td>0</td><td>2</td><td>2022-12-08 23:26:00.000000 UTC</td><td>2025-03-01 03:22:51.000000 UTC</td><td>109.98</td><td>3.0</td><td>0.375</td><td>814</td><td>2665</td><td>2410</td><td>2</td><td>1</td><td>715</td><td>144</td><td>17392</td><td>299</td><td>61069</td><td>41119</td><td>6911</td><td>2670</td><td>11253</td><td>7453</td></tr>
+    <tr><td>30487</td><td>360.62</td><td>190.94</td><td>12</td><td>4</td><td>0</td><td>4</td><td>0</td><td>1</td><td>2025-02-04 18:25:16.000000 UTC</td><td>2025-11-24 14:33:51.000000 UTC</td><td>360.62</td><td>3.0</td><td>0.0</td><td>293</td><td>711</td><td>716</td><td>2</td><td>1</td><td>12023</td><td>435</td><td>17392</td><td>3350</td><td>31267</td><td>19903</td><td>477</td><td>2670</td><td>12023</td><td>17110</td></tr>
+    <tr><td>7251</td><td>61.99</td><td>33.46</td><td>12</td><td>4</td><td>2</td><td>2</td><td>0</td><td>1</td><td>2022-03-19 18:28:23.000000 UTC</td><td>2024-12-27 03:48:57.000000 UTC</td><td>61.99</td><td>3.0</td><td>0.5</td><td>1014</td><td>13977</td><td>13246</td><td>2</td><td>1</td><td>1439</td><td>4241</td><td>17392</td><td>3350</td><td>67511</td><td>44691</td><td>12889</td><td>2670</td><td>10028</td><td>5176</td></tr>
+    <tr><td>50553</td><td>0.0</td><td>0.0</td><td>11</td><td>4</td><td>0</td><td>0</td><td>4</td><td>0</td><td>2023-11-27 05:07:46.000000 UTC</td><td>2024-08-27 08:33:03.000000 UTC</td><td></td><td>2.75</td><td></td><td>274</td><td>27532</td><td>27532</td><td>8</td><td>1</td><td>12023</td><td>27532</td><td>164</td><td>27532</td><td>49889</td><td>50633</td><td>27532</td><td>5658</td><td>36927</td><td>17606</td></tr>
+    <tr><td>35024</td><td>155.66</td><td>67.13</td><td>11</td><td>4</td><td>0</td><td>4</td><td>4</td><td>1</td><td>2023-05-02 16:38:49.000000 UTC</td><td>2026-03-18 23:40:22.000000 UTC</td><td>155.66</td><td>2.75</td><td>0.0</td><td>1051</td><td>5158</td><td>6641</td><td>8</td><td>1</td><td>12023</td><td>435</td><td>164</td><td>3350</td><td>56901</td><td>2269</td><td>4013</td><td>5658</td><td>12023</td><td>4847</td></tr>
+    <tr><td>19105</td><td>249.55</td><td>136.38</td><td>11</td><td>4</td><td>0</td><td>6</td><td>0</td><td>2</td><td>2022-03-31 16:31:39.000000 UTC</td><td>2025-03-11 16:32:39.000000 UTC</td><td>124.78</td><td>2.75</td><td>0.0</td><td>1076</td><td>1994</td><td>1811</td><td>8</td><td>1</td><td>12023</td><td>41</td><td>17392</td><td>299</td><td>67257</td><td>40472</td><td>5842</td><td>5658</td><td>12023</td><td>4611</td></tr>
+    <tr><td>89231</td><td>69.0</td><td>39.74</td><td>11</td><td>4</td><td>4</td><td>1</td><td>2</td><td>1</td><td>2025-10-11 18:13:51.000000 UTC</td><td>2026-03-12 16:56:11.000000 UTC</td><td>69.0</td><td>2.75</td><td>0.8</td><td>152</td><td>12837</td><td>11643</td><td>8</td><td>1</td><td>77</td><td>10609</td><td>2345</td><td>3350</td><td>16298</td><td>4296</td><td>11659</td><td>5658</td><td>9402</td><td>21589</td></tr>
+    <tr><td>24294</td><td>0.0</td><td>0.0</td><td>11</td><td>4</td><td>4</td><td>0</td><td>3</td><td>0</td><td>2019-07-28 10:26:40.000000 UTC</td><td>2025-02-13 09:42:17.000000 UTC</td><td></td><td>2.75</td><td>1.0</td><td>2027</td><td>27532</td><td>27532</td><td>8</td><td>1</td><td>77</td><td>27532</td><td>1133</td><td>27532</td><td>79546</td><td>42048</td><td>27532</td><td>5658</td><td>1</td><td>266</td></tr>
+    <tr><td>75994</td><td>365.25</td><td>187.72</td><td>11</td><td>4</td><td>0</td><td>5</td><td>4</td><td>2</td><td>2024-11-09 13:54:59.000000 UTC</td><td>2026-01-05 02:12:35.000000 UTC</td><td>182.63</td><td>2.75</td><td>0.0</td><td>422</td><td>687</td><td>753</td><td>8</td><td>1</td><td>12023</td><td>144</td><td>164</td><td>299</td><td>35549</td><td>15065</td><td>2937</td><td>5658</td><td>12023</td><td>13948</td></tr>
+    <tr><td>56718</td><td>167.3</td><td>84.9</td><td>11</td><td>3</td><td>4</td><td>4</td><td>0</td><td>1</td><td>2021-12-01 03:13:24.000000 UTC</td><td>2024-06-19 08:28:19.000000 UTC</td><td>167.3</td><td>3.67</td><td>0.5</td><td>931</td><td>4638</td><td>4690</td><td>8</td><td>5093</td><td>77</td><td>435</td><td>17392</td><td>3350</td><td>69815</td><td>53509</td><td>3560</td><td>2543</td><td>10028</td><td>6027</td></tr>
+    <tr><td>39235</td><td>0.0</td><td>0.0</td><td>11</td><td>4</td><td>0</td><td>0</td><td>4</td><td>0</td><td>2025-08-16 22:48:53.000000 UTC</td><td>2026-03-06 04:49:00.000000 UTC</td><td></td><td>2.75</td><td></td><td>202</td><td>27532</td><td>27532</td><td>8</td><td>1</td><td>12023</td><td>27532</td><td>164</td><td>27532</td><td>20052</td><td>5679</td><td>27532</td><td>5658</td><td>36927</td><td>19846</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by Lifetime Days</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY lifetime_days_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>21593</td><td>21.75</td><td>11.01</td><td>6</td><td>4</td><td>1</td><td>1</td><td>3</td><td>1</td><td>2019-02-09 09:42:27.000000 UTC</td><td>2025-12-31 05:35:38.000000 UTC</td><td>21.75</td><td>1.5</td><td>0.5</td><td>2517</td><td>23873</td><td>23588</td><td>2025</td><td>1</td><td>4008</td><td>10609</td><td>1133</td><td>3350</td><td>79950</td><td>15640</td><td>23719</td><td>22716</td><td>10028</td><td>1</td></tr>
+    <tr><td>2629</td><td>7.0</td><td>4.14</td><td>2</td><td>2</td><td>0</td><td>1</td><td>1</td><td>1</td><td>2019-03-29 20:39:47.000000 UTC</td><td>2026-02-08 04:40:28.000000 UTC</td><td>7.0</td><td>1.0</td><td>0.0</td><td>2508</td><td>27297</td><td>27115</td><td>25303</td><td>10016</td><td>12023</td><td>10609</td><td>6078</td><td>3350</td><td>79881</td><td>10316</td><td>27297</td><td>32299</td><td>12023</td><td>2</td></tr>
+    <tr><td>56521</td><td>59.5</td><td>27.25</td><td>2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2019-05-09 07:19:27.000000 UTC</td><td>2026-03-17 14:13:55.000000 UTC</td><td>59.5</td><td>1.0</td><td>0.0</td><td>2504</td><td>14449</td><td>15408</td><td>25303</td><td>10016</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>79788</td><td>2974</td><td>13387</td><td>32299</td><td>12023</td><td>3</td></tr>
+    <tr><td>85000</td><td>12.0</td><td>4.38</td><td>2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2019-03-31 14:19:41.000000 UTC</td><td>2026-02-01 14:48:34.000000 UTC</td><td>12.0</td><td>1.0</td><td>0.0</td><td>2499</td><td>26255</td><td>27038</td><td>25303</td><td>10016</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>79877</td><td>11253</td><td>26238</td><td>32299</td><td>12023</td><td>4</td></tr>
+    <tr><td>13335</td><td>141.68</td><td>77.89</td><td>5</td><td>4</td><td>0</td><td>2</td><td>1</td><td>1</td><td>2019-04-22 16:08:39.000000 UTC</td><td>2026-02-19 18:18:55.000000 UTC</td><td>141.68</td><td>1.25</td><td>0.0</td><td>2495</td><td>5933</td><td>5418</td><td>4060</td><td>1</td><td>12023</td><td>4241</td><td>6078</td><td>3350</td><td>79838</td><td>8366</td><td>4718</td><td>30873</td><td>12023</td><td>5</td></tr>
+    <tr><td>40414</td><td>18.96</td><td>8.93</td><td>2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td><td>2019-04-28 01:01:56.000000 UTC</td><td>2026-02-23 07:48:50.000000 UTC</td><td>18.96</td><td>1.0</td><td>0.0</td><td>2493</td><td>24568</td><td>24785</td><td>25303</td><td>10016</td><td>12023</td><td>10609</td><td>17392</td><td>3350</td><td>79817</td><td>7756</td><td>24470</td><td>32299</td><td>12023</td><td>6</td></tr>
+    <tr><td>10484</td><td>0.0</td><td>0.0</td><td>5</td><td>4</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2019-04-17 06:55:59.000000 UTC</td><td>2026-02-07 23:25:44.000000 UTC</td><td></td><td>1.25</td><td>1.0</td><td>2488</td><td>27532</td><td>27532</td><td>4060</td><td>1</td><td>4008</td><td>27532</td><td>6078</td><td>27532</td><td>79846</td><td>10346</td><td>27532</td><td>30873</td><td>1</td><td>7</td></tr>
+    <tr><td>5544</td><td>257.5</td><td>122.04</td><td>5</td><td>4</td><td>0</td><td>2</td><td>1</td><td>1</td><td>2019-04-30 06:07:29.000000 UTC</td><td>2026-02-20 08:31:48.000000 UTC</td><td>257.5</td><td>1.25</td><td>0.0</td><td>2488</td><td>1832</td><td>2330</td><td>4060</td><td>1</td><td>12023</td><td>4241</td><td>6078</td><td>3350</td><td>79811</td><td>8261</td><td>1273</td><td>30873</td><td>12023</td><td>7</td></tr>
+    <tr><td>85692</td><td>243.9</td><td>103.99</td><td>6</td><td>4</td><td>0</td><td>3</td><td>0</td><td>2</td><td>2019-05-20 18:07:33.000000 UTC</td><td>2026-03-11 06:42:46.000000 UTC</td><td>121.95</td><td>1.5</td><td>0.0</td><td>2487</td><td>2105</td><td>3263</td><td>2025</td><td>1</td><td>12023</td><td>2050</td><td>17392</td><td>299</td><td>79774</td><td>4610</td><td>5997</td><td>22716</td><td>12023</td><td>9</td></tr>
+    <tr><td>76311</td><td>0.0</td><td>0.0</td><td>7</td><td>4</td><td>0</td><td>0</td><td>2</td><td>0</td><td>2019-05-30 16:34:10.000000 UTC</td><td>2026-03-19 17:50:58.000000 UTC</td><td></td><td>1.75</td><td></td><td>2485</td><td>27532</td><td>27532</td><td>887</td><td>1</td><td>12023</td><td>27532</td><td>2345</td><td>27532</td><td>79734</td><td>1713</td><td>27532</td><td>21174</td><td>36927</td><td>10</td></tr>
+    <tr><td>9842</td><td>50.0</td><td>29.0</td><td>7</td><td>4</td><td>0</td><td>1</td><td>4</td><td>1</td><td>2019-05-28 14:07:40.000000 UTC</td><td>2026-03-12 17:50:30.000000 UTC</td><td>50.0</td><td>1.75</td><td>0.0</td><td>2480</td><td>16021</td><td>14730</td><td>887</td><td>1</td><td>12023</td><td>10609</td><td>164</td><td>3350</td><td>79741</td><td>4287</td><td>15152</td><td>21174</td><td>12023</td><td>11</td></tr>
+    <tr><td>1380</td><td>0.0</td><td>0.0</td><td>5</td><td>3</td><td>1</td><td>0</td><td>4</td><td>0</td><td>2019-06-13 06:04:10.000000 UTC</td><td>2026-03-17 23:02:23.000000 UTC</td><td></td><td>1.67</td><td>1.0</td><td>2469</td><td>27532</td><td>27532</td><td>4060</td><td>5093</td><td>4008</td><td>27532</td><td>164</td><td>27532</td><td>79699</td><td>2816</td><td>27532</td><td>21954</td><td>1</td><td>12</td></tr>
+    <tr><td>23520</td><td>0.0</td><td>0.0</td><td>8</td><td>4</td><td>2</td><td>0</td><td>5</td><td>0</td><td>2019-03-14 17:25:45.000000 UTC</td><td>2025-12-15 19:07:17.000000 UTC</td><td></td><td>2.0</td><td>1.0</td><td>2468</td><td>27532</td><td>27532</td><td>364</td><td>1</td><td>1439</td><td>27532</td><td>47</td><td>27532</td><td>79916</td><td>17464</td><td>27532</td><td>8103</td><td>1</td><td>13</td></tr>
+    <tr><td>98794</td><td>0.0</td><td>0.0</td><td>6</td><td>4</td><td>0</td><td>0</td><td>2</td><td>0</td><td>2019-07-02 17:21:36.000000 UTC</td><td>2026-03-19 04:33:52.000000 UTC</td><td></td><td>1.5</td><td></td><td>2452</td><td>27532</td><td>27532</td><td>2025</td><td>1</td><td>12023</td><td>27532</td><td>2345</td><td>27532</td><td>79639</td><td>2156</td><td>27532</td><td>22716</td><td>36927</td><td>14</td></tr>
+    <tr><td>7650</td><td>0.0</td><td>0.0</td><td>2</td><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>2019-03-21 00:28:49.000000 UTC</td><td>2025-11-27 19:11:31.000000 UTC</td><td></td><td>1.0</td><td></td><td>2443</td><td>27532</td><td>27532</td><td>25303</td><td>10016</td><td>12023</td><td>27532</td><td>6078</td><td>27532</td><td>79903</td><td>19528</td><td>27532</td><td>32299</td><td>36927</td><td>15</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by number of returned Items</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY num_returned_items_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>60297</td><td>0.0</td><td>0.0</td><td>10</td><td>4</td><td>9</td><td>0</td><td>0</td><td>0</td><td>2025-08-28 17:11:07.000000 UTC</td><td>2026-02-12 16:17:59.000000 UTC</td><td></td><td>2.5</td><td>1.0</td><td>168</td><td>27532</td><td>27532</td><td>49</td><td>1</td><td>1</td><td>27532</td><td>17392</td><td>27532</td><td>19285</td><td>9566</td><td>27532</td><td>5779</td><td>1</td><td>21006</td></tr>
+    <tr><td>46813</td><td>79.99</td><td>35.84</td><td>9</td><td>4</td><td>8</td><td>1</td><td>0</td><td>1</td><td>2022-07-24 19:23:52.000000 UTC</td><td>2025-11-07 02:23:59.000000 UTC</td><td>79.99</td><td>2.25</td><td>0.8889</td><td>1202</td><td>11217</td><td>12592</td><td>148</td><td>1</td><td>2</td><td>10609</td><td>17392</td><td>3350</td><td>64638</td><td>21752</td><td>9931</td><td>7921</td><td>9396</td><td>3508</td></tr>
+    <tr><td>39503</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>7</td><td>0</td><td>0</td><td>0</td><td>2025-08-17 14:33:03.000000 UTC</td><td>2025-11-29 10:13:11.000000 UTC</td><td></td><td>3.5</td><td>1.0</td><td>104</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>3</td><td>27532</td><td>17392</td><td>27532</td><td>20014</td><td>19331</td><td>27532</td><td>2545</td><td>1</td><td>23415</td></tr>
+    <tr><td>11354</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>7</td><td>0</td><td>0</td><td>0</td><td>2024-08-21 15:42:09.000000 UTC</td><td>2025-02-19 20:37:16.000000 UTC</td><td></td><td>3.5</td><td>1.0</td><td>182</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>3</td><td>27532</td><td>17392</td><td>27532</td><td>39264</td><td>41703</td><td>27532</td><td>2545</td><td>1</td><td>20515</td></tr>
+    <tr><td>59640</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>7</td><td>0</td><td>0</td><td>0</td><td>2025-09-07 15:46:55.000000 UTC</td><td>2025-11-24 02:27:39.000000 UTC</td><td></td><td>3.5</td><td>1.0</td><td>78</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>3</td><td>27532</td><td>17392</td><td>27532</td><td>18632</td><td>19949</td><td>27532</td><td>2545</td><td>1</td><td>24594</td></tr>
+    <tr><td>60349</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>7</td><td>0</td><td>0</td><td>0</td><td>2021-11-13 11:06:48.000000 UTC</td><td>2023-12-12 18:26:45.000000 UTC</td><td></td><td>3.5</td><td>1.0</td><td>759</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>3</td><td>27532</td><td>17392</td><td>27532</td><td>70167</td><td>60101</td><td>27532</td><td>2545</td><td>1</td><td>8144</td></tr>
+    <tr><td>87895</td><td>0.0</td><td>0.0</td><td>9</td><td>4</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2023-06-22 14:54:45.000000 UTC</td><td>2026-02-07 09:40:03.000000 UTC</td><td></td><td>2.25</td><td>1.0</td><td>961</td><td>27532</td><td>27532</td><td>148</td><td>1</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>55359</td><td>10438</td><td>27532</td><td>7921</td><td>1</td><td>5677</td></tr>
+    <tr><td>18146</td><td>0.0</td><td>0.0</td><td>6</td><td>3</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2026-02-12 09:30:34.000000 UTC</td><td>2026-03-14 14:52:21.000000 UTC</td><td></td><td>2.0</td><td>1.0</td><td>30</td><td>27532</td><td>27532</td><td>2025</td><td>5093</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>6345</td><td>3842</td><td>27532</td><td>8103</td><td>1</td><td>27027</td></tr>
+    <tr><td>27201</td><td>42.16</td><td>19.31</td><td>8</td><td>4</td><td>6</td><td>1</td><td>1</td><td>1</td><td>2021-09-25 19:13:29.000000 UTC</td><td>2026-01-30 16:52:20.000000 UTC</td><td>42.16</td><td>2.0</td><td>0.8571</td><td>1588</td><td>18016</td><td>18948</td><td>364</td><td>1</td><td>7</td><td>10609</td><td>6078</td><td>3350</td><td>71073</td><td>11557</td><td>17326</td><td>8103</td><td>9397</td><td>1335</td></tr>
+    <tr><td>89971</td><td>0.0</td><td>0.0</td><td>6</td><td>2</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2024-07-22 10:51:16.000000 UTC</td><td>2025-04-03 13:12:55.000000 UTC</td><td></td><td>3.0</td><td>1.0</td><td>255</td><td>27532</td><td>27532</td><td>2025</td><td>10016</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>40553</td><td>39024</td><td>27532</td><td>2670</td><td>1</td><td>18195</td></tr>
+    <tr><td>39197</td><td>0.0</td><td>0.0</td><td>6</td><td>2</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2025-06-13 09:18:02.000000 UTC</td><td>2026-03-03 06:26:24.000000 UTC</td><td></td><td>3.0</td><td>1.0</td><td>263</td><td>27532</td><td>27532</td><td>2025</td><td>10016</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>24144</td><td>6230</td><td>27532</td><td>2670</td><td>1</td><td>17965</td></tr>
+    <tr><td>29308</td><td>0.0</td><td>0.0</td><td>6</td><td>2</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2026-03-19 11:15:45.276157 UTC</td><td>2026-03-19 12:01:06.276157 UTC</td><td></td><td>3.0</td><td>1.0</td><td>0</td><td>27532</td><td>27532</td><td>2025</td><td>10016</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>1361</td><td>1921</td><td>27532</td><td>2670</td><td>1</td><td>29774</td></tr>
+    <tr><td>15921</td><td>0.0</td><td>0.0</td><td>6</td><td>3</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2023-10-07 02:25:11.000000 UTC</td><td>2025-07-06 23:31:11.000000 UTC</td><td></td><td>2.0</td><td>1.0</td><td>638</td><td>27532</td><td>27532</td><td>2025</td><td>5093</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>51754</td><td>32558</td><td>27532</td><td>8103</td><td>1</td><td>9887</td></tr>
+    <tr><td>99384</td><td>0.0</td><td>0.0</td><td>7</td><td>4</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2023-06-13 07:11:13.000000 UTC</td><td>2025-09-14 09:21:52.000000 UTC</td><td></td><td>1.75</td><td>1.0</td><td>824</td><td>27532</td><td>27532</td><td>887</td><td>1</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>55640</td><td>26886</td><td>27532</td><td>21174</td><td>1</td><td>7337</td></tr>
+    <tr><td>50833</td><td>0.0</td><td>0.0</td><td>6</td><td>2</td><td>6</td><td>0</td><td>0</td><td>0</td><td>2020-06-11 20:41:30.000000 UTC</td><td>2024-11-29 01:34:57.000000 UTC</td><td></td><td>3.0</td><td>1.0</td><td>1632</td><td>27532</td><td>27532</td><td>2025</td><td>10016</td><td>7</td><td>27532</td><td>17392</td><td>27532</td><td>77512</td><td>46165</td><td>27532</td><td>2670</td><td>1</td><td>1171</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Top customers by number of cancelled Items</h3>
+
+<pre><code class="language-sql">WITH first_layer AS (
+	SELECT
+		o.user_id AS customer_id,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 
+END), 2) AS generated_revenue,
+		ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) 
+ELSE 0 END), 2) AS generated_profit,
+		COUNT(*) AS num_items_ordered,
+		COUNT(DISTINCT o.order_id) AS num_orders,
+		SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS 
+num_returned_items,
+		SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS 
+num_completed_items,
+SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS 
+num_cancelled_items,
+COUNT(DISTINCT CASE WHEN o.status = 'Complete' THEN o.order_id END) AS 
+num_completed_orders,
+MIN(o.created_at) AS first_order, 
+MAX(o.created_at) AS last_order
+	FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
+JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
+ON oi.order_id = o.order_id
+JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
+ON oi.product_id = p.id 
+GROUP BY customer_id
+)
+, second_layer AS (
+	SELECT 
+		*,
+		ROUND((generated_revenue / NULLIF(num_completed_orders, 0)), 2) AS 
+avg_order_value,
+		ROUND((num_items_ordered / NULLIF(num_orders, 0)), 2) AS avg_order_size,
+		ROUND((num_returned_items / NULLIF((num_completed_items + 
+num_returned_items), 0)), 4) AS return_rate,
+		DATE_DIFF(DATE(last_order), DATE(first_order), DAY) AS lifetime_days
+	FROM first_layer
+)
+SELECT
+	*,
+	RANK() OVER(ORDER BY generated_revenue DESC) AS revenue_rank,
+	RANK() OVER(ORDER BY generated_profit DESC) AS profit_rank,
+	RANK() OVER(ORDER BY num_items_ordered DESC) AS num_items_ordered_rank,
+	RANK() OVER(ORDER BY num_orders DESC) AS num_orders_rank,
+	RANK() OVER(ORDER BY num_returned_items DESC) AS num_returned_items_rank,
+	RANK() OVER(ORDER BY num_completed_items DESC) AS num_completed_items_rank,
+	RANK() OVER(ORDER BY num_cancelled_items DESC) AS num_cancelled_items_rank,
+	RANK() OVER(ORDER BY num_completed_orders DESC) AS 
+num_completed_orders_rank,
+	RANK() OVER(ORDER BY first_order DESC) AS first_order_rank,
+	RANK() OVER(ORDER BY last_order DESC) AS last_order_rank,
+	RANK() OVER(ORDER BY avg_order_value DESC) AS avg_order_value_rank,
+	RANK() OVER(ORDER BY avg_order_size DESC) AS avg_order_size_rank,
+	RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
+	RANK() OVER(ORDER BY lifetime_days DESC) AS lifetime_days_rank
+FROM second_layer
+ORDER BY num_cancelled_items_rank ASC
+LIMIT 15;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>customer_id</th>
+      <th>generated_revenue</th>
+      <th>generated_profit</th>
+      <th>num_items_ordered</th>
+      <th>num_orders</th>
+      <th>num_returned_items</th>
+      <th>num_completed_items</th>
+      <th>num_cancelled_items</th>
+      <th>num_completed_orders</th>
+      <th>first_order</th>
+      <th>last_order</th>
+      <th>avg_order_value</th>
+      <th>avg_order_size</th>
+      <th>return_rate</th>
+      <th>lifetime_days</th>
+      <th>revenue_rank</th>
+      <th>profit_rank</th>
+      <th>num_items_ordered_rank</th>
+      <th>num_orders_rank</th>
+      <th>num_returned_items_rank</th>
+      <th>num_completed_items_rank</th>
+      <th>num_cancelled_items_rank</th>
+      <th>num_completed_orders_rank</th>
+      <th>first_order_rank</th>
+      <th>last_order_rank</th>
+      <th>avg_order_value_rank</th>
+      <th>avg_order_size_rank</th>
+      <th>return_rate_rank</th>
+      <th>lifetime_days_rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>52450</td><td>0.0</td><td>0.0</td><td>10</td><td>4</td><td>2</td><td>0</td><td>8</td><td>0</td><td>2022-03-11 13:56:16.000000 UTC</td><td>2024-02-04 12:21:46.000000 UTC</td><td></td><td>2.5</td><td>1.0</td><td>695</td><td>27532</td><td>27532</td><td>49</td><td>1</td><td>1439</td><td>27532</td><td>1</td><td>27532</td><td>67677</td><td>58458</td><td>27532</td><td>5779</td><td>1</td><td>9009</td></tr>
+    <tr><td>888</td><td>0.0</td><td>0.0</td><td>8</td><td>3</td><td>0</td><td>0</td><td>8</td><td>0</td><td>2024-06-16 06:47:35.000000 UTC</td><td>2026-03-07 11:36:20.000000 UTC</td><td></td><td>2.67</td><td></td><td>629</td><td>27532</td><td>27532</td><td>364</td><td>5093</td><td>12023</td><td>27532</td><td>1</td><td>27532</td><td>42169</td><td>5387</td><td>27532</td><td>5697</td><td>36927</td><td>10055</td></tr>
+    <tr><td>66118</td><td>0.0</td><td>0.0</td><td>8</td><td>2</td><td>0</td><td>0</td><td>8</td><td>0</td><td>2021-01-07 00:01:40.000000 UTC</td><td>2025-04-19 10:09:06.000000 UTC</td><td></td><td>4.0</td><td></td><td>1563</td><td>27532</td><td>27532</td><td>364</td><td>10016</td><td>12023</td><td>27532</td><td>1</td><td>27532</td><td>75145</td><td>38045</td><td>27532</td><td>1</td><td>36927</td><td>1430</td></tr>
+    <tr><td>56460</td><td>0.0</td><td>0.0</td><td>8</td><td>2</td><td>0</td><td>0</td><td>8</td><td>0</td><td>2023-12-21 22:29:09.000000 UTC</td><td>2025-10-05 22:53:44.000000 UTC</td><td></td><td>4.0</td><td></td><td>654</td><td>27532</td><td>27532</td><td>364</td><td>10016</td><td>12023</td><td>27532</td><td>1</td><td>27532</td><td>49020</td><td>24914</td><td>27532</td><td>1</td><td>36927</td><td>9616</td></tr>
+    <tr><td>88430</td><td>16.0</td><td>8.67</td><td>8</td><td>4</td><td>0</td><td>1</td><td>7</td><td>1</td><td>2025-01-31 20:12:54.000000 UTC</td><td>2026-02-09 12:48:47.000000 UTC</td><td>16.0</td><td>2.0</td><td>0.0</td><td>374</td><td>25144</td><td>24938</td><td>364</td><td>1</td><td>12023</td><td>10609</td><td>5</td><td>3350</td><td>31481</td><td>10094</td><td>25091</td><td>8103</td><td>12023</td><td>15040</td></tr>
+    <tr><td>76677</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2019-03-21 01:21:25.000000 UTC</td><td>2020-11-24 22:01:33.000000 UTC</td><td></td><td>3.5</td><td></td><td>614</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>12023</td><td>27532</td><td>5</td><td>27532</td><td>79902</td><td>77969</td><td>27532</td><td>2545</td><td>36927</td><td>10299</td></tr>
+    <tr><td>35419</td><td>12.95</td><td>6.29</td><td>9</td><td>4</td><td>0</td><td>1</td><td>7</td><td>1</td><td>2022-07-02 09:04:30.000000 UTC</td><td>2025-05-10 12:07:44.000000 UTC</td><td>12.95</td><td>2.25</td><td>0.0</td><td>1043</td><td>26101</td><td>26081</td><td>148</td><td>1</td><td>12023</td><td>10609</td><td>5</td><td>3350</td><td>65171</td><td>36648</td><td>26077</td><td>7921</td><td>12023</td><td>4923</td></tr>
+    <tr><td>50844</td><td>0.0</td><td>0.0</td><td>9</td><td>4</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2022-09-13 18:27:12.000000 UTC</td><td>2025-05-23 12:09:09.000000 UTC</td><td></td><td>2.25</td><td></td><td>983</td><td>27532</td><td>27532</td><td>148</td><td>1</td><td>12023</td><td>27532</td><td>5</td><td>27532</td><td>63329</td><td>35759</td><td>27532</td><td>7921</td><td>36927</td><td>5453</td></tr>
+    <tr><td>6014</td><td>147.97</td><td>88.15</td><td>10</td><td>4</td><td>0</td><td>2</td><td>7</td><td>1</td><td>2024-09-30 18:03:34.000000 UTC</td><td>2026-03-02 09:47:36.000000 UTC</td><td>147.97</td><td>2.5</td><td>0.0</td><td>518</td><td>5625</td><td>4405</td><td>49</td><td>1</td><td>12023</td><td>4241</td><td>5</td><td>3350</td><td>37438</td><td>6389</td><td>4439</td><td>5779</td><td>12023</td><td>11983</td></tr>
+    <tr><td>20234</td><td>0.0</td><td>0.0</td><td>7</td><td>2</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2024-11-03 06:08:40.000000 UTC</td><td>2025-09-13 09:32:50.000000 UTC</td><td></td><td>3.5</td><td></td><td>314</td><td>27532</td><td>27532</td><td>887</td><td>10016</td><td>12023</td><td>27532</td><td>5</td><td>27532</td><td>35827</td><td>26962</td><td>27532</td><td>2545</td><td>36927</td><td>16548</td></tr>
+    <tr><td>51664</td><td>0.0</td><td>0.0</td><td>8</td><td>4</td><td>1</td><td>0</td><td>7</td><td>0</td><td>2019-12-14 08:09:34.000000 UTC</td><td>2025-03-09 18:05:06.000000 UTC</td><td></td><td>2.0</td><td>1.0</td><td>1912</td><td>27532</td><td>27532</td><td>364</td><td>1</td><td>4008</td><td>27532</td><td>5</td><td>27532</td><td>78884</td><td>40590</td><td>27532</td><td>8103</td><td>1</td><td>433</td></tr>
+    <tr><td>61360</td><td>0.0</td><td>0.0</td><td>8</td><td>4</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2023-03-30 09:36:45.000000 UTC</td><td>2025-04-21 01:54:53.000000 UTC</td><td></td><td>2.0</td><td></td><td>753</td><td>27532</td><td>27532</td><td>364</td><td>1</td><td>12023</td><td>27532</td><td>5</td><td>27532</td><td>57877</td><td>37937</td><td>27532</td><td>8103</td><td>36927</td><td>8228</td></tr>
+    <tr><td>89403</td><td>0.0</td><td>0.0</td><td>7</td><td>4</td><td>0</td><td>0</td><td>7</td><td>0</td><td>2024-01-08 04:53:32.000000 UTC</td><td>2025-03-18 04:13:22.000000 UTC</td><td></td><td>1.75</td><td></td><td>435</td><td>27532</td><td>27532</td><td>887</td><td>1</td><td>12023</td><td>27532</td><td>5</td><td>27532</td><td>48359</td><td>40060</td><td>27532</td><td>21174</td><td>36927</td><td>13677</td></tr>
+    <tr><td>4384</td><td>0.0</td><td>0.0</td><td>7</td><td>3</td><td>0</td><td>0</td><td>6</td><td>0</td><td>2021-11-10 18:10:24.000000 UTC</td><td>2023-09-13 17:23:58.000000 UTC</td><td></td><td>2.33</td><td></td><td>672</td><td>27532</td><td>27532</td><td>887</td><td>5093</td><td>12023</td><td>27532</td><td>14</td><td>27532</td><td>70211</td><td>62732</td><td>27532</td><td>7675</td><td>36927</td><td>9363</td></tr>
+    <tr><td>89847</td><td>286.0</td><td>155.13</td><td>9</td><td>4</td><td>0</td><td>2</td><td>6</td><td>1</td><td>2022-10-25 12:13:38.000000 UTC</td><td>2026-01-14 13:40:30.000000 UTC</td><td>286.0</td><td>2.25</td><td>0.0</td><td>1177</td><td>1398</td><td>1324</td><td>148</td><td>1</td><td>12023</td><td>4241</td><td>14</td><td>3350</td><td>62260</td><td>13811</td><td>957</td><td>7921</td><td>12023</td><td>3692</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Customer segment Counts</h3>
+
+<pre><code class="language-sql">WITH customer_order_counts AS (
+  SELECT
+    user_id,
+    SUM(num_of_item) AS total_items
+  FROM `bigquery-public-data.thelook_ecommerce.orders`
+  GROUP BY user_id
+),
+bounds AS (
+  SELECT
+    MIN(total_items) AS min_items,
+    MAX(total_items) AS max_items
+  FROM customer_order_counts
+),
+segments AS (
+  SELECT
+    c.total_items,
+    b.min_items,
+    b.max_items,
+    LEAST(
+      FLOOR((c.total_items - b.min_items) / ((b.max_items - b.min_items) / 4.0)) + 1,
+      4
+    ) AS segment
+  FROM customer_order_counts c
+  CROSS JOIN bounds b
+)
+SELECT
+  min_items,
+  max_items,
+  segment,
+  ROUND(min_items + (segment - 1) * (max_items - min_items) / 4.0, 2) AS segment_start,
+  ROUND(min_items + segment * (max_items - min_items) / 4.0, 2) AS segment_end,
+  COUNT(*) AS num_customers
+FROM segments
+GROUP BY segment, min_items, max_items
+ORDER BY segment;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>min_items</th>
+      <th>max_items</th>
+      <th>segment</th>
+      <th>segment_start</th>
+      <th>segment_end</th>
+      <th>num_customers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>13</td><td>1.0</td><td>1.0</td><td>4.0</td><td>64554</td></tr>
+    <tr><td>1</td><td>13</td><td>2.0</td><td>4.0</td><td>7.0</td><td>13385</td></tr>
+    <tr><td>1</td><td>13</td><td>3.0</td><td>7.0</td><td>10.0</td><td>1877</td></tr>
+    <tr><td>1</td><td>13</td><td>4.0</td><td>10.0</td><td>13.0</td><td>147</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Customer Ages</h3>
+
+<pre><code class="language-sql">SELECT
+  CONCAT(CAST(FLOOR(u.age / 10) * 10 AS STRING), '-', CAST(FLOOR(u.age / 10) * 10 + 9 AS STRING)) AS age_segment,
+  MIN(u.age) AS min_age,
+  MAX(u.age) AS max_age,
+  COUNT(oi.id) AS units_sold,
+  ROUND(SUM(oi.sale_price), 2) AS revenue,
+  ROUND(SUM(oi.sale_price) - SUM(p.cost), 2) AS profit
+FROM
+  `bigquery-public-data.thelook_ecommerce.order_items` oi
+JOIN
+  `bigquery-public-data.thelook_ecommerce.users` u
+  ON oi.user_id = u.id
+JOIN
+  `bigquery-public-data.thelook_ecommerce.products` p
+  ON oi.product_id = p.id
+WHERE
+  oi.status NOT IN ('Cancelled', 'Returned')
+GROUP BY
+  age_segment
+ORDER BY
+  Age_segment;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>age_segment</th>
+      <th>min_age</th>
+      <th>max_age</th>
+      <th>units_sold</th>
+      <th>revenue</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>10-19</td><td>12</td><td>19</td><td>18230</td><td>1086535.55</td><td>564528.2</td></tr>
+    <tr><td>20-29</td><td>20</td><td>29</td><td>23239</td><td>1385413.71</td><td>719594.47</td></tr>
+    <tr><td>30-39</td><td>30</td><td>39</td><td>22805</td><td>1363350.02</td><td>706973.22</td></tr>
+    <tr><td>40-49</td><td>40</td><td>49</td><td>22899</td><td>1353192.46</td><td>700815.07</td></tr>
+    <tr><td>50-59</td><td>50</td><td>59</td><td>23019</td><td>1385873.72</td><td>718893.22</td></tr>
+    <tr><td>60-69</td><td>60</td><td>69</td><td>23142</td><td>1374556.49</td><td>713024.37</td></tr>
+    <tr><td>70-79</td><td>70</td><td>70</td><td>2434</td><td>147135.68</td><td>76413.37</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Customer Geographics</h3>
+
+<pre><code class="language-sql">SELECT
+  u.country,
+  COUNT(oi.id) AS units_sold,
+  ROUND(SUM(oi.sale_price), 2) AS revenue,
+  ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
+FROM
+  `bigquery-public-data.thelook_ecommerce.order_items` oi
+JOIN
+  `bigquery-public-data.thelook_ecommerce.users` u
+  ON oi.user_id = u.id
+JOIN
+  `bigquery-public-data.thelook_ecommerce.products` p
+  ON oi.product_id = p.id
+WHERE
+  oi.status NOT IN ('Cancelled', 'Returned')
+GROUP BY
+  u.country
+ORDER BY
+  revenue DESC;</code></pre>
+
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+
+<table>
+  <thead>
+    <tr>
+      <th>country</th>
+      <th>units_sold</th>
+      <th>revenue</th>
+      <th>profit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>China</td><td>46027</td><td>2732523.67</td><td>1417963.54</td></tr>
+    <tr><td>United States</td><td>30904</td><td>1848883.57</td><td>958482.18</td></tr>
+    <tr><td>Brasil</td><td>19454</td><td>1160149.1</td><td>602022.82</td></tr>
+    <tr><td>South Korea</td><td>7233</td><td>427199.88</td><td>220782.08</td></tr>
+    <tr><td>France</td><td>6488</td><td>389811.61</td><td>202569.05</td></tr>
+    <tr><td>United Kingdom</td><td>6187</td><td>368638.15</td><td>191831.22</td></tr>
+    <tr><td>Germany</td><td>5754</td><td>342511.9</td><td>178214.93</td></tr>
+    <tr><td>Spain</td><td>5220</td><td>313579.9</td><td>162530.54</td></tr>
+    <tr><td>Japan</td><td>3388</td><td>207858.24</td><td>107807.81</td></tr>
+    <tr><td>Australia</td><td>2948</td><td>175506.41</td><td>90959.14</td></tr>
+    <tr><td>Belgium</td><td>1731</td><td>103980.74</td><td>54203.66</td></tr>
+    <tr><td>Poland</td><td>403</td><td>23480.18</td><td>11901.68</td></tr>
+    <tr><td>Colombia</td><td>19</td><td>1129.98</td><td>566.4</td></tr>
+    <tr><td>España</td><td>9</td><td>724.37</td><td>367.75</td></tr>
+    <tr><td>Austria</td><td>2</td><td>54.96</td><td>28.76</td></tr>
+    <tr><td>Deutschland</td><td>1</td><td>24.97</td><td>10.34</td></tr>
+  </tbody>
+</table>
+
+</div>
+
 </details>
 <details>
   <summary><strong>Conclusion</strong></summary>
