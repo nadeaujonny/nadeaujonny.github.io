@@ -1,0 +1,5 @@
+min_items,max_items,segment,segment_start,segment_end,num_customers
+1,13,1.0,1.0,4.0,64554
+1,13,2.0,4.0,7.0,13385
+1,13,3.0,7.0,10.0,1877
+1,13,4.0,10.0,13.0,147
