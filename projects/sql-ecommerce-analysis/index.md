@@ -5711,13 +5711,7 @@ ORDER BY month;</code></pre>
 
 </details>
 <details>
-  <summary><strong>Top Customers</strong></summary>
-
-  <div style="margin-top: 12px;"></div>
-
-</details>
-<details>
-  <summary><strong>Bottom Customers</strong></summary>
+  <summary><strong>Customers</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
