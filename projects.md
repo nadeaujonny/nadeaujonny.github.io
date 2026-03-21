@@ -26,7 +26,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Revenue & Returns Analysis">
       <div class="project-card-content">
         <h2>SQL</h2>
-        <h3>E-commerce Revenue & Returns Analysis</h3>
+        <h3>E-commerce Sales Analysis</h3>
         <p>Analyzed 1M+ order records in BigQuery to identify revenue drivers, return risk, and profit opportunities using advanced SQL.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
