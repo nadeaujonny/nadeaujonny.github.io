@@ -12,11 +12,11 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 <div class="grid">
 
   <div class="col-12">
-    <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Revenue & Returns Analysis">
+    <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Business Optimization Analysis">
       <div class="project-card-content">
         <h2>SQL</h2>
-        <h3>E-commerce Revenue & Returns Analysis</h3>
-        <p>Analyzed 1M+ order records in BigQuery to identify revenue drivers, return risk, and profit opportunities using advanced SQL.</p>
+        <h3>E-commerce Business Optimization Analysis</h3>
+        <p>Multi-dimensional SQL analysis of 181K+ e-commerce orders in BigQuery — examining revenue, profit, margins, returns, and lost revenue across products, brands, categories, customers, trends, and distribution centers.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
