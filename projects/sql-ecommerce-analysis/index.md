@@ -7043,6 +7043,37 @@ ORDER BY
 
 </div>
 
+<h3>Analytical Insights & Business Recommendations</h3>
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+
+<p>Houston TX generates the most revenue ($1,600,413.73) and profit ($853,992.03) across all distribution centers, despite ranking only #3 in total units shipped (22,829). This means Houston is processing higher-value products — likely premium outerwear, jeans, and suits that dominate the top-revenue categories. By comparison, Memphis TN ships the most units (24,282) but generates $182K less revenue than Houston, indicating Memphis handles more lower-price-point items.</p>
+
+<p>Recommendation: Given Houston's revenue leadership, ensure this facility has priority access to premium inventory (Outerwear & Coats, Suits & Sport Coats, Blazers & Jackets — the three highest-margin categories). Operational disruptions at Houston would disproportionately impact the business's bottom line. Consider allocating additional quality control resources to Houston since its higher-value shipments have greater per-unit revenue risk if damaged or delayed.</p>
+
+<p>Processing percentages across all 10 distribution centers fall in a tight band of 19.47%–20.27%, suggesting that order processing capacity and speed are consistent across the network. No single facility is significantly bottlenecked or outperforming others in throughput.</p>
+
+<p>Recommendation: The uniform ~20% processing rate raises a question: is this the optimal throughput, or is every facility equally constrained by the same bottleneck (e.g., a shared technology platform, standardized staffing model, or common shipping carrier limitations)? Investigate whether shipping routes and processing practices across the network can be optimized — even a 1 percentage point improvement in processing speed across all 10 facilities, moving more orders from processing to shipped faster, would reduce the window for customer cancellations (which were identified as a significant source of lost revenue in the product and brand analyses).</p>
+
+<p>The inventory analysis reveals a dramatic imbalance: across all distribution centers, understocked products outnumber overstocked products by roughly 10:1. Chicago IL has 3,595 understocked products vs. 311 overstocked; Memphis TN has 3,576 understocked vs. 298 overstocked. This pattern is consistent across every facility.</p>
+
+<p>Understocking means products with active demand don't have enough inventory to meet expected sales velocity, leading to potential stockouts, lost revenue, and disappointed customers. Given that the product-level analysis showed high-value items like The North Face, Canada Goose, and Diesel driving outsized revenue per unit, a stockout on these items has far greater revenue impact than on low-price basics.</p>
+
+<p>Recommendation: The widespread understocking is the most actionable finding in the distribution center analysis. Prioritize replenishment for the highest-revenue and highest-margin products first — ensure Outerwear & Coats, Suits & Sport Coats, and Blazers & Jackets (the top 3 margin categories) are fully stocked before allocating capital to lower-margin items. Demand can be tracked and forecasted using the historical sales data and seasonal patterns identified in the trends sections to build more accurate reorder points and safety stock levels.</p>
+
+<p>While understocking dominates, each facility does carry 70–311 overstocked products. These are items where inventory exceeds 90 days of projected sales at current velocity — capital tied up in slow-moving merchandise that could be allocated to higher-demand items.</p>
+
+<p>Recommendation: Identify the specific overstocked products at each facility and cross-reference with the bottom products and bottom brands analyses. Products that are overstocked AND appear in the zero-revenue or low-demand lists should be candidates for clearance pricing or return to supplier. Products that are overstocked but have decent margins may simply need promotional support to accelerate their sell-through rate — targeted advertising or bundle deals could move excess inventory before it becomes obsolete.</p>
+
+<p>With 10 distribution centers across the southeastern and eastern US (Memphis, Chicago, Houston, Mobile, LA, Charleston, Philadelphia, NY/NJ, New Orleans, Savannah), the network is heavily weighted toward the eastern half of the country. Given that the customer geography data shows China and Brazil as the #1 and #3 customer countries, the domestic distribution network may be serving international shipping corridors differently than domestic ones.</p>
+
+<p>Recommendation: Evaluate whether the current distribution center footprint optimally serves the geographic customer mix. If the majority of US orders originate from certain regions, ensure inventory is positioned at the nearest facility rather than evenly distributed. For international shipments (especially to China, the largest market), identify which port-adjacent facilities (LA, Houston, NY/NJ) are most efficient for international fulfillment and consider concentrating international-bound inventory at those locations to reduce domestic transit time before international shipping.</p>
+
+<p>The distribution center network as a whole has room for shipping and transit cost optimization. With high en-route rates (60–70% of non-cancelled, non-returned orders) observed across products and categories, a meaningful portion of the business's inventory is constantly in transit between facilities and customers.</p>
+
+<p>Recommendation: Investigate whether shipping routes between facilities and major customer hubs can be consolidated or optimized. For high-volume brands (Calvin Klein with 3,180 orders, Allegra K with 6,057 orders, Carhartt with 2,509 orders), it may be more efficient to position their inventory at specific facilities closest to their customer demand centers rather than spreading it across all 10 locations. This reduces inter-facility transfers and shortens last-mile delivery times, improving both cost efficiency and customer satisfaction.</p>
+
+</div>
+
 </details>
 <details>
   <summary><strong>Conclusion</strong></summary>
