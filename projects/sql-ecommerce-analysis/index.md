@@ -6709,341 +6709,145 @@ ORDER BY
 
   <div style="margin-top: 12px;"></div>
 
-<h3>Distribution centers by Revenue</h3>
+<h3>Distribution center performance</h3>
 
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
-),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
-)
-SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
+<pre><code class="language-sql">SELECT
+  dc.name AS distribution_center,
+  COUNT(oi.id) AS total_units,
+  ROUND(SUM(oi.sale_price), 2) AS revenue,
+  ROUND(SUM(oi.sale_price) - SUM(p.cost), 2) AS profit,
+  ROUND(
+    COUNTIF(oi.status = 'Processing') / COUNT(oi.id) * 100, 2
+  ) AS processing_pct
+FROM
+  `bigquery-public-data.thelook_ecommerce.order_items` oi
+JOIN
+  `bigquery-public-data.thelook_ecommerce.products` p
+  ON oi.product_id = p.id
+JOIN
+  `bigquery-public-data.thelook_ecommerce.distribution_centers` dc
+  ON p.distribution_center_id = dc.id
+GROUP BY
+  dc.name
 ORDER BY
-  revenue_rank ASC;</code></pre>
+  total_units DESC;</code></pre>
 
-<h3>Distribution centers by Profit</h3>
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
 
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
+<table>
+  <thead>
+    <tr>
+      <th>distribution_center</th>
+      <th>total_units</th>
+      <th>revenue</th>
+      <th>profit</th>
+      <th>processing_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Memphis TN</td><td>24282</td><td>1417936.76</td><td>742425.78</td><td>20.27</td></tr>
+    <tr><td>Chicago IL</td><td>23835</td><td>1321943.15</td><td>692110.99</td><td>19.83</td></tr>
+    <tr><td>Houston TX</td><td>22829</td><td>1600413.73</td><td>853992.03</td><td>19.59</td></tr>
+    <tr><td>Mobile AL</td><td>18515</td><td>1242396.82</td><td>634302.9</td><td>20.18</td></tr>
+    <tr><td>Los Angeles CA</td><td>17274</td><td>949866.99</td><td>489442.35</td><td>19.71</td></tr>
+    <tr><td>Charleston SC</td><td>16636</td><td>662246.68</td><td>334984.25</td><td>19.85</td></tr>
+    <tr><td>Philadelphia PA</td><td>16568</td><td>1065642.92</td><td>542109.66</td><td>19.58</td></tr>
+    <tr><td>Port Authority of New York/New Jersey NY/NJ</td><td>16388</td><td>933800.14</td><td>483299.71</td><td>20.23</td></tr>
+    <tr><td>New Orleans LA</td><td>12816</td><td>786466.54</td><td>414082.5</td><td>19.47</td></tr>
+    <tr><td>Savannah GA</td><td>11954</td><td>799532.26</td><td>405281.54</td><td>20.25</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3>Distribution center inventory</h3>
+
+<pre><code class="language-sql">WITH product_sales AS (
+  SELECT
+    p.id AS product_id,
+    p.distribution_center_id,
+    COUNT(oi.id) / GREATEST(DATE_DIFF(CURRENT_DATE(), MIN(DATE(oi.created_at)), DAY), 1) AS daily_sales_rate
+  FROM
+    `bigquery-public-data.thelook_ecommerce.products` p
+  LEFT JOIN
+    `bigquery-public-data.thelook_ecommerce.order_items` oi
+    ON p.id = oi.product_id
+  GROUP BY
+    p.id, p.distribution_center_id
 ),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
-)
-SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
-ORDER BY
-  profit_rank ASC;</code></pre>
 
-<h3>Distribution centers by Unit Orders</h3>
 
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
+inventory AS (
+  SELECT
+    id AS product_id,
+    product_distribution_center_id,
+    COUNT(*) AS stock_on_hand
+  FROM
+    `bigquery-public-data.thelook_ecommerce.inventory_items`
+  WHERE
+    sold_at IS NULL
+  GROUP BY
+    id, product_distribution_center_id
 ),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
+
+
+product_status AS (
+  SELECT
+    ps.distribution_center_id,
+    CASE
+      WHEN SAFE_DIVIDE(COALESCE(i.stock_on_hand, 0), ps.daily_sales_rate) > 90 THEN 'Overstocked'
+      WHEN SAFE_DIVIDE(COALESCE(i.stock_on_hand, 0), ps.daily_sales_rate) < 14 THEN 'Understocked'
+    END AS stock_status
+  FROM
+    product_sales ps
+  LEFT JOIN
+    inventory i
+    ON ps.product_id = i.product_id
+    AND ps.distribution_center_id = i.product_distribution_center_id
 )
+
+
 SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
+  dc.name AS distribution_center,
+  COUNTIF(stock_status = 'Overstocked') AS overstocked_products,
+  COUNTIF(stock_status = 'Understocked') AS understocked_products,
+  COUNTIF(stock_status IS NOT NULL) AS total_flagged_products
+FROM
+  product_status ps
+JOIN
+  `bigquery-public-data.thelook_ecommerce.distribution_centers` dc
+  ON ps.distribution_center_id = dc.id
+GROUP BY
+  dc.name
 ORDER BY
-  unit_orders_placed_rank ASC;</code></pre>
+  total_flagged_products DESC;</code></pre>
 
-<h3>Distribution centers by Return Rate</h3>
+<div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
 
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
-),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
-)
-SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
-ORDER BY
-  return_rate_rank ASC;</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th>distribution_center</th>
+      <th>overstocked_products</th>
+      <th>understocked_products</th>
+      <th>total_flagged_products</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Chicago IL</td><td>311</td><td>3595</td><td>3906</td></tr>
+    <tr><td>Memphis TN</td><td>298</td><td>3576</td><td>3874</td></tr>
+    <tr><td>Houston TX</td><td>294</td><td>3356</td><td>3650</td></tr>
+    <tr><td>Mobile AL</td><td>188</td><td>2719</td><td>2907</td></tr>
+    <tr><td>Los Angeles CA</td><td>162</td><td>2588</td><td>2750</td></tr>
+    <tr><td>Charleston SC</td><td>160</td><td>2545</td><td>2705</td></tr>
+    <tr><td>Philadelphia PA</td><td>155</td><td>2501</td><td>2656</td></tr>
+    <tr><td>Port Authority of New York/New Jersey NY/NJ</td><td>151</td><td>2414</td><td>2565</td></tr>
+    <tr><td>New Orleans LA</td><td>92</td><td>2014</td><td>2106</td></tr>
+    <tr><td>Savannah GA</td><td>70</td><td>1805</td><td>1875</td></tr>
+  </tbody>
+</table>
 
-<h3>Distribution centers by Lost Revenue</h3>
-
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
-),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
-)
-SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
-ORDER BY
-  lost_revenue_rank ASC;</code></pre>
-
-<h3>Distribution centers by Unique Products</h3>
-
-<pre><code class="language-sql">WITH first_layer AS (
-SELECT
-  dc.id AS distribution_center_id,
-  dc.name AS distribution_center_name,
-  dc.latitude AS dc_latitude,
-  dc.longitude AS dc_longitude,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN oi.sale_price ELSE 0 END), 2) AS revenue,
-  ROUND(SUM(CASE WHEN oi.status = 'Complete' THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS profit,
-  COUNT(*) AS unit_orders_placed,
-  SUM(CASE WHEN oi.status = 'Complete' THEN 1 ELSE 0 END) AS units_completed,
-  SUM(CASE WHEN oi.status = 'Returned' THEN 1 ELSE 0 END) AS units_returned,
-  SUM(CASE WHEN oi.status = 'Cancelled' THEN 1 ELSE 0 END) AS units_cancelled,
-  SUM(CASE WHEN oi.status IN ('Shipped', 'Processing') THEN 1 ELSE 0 END) AS units_en_route,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN oi.sale_price ELSE 0 END), 2) AS lost_revenue,
-  ROUND(SUM(CASE WHEN oi.status IN ('Returned', 'Cancelled') THEN (oi.sale_price - p.cost) ELSE 0 END), 2) AS lost_profit,
-  COUNT(DISTINCT p.id) AS unique_products
-FROM `bigquery-public-data.thelook_ecommerce.order_items` AS oi
-JOIN `bigquery-public-data.thelook_ecommerce.orders` AS o
-ON oi.order_id = o.order_id
-JOIN `bigquery-public-data.thelook_ecommerce.products` AS p
-ON oi.product_id = p.id
-JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` AS dc
-ON p.distribution_center_id = dc.id
-GROUP BY distribution_center_id, distribution_center_name, dc_latitude, dc_longitude
-),
-second_layer AS (
-SELECT
-  *,
-  ROUND((profit / NULLIF(revenue, 0)), 4) AS profit_margin,
-  ROUND(units_returned / NULLIF(units_completed + units_returned, 0), 4) AS return_rate,
-  ROUND(units_completed / NULLIF(unit_orders_placed - units_cancelled, 0), 4) AS completion_rate,
-  ROUND(units_cancelled / NULLIF(unit_orders_placed, 0), 4) AS cancellation_rate,
-  ROUND(units_en_route / NULLIF(unit_orders_placed - (units_cancelled + units_returned), 0), 4) AS en_route_rate,
-  ROUND(revenue / SUM(revenue) OVER(), 7) AS revenue_share,
-  ROUND(profit / SUM(profit) OVER(), 7) AS profit_share,
-  ROUND(unit_orders_placed / SUM(unit_orders_placed) OVER(), 7) AS unit_orders_placed_share
-FROM first_layer
-)
-SELECT
-  *,
-  RANK() OVER(ORDER BY revenue DESC) AS revenue_rank,
-  RANK() OVER(ORDER BY profit DESC) AS profit_rank,
-  RANK() OVER(ORDER BY unit_orders_placed DESC) AS unit_orders_placed_rank,
-  RANK() OVER(ORDER BY units_completed DESC) AS units_completed_rank,
-  RANK() OVER(ORDER BY units_returned DESC) AS units_returned_rank,
-  RANK() OVER(ORDER BY lost_revenue DESC) AS lost_revenue_rank,
-  RANK() OVER(ORDER BY lost_profit DESC) AS lost_profit_rank,
-  RANK() OVER(ORDER BY profit_margin DESC) AS profit_margin_rank,
-  RANK() OVER(ORDER BY return_rate DESC) AS return_rate_rank,
-  RANK() OVER(ORDER BY unique_products DESC) AS unique_products_rank
-FROM second_layer
-ORDER BY
-  unique_products_rank ASC;</code></pre>
+</div>
 
 </details>
 <details>
