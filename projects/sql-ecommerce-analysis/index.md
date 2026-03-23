@@ -5557,6 +5557,33 @@ LIMIT 15;</code></pre>
 
 </div>
 
+<h3>Analytical Insights & Business Recommendations</h3>
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+
+<p>Clothing Sets is the worst-performing category across nearly every metric: #26 in revenue ($5,539.46), #26 in profit ($2,131.98), #26 in unit orders (221), and notably has the highest cancellation rate (15.8%) and highest completion rate (32.3% — meaning orders that survive cancellation tend to complete). The combination of an $85.82 average sale price with a $52.90 cost leaves a margin of only 38.5%, the lowest of all 26 categories.</p>
+
+<p>Clothing Sets should be considered for discontinuation or dramatic restructuring. With the lowest profit margin, fewest orders, and highest cancellation rate in the business, this category consumes disproportionate operational resources relative to its contribution. If the category is retained, its product cost structure ($52.90 avg cost on an $85.82 price) needs renegotiation — the cost-to-price ratio is over 61%, far above the business average.</p>
+
+<p>Suits rank #24 in unit orders (1,123) and #21 in profit ($13,000.36) despite having the highest average product cost ($70.96) and third-highest average sale price ($117.30). The resulting profit margin of 39.5% is second-lowest, meaning the premium pricing doesn't translate to premium profitability. This is a category where high input costs (likely driven by fabric quality and construction complexity) compress margins despite strong retail pricing. The 28.3% return rate is moderate, so the margin issue is cost-driven rather than return-driven.</p>
+
+<p>Investigate supplier cost structures for the Suits category. At $70.96 average cost, Suits products consume nearly 60.5% of revenue in input costs — compared to 44.5% for Outerwear & Coats, which has an even higher average sale price. Consider whether a shift to suppliers offering better cost-to-quality ratios could preserve the product's market positioning while improving margins toward the 50%+ range.</p>
+
+<p>Socks (6,329 orders, 39.7% margin) and Leggings (3,246 orders, 39.9% margin) represent high-volume categories that contribute minimally to profit due to structurally low margins. Socks generate $31,572.07 in revenue but only $12,517.44 in profit, while Leggings generate $22,032.86 revenue with $8,796.32 profit. Both categories have average costs that consume ~60% of sale price ($12.76/$21.13 for Socks; $16.07/$26.79 for Leggings), leaving thin absolute profit per unit.</p>
+
+<p>Rather than dropping these categories (they drive significant order volume which may increase basket size through cross-selling), optimize their fulfillment costs. Socks and leggings are lightweight, compact items ideal for low-cost shipping. Consider offering multi-pack deals — a 3-pack of socks at a slight per-unit discount still generates more total profit than a single pair while reducing per-order shipping costs.</p>
+
+<p>The five lowest-margin categories are Clothing Sets (38.5%), Suits (39.5%), Socks (39.7%), Leggings (39.9%), and Tops & Tees (44.1%). These span a range of price points ($16.81–$117.30), indicating that low margins aren't purely a function of low prices — Suits have the highest avg cost in the dataset but still achieve poor margins. By contrast, the top margin categories (Blazers & Jackets at 62.1%, Socks & Hosiery at 59.9%, Suits & Sport Coats at 59.9%) demonstrate that similar product types can achieve very different margin profiles depending on cost structure and pricing strategy.</p>
+
+<p>The juxtaposition of Socks (39.7% margin) vs. Socks & Hosiery (59.9% margin) is particularly striking — two closely related categories with a 20-point margin spread. Analyze whether the Socks category can migrate its supplier mix or pricing approach closer to the Socks & Hosiery model. The same logic applies to Suits (39.5%) vs. Suits & Sport Coats (59.9%) — the combined category architecture may benefit from consolidation or realignment.</p>
+
+<p>Even the bottom categories show return rates in the 27–29% range, consistent with the business-wide pattern. Outerwear & Coats has the lowest return rate (27.2%), and Jumpsuits & Rompers has the second-lowest (27.2%), while Skirts (27.8%) and Suits (28.3%) round out the bottom. The consistency reinforces the finding from the Top Categories section: returns appear driven by platform-level factors rather than category-specific issues. No category deviates more than ~4 points from the mean return rate.</p>
+
+<p>This uniformity strengthens the case for business-wide return reduction investment (better sizing tools, enhanced product photography, virtual try-on) rather than category-specific quality interventions. A platform-level improvement that reduces the baseline return rate by even 1–2 percentage points would compound across all 26 categories.</p>
+
+<p>The smallest categories by order volume — Clothing Sets (221), Jumpsuits & Rompers (929), Suits (1,123) — generate relatively few transactions while requiring full catalog management, supplier relationships, and inventory allocation. Evaluate whether the smallest categories justify their operational overhead. Clothing Sets' 221 orders represent just 0.12% of total order volume. If maintaining supplier relationships, inventory space, and marketing for this category costs more than the $2,131.98 in profit it generates, the category should be wound down or consolidated into a broader category (e.g., merged into Active or Outerwear depending on product types).</p>
+
+</div>
+
 </details>
 <details>
   <summary><strong>Long Term Trends</strong></summary>
