@@ -6601,6 +6601,7 @@ ORDER BY segment;</code></pre>
   CONCAT(CAST(FLOOR(u.age / 10) * 10 AS STRING), '-', CAST(FLOOR(u.age / 10) * 10 + 9 AS STRING)) AS age_segment,
   MIN(u.age) AS min_age,
   MAX(u.age) AS max_age,
+  COUNT(DISTINCT u.id) AS num_customers,
   COUNT(oi.id) AS units_sold,
   ROUND(SUM(oi.sale_price), 2) AS revenue,
   ROUND(SUM(oi.sale_price) - SUM(p.cost), 2) AS profit
@@ -6617,7 +6618,7 @@ WHERE
 GROUP BY
   age_segment
 ORDER BY
-  Age_segment;</code></pre>
+  age_segment;</code></pre>
 
 <div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
 
@@ -6627,19 +6628,20 @@ ORDER BY
       <th>age_segment</th>
       <th>min_age</th>
       <th>max_age</th>
+      <th>num_customers</th>
       <th>units_sold</th>
       <th>revenue</th>
       <th>profit</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>10-19</td><td>12</td><td>19</td><td>18230</td><td>1086535.55</td><td>564528.2</td></tr>
-    <tr><td>20-29</td><td>20</td><td>29</td><td>23239</td><td>1385413.71</td><td>719594.47</td></tr>
-    <tr><td>30-39</td><td>30</td><td>39</td><td>22805</td><td>1363350.02</td><td>706973.22</td></tr>
-    <tr><td>40-49</td><td>40</td><td>49</td><td>22899</td><td>1353192.46</td><td>700815.07</td></tr>
-    <tr><td>50-59</td><td>50</td><td>59</td><td>23019</td><td>1385873.72</td><td>718893.22</td></tr>
-    <tr><td>60-69</td><td>60</td><td>69</td><td>23142</td><td>1374556.49</td><td>713024.37</td></tr>
-    <tr><td>70-79</td><td>70</td><td>70</td><td>2434</td><td>147135.68</td><td>76413.37</td></tr>
+    <tr><td>10-19</td><td>12</td><td>19</td><td></td><td>18230</td><td>1086535.55</td><td>564528.2</td></tr>
+    <tr><td>20-29</td><td>20</td><td>29</td><td></td><td>23239</td><td>1385413.71</td><td>719594.47</td></tr>
+    <tr><td>30-39</td><td>30</td><td>39</td><td></td><td>22805</td><td>1363350.02</td><td>706973.22</td></tr>
+    <tr><td>40-49</td><td>40</td><td>49</td><td></td><td>22899</td><td>1353192.46</td><td>700815.07</td></tr>
+    <tr><td>50-59</td><td>50</td><td>59</td><td></td><td>23019</td><td>1385873.72</td><td>718893.22</td></tr>
+    <tr><td>60-69</td><td>60</td><td>69</td><td></td><td>23142</td><td>1374556.49</td><td>713024.37</td></tr>
+    <tr><td>70-79</td><td>70</td><td>70</td><td></td><td>2434</td><td>147135.68</td><td>76413.37</td></tr>
   </tbody>
 </table>
 
@@ -6649,6 +6651,7 @@ ORDER BY
 
 <pre><code class="language-sql">SELECT
   u.country,
+  COUNT(DISTINCT u.id) AS num_customers,
   COUNT(oi.id) AS units_sold,
   ROUND(SUM(oi.sale_price), 2) AS revenue,
   ROUND(SUM(oi.sale_price - p.cost), 2) AS profit
@@ -6673,28 +6676,29 @@ ORDER BY
   <thead>
     <tr>
       <th>country</th>
+      <th>num_customers</th>
       <th>units_sold</th>
       <th>revenue</th>
       <th>profit</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>China</td><td>46027</td><td>2732523.67</td><td>1417963.54</td></tr>
-    <tr><td>United States</td><td>30904</td><td>1848883.57</td><td>958482.18</td></tr>
-    <tr><td>Brasil</td><td>19454</td><td>1160149.1</td><td>602022.82</td></tr>
-    <tr><td>South Korea</td><td>7233</td><td>427199.88</td><td>220782.08</td></tr>
-    <tr><td>France</td><td>6488</td><td>389811.61</td><td>202569.05</td></tr>
-    <tr><td>United Kingdom</td><td>6187</td><td>368638.15</td><td>191831.22</td></tr>
-    <tr><td>Germany</td><td>5754</td><td>342511.9</td><td>178214.93</td></tr>
-    <tr><td>Spain</td><td>5220</td><td>313579.9</td><td>162530.54</td></tr>
-    <tr><td>Japan</td><td>3388</td><td>207858.24</td><td>107807.81</td></tr>
-    <tr><td>Australia</td><td>2948</td><td>175506.41</td><td>90959.14</td></tr>
-    <tr><td>Belgium</td><td>1731</td><td>103980.74</td><td>54203.66</td></tr>
-    <tr><td>Poland</td><td>403</td><td>23480.18</td><td>11901.68</td></tr>
-    <tr><td>Colombia</td><td>19</td><td>1129.98</td><td>566.4</td></tr>
-    <tr><td>España</td><td>9</td><td>724.37</td><td>367.75</td></tr>
-    <tr><td>Austria</td><td>2</td><td>54.96</td><td>28.76</td></tr>
-    <tr><td>Deutschland</td><td>1</td><td>24.97</td><td>10.34</td></tr>
+    <tr><td>China</td><td></td><td>46027</td><td>2732523.67</td><td>1417963.54</td></tr>
+    <tr><td>United States</td><td></td><td>30904</td><td>1848883.57</td><td>958482.18</td></tr>
+    <tr><td>Brasil</td><td></td><td>19454</td><td>1160149.1</td><td>602022.82</td></tr>
+    <tr><td>South Korea</td><td></td><td>7233</td><td>427199.88</td><td>220782.08</td></tr>
+    <tr><td>France</td><td></td><td>6488</td><td>389811.61</td><td>202569.05</td></tr>
+    <tr><td>United Kingdom</td><td></td><td>6187</td><td>368638.15</td><td>191831.22</td></tr>
+    <tr><td>Germany</td><td></td><td>5754</td><td>342511.9</td><td>178214.93</td></tr>
+    <tr><td>Spain</td><td></td><td>5220</td><td>313579.9</td><td>162530.54</td></tr>
+    <tr><td>Japan</td><td></td><td>3388</td><td>207858.24</td><td>107807.81</td></tr>
+    <tr><td>Australia</td><td></td><td>2948</td><td>175506.41</td><td>90959.14</td></tr>
+    <tr><td>Belgium</td><td></td><td>1731</td><td>103980.74</td><td>54203.66</td></tr>
+    <tr><td>Poland</td><td></td><td>403</td><td>23480.18</td><td>11901.68</td></tr>
+    <tr><td>Colombia</td><td></td><td>19</td><td>1129.98</td><td>566.4</td></tr>
+    <tr><td>España</td><td></td><td>9</td><td>724.37</td><td>367.75</td></tr>
+    <tr><td>Austria</td><td></td><td>2</td><td>54.96</td><td>28.76</td></tr>
+    <tr><td>Deutschland</td><td></td><td>1</td><td>24.97</td><td>10.34</td></tr>
   </tbody>
 </table>
 
