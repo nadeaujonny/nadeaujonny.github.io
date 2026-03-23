@@ -3199,6 +3199,46 @@ LIMIT 15;</code></pre>
 
 </div>
 
+<h3>Analytical Insights & Business Recommendations</h3>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+
+<p><strong>Revenue vs. Profit Leadership Diverges:</strong> Diesel leads all brands in revenue ($53,774.81) but drops to #2 in profit ($27,000.80) due to a relatively low profit margin of 50.2%. Calvin Klein overtakes Diesel in profit ($28,267.04) despite ranking #2 in revenue, thanks to a stronger 53.3% margin. This divergence reveals that Diesel's higher average sale price ($138.24) comes with proportionally higher product costs ($68.92), compressing margins.</p>
+
+<p>Recommendation: For high-revenue, lower-margin brands like Diesel, negotiate better supplier pricing given the volume leverage — 1,466 units ordered gives significant bargaining power. Even a 2–3% cost reduction on Diesel products would yield substantial additional profit given the revenue scale. Alternatively, since Diesel already commands premium pricing, explore whether modest price increases on best-selling Diesel items would be absorbed by demand without significant volume loss.</p>
+
+<p><strong>The North Face: Premium Pricing Power:</strong> The North Face ranks #11 in revenue ($25,174.88) but achieves this with only 233 unit orders — the fewest among the top 15 brands. Its average sale price of $440.81 is the highest by a wide margin (the next highest is True Religion at $196.17). This means The North Face extracts over 2x more revenue per unit than any comparable brand.</p>
+
+<p>With a 54.5% profit margin and only 20 returns out of 81 completed/returned units (24.7% return rate — the lowest among top brands), The North Face represents the most efficient revenue-to-order ratio in the dataset.</p>
+
+<p>Recommendation: Allocate increased internal inventory space and priority fulfillment to The North Face products. Their per-unit contribution is unmatched, and with the lowest return rate among top brands, each sale is highly likely to convert to retained revenue. Ensure stockouts never occur on The North Face items — lost sales on $440+ average items represent outsized opportunity cost.</p>
+
+<p><strong>Volume-Driven Brands Need Margin Attention:</strong> Allegra K dominates unit orders (6,057 — nearly 2x the next brand) but ranks only #16 in revenue ($20,908.12) and has the lowest average sale price ($14.35) among any significant brand. Its profit margin of 52.9% is decent, but the absolute profit per unit is tiny due to the low price point.</p>
+
+<p>Similarly, Hanes (1,966 orders, $20 avg price) and Nautica (1,827 orders, $41.70 avg price) move high volumes but contribute modestly to total profit.</p>
+
+<p>Recommendation: For mass-market brands like Allegra K and Hanes, the sheer volume makes them candidates for package deals and bulk purchasing incentives. Sell packs of 3–5 items at a slight per-unit discount to streamline delivery and processing costs while incentivizing larger basket sizes. A customer buying 5 Allegra K items in one shipment is more profitable than 5 separate single-item orders due to reduced per-order fulfillment costs.</p>
+
+<p><strong>Return Rate Patterns by Brand:</strong> Return rates among the top 30 brands by volume are tightly clustered (27–32%), suggesting returns are somewhat systematic across the business rather than brand-specific. Hanes has the highest return rate at 32.2%, followed by Dockers (31.4%) and Fruit of the Loom (31.3%). These are all mass-market, lower-price basics where sizing uncertainty and low switching costs likely drive returns.</p>
+
+<p>At the other end, Carhartt (27.5%), The North Face (24.7%), and Columbia (26.5%) have the lowest return rates among volume brands, suggesting that outdoor/workwear brands may benefit from more deliberate purchase intent or better product-description accuracy.</p>
+
+<p>Recommendation: Focus return-reduction efforts on the high-return basics brands (Hanes, Dockers, Fruit of the Loom) through better sizing guides and product imagery. Even a 2-point reduction in return rate across Hanes' 1,966 orders would recover approximately 39 additional completed sales.</p>
+
+<p><strong>Lost Revenue Leaders Mirror Revenue Leaders:</strong> The top brands by lost revenue are the same as the top brands by revenue — Diesel ($49,754.60 lost), Calvin Klein ($48,698.10), Carhartt ($41,134.22). This is expected since lost revenue scales with order volume and average price. However, the ratio of lost revenue to actual revenue is striking: Diesel loses $49K vs. earning $53K, meaning nearly half of all potential Diesel revenue evaporates through returns and cancellations.</p>
+
+<p>Recommendation: For brands where lost revenue approaches or exceeds earned revenue, the cost of returns processing, reverse shipping, and restocking is a significant hidden expense. Investigate whether specific Diesel or Calvin Klein product lines disproportionately drive the returns, and target those SKUs for quality review or enhanced product descriptions rather than applying broad brand-level interventions.</p>
+
+<p><strong>Canada Goose: High Value, High Risk:</strong> Canada Goose stands out in the lost revenue/profit tables despite ranking #36 in revenue and #337 in unit orders. With only 115 orders placed, it generates $12,909.93 in revenue but $22,479.93 in lost revenue — nearly 2x what it actually earns. Its 40.5% return rate is the highest among brands appearing in the top 15 by lost profit.</p>
+
+<p>Recommendation: Given Canada Goose's extremely high price point ($577.82 avg) and disproportionate loss ratio, this brand warrants a targeted investigation. With only 22 completed sales out of 115 orders, something systemic is driving cancellations and returns — possibly shipping delays on premium items, customer sticker shock after purchase, or quality/authenticity concerns. Consider whether the brand partnership is net-positive after accounting for return-processing costs on $500+ items.</p>
+
+<p><strong>High-Margin Brand Leaders:</strong> Among the top 30 revenue brands, Ray-Ban leads in profit margin at 58.0%, followed by Paul Fredrick (57.1%), Jones New York (55.0%), and Oakley (54.9%). These brands share a common profile: moderately high average prices ($100–$150) with well-controlled product costs.</p>
+
+<p>Recommendation: Increase advertising and promotional spend for high-margin brands like Ray-Ban and Oakley, especially targeting their best-selling products. A $1 increase in demand for a Ray-Ban item yields $0.58 in profit vs. $0.47 for a Quiksilver item. Strategically advertising Ray-Ban and Oakley — particularly to customer segments in regions where accessory demand is high — would disproportionately grow profit relative to spend.</p>
+
+</div>
+
 </details>
 <details>
   <summary><strong>Bottom Brands</strong></summary>
