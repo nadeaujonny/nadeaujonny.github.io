@@ -7148,4 +7148,90 @@ ORDER BY
 
   <div style="margin-top: 12px;"></div>
 
+<h3>Key Findings</h3>
+
+<p>Across ten analytical dimensions — products, brands, categories, trends, customers, and distribution centers — several findings emerged that would be critical for any business stakeholder evaluating this retailer's performance.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<p><strong>Revenue concentration in premium categories:</strong> Outerwear & Coats generates $339,222 in revenue — ranking #1 — with only 9,028 unit orders, which ranks #10 by volume. This proves that premium categories drive disproportionate revenue per unit. The top 2 categories (Outerwear & Jeans) account for approximately 24% of total revenue, meaning a quarter of the business depends on just two product lines.</p>
+
+<p><strong>Margin diverges sharply from revenue:</strong> Blazers & Jackets has the highest profit margin at 62.1% but ranks only #15 in revenue — the most profitable category per dollar sold is one of the lower-volume ones. Conversely, Jeans ranks #2 in revenue but #21 in margin at 46.5%. A strategy optimized for revenue looks fundamentally different from one optimized for profitability.</p>
+
+<p><strong>Return rates are systemic, not category-specific:</strong> Return rates across all 26 categories fall within a tight 27–31% band, suggesting the approximately 28% baseline is driven by platform-level factors — return policy, product photography, sizing tools — rather than category-specific quality issues. This is a critical finding because it means platform-wide UX improvements would compound across the entire catalog, whereas targeted product-level fixes would have limited impact.</p>
+
+<p><strong>Lost revenue rivals earned revenue:</strong> For nearly every top product, brand, and category, lost revenue from returns and cancellations approaches or exceeds actual completed revenue. Diesel leads all brands in lost revenue ($49,754) against earned revenue of $53,774. Reducing the return and cancellation rate by even 2 percentage points would meaningfully increase net revenue across the business.</p>
+
+<p><strong>The customer base is overwhelmingly single-purchase:</strong> 80.7% of customers (64,554 of 79,963) ordered only 1–4 items total. The top revenue customer generated $1,487 from a single order. Retention and repeat purchasing represent the largest untapped growth lever — the business is acquiring customers effectively but not converting them into repeat buyers.</p>
+
+<p><strong>Distribution centers are systematically understocked:</strong> Across all 10 facilities, understocked products outnumber overstocked products by approximately 10:1. Chicago alone has 3,595 understocked items versus 311 overstocked — meaning potential revenue is being lost to stockouts at scale. This is an operational problem with a direct revenue impact.</p>
+
+<p><strong>Zero-revenue products consume resources:</strong> Multiple products and brands generated $0 in completed revenue despite having orders placed — 100% of their orders were returned, cancelled, or remain in transit. These items occupy inventory space and processing bandwidth without contributing any revenue.</p>
+
+<p><strong>Geographic concentration:</strong> Three countries (China, United States, Brazil) account for the vast majority of revenue, with per-customer spending relatively uniform across geographies at $122–$131 per customer in the top 5 markets. This suggests that demand patterns are consistent internationally but that revenue growth is constrained to a small number of markets.</p>
+</div>
+
+<h3>Highest-Impact Recommendations</h3>
+
+<p>Synthesizing the findings across all ten analytical sections, the following actions would generate the greatest business value if implemented. These are ordered by estimated impact — the first recommendation alone would affect every category, brand, and product in the catalog.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<p><strong>1. Invest in platform-wide return reduction.</strong> Implement improved sizing tools, enhanced product photography, and virtual try-on capabilities. The uniform ~28% return rate across all 26 categories means a single platform improvement compounds across the entire catalog. A 2-point reduction in return rate would recover thousands of currently-lost orders and directly increase net revenue without requiring any new customer acquisition.</p>
+
+<p><strong>2. Rebalance distribution center inventory.</strong> Address the 10:1 understocking-to-overstocking ratio immediately, prioritizing the highest-revenue and highest-margin categories — Outerwear & Coats, Suits & Sport Coats, and Blazers & Jackets — to prevent stockouts on items with $100–$150 average revenue per unit. Every stockout on a premium item is a high-value sale lost.</p>
+
+<p><strong>3. Implement customer retention campaigns targeting single-purchase customers.</strong> The 64,554 customers who purchased only 1–4 items represent a massive re-engagement opportunity. Even converting 5% into repeat buyers adds approximately 3,200 returning customers — significantly cheaper than equivalent new customer acquisition and with higher expected lifetime value.</p>
+
+<p><strong>4. Negotiate supplier costs for high-volume, low-margin brands.</strong> Diesel (1,466 orders, 50.2% margin), Wrangler (1,287 orders, 47.2% margin), and the denim category broadly exhibit structural margin compression. The volume leverage with these suppliers is significant and should be used to renegotiate cost-of-goods to bring margins closer to the catalog average.</p>
+
+<p><strong>5. Delist zero-revenue products and brands.</strong> Products with 3 or more orders and $0 in completed revenue are consuming inventory space, warehouse capacity, and fulfillment bandwidth for no return. Catalog pruning would simplify operations, reduce carrying costs, and improve the customer browsing experience by removing items that consistently fail to convert.</p>
+
+<p><strong>6. Prioritize marketing spend on high-margin categories.</strong> A $1 increase in Blazers & Jackets demand yields $0.62 in profit versus $0.44 for Tops & Tees. Advertising ROI is structurally higher for high-margin categories, meaning the same marketing budget generates more profit when directed toward these product lines.</p>
+
+<p><strong>7. Build seasonal inventory planning using trend data.</strong> Front-load outerwear and sweater inventory before fall/winter peak demand, scale fulfillment staffing for identified high-volume months, and time clearance events to align with the demand troughs visible in the seasonal analysis. Proactive inventory planning based on these patterns would reduce both stockouts and overstock carrying costs.</p>
+</div>
+
+<h3>Analytical Approach & What This Demonstrates</h3>
+
+<p>This project was designed to demonstrate the kind of analysis a data analyst performs in practice — not isolated queries answering single questions, but a systematic, multi-dimensional examination of an entire business from the data layer up.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<p><strong>Multi-dimensional analysis:</strong> Every entity — product, brand, category — was examined from 6–8 metric perspectives simultaneously (revenue, profit, margin, volume, return rate, lost revenue, and more) rather than just one. This mirrors real analyst work where a product can look excellent on revenue but terrible on margin, or a brand can lead in profit but hemorrhage returns. Single-metric analysis leads to bad decisions; multi-dimensional analysis reveals trade-offs.</p>
+
+<p><strong>Paired top/bottom analysis:</strong> Analyzing only top performers gives an incomplete picture. The "Bottom" sections reveal where the business is bleeding — zero-revenue products, margin-compressing categories, serial-returning customers. Identifying what to <em>stop</em> doing is as valuable as identifying what to double down on, and this paired structure ensures both sides are examined.</p>
+
+<p><strong>Layered CTE architecture:</strong> The consistent <code>first_layer → second_layer → third_layer</code> CTE pattern demonstrates a real-world query design approach where complex metrics are built incrementally. Each layer has a clear purpose: aggregate raw data, derive ratios and calculated metrics, then rank and filter. This produces readable, maintainable, and auditable SQL that another analyst can pick up and extend without reverse-engineering the logic.</p>
+
+<p><strong>Recommendations grounded in data:</strong> Every recommendation in this project ties directly to a specific finding with a specific number. "Reduce return rates" is vague; "reduce the platform-wide ~28% return rate that is uniformly distributed across all 26 categories, suggesting platform-level UX as the root cause" is actionable and defensible. Data-driven recommendations require this level of specificity to be credible.</p>
+
+<p><strong>SQL as the right tool for the job:</strong> This entire analysis — joining six tables, computing conditional aggregations, building multi-layer derived metrics, ranking across 29,000+ products and 2,700+ brands — was accomplished purely in SQL. No data was exported for processing in another tool. This demonstrates that SQL is not just a "data extraction" language but a full analytical engine capable of end-to-end business analysis when used with intention and structure.</p>
+</div>
+
+<h3>Limitations & Future Work</h3>
+
+<p>Analytical maturity includes knowing the boundaries of your own work. The following limitations are important context for interpreting the findings above.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<p><strong>Synthetic dataset:</strong> <code>thelook_ecommerce</code> is Google's synthetic dataset, not real company data. Some pricing anomalies exist — for example, socks listed at $903, which are presumably data generation artifacts. The analytical methodology is sound and fully transferable to real datasets, but the specific dollar figures are illustrative rather than representative of a real retailer.</p>
+
+<p><strong>No cost-of-operations data:</strong> The analysis calculates product-level profit (sale price minus product cost) but cannot account for fulfillment costs, marketing spend, overhead, or return processing costs. A real-world version of this analysis would incorporate these to produce true net profitability figures and more accurate ROI calculations for the recommendations.</p>
+
+<p><strong>No customer journey data:</strong> The dataset lacks clickstream, page-view, cart-abandonment, or marketing attribution data. Customer analysis is limited to transactional behavior (orders, returns, cancellations) rather than full funnel analysis. Understanding <em>why</em> customers don't return would require data this dataset does not contain.</p>
+
+<p><strong>Time-series stationarity not tested:</strong> The long-term and seasonal trend analyses identify patterns visually but do not apply statistical tests for trend significance or seasonality decomposition. A more rigorous approach would use time-series methods — moving averages, decomposition, or forecasting models — which is beyond SQL's native capabilities and better suited to Python or R.</p>
+
+<p><strong>No A/B testing or causal inference:</strong> All findings are correlational. Recommendations like "improve sizing tools to reduce returns" are grounded in observed patterns but would need controlled experiments to validate causal impact before committing significant resources.</p>
+
+<p><strong>Potential future extensions:</strong> This analysis could be extended with customer cohort and retention analysis (tracking repeat purchase behavior over time), RFM segmentation (Recency, Frequency, Monetary value scoring), market basket analysis (which products are frequently purchased together), or predictive modeling for return probability — each of which would require tools beyond SQL and would build naturally on the foundation established here.</p>
+</div>
+
+<h3>Tools Used</h3>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<ul>
+<li><strong>Google BigQuery</strong> — cloud data warehouse, Standard SQL dialect</li>
+<li><strong>BigQuery public dataset:</strong> <code>bigquery-public-data.thelook_ecommerce</code></li>
+<li><strong>No external tools:</strong> All analysis performed entirely within SQL — no data export, no spreadsheet processing, no visualization libraries. Charts in the Long Term Trends and Seasonal Trends sections were produced separately from query result exports, but all underlying analysis is SQL-native.</li>
+</ul>
+</div>
+
 </details>
