@@ -2152,6 +2152,34 @@ LIMIT 15;</code></pre>
 
 </div>
 
+<h3>Analytical Insights & Business Recommendations</h3>
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+
+<p>The bottom 15 products by revenue all show $0 in completed revenue — every order for these items was either cancelled, returned, or is still in transit with no completions. Products like Marc Ecko Cut & Sew Pinstripe Vest (10 orders, $0 revenue), Diesel Women's Louvboot Slim Flare Jean (4 orders, $0 revenue), and Allegra K Dotted Dress (5 orders, $0 revenue) are occupying warehouse space and shipping bandwidth without generating any return. Many of these zero-revenue products still have units en route (shown by en_route_rate of 1.0), meaning they are actively consuming fulfillment resources. Others have high cancellation rates, suggesting customers are abandoning these purchases during checkout or processing.</p>
+
+<p>Recommendation: These zero-revenue products should be evaluated for delisting. If a product has generated multiple orders but zero completions, the pattern indicates either a systemic quality issue, misleading product listings, or severe delivery problems. Flag all products with 3+ orders and $0 revenue for an immediate review, and consider removing them from active listings if the pattern persists, as they are wasting inventory space and shipping bandwidth that could serve profitable items.</p>
+
+<p>Among the top 50 products by order volume, the lowest-profit items are dominated by low-price-point basics: HUGO BOSS Argyle Crew Socks ($9.75 avg sale, $15.65 profit on 22 orders), Gregg Homme Bikini Swimsuit ($13.22 avg sale, $20.64 profit on 25 orders), and Puma Men's Socks ($13.00 avg sale, $35.98 profit on 24 orders). These high-volume, low-profit products have thin individual margins and contribute minimally to overall profitability despite generating consistent order activity. Their high volume creates operational costs (picking, packing, shipping) that may approach or exceed their profit contribution.</p>
+
+<p>Recommendation: For low-profit basics that still move volume, consider two strategies: (1) bundle them with higher-margin items to improve basket profitability — e.g., include socks or underwear as add-on suggestions when customers are purchasing outerwear or jeans; (2) streamline their fulfillment by packaging commonly co-ordered basics together to reduce per-unit handling costs.</p>
+
+<p>The lowest profit margins among top-50 revenue products include The North Face Apex Bionic ($903 sale, 41.9% margin), PAIGE Skyline Skinny Jean (42.8% margin), and 7 For All Mankind Austyn Relaxed Straight (43.5% margin). These are high-cost items where the gap between sale price and product cost is compressed.</p>
+
+<p>Recommendation: For premium products with low margins, negotiate better supplier pricing. The North Face Apex Bionic has a $524.64 average cost on a $903 sale price — the margin is below 42% while comparable outerwear in the top products section achieves 54–59%. Either the supplier cost is disproportionately high or the retail price is undervaluing the brand. Explore whether cost renegotiation or a modest price increase (given the premium brand positioning) can bring margins in line with category peers.</p>
+
+<p>Several bottom products by return rate (filtered to top-20 revenue items) actually show the lowest return rates in the dataset. Products like AIR JORDAN DOMINATE SHORTS (0% return rate), Canada Goose Women's Expedition Parka (0% return rate, 100% completion rate), and True Religion Women's Julie Super T Jean (0% return rate) demonstrate strong product quality and customer satisfaction.</p>
+
+<p>Recommendation: These low-return, high-revenue products represent quality benchmarks. Investigate their suppliers, product descriptions, sizing accuracy, and packaging to identify what practices keep returns at zero. Apply those practices (better product photography, more accurate sizing guides, quality packaging) to high-return items in the same categories to reduce return-driven revenue leakage.</p>
+
+<p>The bottom products by lost revenue (filtered to top-50 revenue items) include several products with $0 in lost revenue — Steinbock Tyrolean Sport Coat, The North Face Apex Bionic, Women's Cashmere Overcoat, Mountain Hardwear Chillwave Parka, and AIR JORDAN DOMINATE SHORTS all have zero cancellations and zero returns among their completed orders. These products represent the ideal state: customers order them, the orders complete, and no revenue is lost to returns or cancellations. The common thread is premium outerwear/coats and specialty items where purchase intent is presumably more deliberate.</p>
+
+<p>Recommendation: Prioritize internal inventory space and marketing resources for these zero-loss products. They are the most operationally efficient items in the catalog — every unit shipped generates full revenue with no return-processing costs or refund overhead. Ensure these items never experience stockouts, as the demand-to-completion pipeline is clean.</p>
+
+<p>The bottom 15 products by unit orders all have just 1 order placed, with most generating $0 revenue. Products like Ulla Popken Sequined Swing Jacket (1 order, cancelled), Acid Wash Jean Dark Leggings (1 order, returned), and multiple others across various brands represent the extreme long tail of the product catalog. With over 27,000+ products ranked at the bottom for order volume, a significant portion of the catalog may be dead weight — occupying listing space, complicating inventory management, and diluting search/browse results for customers.</p>
+
+<p>Recommendation: Consider dropping products with fewer than 3 lifetime orders and $0 revenue from active listings. This catalog pruning would reduce operational complexity without meaningfully impacting revenue, and it would improve the browsing and search experience for customers by surfacing higher-performing items. These low-performing products may also indicate brands that are not resonating with the customer base.</p>
+
+</div>
 
 </details>
 <details>
