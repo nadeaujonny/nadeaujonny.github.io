@@ -1,14 +1,14 @@
 ---
 layout: default
-title: E-commerce Sales Analysis (SQL)
-description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL — CTEs, window functions, and time-series logic — to examine products, brands, categories, trends, and customers."
+title: E-commerce Business Optimization Analysis (BigQuery SQL)
+description: "Multi-dimensional e-commerce analysis in BigQuery using CTEs, window functions, conditional aggregation, and cross-metric ranking to evaluate revenue, profitability, return risk, and operational efficiency across 10 analytical dimensions."
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
-# E-commerce Sales Analysis (SQL)
+# E-commerce Business Optimization Analysis (SQL)
 
-> This project analyzes the BigQuery **thelook_ecommerce** dataset to identify ways to optimize the company using advanced SQL.
+> A 10-section analytical deep dive into the BigQuery **thelook_ecommerce** dataset — examining products, brands, categories, long-term trends, seasonal patterns, customers, and distribution centers across revenue, profit, margin, return rate, and lost revenue metrics to produce actionable business recommendations.
 
 ---
 
