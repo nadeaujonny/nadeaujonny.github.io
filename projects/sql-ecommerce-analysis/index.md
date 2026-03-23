@@ -17,6 +17,74 @@ description: "Analyzing 1M+ e-commerce orders in BigQuery using advanced SQL —
 
   <div style="margin-top: 12px;"></div>
 
+<h3>Project Objective</h3>
+
+<p>This project analyzes a large-scale e-commerce dataset to identify revenue drivers, profit optimization opportunities, return risk patterns, and operational inefficiencies — the same kinds of questions a data analyst would be asked to investigate at a real retail or e-commerce company. The framing is straightforward: if I were hired as a data analyst at this company, what would I investigate first, what would I find, and what would I recommend? Every analysis section ends with concrete, actionable business recommendations — not just charts and tables. The goal is to demonstrate that data analysis is only valuable when it translates into decisions.</p>
+
+<h3>Dataset Overview</h3>
+
+<p>The dataset used is <strong>thelook_ecommerce</strong>, a public dataset hosted in Google BigQuery (<code>bigquery-public-data.thelook_ecommerce</code>). It simulates a mid-size e-commerce retailer selling apparel, accessories, and outerwear — structurally analogous to real retail datasets with order statuses (Complete, Returned, Cancelled, Shipped, Processing), product costs, sale prices, customer demographics, and distribution center assignments.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<p><strong>Dataset at a glance:</strong></p>
+<ul>
+<li><strong>Scale:</strong> ~181,000 order items, ~80,000 unique customers, ~29,000 unique products across ~2,700 brands and 26 product categories</li>
+<li><strong>Tables used:</strong> order_items, orders, products, users, distribution_centers, inventory_items</li>
+<li><strong>Time range:</strong> 2019 through early 2026 (BigQuery continuously generates synthetic data for this dataset, so the date range extends beyond the original creation date)</li>
+<li><strong>Domain:</strong> Simulated e-commerce retailer — apparel, accessories, and outerwear</li>
+</ul>
+<p><strong>Note:</strong> Because this is a synthetic/simulated dataset, some product prices contain anomalies (e.g., socks listed at $903) that would not exist in production data. These anomalies are left in the analysis as-is since the purpose is to demonstrate analytical methodology rather than clean a specific company's data.</p>
+</div>
+
+<h3>SQL Techniques Demonstrated</h3>
+
+<p>The queries in this project go well beyond basic SELECT statements. Each analysis builds complex, multi-layered queries designed to extract derived metrics that do not exist in the raw data — profit margins, return rates, revenue shares, and cross-metric rankings all computed within a single query execution. The following techniques are used consistently throughout:</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<ul>
+<li><strong>Common Table Expressions (CTEs):</strong> Multi-layered CTEs (first_layer, second_layer, third_layer) used throughout to build complex metrics incrementally — separating raw aggregation, derived ratio calculations, and ranking into clean logical stages</li>
+<li><strong>Window Functions:</strong> RANK(), SUM() OVER(), ROUND() with window clauses for calculating revenue shares, profit shares, and cross-metric rankings within a single query</li>
+<li><strong>Conditional Aggregation:</strong> Extensive use of CASE WHEN inside SUM() and COUNT() to calculate status-specific metrics (revenue from completed orders only, return counts, cancellation counts, en-route counts) from a single pass through the data</li>
+<li><strong>Multi-table JOINs:</strong> Consistently joining order_items → orders → products (and users, distribution_centers, inventory_items where relevant) to build unified analytical views</li>
+<li><strong>NULLIF for safe division:</strong> Used throughout to prevent division-by-zero errors in ratio calculations (profit margin, return rate, completion rate, etc.)</li>
+<li><strong>DATE functions:</strong> DATE_TRUNC, EXTRACT(MONTH FROM ...), DATE_DIFF for time-series aggregation and customer lifetime calculations</li>
+<li><strong>Subquery filtering:</strong> Third-layer CTEs with WHERE clauses filtering on rank thresholds (e.g., WHERE revenue_rank <= 50) to create contextually meaningful "bottom" analyses rather than simply reversing sort order</li>
+</ul>
+<p>Every query is written to be readable and self-documenting — clear aliasing, logical CTE naming, and consistent formatting throughout.</p>
+</div>
+
+<h3>Analysis Structure</h3>
+
+<p>The analysis is structured across ten analytical dimensions: Top Products, Bottom Products, Top Brands, Bottom Brands, Top Categories, Bottom Categories, Long Term Trends, Seasonal Trends, Customers, and Distribution Centers. Each section examines performance from multiple angles — revenue, profit, profit margin, unit volume, return rate, units returned, lost revenue, and lost profit — providing a 360-degree view rather than a single-metric snapshot.</p>
+
+<p>"Top" and "Bottom" analyses are paired intentionally. Understanding what performs well is only half the picture — identifying underperformers, high-risk products, and margin-compressing segments is equally valuable for business optimization. A company that only monitors its best sellers will miss the products, brands, and categories that are quietly eroding profitability through returns, cancellations, and thin margins.</p>
+
+<p>Every section concludes with an <strong>Analytical Insights &amp; Business Recommendations</strong> block that translates data findings into specific, prioritized actions a business could take.</p>
+
+<h3>Business Context</h3>
+
+<p>E-commerce businesses generate massive transactional datasets but often lack the analytical infrastructure to extract cross-dimensional insights — most reporting stops at top-line revenue. This project goes deeper: it examines where profit is actually generated vs. where revenue is highest (they often diverge), which products and brands are net-negative after accounting for returns and cancellations, and what operational patterns (distribution center inventory imbalances, seasonal demand shifts) are costing the business money.</p>
+
+<p>SQL is the foundational tool for this kind of work because the questions require joining multiple tables, filtering on complex conditions, and computing derived metrics that don't exist in raw data — exactly the workflow a data analyst performs daily. The retail and e-commerce industry context is important here: return rates of 20–30% are common in online apparel retail. The ~28% average return rate observed in this dataset is realistic and aligns with industry benchmarks, which validates the analytical approach.</p>
+
+<h3>Key Metrics Tracked</h3>
+
+<p>The following metrics are computed and referenced throughout every section of the analysis. Understanding these definitions is essential for interpreting the tables and recommendations.</p>
+
+<div style="margin-top: 12px; padding: 16px; background: #f8f9fa; border-left: 4px solid #2E75B6; border-radius: 4px;">
+<ul>
+<li><strong>Revenue:</strong> Sum of sale prices from completed orders only</li>
+<li><strong>Profit:</strong> Revenue minus product cost for completed orders</li>
+<li><strong>Profit Margin:</strong> Profit / Revenue — measures how much of each revenue dollar is retained</li>
+<li><strong>Return Rate:</strong> Returned items / (Completed + Returned items) — measures post-delivery dissatisfaction</li>
+<li><strong>Completion Rate:</strong> Completed items / (Total items − Cancelled items) — measures fulfillment success</li>
+<li><strong>Cancellation Rate:</strong> Cancelled items / Total items ordered</li>
+<li><strong>En Route Rate:</strong> Shipped + Processing items / (Total − Cancelled − Returned) — measures what share of surviving orders are still in transit</li>
+<li><strong>Lost Revenue / Lost Profit:</strong> Revenue and profit that would have been earned if returned and cancelled orders had completed — quantifies the business cost of failed orders</li>
+<li><strong>Revenue Share / Profit Share / Unit Orders Share:</strong> Each entity's contribution to total business volume — enables apples-to-apples comparison across different scales</li>
+</ul>
+</div>
+
 </details>
 <details>
   <summary><strong>Top Products</strong></summary>
