@@ -11,9 +11,3 @@ __pycache__/
 
 # OS files
 .DS_Store
-
-# App deployment copies (generated from outputs/)
-app/best_model.pkl
-app/preprocessor.pkl
-app/model_comparison.csv
-app/figures/*.png
