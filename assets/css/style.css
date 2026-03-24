@@ -1112,11 +1112,6 @@ code, pre {
   color: #fff !important;
 }
 
-/* ── ML Churn Prediction card ── */
-.ml-card {
-  background-image: url("../images/ml-churn-prediction-project-card-image.png") !important;
-}
-
 /* ── Multi-Agent Pipeline card ── */
 .multiagent-card {
   background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 40%, #4a1a6b 100%);
