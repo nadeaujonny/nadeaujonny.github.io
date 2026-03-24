@@ -1082,6 +1082,42 @@ code, pre {
   color: #fff !important;
 }
 
+/* ── ML Churn Prediction card ── */
+.ml-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+}
+
+/* ── Multi-Agent Pipeline card ── */
+.multiagent-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 40%, #4a1a6b 100%);
+}
+
+/* ── Coming Soon shared styles ── */
+.coming-soon-card {
+  cursor: default;
+  position: relative;
+  opacity: 0.85;
+}
+
+.coming-soon-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
 /* =========================================================
    SKIP NAVIGATION — accessible shortcut, visible on :focus
    ========================================================= */

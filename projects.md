@@ -132,4 +132,26 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
+  <div class="col-6">
+    <div class="project-card-link ml-card coming-soon-card" aria-label="Coming Soon: Machine Learning — Customer Churn Prediction">
+      <div class="project-card-content">
+        <span class="coming-soon-badge">Coming Soon</span>
+        <h2>Machine Learning</h2>
+        <h3>Customer Churn Prediction</h3>
+        <p>End-to-end ML pipeline — training and comparing 5 classification models (Logistic Regression, Random Forest, XGBoost, LightGBM, SVM) on telecom customer data, with hyperparameter tuning, SHAP explainability, and an interactive Streamlit app for real-time churn risk scoring.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="project-card-link multiagent-card coming-soon-card" aria-label="Coming Soon: Multi-Agent Data Analysis Pipeline">
+      <div class="project-card-content">
+        <span class="coming-soon-badge">Coming Soon</span>
+        <h2>Python · Claude API</h2>
+        <h3>Multi-Agent Data Analysis Pipeline</h3>
+        <p>Python pipeline orchestrating 5 specialized Claude AI agents to collaboratively profile, clean, analyze, narrate, and review CSV datasets — with structured JSON handoffs, automated code execution, a reviewer feedback loop, and a deployed Streamlit walkthrough app.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
