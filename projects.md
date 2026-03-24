@@ -133,14 +133,14 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <div class="project-card-link ml-card coming-soon-card" aria-label="Coming Soon: Machine Learning — Customer Churn Prediction">
+    <a class="project-card-link ml-card" href="/projects/ml-churn-prediction/" aria-label="Open ML project: Customer Churn Prediction">
       <div class="project-card-content">
-        <span class="coming-soon-badge">Coming Soon</span>
         <h2>Machine Learning</h2>
         <h3>Customer Churn Prediction</h3>
-        <p>End-to-end ML pipeline — training and comparing 5 classification models (Logistic Regression, Random Forest, XGBoost, LightGBM, SVM) on telecom customer data, with hyperparameter tuning, SHAP explainability, and an interactive Streamlit app for real-time churn risk scoring.</p>
+        <p>End-to-end ML pipeline — 5 classification models compared head-to-head, SHAP explainability, hyperparameter tuning, and an interactive Streamlit app for real-time churn risk scoring with 0.83 AUC and 79% recall.</p>
+        <div class="project-card-cta">Open project →</div>
       </div>
-    </div>
+    </a>
   </div>
 
   <div class="col-6">
