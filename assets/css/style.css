@@ -751,6 +751,10 @@ code, pre {
   background-image: url("../supply-chain-project-card-image.png") !important;
 }
 
+.ml-card {
+  background-image: url("../ml-churn-prediction-project-card-image.png") !important;
+}
+
 /* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
