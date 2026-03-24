@@ -1,0 +1,19 @@
+# Data files (large CSVs)
+data/*.csv
+
+# Model artifacts
+models/*.pkl
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# App deployment copies (generated from outputs/)
+app/best_model.pkl
+app/preprocessor.pkl
+app/model_comparison.csv
+app/figures/*.png
