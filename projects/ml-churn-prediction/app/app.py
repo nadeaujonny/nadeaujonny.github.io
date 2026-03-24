@@ -4,6 +4,13 @@ import numpy as np
 import joblib
 import shap
 import matplotlib.pyplot as plt
+import os
+import sys
+
+# Get the directory where app.py lives (works on both local and Streamlit Cloud)
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, APP_DIR)
+
 from feature_helpers import engineer_features
 
 # Page config
@@ -12,8 +19,8 @@ st.set_page_config(page_title="Customer Churn Predictor", page_icon="📊", layo
 # Load model and preprocessor
 @st.cache_resource
 def load_model():
-    model = joblib.load('best_model.pkl')
-    preprocessor = joblib.load('preprocessor.pkl')
+    model = joblib.load(os.path.join(APP_DIR, 'best_model.pkl'))
+    preprocessor = joblib.load(os.path.join(APP_DIR, 'preprocessor.pkl'))
     return model, preprocessor
 
 model, preprocessor = load_model()
@@ -125,7 +132,6 @@ if page == "Predict Churn Risk":
         with col_result2:
             # SHAP explanation for this prediction
             st.subheader("Why this prediction?")
-            feature_names = joblib.load('preprocessor.pkl').get_feature_names_out() if hasattr(preprocessor, 'get_feature_names_out') else None
             
             # Get feature names
             cat_names = preprocessor.named_transformers_['cat'].get_feature_names_out(categorical_features).tolist()
@@ -156,7 +162,7 @@ elif page == "Model Performance":
     
     # Model comparison table
     st.subheader("Model Comparison")
-    comparison_df = pd.read_csv('model_comparison.csv')
+    comparison_df = pd.read_csv(os.path.join(APP_DIR, 'model_comparison.csv'))
     st.dataframe(comparison_df, use_container_width=True)
     
     st.info("**Best Model: Logistic Regression** — Highest AUC (0.834) and Recall (0.789). "
@@ -167,13 +173,13 @@ elif page == "Model Performance":
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Model Comparison")
-        st.image('figures/model_comparison.png', use_container_width=True)
+        st.image(os.path.join(APP_DIR, 'figures/model_comparison.png'), use_container_width=True)
     with col2:
         st.subheader("ROC Curves")
-        st.image('figures/roc_curves.png', use_container_width=True)
+        st.image(os.path.join(APP_DIR, 'figures/roc_curves.png'), use_container_width=True)
     
     st.subheader("Confusion Matrices")
-    st.image('figures/confusion_matrix.png', use_container_width=True)
+    st.image(os.path.join(APP_DIR, 'figures/confusion_matrix.png'), use_container_width=True)
 
 # ============================================================
 # PAGE 3: Data Insights
@@ -184,17 +190,17 @@ elif page == "Data Insights":
     st.subheader("Key EDA Findings")
     col1, col2 = st.columns(2)
     with col1:
-        st.image('figures/churn_by_contract.png', caption='Churn Rate by Contract Type', 
-                 use_container_width=True)
+        st.image(os.path.join(APP_DIR, 'figures/churn_by_contract.png'), 
+                 caption='Churn Rate by Contract Type', use_container_width=True)
     with col2:
-        st.image('figures/tenure_by_churn.png', caption='Tenure Distribution by Churn Status', 
-                 use_container_width=True)
+        st.image(os.path.join(APP_DIR, 'figures/tenure_by_churn.png'), 
+                 caption='Tenure Distribution by Churn Status', use_container_width=True)
     
     st.markdown("---")
     st.subheader("SHAP Feature Importance")
     st.write("SHAP values show how each feature contributes to the model's churn predictions.")
-    st.image('figures/shap_summary.png', caption='SHAP Summary — Top 15 Features Driving Churn', 
-             use_container_width=True)
+    st.image(os.path.join(APP_DIR, 'figures/shap_summary.png'), 
+             caption='SHAP Summary — Top 15 Features Driving Churn', use_container_width=True)
     
     st.subheader("Business Recommendations")
     st.markdown("""
@@ -212,15 +218,13 @@ elif page == "Sample Predictions":
     st.title("📋 Sample Predictions")
     st.write("Predictions on 15 test set customers showing actual vs predicted churn with probability scores.")
     
-    sample_df = pd.read_csv('model_comparison.csv')  # Placeholder — will use sample_predictions
-    
     try:
-        sample_df = pd.read_csv('../outputs/metrics/sample_predictions.csv')
+        sample_df = pd.read_csv(os.path.join(APP_DIR, '..', 'outputs', 'metrics', 'sample_predictions.csv'))
     except FileNotFoundError:
         sample_df = pd.DataFrame({
             'Actual': [0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
             'Predicted': [0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0],
-            'Churn_Probability': [0.05, 0.79, 0.01, 0.40, 0.24, 0.72, 0.07, 0.36, 0.84, 0.05, 0.87, 0.35, 0.83, 0.16, 0.43]
+            'Churn_Probability': [0.0497, 0.7920, 0.0141, 0.3977, 0.2398, 0.7201, 0.0712, 0.3605, 0.8375, 0.0529, 0.8672, 0.3457, 0.8268, 0.1601, 0.4274]
         })
     
     # Color code the probabilities
