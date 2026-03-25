@@ -2542,8 +2542,343 @@ print("  - outputs/metrics/model_comparison.csv")</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Phase 5 &mdash; Hyperparameter Tuning</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Tuning setup, default vs tuned comparison table, decision to keep default -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 5 attempts to improve the winning Logistic Regression model from Phase 4 by searching across
+    hyperparameter combinations using <code>RandomizedSearchCV</code>. The tuning runs 50 random parameter
+    combinations with 5-fold stratified cross-validation, optimizing for AUC. The result was a tuned model
+    that improved accuracy and precision but <strong>sacrificed 22 percentage points of recall</strong> &mdash;
+    leading to a principled decision to <strong>reject the tuned model and keep the default</strong>. This
+    phase runs in the first half of <code>notebooks/05_tuning_evaluation.ipynb</code>.
+  </p>
+
+  <h3>Key Code: Tuning Setup</h3>
+  <p>
+    The parameter search space covers the regularization strength (<code>C</code>), penalty type
+    (<code>l1</code> vs <code>l2</code>), solver algorithm, and critically whether to use
+    <code>class_weight='balanced'</code> or <code>None</code>. Including <code>class_weight</code> in the
+    search space allows the tuner to explore whether removing class balancing improves overall AUC &mdash;
+    which it did, but at a cost:
+  </p>
+
+  <pre><code class="language-python">from sklearn.model_selection import RandomizedSearchCV, StratifiedKFold
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (accuracy_score, precision_score, recall_score,
+                              f1_score, roc_auc_score, classification_report)
+
+# Define hyperparameter search space
+param_dist = {
+    'C': [0.001, 0.01, 0.1, 0.5, 1, 5, 10, 50, 100],
+    'penalty': ['l1', 'l2'],
+    'solver': ['liblinear', 'saga'],
+    'class_weight': ['balanced', None],
+    'max_iter': [1000]
+}
+
+# RandomizedSearchCV: 50 iterations, 5-fold stratified CV, optimize AUC
+search = RandomizedSearchCV(
+    LogisticRegression(random_state=42),
+    param_distributions=param_dist,
+    n_iter=50,
+    scoring='roc_auc',
+    cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=42),
+    random_state=42,
+    n_jobs=-1,
+    verbose=1
+)
+
+search.fit(X_train_processed, y_train)
+
+print(f"Best CV AUC: {search.best_score_:.4f}")
+print(f"Best params: {search.best_params_}")
+# Output:
+# Best CV AUC: 0.8459
+# Best params: {'solver': 'liblinear', 'penalty': 'l2',
+#               'max_iter': 1000, 'class_weight': None, 'C': 1}</code></pre>
+
+  <h3>Tuning Configuration</h3>
+  <table>
+    <thead>
+      <tr><th>Setting</th><th>Value</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Method</td>
+        <td><code>RandomizedSearchCV</code></td>
+        <td>More efficient than GridSearch for multi-parameter spaces &mdash; samples random combinations rather than exhaustive grid</td>
+      </tr>
+      <tr>
+        <td>Iterations</td>
+        <td>50</td>
+        <td>50 random parameter combinations evaluated &mdash; sufficient coverage for a 5-parameter space</td>
+      </tr>
+      <tr>
+        <td>CV Folds</td>
+        <td>5 (stratified)</td>
+        <td>Same fold strategy as Phase 4 &mdash; preserves class ratio in each fold</td>
+      </tr>
+      <tr>
+        <td>Scoring</td>
+        <td><code>roc_auc</code></td>
+        <td>Optimizes overall discriminative ability across all thresholds</td>
+      </tr>
+      <tr>
+        <td>Random State</td>
+        <td>42</td>
+        <td>Reproducibility &mdash; same random combinations every run</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Parameter Search Space</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Values Searched</th><th>What It Controls</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>C</code></td>
+        <td>0.001, 0.01, 0.1, 0.5, 1, 5, 10, 50, 100</td>
+        <td>Inverse regularization strength &mdash; smaller C = stronger regularization (simpler model), larger C = less regularization (more complex model)</td>
+      </tr>
+      <tr>
+        <td><code>penalty</code></td>
+        <td>l1, l2</td>
+        <td>Regularization type &mdash; L1 (Lasso) can drive coefficients to exactly zero (feature selection), L2 (Ridge) shrinks coefficients toward zero</td>
+      </tr>
+      <tr>
+        <td><code>solver</code></td>
+        <td>liblinear, saga</td>
+        <td>Optimization algorithm &mdash; liblinear is efficient for small datasets, saga supports L1 and L2 on larger data</td>
+      </tr>
+      <tr>
+        <td><code>class_weight</code></td>
+        <td>balanced, None</td>
+        <td><strong>Critical parameter</strong> &mdash; 'balanced' upweights the minority class; None treats both classes equally. This is where the recall tradeoff occurs.</td>
+      </tr>
+      <tr>
+        <td><code>max_iter</code></td>
+        <td>1000</td>
+        <td>Fixed &mdash; ensures convergence for all solver/penalty combinations</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Best Tuned Parameters</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Best Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>C</code></td><td>1</td></tr>
+      <tr><td><code>penalty</code></td><td>l2</td></tr>
+      <tr><td><code>solver</code></td><td>liblinear</td></tr>
+      <tr><td><code>class_weight</code></td><td><strong>None</strong></td></tr>
+      <tr><td><code>max_iter</code></td><td>1000</td></tr>
+      <tr><td>Best CV AUC</td><td>0.8459</td></tr>
+    </tbody>
+  </table>
+  <p>
+    The tuner selected <code>class_weight=None</code> &mdash; removing class balancing. This is the key
+    finding: without balanced class weights, the model optimizes for the majority class (no churn), which
+    improves accuracy and precision but reduces recall.
+  </p>
+
+  <h3>Key Code: Evaluate Tuned Model on Test Set</h3>
+
+  <pre><code class="language-python"># Get the best tuned model
+tuned_model = search.best_estimator_
+
+# Predict on test set with tuned model
+y_pred_tuned = tuned_model.predict(X_test_processed)
+y_prob_tuned = tuned_model.predict_proba(X_test_processed)[:, 1]
+
+# Collect tuned metrics
+tuned_metrics = {
+    'Accuracy': accuracy_score(y_test, y_pred_tuned),
+    'Precision': precision_score(y_test, y_pred_tuned),
+    'Recall': recall_score(y_test, y_pred_tuned),
+    'F1': f1_score(y_test, y_pred_tuned),
+    'AUC': roc_auc_score(y_test, y_prob_tuned),
+}
+
+for metric, value in tuned_metrics.items():
+    print(f"{metric}: {value:.4f}")
+# Output:
+# Accuracy:  0.7982
+# Precision: 0.6347
+# Recall:    0.5668
+# F1:        0.5989
+# AUC:       0.8346</code></pre>
+
+  <h3>Key Code: Default vs Tuned Side-by-Side Comparison</h3>
+
+  <pre><code class="language-python"># Load the default model from Phase 4
+default_model = joblib.load('../models/best_model.pkl')
+
+# Predict with default model
+y_pred_default = default_model.predict(X_test_processed)
+y_prob_default = default_model.predict_proba(X_test_processed)[:, 1]
+
+# Default metrics
+default_metrics = {
+    'Accuracy': accuracy_score(y_test, y_pred_default),
+    'Precision': precision_score(y_test, y_pred_default),
+    'Recall': recall_score(y_test, y_pred_default),
+    'F1': f1_score(y_test, y_pred_default),
+    'AUC': roc_auc_score(y_test, y_prob_default),
+}
+
+# Side-by-side comparison
+print(f"{'Metric':<12} {'Default':>10} {'Tuned':>10} {'Change':>10}")
+print("-" * 44)
+for metric in default_metrics:
+    d = default_metrics[metric]
+    t = tuned_metrics[metric]
+    change = t - d
+    print(f"{metric:<12} {d:>10.4f} {t:>10.4f} {change:>+10.4f}")
+# Output:
+# Metric        Default      Tuned     Change
+# --------------------------------------------
+# Accuracy       0.7242     0.7982    +0.0740
+# Precision      0.4884     0.6347    +0.1463
+# Recall         0.7888     0.5668    -0.2220
+# F1             0.6033     0.5989    -0.0044
+# AUC            0.8344     0.8346    +0.0002</code></pre>
+
+  <h3>Results: Default vs Tuned Comparison</h3>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Default (Balanced)</th><th>Tuned</th><th>Change</th><th>Better For Churn?</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Accuracy</td>
+        <td>0.7242</td>
+        <td><strong>0.7982</strong></td>
+        <td style="color: green;">+0.0740</td>
+        <td>Misleading &mdash; mostly from predicting more "no churn" correctly</td>
+      </tr>
+      <tr>
+        <td>Precision</td>
+        <td>0.4884</td>
+        <td><strong>0.6347</strong></td>
+        <td style="color: green;">+0.1463</td>
+        <td>Yes &mdash; fewer false alarms, but at what cost?</td>
+      </tr>
+      <tr>
+        <td><strong>Recall</strong></td>
+        <td><strong>0.7888</strong></td>
+        <td>0.5668</td>
+        <td style="color: red;">&minus;0.2220</td>
+        <td><strong>NO &mdash; 22 percentage points lost. Now misses 43% of churners.</strong></td>
+      </tr>
+      <tr>
+        <td>F1</td>
+        <td><strong>0.6033</strong></td>
+        <td>0.5989</td>
+        <td style="color: red;">&minus;0.0044</td>
+        <td>Essentially flat &mdash; precision gains offset by recall losses</td>
+      </tr>
+      <tr>
+        <td>AUC</td>
+        <td>0.8344</td>
+        <td><strong>0.8346</strong></td>
+        <td style="color: green;">+0.0002</td>
+        <td>Negligible improvement &mdash; essentially identical</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Decision: Keep the Default Balanced Model</h3>
+  <p>
+    The tuned model gained accuracy (+7.4pp) and precision (+14.6pp) but <strong>lost 22 percentage points
+    of recall</strong> (from 79% down to 57%). AUC was essentially unchanged (+0.0002). This tradeoff is
+    unacceptable for a churn prediction use case:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Scenario</th><th>Default Model</th><th>Tuned Model</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Out of 374 actual churners in the test set&hellip;</td>
+        <td><strong>Catches 295</strong> (79%)</td>
+        <td>Catches 212 (57%)</td>
+      </tr>
+      <tr>
+        <td>Misses&hellip;</td>
+        <td>79 churners</td>
+        <td><strong>162 churners</strong></td>
+      </tr>
+      <tr>
+        <td>False alarms (loyal customers flagged)&hellip;</td>
+        <td>309</td>
+        <td><strong>122</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    The tuned model generates fewer false alarms (122 vs 309), but it <strong>doubles the number of missed
+    churners</strong> (162 vs 79). In business terms: the cost of sending 187 extra retention offers to loyal
+    customers (the false alarm difference) is far lower than the cost of losing 83 additional customers who
+    churn undetected. A $10 retention offer sent to 187 non-churners costs $1,870. Losing 83 customers with
+    an average lifetime value of even $500 costs $41,500. The math is clear.
+  </p>
+
+  <h3>Key Code: Final Model Confirmation &amp; Classification Report</h3>
+
+  <pre><code class="language-python"># Decision: KEEP the default balanced model
+# The tuned model sacrifices too much recall for marginal AUC gain
+final_model = default_model  # LogisticRegression(class_weight='balanced')
+
+# Save final model (overwrite with the confirmed default)
+joblib.dump(final_model, '../models/best_model.pkl')
+
+# Final classification report on test set
+y_pred_final = final_model.predict(X_test_processed)
+print(classification_report(y_test, y_pred_final, target_names=['No Churn', 'Churn']))
+# Output:
+#               precision    recall  f1-score   support
+#
+#    No Churn       0.90      0.70      0.79      1033
+#        Churn       0.49      0.79      0.60       374
+#
+#     accuracy                           0.72      1407
+#    macro avg       0.70      0.74      0.70      1407
+# weighted avg       0.79      0.72      0.74      1407</code></pre>
+
+  <h3>Final Deployed Model</h3>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Model Type</td><td>LogisticRegression</td></tr>
+      <tr><td>Key Parameter</td><td><code>class_weight='balanced'</code></td></tr>
+      <tr><td>Other Parameters</td><td><code>max_iter=1000, random_state=42</code></td></tr>
+      <tr><td>Test AUC</td><td>0.8344</td></tr>
+      <tr><td>Test Recall</td><td>0.7888 (catches 79% of churners)</td></tr>
+      <tr><td>Test F1</td><td>0.6033</td></tr>
+      <tr><td>Test Accuracy</td><td>0.7242</td></tr>
+      <tr><td>Serialized To</td><td><code>models/best_model.pkl</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Why This Matters: Principled Model Selection</h3>
+  <p>
+    This phase demonstrates something more valuable than finding the best hyperparameters &mdash; it
+    demonstrates <strong>principled model selection based on business cost asymmetry</strong>. The tuned model
+    "looks better" on accuracy (a metric most people intuitively understand), but a model that catches only
+    57% of churners is less useful than one that catches 79%, even if it generates more false positives.
+    Knowing <em>when not to tune</em> &mdash; when the default configuration already makes the right tradeoff
+    for the business problem &mdash; is a judgment call that separates thoughtful analysis from blind
+    optimization.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
