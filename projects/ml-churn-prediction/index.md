@@ -1581,8 +1581,472 @@ plt.show()</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Phase 3 &mdash; Feature Engineering &amp; Preprocessing</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Engineered features table, feature lists, pipeline code, train/test split -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 3 transforms the cleaned dataset into a model-ready format through three steps: engineering 5 new
+    domain-informed features, splitting the data into train/test sets with stratification, and building a
+    scikit-learn preprocessing pipeline that scales numeric features and one-hot encodes categorical features.
+    A critical design decision was placing all feature engineering logic in a <strong>shared Python module</strong>
+    (<code>feature_helpers.py</code>) used by both the training notebooks and the deployed Streamlit app &mdash;
+    guaranteeing identical transformations at train time and serve time. All work runs in
+    <code>notebooks/03_feature_engineering.ipynb</code>.
+  </p>
+
+  <h3>Key Code: Load Cleaned Data &amp; Apply Feature Engineering</h3>
+  <p>
+    The notebook loads the cleaned CSV from Phase 1, imports the shared <code>engineer_features()</code> function,
+    and applies it to create the 5 new columns. The output is verified by inspecting the first 10 rows of the
+    new features alongside the original columns they were derived from:
+  </p>
+
+  <pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+import joblib
+import os
+
+# Load cleaned dataset from Phase 1
+df = pd.read_csv('../data/telco_churn_cleaned.csv')
+
+# Import and apply shared feature engineering function
+from feature_helpers import engineer_features
+df = engineer_features(df)
+
+print(f"Shape after feature engineering: {df.shape}")
+print(f"\nNew columns: ServiceCount, HasInternet, HasPhone, AvgMonthlyCharge, TenureGroup")
+# Output:
+# Shape after feature engineering: (7032, 25)
+# New columns: ServiceCount, HasInternet, HasPhone, AvgMonthlyCharge, TenureGroup
+
+# Verify new features
+print(f"\nSample of new features:")
+df[['tenure', 'MonthlyCharges', 'TotalCharges', 'ServiceCount',
+    'HasInternet', 'HasPhone', 'AvgMonthlyCharge', 'TenureGroup']].head(10)
+# Output:
+#    tenure  MonthlyCharges  TotalCharges  ServiceCount  HasInternet  HasPhone  AvgMonthlyCharge  TenureGroup
+# 0       1           29.85         29.85             1            1         0         29.850000            0
+# 1      34           56.95       1889.50             2            1         1         55.573529            2
+# 2       2           53.85        108.15             2            1         1         54.075000            0
+# 3      45           42.30       1840.75             3            1         0         40.905556            2
+# 4       2           70.70        151.65             0            1         1         75.825000            0
+# 5       8           99.65        820.50             3            1         1        102.562500            0
+# 6      22           89.10       1949.40             2            1         1         88.609091            1
+# 7      10           29.75        301.90             1            1         0         30.190000            0
+# 8      28          104.80       3046.05             4            1         1        108.787500            2
+# 9      62           56.15       3487.95             2            1         1         56.257258            3</code></pre>
+
+  <h3>The Shared Feature Engineering Function</h3>
+  <p>
+    This is the <strong>single source of truth</strong> for all feature transformations. The function lives in
+    <code>notebooks/feature_helpers.py</code> and is copied identically to <code>app/feature_helpers.py</code>
+    for the Streamlit deployment. Any change to feature logic must be made in this one function to guarantee
+    train/serve consistency:
+  </p>
+
+  <pre><code class="language-python">"""
+Shared feature engineering function.
+Used by notebooks (training) and Streamlit app (prediction)
+to ensure identical transformations.
+"""
+
+def engineer_features(df):
+    """
+    Create engineered features from the cleaned telco churn dataset.
+
+    Parameters:
+        df: pandas DataFrame with cleaned columns
+
+    Returns:
+        df: DataFrame with new features added
+    """
+    df = df.copy()
+
+    # 1. Service count: how many optional services does the customer have?
+    service_cols = ['OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
+                    'TechSupport', 'StreamingTV', 'StreamingMovies']
+    df['ServiceCount'] = df[service_cols].apply(
+        lambda row: (row == 'Yes').sum(), axis=1
+    )
+
+    # 2. Has internet service (binary)
+    df['HasInternet'] = (df['InternetService'] != 'No').astype(int)
+
+    # 3. Has phone service (binary)
+    df['HasPhone'] = (df['PhoneService'] == 'Yes').astype(int)
+
+    # 4. Average monthly charge (TotalCharges / tenure), handle tenure=0
+    df['AvgMonthlyCharge'] = df.apply(
+        lambda row: row['TotalCharges'] / row['tenure'] if row['tenure'] > 0
+        else row['MonthlyCharges'], axis=1
+    )
+
+    # 5. Tenure group (numeric encoding for modeling)
+    def tenure_bucket(t):
+        if t <= 12: return 0
+        elif t <= 24: return 1
+        elif t <= 48: return 2
+        else: return 3
+
+    df['TenureGroup'] = df['tenure'].apply(tenure_bucket)
+
+    return df</code></pre>
+
+  <h3>5 Engineered Features</h3>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>Logic</th><th>Type</th><th>EDA Insight That Motivated It</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ServiceCount</code></td>
+        <td>Count of "Yes" across 6 optional service columns (OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies)</td>
+        <td>int (0&ndash;6)</td>
+        <td>EDA showed lack of add-ons increases churn &mdash; more services = more switching cost = stickier customer</td>
+      </tr>
+      <tr>
+        <td><code>HasInternet</code></td>
+        <td>1 if InternetService &ne; "No", else 0</td>
+        <td>binary</td>
+        <td>Internet customers (especially fiber optic) churn at higher rates &mdash; consolidates the signal</td>
+      </tr>
+      <tr>
+        <td><code>HasPhone</code></td>
+        <td>1 if PhoneService = "Yes", else 0</td>
+        <td>binary</td>
+        <td>Parallel to HasInternet &mdash; consolidates base service indicator</td>
+      </tr>
+      <tr>
+        <td><code>AvgMonthlyCharge</code></td>
+        <td>TotalCharges / tenure (uses MonthlyCharges if tenure = 0)</td>
+        <td>float</td>
+        <td>Churners cluster in the low-tenure, high-charge scatter region &mdash; captures the cost-to-loyalty ratio</td>
+      </tr>
+      <tr>
+        <td><code>TenureGroup</code></td>
+        <td>0&ndash;12 &rarr; 0, 13&ndash;24 &rarr; 1, 25&ndash;48 &rarr; 2, 49+ &rarr; 3</td>
+        <td>int (0&ndash;3)</td>
+        <td>Churn is heavily front-loaded in the first 12 months &mdash; bucketing captures this non-linear relationship</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>Features Intentionally Excluded from the Model</h4>
+  <p>
+    Two additional features were computed during EDA but <strong>intentionally excluded</strong> from the
+    modeling pipeline:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>Used In</th><th>Why Excluded</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>tenure_group</code> (string bins)</td>
+        <td>EDA only (binned churn rate chart)</td>
+        <td>Redundant with raw <code>tenure</code> for modeling; the numeric <code>TenureGroup</code> serves the same role more efficiently</td>
+      </tr>
+      <tr>
+        <td><code>TotalCharges / (tenure + 1)</code></td>
+        <td>EDA only (data quality validation)</td>
+        <td>Nearly identical to <code>MonthlyCharges</code> &mdash; would add multicollinearity without new signal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Define Feature Lists &amp; Separate Target</h3>
+  <p>
+    After feature engineering, the 24 features (excluding the <code>Churn</code> target) are explicitly split
+    into numeric and categorical lists. This separation drives the preprocessing pipeline &mdash; numeric
+    features get <code>StandardScaler</code>, categorical features get <code>OneHotEncoder</code>:
+  </p>
+
+  <pre><code class="language-python"># Define feature lists
+numeric_features = ['SeniorCitizen', 'tenure', 'MonthlyCharges', 'TotalCharges',
+                    'ServiceCount', 'HasInternet', 'HasPhone', 'AvgMonthlyCharge',
+                    'TenureGroup']
+
+categorical_features = ['gender', 'Partner', 'Dependents', 'PhoneService',
+                        'MultipleLines', 'InternetService', 'OnlineSecurity',
+                        'OnlineBackup', 'DeviceProtection', 'TechSupport',
+                        'StreamingTV', 'StreamingMovies', 'Contract',
+                        'PaperlessBilling', 'PaymentMethod']
+
+print(f"Numeric features ({len(numeric_features)}): {numeric_features}")
+print(f"\nCategorical features ({len(categorical_features)}): {categorical_features}")
+print(f"\nTotal features: {len(numeric_features) + len(categorical_features)}")
+# Output:
+# Numeric features (9): ['SeniorCitizen', 'tenure', 'MonthlyCharges', ...]
+# Categorical features (15): ['gender', 'Partner', 'Dependents', ...]
+# Total features: 24
+
+# Separate features and target
+X = df[numeric_features + categorical_features]
+y = df['Churn']
+
+print(f"\nX shape: {X.shape}")
+print(f"y shape: {y.shape}")
+print(f"y distribution:\n{y.value_counts(normalize=True).round(4)}")
+# Output:
+# X shape: (7032, 24)
+# y shape: (7032,)
+# y distribution:
+# Churn
+# 0    0.7342
+# 1    0.2658</code></pre>
+
+  <h3>Key Code: Train/Test Split with Stratification</h3>
+  <p>
+    The data is split <strong>before any preprocessing</strong> to prevent data leakage. The
+    <code>stratify=y</code> parameter ensures both train and test sets preserve the original 73.4/26.6 class
+    distribution, which is critical for reliable evaluation on imbalanced data:
+  </p>
+
+  <pre><code class="language-python"># Train-test split (80/20) with stratification to preserve churn ratio
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+print(f"X_train: {X_train.shape}")
+print(f"X_test:  {X_test.shape}")
+print(f"\nTrain churn rate: {y_train.mean():.4f}")
+print(f"Test churn rate:  {y_test.mean():.4f}")
+# Output:
+# X_train: (5625, 24)
+# X_test:  (1407, 24)
+#
+# Train churn rate: 0.2658
+# Test churn rate:  0.2658  ← stratification confirmed</code></pre>
+
+  <h3>Key Code: Build Preprocessing Pipeline</h3>
+  <p>
+    The <code>ColumnTransformer</code> applies <code>StandardScaler</code> to the 9 numeric features and
+    <code>OneHotEncoder</code> to the 15 categorical features. Three key design decisions:
+  </p>
+  <p>
+    <strong><code>drop='first'</code></strong> avoids the dummy variable trap for Logistic Regression and SVM
+    (e.g., for a 3-category column like InternetService, only 2 binary columns are created, with the dropped
+    category becoming the implicit baseline).
+  </p>
+  <p>
+    <strong><code>handle_unknown='ignore'</code></strong> makes the pipeline robust for the Streamlit app &mdash;
+    if a user enters a category combination not seen during training, the encoder outputs zeros instead of
+    throwing an error.
+  </p>
+  <p>
+    <strong>Fit on training data only, transform both</strong> &mdash; the scaler learns means/stds and the
+    encoder learns categories exclusively from the training set. The test set is transformed using those
+    learned parameters, preventing any information leakage from test to train.
+  </p>
+
+  <pre><code class="language-python"># Build preprocessing pipeline
+# StandardScaler for numeric features, OneHotEncoder for categorical features
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', StandardScaler(), numeric_features),
+        ('cat', OneHotEncoder(drop='first', sparse_output=False,
+                              handle_unknown='ignore'), categorical_features)
+    ]
+)
+
+# Fit on training data only, transform both
+X_train_processed = preprocessor.fit_transform(X_train)
+X_test_processed = preprocessor.transform(X_test)
+
+# Extract feature names for later use (SHAP needs these)
+cat_feature_names = preprocessor.named_transformers_['cat'] \
+    .get_feature_names_out(categorical_features).tolist()
+all_feature_names = numeric_features + cat_feature_names
+
+print(f"X_train_processed shape: {X_train_processed.shape}")
+print(f"X_test_processed shape:  {X_test_processed.shape}")
+print(f"\nTotal feature columns after encoding: {len(all_feature_names)}")
+print(f"\nFirst 10 feature names: {all_feature_names[:10]}")
+# Output:
+# X_train_processed shape: (5625, 35)
+# X_test_processed shape:  (1407, 35)
+#
+# Total feature columns after encoding: 35
+#
+# First 10 feature names: ['SeniorCitizen', 'tenure', 'MonthlyCharges',
+#   'TotalCharges', 'ServiceCount', 'HasInternet', 'HasPhone',
+#   'AvgMonthlyCharge', 'TenureGroup', 'gender_Male']</code></pre>
+
+  <h3>Key Code: Save All Artifacts</h3>
+  <p>
+    Four serialized artifacts are saved for consumption by the model training notebook (Phase 4),
+    the tuning/SHAP notebook (Phase 5&ndash;6), and the Streamlit app:
+  </p>
+
+  <pre><code class="language-python"># Save the preprocessor and feature names for later use
+os.makedirs('../models', exist_ok=True)
+
+joblib.dump(preprocessor, '../models/preprocessor.pkl')
+joblib.dump(all_feature_names, '../models/feature_names.pkl')
+
+# Also save the split data for the next notebook
+joblib.dump((X_train, X_test, y_train, y_test), '../models/train_test_split.pkl')
+joblib.dump((X_train_processed, X_test_processed), '../models/processed_data.pkl')
+
+print("Saved:")
+print("  - models/preprocessor.pkl")
+print("  - models/feature_names.pkl")
+print("  - models/train_test_split.pkl")
+print("  - models/processed_data.pkl")</code></pre>
+
+  <h3>Feature Summary: Before &amp; After Encoding</h3>
+  <table>
+    <thead>
+      <tr><th>Stage</th><th>Numeric</th><th>Categorical</th><th>Total Columns</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>After feature engineering (before encoding)</td>
+        <td>9</td>
+        <td>15</td>
+        <td>24</td>
+      </tr>
+      <tr>
+        <td>After OneHotEncoding (<code>drop='first'</code>)</td>
+        <td>9</td>
+        <td>26 (from 15 original)</td>
+        <td>35</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Complete Feature Lists</h3>
+  <h4>9 Numeric Features (StandardScaler)</h4>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>Source</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>SeniorCitizen</code></td><td>Original</td><td>0/1 binary &mdash; already numeric in raw data</td></tr>
+      <tr><td><code>tenure</code></td><td>Original</td><td>Months with the company (0&ndash;72)</td></tr>
+      <tr><td><code>MonthlyCharges</code></td><td>Original</td><td>Monthly bill amount ($18.25&ndash;$118.75)</td></tr>
+      <tr><td><code>TotalCharges</code></td><td>Original</td><td>Cumulative charges over customer lifetime</td></tr>
+      <tr><td><code>ServiceCount</code></td><td>Engineered</td><td>Count of optional services (0&ndash;6)</td></tr>
+      <tr><td><code>HasInternet</code></td><td>Engineered</td><td>1 if customer has any internet service</td></tr>
+      <tr><td><code>HasPhone</code></td><td>Engineered</td><td>1 if customer has phone service</td></tr>
+      <tr><td><code>AvgMonthlyCharge</code></td><td>Engineered</td><td>TotalCharges / tenure (cost-to-loyalty ratio)</td></tr>
+      <tr><td><code>TenureGroup</code></td><td>Engineered</td><td>Bucketed tenure: 0&ndash;12&rarr;0, 13&ndash;24&rarr;1, 25&ndash;48&rarr;2, 49+&rarr;3</td></tr>
+    </tbody>
+  </table>
+
+  <h4>15 Categorical Features (OneHotEncoder, drop='first')</h4>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>Values</th><th>Columns After Encoding</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>gender</code></td><td>Male, Female</td><td>1 (<code>gender_Male</code>)</td></tr>
+      <tr><td><code>Partner</code></td><td>Yes, No</td><td>1</td></tr>
+      <tr><td><code>Dependents</code></td><td>Yes, No</td><td>1</td></tr>
+      <tr><td><code>PhoneService</code></td><td>Yes, No</td><td>1</td></tr>
+      <tr><td><code>MultipleLines</code></td><td>Yes, No, No phone service</td><td>2</td></tr>
+      <tr><td><code>InternetService</code></td><td>DSL, Fiber optic, No</td><td>2</td></tr>
+      <tr><td><code>OnlineSecurity</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>OnlineBackup</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>DeviceProtection</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>TechSupport</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>StreamingTV</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>StreamingMovies</code></td><td>Yes, No, No internet service</td><td>2</td></tr>
+      <tr><td><code>Contract</code></td><td>Month-to-month, One year, Two year</td><td>2</td></tr>
+      <tr><td><code>PaperlessBilling</code></td><td>Yes, No</td><td>1</td></tr>
+      <tr><td><code>PaymentMethod</code></td><td>Electronic check, Mailed check, Bank transfer, Credit card</td><td>3</td></tr>
+    </tbody>
+  </table>
+  <p>
+    <strong>Total after encoding:</strong> 9 numeric + 26 one-hot = <strong>35 columns</strong> entering the model.
+  </p>
+
+  <h3>Train/Test Split Summary</h3>
+  <table>
+    <thead>
+      <tr><th>Set</th><th>Rows</th><th>Features (before encoding)</th><th>Features (after encoding)</th><th>Churn Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Training</td><td>5,625</td><td>24</td><td>35</td><td>0.2658</td></tr>
+      <tr><td>Test</td><td>1,407</td><td>24</td><td>35</td><td>0.2658</td></tr>
+    </tbody>
+  </table>
+  <p>
+    The identical churn rates (0.2658) confirm that <code>stratify=y</code> worked correctly &mdash; both sets
+    preserve the original class distribution.
+  </p>
+
+  <h3>Saved Artifacts</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Contents</th><th>Consumed By</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>models/preprocessor.pkl</code></td>
+        <td>Fitted <code>ColumnTransformer</code> (scaler + encoder)</td>
+        <td>Phase 4 notebook, Phase 5&ndash;6 notebook, Streamlit app</td>
+      </tr>
+      <tr>
+        <td><code>models/feature_names.pkl</code></td>
+        <td>List of 35 post-encoding feature names</td>
+        <td>SHAP explainability (Phase 6)</td>
+      </tr>
+      <tr>
+        <td><code>models/train_test_split.pkl</code></td>
+        <td>(X_train, X_test, y_train, y_test) before encoding</td>
+        <td>Phase 4 notebook</td>
+      </tr>
+      <tr>
+        <td><code>models/processed_data.pkl</code></td>
+        <td>(X_train_processed, X_test_processed) after encoding</td>
+        <td>Phase 4 notebook, Phase 5&ndash;6 notebook</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Class Imbalance Strategy</h3>
+  <p>
+    The 73.4/26.6 class split is moderate &mdash; not extreme enough for SMOTE (synthetic oversampling) but
+    significant enough to require explicit handling. The chosen approach:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Strategy</th><th>Applied To</th><th>How It Works</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>class_weight='balanced'</code></td>
+        <td>Logistic Regression, Random Forest, SVM</td>
+        <td>Adjusts the loss function to penalize misclassification of the minority class (churners) more heavily, proportional to class frequency</td>
+      </tr>
+      <tr>
+        <td><code>scale_pos_weight</code></td>
+        <td>XGBoost, LightGBM</td>
+        <td>Set to ratio of negatives to positives (&asymp; 2.76) &mdash; equivalent effect to <code>class_weight='balanced'</code> for gradient boosting models</td>
+      </tr>
+      <tr>
+        <td>Threshold tuning</td>
+        <td>Final evaluation (Phase 6)</td>
+        <td>Analyzed precision-recall tradeoff across thresholds to understand business impact of different cutoff points</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>SHAP Interpretation Note</h3>
+  <p>
+    With <code>drop='first'</code>, SHAP values for one-hot encoded categories are interpreted
+    <strong>relative to the dropped baseline category</strong>. For example, the SHAP value for
+    <code>InternetService_Fiber optic</code> represents the effect of fiber optic <em>compared to the dropped
+    baseline</em> (which is DSL). Similarly, <code>Contract_Two year</code> shows the effect compared to
+    the dropped month-to-month baseline. This is technically correct and actually makes business interpretation
+    intuitive &mdash; the most common/default category becomes the implicit reference point.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
