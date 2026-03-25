@@ -3298,8 +3298,445 @@ plt.close()</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Streamlit App</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Link to live app, 4 pages described, screenshots, deployment info -->
+
+  <h3>Overview</h3>
+  <p>
+    The project culminates in a deployed, interactive Streamlit web application where anyone can input a
+    customer profile and receive a churn risk score with a SHAP waterfall explanation &mdash; no code required.
+    The app has four pages: a real-time churn predictor with per-customer explanations, a model performance
+    dashboard, a data insights &amp; SHAP explainability page, and a sample predictions table. A live
+    Streamlit app is significantly more compelling than a static Jupyter notebook &mdash; it demonstrates
+    deployment skills and makes the project accessible to non-technical stakeholders.
+  </p>
+  <p>
+    <strong><a href="https://nadeaujonnyappio-ba7xf6aknjidd9ppd5ww3t.streamlit.app" target="_blank">Launch Live App &rarr;</a></strong>
+  </p>
+
+  <h3>Key Code: App Initialization &amp; Model Loading</h3>
+  <p>
+    The app loads the serialized model and preprocessor once using Streamlit&rsquo;s
+    <code>@st.cache_resource</code> decorator (caches across reruns and sessions for performance),
+    imports the shared <code>engineer_features()</code> function, and sets up sidebar navigation
+    across the four pages:
+  </p>
+
+  <pre><code class="language-python">import streamlit as st
+import pandas as pd
+import numpy as np
+import joblib
+import shap
+import matplotlib.pyplot as plt
+import os, sys
+
+# Get the directory where app.py lives (works on both local and Streamlit Cloud)
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, APP_DIR)
+
+from feature_helpers import engineer_features
+
+# Page config
+st.set_page_config(page_title="Customer Churn Predictor",
+                   page_icon="📊", layout="wide")
+
+# Load model and preprocessor (cached across sessions)
+@st.cache_resource
+def load_model():
+    model = joblib.load(os.path.join(APP_DIR, 'best_model.pkl'))
+    preprocessor = joblib.load(os.path.join(APP_DIR, 'preprocessor.pkl'))
+    return model, preprocessor
+
+model, preprocessor = load_model()
+
+# Sidebar navigation
+st.sidebar.title("📊 Churn Predictor")
+page = st.sidebar.radio("Navigate", [
+    "Predict Churn Risk", "Model Performance",
+    "Data Insights", "Sample Predictions"
+])</code></pre>
+
+  <h3>Page 1: Predict Churn Risk</h3>
+  <p>
+    The centerpiece of the app. A three-column input form captures all customer attributes &mdash;
+    demographics, services, and account details &mdash; using dropdowns for categorical features and sliders
+    for numeric features. When the user clicks "Predict," the app builds a DataFrame from the inputs,
+    auto-computes <code>TotalCharges</code> from <code>tenure &times; MonthlyCharges</code>, applies the
+    shared <code>engineer_features()</code> function (guaranteeing identical transformations to training),
+    transforms with the fitted preprocessor, predicts churn probability, and generates a SHAP waterfall
+    plot explaining that specific prediction &mdash; all in under a second.
+  </p>
+
+  <h4>Key Code: Input Form (3-Column Layout)</h4>
+
+  <pre><code class="language-python">col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.subheader("Demographics")
+    gender = st.selectbox("Gender", ["Male", "Female"])
+    senior_citizen = st.selectbox("Senior Citizen", ["No", "Yes"])
+    partner = st.selectbox("Partner", ["Yes", "No"])
+    dependents = st.selectbox("Dependents", ["Yes", "No"])
+
+with col2:
+    st.subheader("Services")
+    tenure = st.slider("Tenure (months)", 0, 72, 12)
+    phone_service = st.selectbox("Phone Service", ["Yes", "No"])
+    multiple_lines = st.selectbox("Multiple Lines",
+                                  ["Yes", "No", "No phone service"])
+    internet_service = st.selectbox("Internet Service",
+                                    ["DSL", "Fiber optic", "No"])
+    online_security = st.selectbox("Online Security",
+                                   ["Yes", "No", "No internet service"])
+    online_backup = st.selectbox("Online Backup",
+                                 ["Yes", "No", "No internet service"])
+    device_protection = st.selectbox("Device Protection",
+                                     ["Yes", "No", "No internet service"])
+    tech_support = st.selectbox("Tech Support",
+                                ["Yes", "No", "No internet service"])
+    streaming_tv = st.selectbox("Streaming TV",
+                                ["Yes", "No", "No internet service"])
+    streaming_movies = st.selectbox("Streaming Movies",
+                                    ["Yes", "No", "No internet service"])
+
+with col3:
+    st.subheader("Account")
+    contract = st.selectbox("Contract",
+                            ["Month-to-month", "One year", "Two year"])
+    paperless_billing = st.selectbox("Paperless Billing", ["Yes", "No"])
+    payment_method = st.selectbox("Payment Method", [
+        "Electronic check", "Mailed check",
+        "Bank transfer (automatic)", "Credit card (automatic)"
+    ])
+    monthly_charges = st.slider("Monthly Charges ($)", 18.0, 120.0, 70.0)</code></pre>
+
+  <h4>Key Code: Build DataFrame, Engineer Features &amp; Predict</h4>
+
+  <pre><code class="language-python">if st.button("Predict Churn Risk", type="primary"):
+    # Build input DataFrame matching the training schema exactly
+    input_data = pd.DataFrame([{
+        'gender': gender,
+        'SeniorCitizen': 1 if senior_citizen == "Yes" else 0,
+        'Partner': partner,
+        'Dependents': dependents,
+        'tenure': tenure,
+        'PhoneService': phone_service,
+        'MultipleLines': multiple_lines,
+        'InternetService': internet_service,
+        'OnlineSecurity': online_security,
+        'OnlineBackup': online_backup,
+        'DeviceProtection': device_protection,
+        'TechSupport': tech_support,
+        'StreamingTV': streaming_tv,
+        'StreamingMovies': streaming_movies,
+        'Contract': contract,
+        'PaperlessBilling': paperless_billing,
+        'PaymentMethod': payment_method,
+        'MonthlyCharges': monthly_charges,
+        'TotalCharges': monthly_charges * tenure,  # Auto-computed
+    }])
+
+    # Apply shared feature engineering (identical to training)
+    input_engineered = engineer_features(input_data)
+
+    # Define feature order (must match training preprocessor)
+    numeric_features = ['SeniorCitizen', 'tenure', 'MonthlyCharges',
+                        'TotalCharges', 'ServiceCount', 'HasInternet',
+                        'HasPhone', 'AvgMonthlyCharge', 'TenureGroup']
+    categorical_features = ['gender', 'Partner', 'Dependents',
+                            'PhoneService', 'MultipleLines',
+                            'InternetService', 'OnlineSecurity',
+                            'OnlineBackup', 'DeviceProtection',
+                            'TechSupport', 'StreamingTV',
+                            'StreamingMovies', 'Contract',
+                            'PaperlessBilling', 'PaymentMethod']
+
+    input_final = input_engineered[numeric_features + categorical_features]
+
+    # Preprocess and predict
+    input_processed = preprocessor.transform(input_final)
+    churn_prob = model.predict_proba(input_processed)[0][1]</code></pre>
+
+  <h4>Key Code: Risk Display &amp; Real-Time SHAP Waterfall</h4>
+
+  <pre><code class="language-python">    # Display color-coded risk level
+    if churn_prob >= 0.5:
+        st.error(f"⚠️ HIGH RISK — Churn Probability: {churn_prob:.1%}")
+    elif churn_prob >= 0.3:
+        st.warning(f"⚡ MEDIUM RISK — Churn Probability: {churn_prob:.1%}")
+    else:
+        st.success(f"✅ LOW RISK — Churn Probability: {churn_prob:.1%}")
+
+    # Generate per-customer SHAP explanation
+    st.subheader("Why this prediction?")
+    cat_names = preprocessor.named_transformers_['cat'] \
+        .get_feature_names_out(categorical_features).tolist()
+    all_names = numeric_features + cat_names
+
+    explainer = shap.LinearExplainer(model, input_processed,
+                                     feature_names=all_names)
+    shap_values = explainer.shap_values(input_processed)
+
+    explanation = shap.Explanation(
+        values=shap_values[0],
+        base_values=explainer.expected_value,
+        data=input_processed[0],
+        feature_names=all_names
+    )
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    shap.waterfall_plot(explanation, max_display=10, show=False)
+    plt.tight_layout()
+    st.pyplot(fig)
+    plt.close()</code></pre>
+
+  <h4>Risk Thresholds</h4>
+  <table>
+    <thead>
+      <tr><th>Probability Range</th><th>Risk Level</th><th>Display Color</th><th>Streamlit Component</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&ge; 50%</td><td>HIGH RISK</td><td>Red</td><td><code>st.error()</code></td></tr>
+      <tr><td>30% &ndash; 49%</td><td>MEDIUM RISK</td><td>Yellow</td><td><code>st.warning()</code></td></tr>
+      <tr><td>&lt; 30%</td><td>LOW RISK</td><td>Green</td><td><code>st.success()</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Page 2: Model Performance</h3>
+  <p>
+    Displays the full model comparison from Phase 4 &mdash; the 5-model results table loaded from
+    <code>model_comparison.csv</code>, a blue info box explaining why Logistic Regression was selected,
+    the model comparison bar chart, the ROC curves overlay, and all 5 confusion matrices. All charts are
+    pre-generated PNGs loaded from the <code>figures/</code> directory.
+  </p>
+
+  <pre><code class="language-python"># PAGE 2: Model Performance
+st.title("📈 Model Performance")
+st.write("Comparison of 5 classification models trained on the "
+         "Telco Customer Churn dataset.")
+
+# Model comparison table
+comparison_df = pd.read_csv(os.path.join(APP_DIR, 'model_comparison.csv'))
+st.dataframe(comparison_df, use_container_width=True)
+
+st.info("**Best Model: Logistic Regression** — Highest AUC (0.834) "
+        "and Recall (0.789). Recall is our priority metric: it's "
+        "cheaper to send a retention offer to a loyal customer "
+        "than to miss a churner.")
+
+# Charts in two columns
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("Model Comparison")
+    st.image(os.path.join(APP_DIR, 'figures/model_comparison.png'),
+             use_container_width=True)
+with col2:
+    st.subheader("ROC Curves")
+    st.image(os.path.join(APP_DIR, 'figures/roc_curves.png'),
+             use_container_width=True)
+
+st.subheader("Confusion Matrices")
+st.image(os.path.join(APP_DIR, 'figures/confusion_matrix.png'),
+         use_container_width=True)</code></pre>
+
+  <h3>Page 3: Data Insights &amp; SHAP Explainability</h3>
+  <p>
+    Combines key EDA charts (churn by contract type, tenure distribution by churn) with the SHAP
+    beeswarm summary plot and the five business recommendations. This page bridges the analytical
+    findings and the model&rsquo;s learned patterns into a single view.
+  </p>
+
+  <pre><code class="language-python"># PAGE 3: Data Insights & SHAP Explainability
+st.title("🔍 Data Insights & SHAP Explainability")
+
+# EDA charts in two columns
+st.subheader("Key EDA Findings")
+col1, col2 = st.columns(2)
+with col1:
+    st.image(os.path.join(APP_DIR, 'figures/churn_by_contract.png'),
+             caption='Churn Rate by Contract Type',
+             use_container_width=True)
+with col2:
+    st.image(os.path.join(APP_DIR, 'figures/tenure_by_churn.png'),
+             caption='Tenure Distribution by Churn Status',
+             use_container_width=True)
+
+# SHAP summary
+st.markdown("---")
+st.subheader("SHAP Feature Importance")
+st.write("SHAP values show how each feature contributes to the "
+         "model's churn predictions.")
+st.image(os.path.join(APP_DIR, 'figures/shap_summary.png'),
+         caption='SHAP Summary — Top 15 Features Driving Churn',
+         use_container_width=True)
+
+# Business recommendations
+st.subheader("Business Recommendations")
+st.markdown("""
+1. **Incentivize annual contracts** — Month-to-month customers
+   churn at 42.7% vs 2.8% for two-year contracts
+2. **Focus retention on new customers** — Most churn happens
+   in the first few months
+3. **Bundle support add-ons** — Customers with OnlineSecurity
+   and TechSupport churn significantly less
+4. **Address fiber optic experience** — Fiber customers churn
+   more despite paying more (potential service quality issue)
+5. **Migrate electronic check users** — This payment method
+   correlates with higher churn
+""")</code></pre>
+
+  <h3>Page 4: Sample Predictions</h3>
+  <p>
+    Displays a table of 15 test set customers with their actual churn status, the model&rsquo;s predicted
+    status, and the churn probability score. The probability column is color-coded with a red-yellow-green
+    gradient so visitors can immediately see the model&rsquo;s confidence level. This gives a concrete
+    sense of model accuracy without needing to input values manually.
+  </p>
+
+  <pre><code class="language-python"># PAGE 4: Sample Predictions
+st.title("📋 Sample Predictions")
+st.write("Predictions on 15 test set customers showing actual vs "
+         "predicted churn with probability scores.")
+
+sample_df = pd.read_csv(
+    os.path.join(APP_DIR, '..', 'outputs', 'metrics',
+                 'sample_predictions.csv')
+)
+
+# Color-coded probability column
+st.dataframe(
+    sample_df.style.background_gradient(
+        subset=['Churn_Probability'], cmap='RdYlGn_r'
+    ),
+    use_container_width=True
+)
+
+st.markdown("---")
+st.write("**How to read this table:**")
+st.markdown("""
+- **Actual**: Whether the customer actually churned (1) or stayed (0)
+- **Predicted**: The model's binary prediction at the 0.5 threshold
+- **Churn_Probability**: The model's confidence score
+  (0 = definitely staying, 1 = definitely churning)
+""")</code></pre>
+
+  <h3>4-Page Summary</h3>
+  <table>
+    <thead>
+      <tr><th>Page</th><th>Title</th><th>Purpose</th><th>Key Features</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Predict Churn Risk</td>
+        <td>Real-time scoring of any customer profile</td>
+        <td>3-column input form (16 fields), auto-computed TotalCharges, color-coded risk level, live SHAP waterfall explanation</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Model Performance</td>
+        <td>Show all 5-model comparison results</td>
+        <td>Results table from CSV, info box explaining winner, model comparison chart, ROC curves, confusion matrices</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Data Insights</td>
+        <td>Bridge EDA findings and SHAP importance</td>
+        <td>Churn by contract chart, tenure histogram, SHAP beeswarm, 5 business recommendations</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Sample Predictions</td>
+        <td>Concrete examples of model accuracy</td>
+        <td>15 test customers with actual vs predicted, color-gradient probability column</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Train/Serve Consistency Guarantees</h3>
+  <p>
+    A common deployment failure is a mismatch between training-time and serve-time feature transformations.
+    This app avoids that through three design decisions:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Risk</th><th>Mitigation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Feature engineering differs between training and prediction</td>
+        <td><code>feature_helpers.py</code> is a single shared module &mdash; identical copy in <code>notebooks/</code> and <code>app/</code></td>
+      </tr>
+      <tr>
+        <td>Preprocessing pipeline differs (different scaling, different encoding)</td>
+        <td>The fitted <code>ColumnTransformer</code> is serialized via joblib &mdash; same scaler means, stds, and encoder categories at serve time</td>
+      </tr>
+      <tr>
+        <td>Feature column order mismatch</td>
+        <td>Feature lists are explicitly defined in the same order as training (<code>numeric_features + categorical_features</code>)</td>
+      </tr>
+      <tr>
+        <td>Unknown categories in user input</td>
+        <td><code>handle_unknown='ignore'</code> in OneHotEncoder &mdash; unseen categories produce zeros instead of errors</td>
+      </tr>
+      <tr>
+        <td>SeniorCitizen encoding mismatch</td>
+        <td>App converts "Yes"/"No" dropdown to 1/0 integer before building the DataFrame</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>App Files</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Purpose</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>app/app.py</code></td><td>Main Streamlit application (4 pages)</td><td>Written in Phase 7</td></tr>
+      <tr><td><code>app/feature_helpers.py</code></td><td>Shared feature engineering function</td><td>Copied from <code>notebooks/feature_helpers.py</code></td></tr>
+      <tr><td><code>app/best_model.pkl</code></td><td>Serialized LogisticRegression model</td><td>Copied from <code>models/best_model.pkl</code></td></tr>
+      <tr><td><code>app/preprocessor.pkl</code></td><td>Fitted ColumnTransformer (scaler + encoder)</td><td>Copied from <code>models/preprocessor.pkl</code></td></tr>
+      <tr><td><code>app/model_comparison.csv</code></td><td>5-model results table for Page 2</td><td>Copied from <code>outputs/metrics/</code></td></tr>
+      <tr><td><code>app/requirements.txt</code></td><td>Streamlit-specific dependencies</td><td>Written in Phase 7</td></tr>
+      <tr><td><code>app/figures/</code></td><td>6 pre-generated chart PNGs for Pages 2 &amp; 3</td><td>Copied from <code>outputs/figures/</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Streamlit Requirements</h3>
+
+  <pre><code class="language-text"># app/requirements.txt
+streamlit
+pandas
+numpy
+scikit-learn
+shap
+matplotlib
+joblib</code></pre>
+
+  <h3>Deployment</h3>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Platform</td><td>Streamlit Community Cloud (free tier)</td></tr>
+      <tr><td>Repository</td><td><code>nadeaujonny/nadeaujonny.github.io</code></td></tr>
+      <tr><td>Branch</td><td><code>main</code></td></tr>
+      <tr><td>Entry File</td><td><code>projects/ml-churn-prediction/app/app.py</code></td></tr>
+      <tr><td>Live URL</td><td><a href="https://nadeaujonnyappio-ba7xf6aknjidd9ppd5ww3t.streamlit.app" target="_blank">nadeaujonnyappio-ba7xf6aknjidd9ppd5ww3t.streamlit.app</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Why a Deployed App Matters</h3>
+  <p>
+    A deployed Streamlit app is significantly more impactful than a static notebook for three reasons:
+    it demonstrates <strong>deployment skills</strong> (model serialization, dependency management,
+    cloud hosting), it makes the project <strong>accessible to non-technical stakeholders</strong>
+    (a hiring manager can try the predictor without installing Python), and the real-time SHAP
+    waterfall explanations demonstrate <strong>explainability in action</strong> rather than as a static
+    screenshot. The app turns a completed analysis into a usable tool.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
