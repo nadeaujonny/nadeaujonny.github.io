@@ -386,8 +386,386 @@ else:
 
 <details class="dropdown-section">
   <summary><strong>Dataset</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Source, size, column descriptions table, known data issues -->
+
+  <h3>Source &amp; Overview</h3>
+  <p>
+    This project uses the <strong>Telco Customer Churn</strong> dataset &mdash; an IBM sample dataset hosted on
+    Kaggle at
+    <a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn" target="_blank">kaggle.com/datasets/blastchar/telco-customer-churn</a>.
+    The dataset contains records for 7,043 customers of a fictional telecom company, with 21 columns capturing
+    customer demographics, service subscriptions, account details, and whether the customer churned (cancelled
+    their service) in the last month.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>File</td><td><code>WA_Fn-UseC_-Telco-Customer-Churn.csv</code></td></tr>
+      <tr><td>File Size</td><td>~955 KB</td></tr>
+      <tr><td>Raw Dimensions</td><td>7,043 rows &times; 21 columns</td></tr>
+      <tr><td>Cleaned Dimensions</td><td>7,032 rows &times; 20 columns</td></tr>
+      <tr><td>Target Variable</td><td><code>Churn</code> (Yes/No &rarr; 1/0, binary classification)</td></tr>
+      <tr><td>Class Distribution</td><td>73.4% No Churn (5,163) / 26.6% Churn (1,869) &mdash; moderately imbalanced</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Loading &amp; Initial Inspection</h3>
+  <p>
+    The raw dataset was loaded and inspected in <code>01_data_cleaning.ipynb</code>. The first inspection
+    confirmed 7,043 rows, identified <code>TotalCharges</code> as an incorrectly typed object column, and
+    verified zero explicit nulls and zero duplicates in the raw data:
+  </p>
+
+  <pre><code class="language-python">import pandas as pd
+import numpy as np
+
+# Load the raw dataset
+df = pd.read_csv('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
+
+print(f"Shape: {df.shape}")
+print(f"\nColumn dtypes:\n{df.dtypes}")
+# Output: Shape: (7043, 21)
+# TotalCharges shows as 'object' — should be numeric
+
+# Confirm no explicit nulls and no duplicates
+print(f"Missing values per column:\n{df.isnull().sum()}")
+print(f"\nDuplicate rows: {df.duplicated().sum()}")
+# Output: 0 missing values across all columns, 0 duplicates
+
+# Check cardinality of each column
+print(f"\nUnique values per column:\n{df.nunique()}")
+# Output: customerID=7043 (unique), gender=2, SeniorCitizen=2,
+# tenure=73, MonthlyCharges=1585, TotalCharges=6531, etc.</code></pre>
+
+  <h3>Column Descriptions &mdash; Customer Demographics (5 columns)</h3>
+  <table>
+    <thead>
+      <tr><th>Column</th><th>Type</th><th>Values</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>customerID</code></td>
+        <td>string</td>
+        <td>7,043 unique</td>
+        <td>Unique customer identifier &mdash; dropped before modeling (not a predictive feature)</td>
+      </tr>
+      <tr>
+        <td><code>gender</code></td>
+        <td>categorical</td>
+        <td>Male, Female</td>
+        <td>Customer gender &mdash; EDA showed no meaningful difference in churn rates</td>
+      </tr>
+      <tr>
+        <td><code>SeniorCitizen</code></td>
+        <td>binary</td>
+        <td>0, 1</td>
+        <td>Whether customer is 65+ &mdash; already numeric (unlike other binary columns which use Yes/No), treated as a numeric feature during preprocessing</td>
+      </tr>
+      <tr>
+        <td><code>Partner</code></td>
+        <td>categorical</td>
+        <td>Yes, No</td>
+        <td>Whether customer has a partner</td>
+      </tr>
+      <tr>
+        <td><code>Dependents</code></td>
+        <td>categorical</td>
+        <td>Yes, No</td>
+        <td>Whether customer has dependents</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Column Descriptions &mdash; Service Information (10 columns)</h3>
+  <table>
+    <thead>
+      <tr><th>Column</th><th>Type</th><th>Values</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>tenure</code></td>
+        <td>integer</td>
+        <td>0&ndash;72 months</td>
+        <td>Number of months the customer has been with the company &mdash; emerged as the single strongest SHAP feature</td>
+      </tr>
+      <tr>
+        <td><code>PhoneService</code></td>
+        <td>categorical</td>
+        <td>Yes, No</td>
+        <td>Whether customer has phone service</td>
+      </tr>
+      <tr>
+        <td><code>MultipleLines</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No phone service</td>
+        <td>Whether customer has multiple phone lines &mdash; "No phone service" is a distinct category, not missing data</td>
+      </tr>
+      <tr>
+        <td><code>InternetService</code></td>
+        <td>categorical</td>
+        <td>DSL, Fiber optic, No</td>
+        <td>Type of internet service &mdash; fiber optic customers showed significantly higher churn rates despite paying more</td>
+      </tr>
+      <tr>
+        <td><code>OnlineSecurity</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has online security add-on &mdash; absence correlates strongly with churn</td>
+      </tr>
+      <tr>
+        <td><code>OnlineBackup</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has online backup add-on</td>
+      </tr>
+      <tr>
+        <td><code>DeviceProtection</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has device protection add-on</td>
+      </tr>
+      <tr>
+        <td><code>TechSupport</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has tech support add-on &mdash; absence correlates strongly with churn</td>
+      </tr>
+      <tr>
+        <td><code>StreamingTV</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has streaming TV add-on</td>
+      </tr>
+      <tr>
+        <td><code>StreamingMovies</code></td>
+        <td>categorical</td>
+        <td>Yes, No, No internet service</td>
+        <td>Whether customer has streaming movies add-on</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Column Descriptions &mdash; Account Information (5 columns)</h3>
+  <table>
+    <thead>
+      <tr><th>Column</th><th>Type</th><th>Values</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Contract</code></td>
+        <td>categorical</td>
+        <td>Month-to-month, One year, Two year</td>
+        <td>Contract type &mdash; the single strongest churn predictor in EDA (42.7% churn for month-to-month vs. 2.8% for two-year)</td>
+      </tr>
+      <tr>
+        <td><code>PaperlessBilling</code></td>
+        <td>categorical</td>
+        <td>Yes, No</td>
+        <td>Whether customer uses paperless billing</td>
+      </tr>
+      <tr>
+        <td><code>PaymentMethod</code></td>
+        <td>categorical</td>
+        <td>Electronic check, Mailed check, Bank transfer (automatic), Credit card (automatic)</td>
+        <td>Payment method &mdash; electronic check showed noticeably higher churn than other methods</td>
+      </tr>
+      <tr>
+        <td><code>MonthlyCharges</code></td>
+        <td>float</td>
+        <td>18.25&ndash;118.75</td>
+        <td>Monthly charge amount in dollars &mdash; churners skew toward $70&ndash;$100/month plans</td>
+      </tr>
+      <tr>
+        <td><code>TotalCharges</code></td>
+        <td>string &rarr; float</td>
+        <td>varies</td>
+        <td>Total amount charged over customer lifetime &mdash; stored as string in raw data with whitespace entries for tenure=0 customers (see Known Data Issues below)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Column Descriptions &mdash; Target Variable (1 column)</h3>
+  <table>
+    <thead>
+      <tr><th>Column</th><th>Type</th><th>Values</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Churn</code></td>
+        <td>categorical &rarr; binary</td>
+        <td>Yes &rarr; 1, No &rarr; 0</td>
+        <td>Whether the customer churned (cancelled service) in the last month &mdash; this is the prediction target</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Class Distribution</h3>
+  <p>
+    The target variable is <strong>moderately imbalanced</strong>: 73.4% of customers did not churn (class 0) while
+    26.6% did churn (class 1). This imbalance is not extreme enough to require synthetic oversampling (SMOTE), but it
+    is significant enough that all five models in this project use explicit class imbalance handling &mdash;
+    <code>class_weight='balanced'</code> for Logistic Regression, Random Forest, and SVM, and
+    <code>scale_pos_weight</code> (ratio of negatives to positives &asymp; 2.76) for XGBoost and LightGBM. Evaluation
+    also prioritizes recall and AUC over raw accuracy, since a naive "predict no churn for everyone" model would
+    achieve 73.4% accuracy while catching zero churners.
+  </p>
+
+  <pre><code class="language-python"># Verify class distribution after encoding
+print(df['Churn'].value_counts(normalize=True).round(4))
+# Output:
+# Churn
+# 0    0.7342
+# 1    0.2658
+
+# Compute class weight ratio for gradient boosting models
+pos_weight = y_train.value_counts()[0] / y_train.value_counts()[1]
+# pos_weight ≈ 2.76</code></pre>
+
+  <h3>Known Data Issues Handled</h3>
+  <p>
+    The dataset is relatively clean &mdash; no explicit missing values and no duplicate rows in the raw data.
+    However, three data issues required attention during cleaning:
+  </p>
+
+  <h4>Issue 1: TotalCharges Stored as String</h4>
+  <p>
+    The <code>TotalCharges</code> column was loaded as <code>object</code> dtype instead of numeric. Investigation
+    revealed that 11 rows contained whitespace strings instead of numeric values &mdash; all corresponding to
+    customers with <code>tenure=0</code> (brand new customers with no billing history). Converting with
+    <code>pd.to_numeric(errors='coerce')</code> turned these into NaN, and the 11 rows were dropped (0.16% of
+    data &mdash; negligible impact on model training).
+  </p>
+
+  <pre><code class="language-python"># Fix TotalCharges: convert from string to numeric
+# Whitespace entries (tenure=0 customers) will become NaN
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+
+# Check how many NaNs this created
+print(f"TotalCharges NaNs after conversion: {df['TotalCharges'].isna().sum()}")
+# Output: TotalCharges NaNs after conversion: 11
+
+# Investigate: all NaN rows are tenure=0 customers
+print(df[df['TotalCharges'].isna()][['customerID', 'tenure', 'MonthlyCharges', 'TotalCharges']])
+# Output:
+#       customerID  tenure  MonthlyCharges  TotalCharges
+# 488   4472-LVYGI       0           52.55           NaN
+# 753   3115-CZMZD       0           20.25           NaN
+# 936   5709-LVOEQ       0           80.85           NaN
+# 1082  4367-NUYAO       0           25.75           NaN
+# 1340  1371-DWPAZ       0           56.05           NaN
+# 3331  7644-OMVMY       0           19.85           NaN
+# 3826  3213-VVOLG       0           25.35           NaN
+# 4380  2520-SGTTA       0           20.00           NaN
+# 5218  2923-ARZLG       0           19.70           NaN
+# 6670  4075-WKNIU       0           73.35           NaN
+# 6754  2775-SEFEE       0           61.90           NaN
+
+# Drop the 11 rows — 0.16% of data, all tenure=0 with no billing history
+df = df.dropna(subset=['TotalCharges'])</code></pre>
+
+  <h4>Issue 2: SeniorCitizen Already Encoded as 0/1</h4>
+  <p>
+    Unlike every other binary column in the dataset (which uses Yes/No string values), <code>SeniorCitizen</code>
+    is already encoded as 0/1 integers. This means it does not need one-hot encoding and is treated as a
+    <strong>numeric feature</strong> during preprocessing. Applying <code>StandardScaler</code> to a 0/1 column
+    is harmless and maintains pipeline consistency.
+  </p>
+
+  <h4>Issue 3: "No internet service" and "No phone service" Values</h4>
+  <p>
+    Six service columns (<code>OnlineSecurity</code>, <code>OnlineBackup</code>, <code>DeviceProtection</code>,
+    <code>TechSupport</code>, <code>StreamingTV</code>, <code>StreamingMovies</code>) contain the value
+    "No internet service" for customers who do not have internet at all, and <code>MultipleLines</code> contains
+    "No phone service" for customers without phone service. These are <strong>informative categories, not missing
+    data</strong> &mdash; they carry meaningful signal (a customer who doesn't have internet at all is different
+    from a customer who has internet but opted out of a specific add-on). These values are preserved as distinct
+    categories during one-hot encoding with <code>handle_unknown='ignore'</code>.
+  </p>
+
+  <h3>Key Code: Complete Cleaning Pipeline</h3>
+  <p>
+    The full cleaning pipeline runs in <code>01_data_cleaning.ipynb</code> and produces the cleaned CSV consumed
+    by all downstream notebooks:
+  </p>
+
+  <pre><code class="language-python"># 1. Load raw data
+df = pd.read_csv('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
+# Shape: (7043, 21)
+
+# 2. Fix TotalCharges dtype (string → float)
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+# 11 whitespace entries become NaN
+
+# 3. Drop 11 NaN rows (all tenure=0, no billing history, 0.16% of data)
+df = df.dropna(subset=['TotalCharges'])
+
+# 4. Drop customerID (not a predictive feature)
+df = df.drop('customerID', axis=1)
+
+# 5. Encode target variable: Yes=1, No=0
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+
+# 6. Verify final state
+print(f"Shape after cleaning: {df.shape}")
+# Output: Shape after cleaning: (7032, 20)
+print(f"\nTotalCharges dtype: {df['TotalCharges'].dtype}")
+# Output: TotalCharges dtype: float64
+print(f"\nChurn distribution:\n{df['Churn'].value_counts(normalize=True).round(4)}")
+# Output: 0 = 0.7342, 1 = 0.2658
+
+# 7. Save cleaned dataset for subsequent notebooks
+df.to_csv('../data/telco_churn_cleaned.csv', index=False)
+print(f"Cleaned dataset saved: {df.shape[0]} rows × {df.shape[1]} columns")
+# Output: Cleaned dataset saved: 7032 rows × 20 columns
+# Columns: ['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure',
+#   'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
+#   'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV',
+#   'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod',
+#   'MonthlyCharges', 'TotalCharges', 'Churn']</code></pre>
+
+  <h3>Feature Categorization Summary</h3>
+  <p>
+    After cleaning, the 20 remaining columns break down into three groups that determined preprocessing strategy
+    in Phase 3:
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Count</th><th>Columns</th><th>Preprocessing</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Numeric (original)</td>
+        <td>4</td>
+        <td><code>SeniorCitizen</code>, <code>tenure</code>, <code>MonthlyCharges</code>, <code>TotalCharges</code></td>
+        <td>StandardScaler</td>
+      </tr>
+      <tr>
+        <td>Categorical (binary Yes/No)</td>
+        <td>6</td>
+        <td><code>gender</code>, <code>Partner</code>, <code>Dependents</code>, <code>PhoneService</code>, <code>PaperlessBilling</code>, <code>Churn</code> (target)</td>
+        <td>OneHotEncoder (drop='first') for features; Churn mapped directly to 0/1</td>
+      </tr>
+      <tr>
+        <td>Categorical (3&ndash;4 values)</td>
+        <td>9</td>
+        <td><code>MultipleLines</code>, <code>InternetService</code>, <code>OnlineSecurity</code>, <code>OnlineBackup</code>, <code>DeviceProtection</code>, <code>TechSupport</code>, <code>StreamingTV</code>, <code>StreamingMovies</code>, <code>Contract</code>, <code>PaymentMethod</code></td>
+        <td>OneHotEncoder (drop='first', handle_unknown='ignore')</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    After feature engineering in Phase 3 (adding <code>ServiceCount</code>, <code>HasInternet</code>,
+    <code>HasPhone</code>, <code>AvgMonthlyCharge</code>, and <code>TenureGroup</code>), the final feature set
+    grows to <strong>9 numeric + 15 categorical = 24 features before encoding</strong>, expanding to
+    <strong>35 columns after one-hot encoding</strong> with <code>drop='first'</code>.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
