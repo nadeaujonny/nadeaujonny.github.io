@@ -19,19 +19,15 @@ Mathematics Graduate | Google Data Analytics Certified | End-to-end Analytics Pr
 </p>
 
 ## About Me
-Since October 24th 2025, I have delved deep into data analytics--getting Google Certified, studying hard skills further from free online YouTube bootcamp videos, and completing independent data analytics projects to build my portfolio. I want to be clear, throughout my data analytics journey I have actively tried to maintain a balance between internalizing critical knowledge, personally developing key skills, and being the origin of authentic and deliberate analytical and procedural decisions; but also using the resources available to me to efficiently produce quality output. 
-
-My background is in mathematics--I graduated from UC Santa Barbara with a B.A. in Math and completed teaching credential coursework at CSULB with a 4.0 GPA. That foundation shows up in how I approach data: I'm comfortable with the logic behind statistical methods, I think in terms of structure and patterns, and years of breaking down complex problems for students taught me how to communicate analytical findings clearly. Before transitioning into analytics, I delivered over 1,500 hours of math instruction and consistently turned around struggling students by diagnosing exactly where their understanding broke down — the same diagnostic thinking I now apply to datasets.
-
-My portfolio reflects end-to-end analytical work across SQL, Excel, Tableau, Power BI, Python, and R--from querying 100K+ transactions in BigQuery and building ETL pipelines in Power Query, to designing star schema data models, writing DAX measures, and running statistical tests in R and Python. I'm currently building a supply chain analytics project targeting Oracle SQL, demand forecasting, inventory optimization, and MRP simulation--deliberately scoped to match real-world planning analyst workflows. I'm energized by collaborative problem-solving environments and I'm looking to bring this skill set to a team where data-driven decisions matter.
+I was born and raised in Torrance, California. I grew up playing soccer, playing video games,  and of course going to school. I tried hard in all three. I worked my way up to playing for a premier-level club team, I got all of the armor pieces in Halo 3, and I was consistently near the top of my class. Math was always a favorite subject of mine; I was always eager to tackle new and challenging problems and confident in my ability to solve them. I went to UCSB and enjoyed the people there, the campus, the food, the absolutely prime location, and of course my classes. I’ll never forget Euclid's proof that there exist infinitely many prime numbers. During my summers I would work at Escape Communications, while also taking UCSB summer classes. I majored in Mathematics and decided to pursue math education. The excitement of giving presentations and lessons along with the satisfaction of being competent enough in the topic to answer all questions thrown my way are what drew me to it. I graduated, and I got a job as a tutor (with opportunities to give instruction) at a private school back in Torrance called Mr. J’s Academy. I worked there during schoolday hours for two years while also tutoring for Wyzant and Blue Train College Prep during after-school hours. During my second year there I spent my evenings taking classes and doing coursework at CSULB to get a math teaching credential. I completed the coursework with a 4.0 GPA and began my student teaching the next academic semester. I enjoyed student teaching and the kids were great for the most part. I was quick to realize that some students in my classes would talk during my lessons and would not stop when I told them to. This was extremely frustrating and my mentor teachers said it would be a constant struggle, which made me rethink my career path. I knew that I could really help these students learn and succeed but some of them didn’t put in the effort to even make that possible. I didn’t feel valued. I wanted to do something where I could feel valued. I did some research and landed on data analytics. Data analysis work is highly valuable for companies that want to optimize performance and maximize profit. So I have pursued that, and I have learned a lot. I am proud of my work, and I am still building projects and adding to my portfolio. I know the field is changing drastically right now and I see that as an opportunity to take advantage of my resources and learn how to leverage them to perform in these jobs as well as possible.
 
 ---
 
 ## Tools Used
 - **SQL & Databases:** BigQuery, MySQL, Oracle SQL, Joins, CTEs, Window Functions, DDL/DML
 - **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query
-- **Visualization & BI:** Tableau, Power BI (DAX, Star Schema), Looker Studio, Data Storytelling
-- **Programming:** Python, R (tidyverse, ggplot2), Jupyter Notebooks, VS Code
+- **Visualization & BI:** Tableau, Power BI, Looker Studio, Excel Dashboards
+- **Programming:** Python, R , Jupyter Notebooks, VS Code, RStudio
 - **AI:** Claude, Claude Code, ChatGPT, Codex, Gemini
 - **Version Control:** Git, GitHub
 
@@ -43,10 +39,11 @@ I have used the following AI tools in the following ways: Claude Code and ChatGP
 ---
 
 ## Education & Certifications
-- **B.A. in Mathematics** — UCSB  
-- **Minor: Secondary Mathematics & Science Education** — UCSB  
-- **Single Subject Teaching Credential Coursework (Mathematics)** — CSULB (4.0 GPA)  
-- **Google Data Analytics Professional Certificate** — Coursera  
+- **B.A. in Mathematics** -- UCSB  
+- **Minor: Secondary Mathematics & Science Education** -- UCSB  
+- **Single Subject Teaching Credential Coursework (Mathematics)** -- CSULB (4.0 GPA)  
+- **Google Data Analytics Professional Certificate** -- Coursera
+- **South High School** -- 4.4 GPA
 
 ---
 
