@@ -2883,8 +2883,417 @@ print(classification_report(y_test, y_pred_final, target_names=['No Churn', 'Chu
 
 <details class="dropdown-section">
   <summary><strong>Phase 6 &mdash; SHAP Explainability</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: SHAP summary plot, bar plot, waterfall example, business translations -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 6 is the crown jewel of the project &mdash; what separates it from a tutorial. SHAP (SHapley
+    Additive exPlanations) values are computed for every test set customer to answer two questions:
+    <strong>globally</strong>, which features drive churn predictions across the entire customer base? And
+    <strong>locally</strong>, for any individual customer, exactly which features pushed their risk score up
+    or down, and by how much? The result is a model that doesn&rsquo;t just predict &mdash; it <em>explains</em>.
+    This phase runs in the second half of <code>notebooks/05_tuning_evaluation.ipynb</code>.
+  </p>
+
+  <h3>What Is SHAP?</h3>
+  <p>
+    SHAP is rooted in cooperative game theory (specifically Shapley values). For each prediction, SHAP
+    assigns every feature an additive contribution showing how it pushed the prediction away from the
+    baseline (the average prediction across all customers). Features with positive SHAP values push toward
+    churn; features with negative SHAP values push away from churn. The values are additive &mdash; the
+    base value plus all SHAP values equals the model&rsquo;s log-odds output for that customer.
+  </p>
+
+  <h3>Key Code: Create SHAP Explainer &amp; Compute Values</h3>
+  <p>
+    Since the final model is Logistic Regression, <code>shap.LinearExplainer</code> is used (the appropriate
+    explainer for linear models). SHAP values are computed for all 1,407 test set customers, producing a
+    matrix of shape (1407, 35) &mdash; one SHAP value per feature per customer:
+  </p>
+
+  <pre><code class="language-python">import shap
+import matplotlib.pyplot as plt
+
+# Load the final model and processed test data
+final_model = joblib.load('../models/best_model.pkl')
+X_train_processed, X_test_processed = joblib.load('../models/processed_data.pkl')
+all_feature_names = joblib.load('../models/feature_names.pkl')
+
+# Create SHAP explainer (LinearExplainer for logistic regression)
+explainer = shap.LinearExplainer(final_model, X_train_processed,
+                                  feature_names=all_feature_names)
+
+# Compute SHAP values for all test set customers
+shap_values = explainer.shap_values(X_test_processed)
+
+print(f"SHAP values shape: {shap_values.shape}")
+print(f"Base value (expected value): {explainer.expected_value:.4f}")
+# Output:
+# SHAP values shape: (1407, 35)
+# Base value (expected value): -1.0175  (log-odds space)</code></pre>
+
+  <h3>Key Code: SHAP Summary Plot (Beeswarm)</h3>
+  <p>
+    The beeswarm plot is the most informative SHAP visualization. Each dot represents one customer&rsquo;s
+    SHAP value for one feature. The horizontal position shows the magnitude and direction of impact (right =
+    pushes toward churn, left = pushes away from churn), and the color indicates whether the feature value
+    itself was high (red) or low (blue). Features are ranked top-to-bottom by mean absolute SHAP value
+    (global importance):
+  </p>
+
+  <pre><code class="language-python"># SHAP Summary Plot (Beeswarm) — global feature importance + direction
+plt.figure(figsize=(10, 8))
+shap.summary_plot(shap_values, X_test_processed,
+                  feature_names=all_feature_names,
+                  max_display=15, show=False)
+plt.tight_layout()
+plt.savefig('../outputs/figures/shap_summary.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/shap_summary.png"
+      alt="SHAP beeswarm summary plot showing top 15 features with direction and magnitude of impact on churn predictions"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      SHAP summary (beeswarm) plot &mdash; top 15 features driving churn predictions across all 1,407 test
+      customers. Each dot is one customer; horizontal position shows impact direction and magnitude; color
+      shows feature value (red = high, blue = low). Also displayed in the Streamlit app (Page 3: Data Insights).
+    </figcaption>
+  </figure>
+
+  <h3>Key Code: SHAP Bar Plot (Global Importance)</h3>
+  <p>
+    The bar plot provides a simpler view of global importance &mdash; showing just the mean absolute SHAP
+    value per feature without the directional detail of the beeswarm:
+  </p>
+
+  <pre><code class="language-python"># SHAP Bar Plot — mean absolute SHAP values (simpler global importance)
+plt.figure(figsize=(10, 8))
+shap.summary_plot(shap_values, X_test_processed,
+                  feature_names=all_feature_names,
+                  plot_type='bar', max_display=15, show=False)
+plt.tight_layout()
+plt.savefig('../outputs/figures/shap_bar.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/shap_bar.png"
+      alt="SHAP bar plot showing mean absolute SHAP values for top 15 features"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      SHAP bar plot &mdash; mean absolute SHAP value per feature, showing overall importance ranking
+      without directional detail. Tenure, Contract_Two year, and InternetService_Fiber optic are the
+      top three drivers.
+    </figcaption>
+  </figure>
+
+  <h3>Global Feature Importance: Top 15</h3>
+  <p>
+    The top 15 features by mean absolute SHAP value, with business interpretation for each:
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Rank</th><th>Feature</th><th>Direction</th><th>Business Interpretation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><code>tenure</code></td>
+        <td>Low tenure &rarr; churn</td>
+        <td>The single strongest predictor. New customers are the highest risk &mdash; the first 12 months are critical.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><code>Contract_Two year</code></td>
+        <td>Having two-year contract &rarr; no churn</td>
+        <td>Strongest churn <em>reducer</em>. Long-term contracts lock in loyalty. (Baseline: month-to-month)</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><code>InternetService_Fiber optic</code></td>
+        <td>Fiber optic &rarr; churn</td>
+        <td>Fiber customers churn more despite paying more &mdash; points to a service quality or expectations gap.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><code>TotalCharges</code></td>
+        <td>Higher total charges &rarr; no churn</td>
+        <td>Proxy for loyalty &mdash; customers who&rsquo;ve paid more have been around longer and are stickier.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><code>MonthlyCharges</code></td>
+        <td>Higher monthly charges &rarr; churn</td>
+        <td>Higher monthly bills correlate with churn &mdash; customers may feel they&rsquo;re not getting value.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><code>Contract_One year</code></td>
+        <td>Having one-year contract &rarr; no churn</td>
+        <td>Reduces churn, but less strongly than two-year. Any commitment beyond month-to-month helps.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><code>TenureGroup</code></td>
+        <td>Lower group &rarr; churn</td>
+        <td>Reinforces the tenure signal &mdash; the 0&ndash;12 month bucket is the danger zone.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td><code>PaymentMethod_Electronic check</code></td>
+        <td>Electronic check &rarr; churn</td>
+        <td>Manual payment = less friction to leave. Automatic payments create passive retention.</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><code>OnlineSecurity_Yes</code></td>
+        <td>Having security &rarr; no churn</td>
+        <td>Support add-ons increase switching cost and perceived value.</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><code>MultipleLines_Yes</code></td>
+        <td>Multiple lines &rarr; slight churn</td>
+        <td>May correlate with higher bills; minor effect.</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><code>TechSupport_Yes</code></td>
+        <td>Having tech support &rarr; no churn</td>
+        <td>Customers who feel supported stay longer. Bundling tech support is a direct retention lever.</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td><code>StreamingTV_Yes</code></td>
+        <td>Streaming TV &rarr; slight churn</td>
+        <td>Correlated with higher monthly charges; minor independent effect.</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td><code>StreamingMovies_Yes</code></td>
+        <td>Streaming movies &rarr; slight churn</td>
+        <td>Same pattern as StreamingTV &mdash; service usage correlated with higher bills.</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td><code>PaperlessBilling_Yes</code></td>
+        <td>Paperless billing &rarr; slight churn</td>
+        <td>Digital-first customers may be more tech-savvy and more willing to switch providers.</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td><code>HasInternet</code></td>
+        <td>Having internet &rarr; churn</td>
+        <td>Internet customers face more competition and have more reasons to switch than phone-only customers.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: SHAP Waterfall Plot (Individual Customer Explanation)</h3>
+  <p>
+    The waterfall plot explains a <strong>single customer&rsquo;s prediction</strong> feature by feature.
+    Starting from the base value (average prediction), each bar shows how one feature pushed the prediction
+    up (toward churn, red) or down (away from churn, blue). This is the visualization that appears in the
+    Streamlit app&rsquo;s Predict page for every customer scored in real time:
+  </p>
+
+  <pre><code class="language-python"># Find the highest-risk customer in the test set
+y_prob_final = final_model.predict_proba(X_test_processed)[:, 1]
+high_risk_idx = y_prob_final.argmax()
+
+print(f"Highest-risk customer index: {high_risk_idx}")
+print(f"Churn probability: {y_prob_final[high_risk_idx]:.4f}")
+print(f"Actual churn: {y_test.iloc[high_risk_idx]}")
+
+# Build SHAP Explanation object for this customer
+explanation = shap.Explanation(
+    values=shap_values[high_risk_idx],
+    base_values=explainer.expected_value,
+    data=X_test_processed[high_risk_idx],
+    feature_names=all_feature_names
+)
+
+# Generate waterfall plot
+fig, ax = plt.subplots(figsize=(10, 6))
+shap.waterfall_plot(explanation, max_display=10, show=False)
+plt.tight_layout()
+plt.savefig('../outputs/figures/shap_waterfall_example.png', dpi=150,
+            bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/shap_waterfall_example.png"
+      alt="SHAP waterfall plot showing feature-by-feature contribution for the highest-risk customer"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      SHAP waterfall plot for the highest-risk customer in the test set. Each bar shows one feature&rsquo;s
+      contribution, starting from the base value (average prediction). Red bars push toward churn; blue bars
+      push away from churn. This same type of plot is generated in real time in the Streamlit app for every
+      customer scored.
+    </figcaption>
+  </figure>
+
+  <h3>Waterfall Decomposition: High-Risk Customer</h3>
+  <p>
+    The highest-risk customer in the test set was correctly predicted as a churner. The waterfall plot breaks
+    down exactly why the model flagged them:
+  </p>
+
+  <h4>Features Pushing Toward Churn (Red)</h4>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>SHAP Value</th><th>Plain-Language Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>tenure</code></td><td>+1.22</td><td>Very low tenure &mdash; brand new customer, highest risk window</td></tr>
+      <tr><td><code>InternetService_Fiber optic</code></td><td>+0.59</td><td>Fiber optic customer &mdash; higher churn rate segment</td></tr>
+      <tr><td><code>Contract_Two year</code> = 0</td><td>+0.36</td><td>Not on a two-year contract &mdash; no long-term commitment</td></tr>
+      <tr><td><code>TenureGroup</code></td><td>+0.30</td><td>Falls in the 0&ndash;12 month danger zone bucket</td></tr>
+      <tr><td><code>PaymentMethod_Electronic check</code></td><td>+0.20</td><td>Manual payment method &mdash; less friction to leave</td></tr>
+      <tr><td><code>MultipleLines_Yes</code></td><td>+0.19</td><td>Multiple lines &mdash; correlated with higher bills</td></tr>
+      <tr><td><code>SeniorCitizen</code></td><td>+0.18</td><td>Senior citizen &mdash; slightly higher churn demographic</td></tr>
+      <tr><td><code>StreamingMovies_Yes</code></td><td>+0.17</td><td>Streaming movies &mdash; adds to monthly cost</td></tr>
+      <tr><td><code>StreamingTV_Yes</code></td><td>+0.17</td><td>Streaming TV &mdash; adds to monthly cost</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Features Pushing Away from Churn (Blue)</h4>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>SHAP Value</th><th>Plain-Language Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>TotalCharges</code></td><td>&minus;0.54</td><td>Relatively low total charges partially offset risk</td></tr>
+      <tr><td><code>MonthlyCharges</code></td><td>&minus;0.44</td><td>Monthly charges not at the extreme high end</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Plain-language summary:</strong> &ldquo;This customer is high risk because they have very low
+    tenure, use fiber optic internet, are not on a long-term contract, pay by electronic check, and are a
+    senior citizen. Their relatively low total and monthly charges partially offset the risk, but not
+    enough.&rdquo;
+  </p>
+
+  <h3>Key Code: SHAP in the Streamlit App (Real-Time Per-Customer Explanations)</h3>
+  <p>
+    The Streamlit app generates SHAP waterfall plots on-the-fly for every customer scored. When a user
+    submits a customer profile through the form, the app loads the model and preprocessor, transforms
+    the input, predicts the churn probability, and then runs SHAP to explain that specific prediction:
+  </p>
+
+  <pre><code class="language-python"># From app/app.py — real-time SHAP explanation in the Streamlit app
+
+# After preprocessing and prediction...
+churn_prob = model.predict_proba(input_processed)[0][1]
+
+# Generate per-customer SHAP explanation
+cat_names = preprocessor.named_transformers_['cat'] \
+    .get_feature_names_out(categorical_features).tolist()
+all_names = numeric_features + cat_names
+
+explainer = shap.LinearExplainer(model, input_processed,
+                                  feature_names=all_names)
+shap_values = explainer.shap_values(input_processed)
+
+explanation = shap.Explanation(
+    values=shap_values[0],
+    base_values=explainer.expected_value,
+    data=input_processed[0],
+    feature_names=all_names
+)
+
+# Display waterfall in Streamlit
+fig, ax = plt.subplots(figsize=(8, 5))
+shap.waterfall_plot(explanation, max_display=10, show=False)
+plt.tight_layout()
+st.pyplot(fig)
+plt.close()</code></pre>
+
+  <h3>Business Translations of SHAP Findings</h3>
+  <p>
+    SHAP values translate model predictions into actionable business insights. Here are the key
+    translations from the global importance ranking:
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>SHAP Finding</th><th>Business Translation</th><th>Recommended Action</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tenure is the #1 driver; low tenure pushes strongly toward churn</td>
+        <td>New customers are the highest risk segment &mdash; most attrition happens in the first 12 months</td>
+        <td>Focus retention programs on the first-year experience: onboarding, check-ins, early loyalty incentives</td>
+      </tr>
+      <tr>
+        <td>Contract_Two year is the #1 churn <em>reducer</em></td>
+        <td>Long-term contracts are the single most effective retention mechanism in the data</td>
+        <td>Incentivize annual/two-year contracts &mdash; even small discounts would likely pay for themselves through reduced churn</td>
+      </tr>
+      <tr>
+        <td>InternetService_Fiber optic pushes toward churn despite higher revenue</td>
+        <td>Fiber customers pay more but leave more &mdash; this is a service quality or expectations problem, not a pricing problem</td>
+        <td>Investigate fiber optic service quality, speed consistency, and support experience</td>
+      </tr>
+      <tr>
+        <td>OnlineSecurity and TechSupport reduce churn when present</td>
+        <td>Support add-ons create both perceived value and switching cost</td>
+        <td>Bundle OnlineSecurity and TechSupport at reduced cost or include by default for at-risk segments</td>
+      </tr>
+      <tr>
+        <td>Electronic check payment increases churn</td>
+        <td>Manual payment = less friction to cancel; automatic payments create passive retention</td>
+        <td>Migrate electronic check users to automatic payment methods (bank transfer, credit card)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Connection to Teaching Background</h3>
+  <p>
+    SHAP values translate black-box model predictions into plain-language explanations that any business
+    stakeholder can understand. Instead of just saying &ldquo;this customer is high risk,&rdquo; the model
+    says &ldquo;this customer is high risk <em>because</em> they&rsquo;re on a month-to-month contract, have
+    been here only 3 months, and don&rsquo;t have tech support.&rdquo; This ability to make complex analytical
+    outputs accessible to non-technical audiences directly ties to a background in mathematics education and
+    translating abstract concepts for diverse learners.
+  </p>
+
+  <h3>Charts Generated</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Description</th><th>Reused In</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>shap_summary.png</code></td>
+        <td>Beeswarm plot &mdash; top 15 features with direction + magnitude for all 1,407 test customers</td>
+        <td>Streamlit app (Page 3), portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>shap_bar.png</code></td>
+        <td>Bar plot &mdash; mean absolute SHAP values (simpler global importance view)</td>
+        <td>Portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>shap_waterfall_example.png</code></td>
+        <td>Waterfall plot &mdash; single high-risk customer showing feature-by-feature contribution</td>
+        <td>Portfolio page</td>
+      </tr>
+    </tbody>
+  </table>
+
 </details>
 
 <details class="dropdown-section">
