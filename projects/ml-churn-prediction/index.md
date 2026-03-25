@@ -3967,8 +3967,357 @@ print(f"Cost of extra missed churners: ${cost_of_extra_missed:,}")
 
 <details class="dropdown-section">
   <summary><strong>Technical Details</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Libraries table, final model specs, how to reproduce, project structure tree -->
+
+  <h3>Libraries &amp; Dependencies</h3>
+  <table>
+    <thead>
+      <tr><th>Library</th><th>Role in This Project</th><th>Phase(s) Used</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>pandas</code></td>
+        <td>Data loading, cleaning, manipulation, feature engineering, DataFrame operations throughout</td>
+        <td>All phases (1&ndash;7)</td>
+      </tr>
+      <tr>
+        <td><code>numpy</code></td>
+        <td>Numerical computing, array operations</td>
+        <td>All phases</td>
+      </tr>
+      <tr>
+        <td><code>scikit-learn</code></td>
+        <td>Logistic Regression, Random Forest, SVM, ColumnTransformer, StandardScaler, OneHotEncoder, train_test_split, StratifiedKFold, cross_val_score, RandomizedSearchCV, all evaluation metrics</td>
+        <td>Phases 3&ndash;5</td>
+      </tr>
+      <tr>
+        <td><code>xgboost</code></td>
+        <td>XGBClassifier &mdash; gradient boosting (level-wise tree growth)</td>
+        <td>Phase 4</td>
+      </tr>
+      <tr>
+        <td><code>lightgbm</code></td>
+        <td>LGBMClassifier &mdash; gradient boosting (leaf-wise tree growth)</td>
+        <td>Phase 4</td>
+      </tr>
+      <tr>
+        <td><code>shap</code></td>
+        <td>LinearExplainer for global feature importance (beeswarm, bar plots) and per-customer waterfall explanations</td>
+        <td>Phase 6, Streamlit app (Page 1)</td>
+      </tr>
+      <tr>
+        <td><code>matplotlib</code></td>
+        <td>All chart generation &mdash; EDA visualizations, model comparison, ROC curves, confusion matrices, SHAP plots</td>
+        <td>Phases 2, 4, 6, Streamlit app</td>
+      </tr>
+      <tr>
+        <td><code>seaborn</code></td>
+        <td>Statistical visualization &mdash; heatmaps, styled plots built on top of matplotlib</td>
+        <td>Phases 2, 4</td>
+      </tr>
+      <tr>
+        <td><code>streamlit</code></td>
+        <td>4-page interactive web application &mdash; input forms, predictions, chart display, data tables</td>
+        <td>Phase 7 (deployment)</td>
+      </tr>
+      <tr>
+        <td><code>joblib</code></td>
+        <td>Serialization of model (<code>.pkl</code>), preprocessor, feature names, and train/test data for artifact handoff between notebooks and app</td>
+        <td>Phases 3&ndash;7</td>
+      </tr>
+      <tr>
+        <td><code>scipy</code></td>
+        <td>Statistical distributions used by RandomizedSearchCV parameter spaces</td>
+        <td>Phase 5</td>
+      </tr>
+      <tr>
+        <td><code>jupyter</code></td>
+        <td>Interactive notebook environment for all 5 analysis notebooks</td>
+        <td>Phases 1&ndash;6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Full Requirements</h3>
+
+  <pre><code class="language-text"># requirements.txt (full project)
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+xgboost>=2.0
+lightgbm>=4.0
+shap>=0.42
+matplotlib>=3.7
+seaborn>=0.12
+streamlit>=1.28
+scipy>=1.10
+joblib>=1.3
+jupyter>=1.0</code></pre>
+
+  <pre><code class="language-text"># app/requirements.txt (Streamlit deployment only)
+streamlit
+pandas
+numpy
+scikit-learn
+shap
+matplotlib
+joblib</code></pre>
+
+  <pre><code class="language-bash"># Install everything
+pip install pandas numpy scikit-learn xgboost lightgbm shap \
+    matplotlib seaborn streamlit scipy joblib jupyter</code></pre>
+
+  <p>
+    All libraries install via pip with no special dependencies. <strong>No GPU required.</strong>
+    Everything runs locally on any modern machine.
+  </p>
+
+  <h3>Final Model Specification</h3>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Algorithm</td><td>Logistic Regression (<code>sklearn.linear_model.LogisticRegression</code>)</td></tr>
+      <tr><td>Key Parameter</td><td><code>class_weight='balanced'</code></td></tr>
+      <tr><td>Other Parameters</td><td><code>max_iter=1000, random_state=42</code></td></tr>
+      <tr><td>Input Features</td><td>35 (9 numeric + 26 one-hot encoded from 15 categorical)</td></tr>
+      <tr><td>Training Rows</td><td>5,625 (80% of 7,032)</td></tr>
+      <tr><td>Test Rows</td><td>1,407 (20% of 7,032)</td></tr>
+      <tr><td>Test AUC</td><td>0.8344</td></tr>
+      <tr><td>Test Recall</td><td>0.7888 (catches 79% of churners)</td></tr>
+      <tr><td>Test F1</td><td>0.6033</td></tr>
+      <tr><td>Test Accuracy</td><td>0.7242</td></tr>
+      <tr><td>Serialized File</td><td><code>models/best_model.pkl</code> (also copied to <code>app/best_model.pkl</code>)</td></tr>
+      <tr><td>Explainer</td><td><code>shap.LinearExplainer</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>How to Reproduce</h3>
+  <ol>
+    <li>
+      <strong>Clone the repository:</strong>
+      <pre><code class="language-bash">git clone https://github.com/nadeaujonny/nadeaujonny.github.io.git
+cd projects/ml-churn-prediction</code></pre>
+    </li>
+    <li>
+      <strong>Download the dataset</strong> from
+      <a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn" target="_blank">Kaggle</a>
+      and place the CSV file in <code>data/</code>:
+      <pre><code class="language-text">data/WA_Fn-UseC_-Telco-Customer-Churn.csv</code></pre>
+    </li>
+    <li>
+      <strong>Install dependencies:</strong>
+      <pre><code class="language-bash">pip install -r requirements.txt</code></pre>
+    </li>
+    <li>
+      <strong>Run the notebooks in order</strong> (each builds on the previous):
+      <pre><code class="language-bash">jupyter notebook
+# Execute in order:
+# 01_data_cleaning.ipynb     → produces data/telco_churn_cleaned.csv
+# 02_eda.ipynb               → produces outputs/figures/*.png
+# 03_feature_engineering.ipynb → produces models/preprocessor.pkl + splits
+# 04_model_training.ipynb    → produces models/best_model.pkl + charts
+# 05_tuning_evaluation.ipynb → produces SHAP charts + final evaluation</code></pre>
+    </li>
+    <li>
+      <strong>Run the Streamlit app locally:</strong>
+      <pre><code class="language-bash">cd app
+streamlit run app.py</code></pre>
+    </li>
+  </ol>
+
+  <h3>Notebook Pipeline &amp; Data Flow</h3>
+  <table>
+    <thead>
+      <tr><th>Notebook</th><th>Input</th><th>Output</th><th>Phase</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>01_data_cleaning.ipynb</code></td>
+        <td>Raw CSV (7,043 &times; 21)</td>
+        <td><code>data/telco_churn_cleaned.csv</code> (7,032 &times; 20)</td>
+        <td>Phase 1</td>
+      </tr>
+      <tr>
+        <td><code>02_eda.ipynb</code></td>
+        <td>Cleaned CSV</td>
+        <td>7 chart PNGs in <code>outputs/figures/</code></td>
+        <td>Phase 2</td>
+      </tr>
+      <tr>
+        <td><code>03_feature_engineering.ipynb</code></td>
+        <td>Cleaned CSV</td>
+        <td><code>models/preprocessor.pkl</code>, <code>feature_names.pkl</code>, <code>train_test_split.pkl</code>, <code>processed_data.pkl</code></td>
+        <td>Phase 3</td>
+      </tr>
+      <tr>
+        <td><code>04_model_training.ipynb</code></td>
+        <td>Preprocessed splits from Phase 3</td>
+        <td><code>models/best_model.pkl</code>, <code>all_models.pkl</code>, <code>model_comparison.csv</code>, 3 chart PNGs</td>
+        <td>Phase 4</td>
+      </tr>
+      <tr>
+        <td><code>05_tuning_evaluation.ipynb</code></td>
+        <td>Best model + preprocessed data from Phases 3&ndash;4</td>
+        <td>Tuning results, 3 SHAP chart PNGs, <code>sample_predictions.csv</code>, final model confirmation</td>
+        <td>Phases 5&ndash;6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Project Structure</h3>
+
+  <pre><code class="language-text">projects/ml-churn-prediction/
+├── index.md                            # Portfolio page (this page)
+├── README.md                           # GitHub README
+├── requirements.txt                    # Full project Python dependencies
+├── .gitignore
+│
+├── data/
+│   ├── WA_Fn-UseC_-Telco-Customer-Churn.csv   # Raw dataset (gitignored)
+│   └── telco_churn_cleaned.csv                  # Cleaned dataset (gitignored)
+│
+├── notebooks/
+│   ├── 01_data_cleaning.ipynb          # Phase 1: Load, inspect, clean, save
+│   ├── 02_eda.ipynb                    # Phase 2: 7 visualizations, findings
+│   ├── 03_feature_engineering.ipynb    # Phase 3: Features, split, preprocessing
+│   ├── 04_model_training.ipynb         # Phase 4: Train 5 models, compare, save
+│   ├── 05_tuning_evaluation.ipynb      # Phases 5–6: Tuning, SHAP, final eval
+│   └── feature_helpers.py              # Shared feature engineering function
+│
+├── models/
+│   ├── best_model.pkl                  # Final Logistic Regression model
+│   ├── preprocessor.pkl                # Fitted ColumnTransformer
+│   ├── feature_names.pkl               # 35 post-encoding feature names
+│   ├── all_models.pkl                  # All 5 fitted models
+│   ├── train_test_split.pkl            # (X_train, X_test, y_train, y_test)
+│   └── processed_data.pkl              # (X_train_processed, X_test_processed)
+│
+├── outputs/
+│   ├── figures/
+│   │   ├── churn_distribution.png      # Overall churn bar chart
+│   │   ├── churn_by_contract.png       # Churn rate by contract type ★
+│   │   ├── tenure_by_churn.png         # Tenure histograms by churn ★
+│   │   ├── monthly_charges_by_churn.png
+│   │   ├── churn_by_categories.png     # 4×4 categorical grid
+│   │   ├── correlation_heatmap.png
+│   │   ├── tenure_vs_charges_scatter.png
+│   │   ├── model_comparison.png        # Model comparison bar chart ★
+│   │   ├── roc_curves.png              # ROC curves overlay ★
+│   │   ├── confusion_matrix.png        # 5 confusion matrices ★
+│   │   ├── shap_summary.png            # SHAP beeswarm ★
+│   │   ├── shap_bar.png                # SHAP bar plot
+│   │   └── shap_waterfall_example.png  # SHAP waterfall (high-risk)
+│   └── metrics/
+│       ├── model_comparison.csv        # 5-model results table ★
+│       └── sample_predictions.csv      # 15 test customer predictions
+│
+└── app/
+    ├── app.py                          # Streamlit application (4 pages)
+    ├── feature_helpers.py              # Copy of shared function
+    ├── best_model.pkl                  # Copy for deployment
+    ├── preprocessor.pkl                # Copy for deployment
+    ├── model_comparison.csv            # Copy for Page 2
+    ├── requirements.txt                # Streamlit-specific deps
+    └── figures/                        # ★ Chart copies for app
+        ├── churn_by_contract.png
+        ├── confusion_matrix.png
+        ├── model_comparison.png
+        ├── roc_curves.png
+        ├── shap_summary.png
+        └── tenure_by_churn.png</code></pre>
+
+  <p style="font-size: 0.85em; color: #666;">
+    ★ indicates files that are used by both the notebooks/portfolio page and the Streamlit app
+    (copied into <code>app/figures/</code> for deployment).
+  </p>
+
+  <h3>Serialized Artifacts &amp; Data Flow</h3>
+  <table>
+    <thead>
+      <tr><th>Artifact</th><th>Created By</th><th>Consumed By</th><th>Contents</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>telco_churn_cleaned.csv</code></td>
+        <td>Notebook 01</td>
+        <td>Notebooks 02, 03</td>
+        <td>7,032 &times; 20 cleaned dataset</td>
+      </tr>
+      <tr>
+        <td><code>preprocessor.pkl</code></td>
+        <td>Notebook 03</td>
+        <td>Notebooks 04, 05, Streamlit app</td>
+        <td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td>
+      </tr>
+      <tr>
+        <td><code>feature_names.pkl</code></td>
+        <td>Notebook 03</td>
+        <td>Notebooks 04, 05</td>
+        <td>List of 35 post-encoding feature names (for SHAP)</td>
+      </tr>
+      <tr>
+        <td><code>train_test_split.pkl</code></td>
+        <td>Notebook 03</td>
+        <td>Notebook 04</td>
+        <td>(X_train, X_test, y_train, y_test) before encoding</td>
+      </tr>
+      <tr>
+        <td><code>processed_data.pkl</code></td>
+        <td>Notebook 03</td>
+        <td>Notebooks 04, 05</td>
+        <td>(X_train_processed, X_test_processed) after encoding</td>
+      </tr>
+      <tr>
+        <td><code>best_model.pkl</code></td>
+        <td>Notebook 04 (confirmed in 05)</td>
+        <td>Notebook 05, Streamlit app</td>
+        <td>Fitted LogisticRegression (<code>class_weight='balanced'</code>)</td>
+      </tr>
+      <tr>
+        <td><code>all_models.pkl</code></td>
+        <td>Notebook 04</td>
+        <td>Notebook 05 (reference)</td>
+        <td>Dictionary of all 5 fitted models</td>
+      </tr>
+      <tr>
+        <td><code>model_comparison.csv</code></td>
+        <td>Notebook 04</td>
+        <td>Streamlit app (Page 2)</td>
+        <td>5-model results table (all metrics)</td>
+      </tr>
+      <tr>
+        <td><code>sample_predictions.csv</code></td>
+        <td>Notebook 05</td>
+        <td>Streamlit app (Page 4)</td>
+        <td>15 test customers with actual, predicted, probability</td>
+      </tr>
+      <tr>
+        <td><code>feature_helpers.py</code></td>
+        <td>Written once</td>
+        <td>Notebooks 03&ndash;05, Streamlit app</td>
+        <td>Shared <code>engineer_features()</code> function &mdash; single source of truth</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Environment &amp; Runtime</h3>
+  <table>
+    <thead>
+      <tr><th>Property</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Python Version</td><td>3.13.9</td></tr>
+      <tr><td>GPU Required</td><td>No &mdash; all models train in seconds on CPU</td></tr>
+      <tr><td>Total Training Time (all 5 models)</td><td>&lt; 30 seconds on a modern laptop</td></tr>
+      <tr><td>Streamlit Deployment</td><td>Streamlit Community Cloud (free tier)</td></tr>
+      <tr><td>Repository</td><td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/tree/main/projects/ml-churn-prediction" target="_blank">github.com/nadeaujonny/&hellip;/ml-churn-prediction</a></td></tr>
+      <tr><td>Random Seed</td><td><code>random_state=42</code> throughout &mdash; all results are reproducible</td></tr>
+    </tbody>
+  </table>
+
 </details>
 
 <details class="dropdown-section">
