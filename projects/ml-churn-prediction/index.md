@@ -2051,8 +2051,493 @@ print("  - models/processed_data.pkl")</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Phase 4 &mdash; Model Training &amp; Comparison</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: 5 models, results table, charts, best model selection rationale -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 4 trains five classification algorithms head-to-head on the preprocessed training set, evaluates
+    each with 5-fold stratified cross-validation, then scores them on the held-out test set across multiple
+    metrics. The goal is not just to find the best model, but to compare algorithmic families &mdash; linear
+    (Logistic Regression), ensemble (Random Forest), gradient boosting (XGBoost, LightGBM), and geometric
+    (SVM) &mdash; and document <em>why</em> the winner was selected based on business-relevant criteria. All
+    work runs in <code>notebooks/04_model_training.ipynb</code>.
+  </p>
+
+  <h3>Why These 5 Models</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Model</th><th>Library</th><th>Family</th><th>Why Include It</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Logistic Regression</td>
+        <td>sklearn</td>
+        <td>Linear</td>
+        <td>Baseline &mdash; simple, interpretable, fast. If this does well, complex models need to beat it to justify their complexity.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Random Forest</td>
+        <td>sklearn</td>
+        <td>Ensemble</td>
+        <td>Ensemble of decision trees. Handles non-linear relationships, resistant to overfitting. Industry workhorse.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>XGBoost</td>
+        <td>xgboost</td>
+        <td>Gradient Boosting</td>
+        <td>Consistently wins Kaggle competitions for tabular data. Level-wise tree growth strategy.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>LightGBM</td>
+        <td>lightgbm</td>
+        <td>Gradient Boosting</td>
+        <td>Microsoft&rsquo;s gradient boosting framework. Leaf-wise tree growth &mdash; often faster than XGBoost with competitive accuracy.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>SVM</td>
+        <td>sklearn</td>
+        <td>Geometric</td>
+        <td>Different mathematical approach (finds optimal separating hyperplane). Shows breadth across algorithmic families.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Load Artifacts &amp; Define All 5 Models</h3>
+  <p>
+    The notebook loads the preprocessed data and fitted artifacts from Phase 3, then defines all five models
+    with explicit class imbalance handling. Logistic Regression, Random Forest, and SVM use
+    <code>class_weight='balanced'</code>, while XGBoost and LightGBM use <code>scale_pos_weight</code>
+    (the ratio of non-churners to churners &asymp; 2.76):
+  </p>
+
+  <pre><code class="language-python">import joblib
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+from sklearn.svm import SVC
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.metrics import (accuracy_score, precision_score, recall_score,
+                              f1_score, roc_auc_score, classification_report,
+                              confusion_matrix, RocCurveDisplay)
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load preprocessed data and artifacts from Phase 3
+X_train, X_test, y_train, y_test = joblib.load('../models/train_test_split.pkl')
+X_train_processed, X_test_processed = joblib.load('../models/processed_data.pkl')
+all_feature_names = joblib.load('../models/feature_names.pkl')
+
+# Calculate class weight ratio for gradient boosting models
+pos_weight = y_train.value_counts()[0] / y_train.value_counts()[1]
+print(f"scale_pos_weight: {pos_weight:.2f}") # Output: scale_pos_weight: 2.76
+
+# Define all 5 models with class imbalance handling
+models = {
+    'Logistic Regression': LogisticRegression(
+        class_weight='balanced', max_iter=1000, random_state=42
+    ),
+    'Random Forest': RandomForestClassifier(
+        class_weight='balanced', n_estimators=100, random_state=42
+    ),
+    'XGBoost': XGBClassifier(
+        scale_pos_weight=pos_weight, n_estimators=100,
+        random_state=42, eval_metric='logloss'
+    ),
+    'LightGBM': LGBMClassifier(
+        scale_pos_weight=pos_weight, n_estimators=100,
+        random_state=42, verbose=-1
+    ),
+    'SVM': SVC(
+        class_weight='balanced', probability=True, random_state=42
+    ),
+}</code></pre>
+
+  <h3>Key Code: 5-Fold Stratified Cross-Validation</h3>
+  <p>
+    Each model is evaluated with 5-fold stratified cross-validation on the training set to assess
+    generalization performance and stability. The stratified folds ensure each fold preserves the
+    73.4/26.6 class ratio. Cross-validation scores are collected for AUC before any test set evaluation:
+  </p>
+
+  <pre><code class="language-python"># 5-fold stratified cross-validation
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+cv_results = {}
+for name, model in models.items():
+    cv_auc = cross_val_score(model, X_train_processed, y_train,
+                              cv=cv, scoring='roc_auc')
+    cv_results[name] = {
+        'cv_auc_mean': cv_auc.mean(),
+        'cv_auc_std': cv_auc.std(),
+    }
+    print(f"{name}: CV AUC = {cv_auc.mean():.4f} (±{cv_auc.std():.4f})")
+
+# Output:
+# Logistic Regression: CV AUC = 0.8453 (±0.0187)
+# Random Forest:       CV AUC = 0.8282 (±0.0150)
+# XGBoost:             CV AUC = 0.8212 (±0.0142)
+# LightGBM:            CV AUC = 0.8346 (±0.0144)
+# SVM:                 CV AUC = 0.8286 (±0.0190)</code></pre>
+
+  <h3>Key Code: Train on Full Training Set &amp; Evaluate on Test Set</h3>
+  <p>
+    After cross-validation, each model is trained on the full training set and evaluated on the held-out
+    test set. Six metrics are collected per model: accuracy, precision, recall, F1, and AUC on the test set,
+    plus the cross-validation AUC mean and standard deviation:
+  </p>
+
+  <pre><code class="language-python"># Train each model and evaluate on test set
+results = []
+fitted_models = {}
+
+for name, model in models.items():
+    # Train on full training set
+    model.fit(X_train_processed, y_train)
+    fitted_models[name] = model
+
+    # Predict on test set
+    y_pred = model.predict(X_test_processed)
+    y_prob = model.predict_proba(X_test_processed)[:, 1]
+
+    # Collect all metrics
+    results.append({
+        'Model': name,
+        'CV AUC (mean)': cv_results[name]['cv_auc_mean'],
+        'CV AUC (std)': cv_results[name]['cv_auc_std'],
+        'Accuracy': accuracy_score(y_test, y_pred),
+        'Precision': precision_score(y_test, y_pred),
+        'Recall': recall_score(y_test, y_pred),
+        'F1': f1_score(y_test, y_pred),
+        'AUC': roc_auc_score(y_test, y_prob),
+    })
+
+# Create comparison DataFrame sorted by Test AUC
+results_df = pd.DataFrame(results).sort_values('AUC', ascending=False).round(4)
+print(results_df.to_string(index=False))</code></pre>
+
+  <h3>Results: Head-to-Head Comparison</h3>
+  <p>
+    The complete results table, sorted by test AUC (the primary overall quality metric):
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>CV AUC (mean)</th>
+        <th>CV AUC (std)</th>
+        <th>Accuracy</th>
+        <th>Precision</th>
+        <th>Recall</th>
+        <th>F1</th>
+        <th>AUC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Logistic Regression</strong></td>
+        <td><strong>0.8453</strong></td>
+        <td>0.0187</td>
+        <td>0.7242</td>
+        <td>0.4884</td>
+        <td><strong>0.7888</strong></td>
+        <td>0.6033</td>
+        <td><strong>0.8344</strong></td>
+      </tr>
+      <tr>
+        <td>LightGBM</td>
+        <td>0.8346</td>
+        <td>0.0144</td>
+        <td>0.7548</td>
+        <td>0.5263</td>
+        <td>0.7754</td>
+        <td><strong>0.6270</strong></td>
+        <td>0.8292</td>
+      </tr>
+      <tr>
+        <td>Random Forest</td>
+        <td>0.8282</td>
+        <td>0.0150</td>
+        <td><strong>0.7861</strong></td>
+        <td><strong>0.6229</strong></td>
+        <td>0.4947</td>
+        <td>0.5514</td>
+        <td>0.8170</td>
+      </tr>
+      <tr>
+        <td>SVM</td>
+        <td>0.8286</td>
+        <td>0.0190</td>
+        <td>0.7257</td>
+        <td>0.4900</td>
+        <td><strong>0.7888</strong></td>
+        <td>0.6045</td>
+        <td>0.8151</td>
+      </tr>
+      <tr>
+        <td>XGBoost</td>
+        <td>0.8212</td>
+        <td>0.0142</td>
+        <td>0.7456</td>
+        <td>0.5164</td>
+        <td>0.6738</td>
+        <td>0.5847</td>
+        <td>0.8095</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size: 0.85em; color: #666;">
+    Bold values indicate the best score in each column. Full CSV:
+    <a href="./outputs/metrics/model_comparison.csv">model_comparison.csv</a>
+  </p>
+
+  <h3>Key Code: Model Comparison Bar Chart</h3>
+
+  <pre><code class="language-python"># Model comparison bar chart — AUC, Recall, F1 for all 5 models
+metrics_to_plot = ['AUC', 'Recall', 'F1']
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+for i, metric in enumerate(metrics_to_plot):
+    values = results_df.sort_values(metric, ascending=True)
+    axes[i].barh(values['Model'], values[metric], color='#3498db',
+                 edgecolor='black', linewidth=0.5)
+    axes[i].set_title(metric, fontsize=14, fontweight='bold')
+    axes[i].set_xlim(0, 1)
+    for j, (val, name) in enumerate(zip(values[metric], values['Model'])):
+        axes[i].text(val + 0.01, j, f'{val:.4f}', va='center', fontsize=10)
+
+plt.suptitle('Model Comparison — Key Metrics', fontsize=16, fontweight='bold')
+plt.tight_layout()
+plt.savefig('../outputs/figures/model_comparison.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/model_comparison.png"
+      alt="Bar chart comparing AUC, Recall, and F1 across all 5 models"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Model comparison across AUC, Recall, and F1 &mdash; Logistic Regression leads on AUC (0.8344) and
+      Recall (0.7888), while LightGBM has the highest F1 (0.6270). Also displayed in the Streamlit app
+      (Page 2: Model Performance).
+    </figcaption>
+  </figure>
+
+  <h3>Key Code: ROC Curves Overlay</h3>
+
+  <pre><code class="language-python"># ROC curves — all 5 models on the same plot
+fig, ax = plt.subplots(figsize=(8, 6))
+
+for name, model in fitted_models.items():
+    y_prob = model.predict_proba(X_test_processed)[:, 1]
+    RocCurveDisplay.from_predictions(y_test, y_prob, name=name, ax=ax)
+
+# Add random baseline
+ax.plot([0, 1], [0, 1], 'k--', label='Random (AUC = 0.50)', alpha=0.5)
+ax.set_title('ROC Curves — All 5 Models', fontsize=14, fontweight='bold')
+ax.legend(loc='lower right')
+plt.tight_layout()
+plt.savefig('../outputs/figures/roc_curves.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/roc_curves.png"
+      alt="ROC curves for all 5 models overlaid on a single plot with random baseline"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      ROC curves for all 5 models &mdash; all models significantly outperform the random baseline (dashed),
+      with Logistic Regression (AUC=0.834) and LightGBM (AUC=0.829) showing the best discriminative ability.
+      Also displayed in the Streamlit app (Page 2).
+    </figcaption>
+  </figure>
+
+  <h3>Key Code: Confusion Matrices</h3>
+
+  <pre><code class="language-python"># Confusion matrices — all 5 models side by side
+fig, axes = plt.subplots(1, 5, figsize=(25, 4))
+
+for i, (name, model) in enumerate(fitted_models.items()):
+    y_pred = model.predict(X_test_processed)
+    cm = confusion_matrix(y_test, y_pred)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=axes[i],
+                xticklabels=['No Churn', 'Churn'],
+                yticklabels=['No Churn', 'Churn'])
+    axes[i].set_title(name, fontsize=10, fontweight='bold')
+    axes[i].set_ylabel('Actual' if i == 0 else '')
+    axes[i].set_xlabel('Predicted')
+
+plt.suptitle('Confusion Matrices — All 5 Models', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('../outputs/figures/confusion_matrix.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/confusion_matrix.png"
+      alt="Five confusion matrices displayed side by side for all models"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Confusion matrices for all 5 models &mdash; Logistic Regression and SVM catch the most churners
+      (295 of 374 = 79% recall) but generate more false positives, while Random Forest has the fewest
+      false positives but misses over half of actual churners (49% recall). Also displayed in the Streamlit
+      app (Page 2).
+    </figcaption>
+  </figure>
+
+  <h3>Key Code: Save Artifacts</h3>
+
+  <pre><code class="language-python"># Save the best model and all models
+best_model = fitted_models['Logistic Regression']
+joblib.dump(best_model, '../models/best_model.pkl')
+joblib.dump(fitted_models, '../models/all_models.pkl')
+
+# Save comparison table for Streamlit app
+results_df.to_csv('../outputs/metrics/model_comparison.csv', index=False)
+
+print("Saved:")
+print("  - models/best_model.pkl (Logistic Regression)")
+print("  - models/all_models.pkl (all 5 fitted models)")
+print("  - outputs/metrics/model_comparison.csv")</code></pre>
+
+  <h3>Best Model Selection: Logistic Regression</h3>
+  <p>
+    The model selection criteria, ranked by priority for a churn prediction use case:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Criterion</th><th>Why It Matters for Churn</th><th>Winner</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Recall</strong></td>
+        <td>A missed churner = lost customer (expensive). A false alarm = unnecessary retention offer (cheap). Optimize for catching churners.</td>
+        <td>Logistic Regression &amp; SVM (tied: 0.7888)</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>ROC-AUC</strong></td>
+        <td>Overall discriminative ability across all thresholds &mdash; how well can the model separate churners from non-churners?</td>
+        <td>Logistic Regression (0.8344)</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>F1 Score</strong></td>
+        <td>Balance of precision and recall &mdash; secondary to recall but useful as a tiebreaker.</td>
+        <td>LightGBM (0.6270)</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>CV Stability</strong></td>
+        <td>Low cross-validation variance means the model generalizes well and isn&rsquo;t overfitting to a lucky split.</td>
+        <td>Logistic Regression (0.8453 &plusmn; 0.0187)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Winner: Logistic Regression.</strong> It achieved the highest test AUC (0.8344), the highest
+    recall tied with SVM (0.7888 &mdash; catching 79% of all churners), and the highest cross-validated AUC
+    (0.8453) with low variance (&plusmn;0.0187). Since it tied SVM on recall but beat it on AUC, and since
+    logistic regression is far more interpretable and faster to deploy, it was the clear choice.
+  </p>
+
+  <h4>The Surprise: Simplest Model Won</h4>
+  <p>
+    The project plan predicted that XGBoost or LightGBM would win. Instead, the simplest model outperformed
+    the ensemble and gradient boosting methods on the two priority metrics. This is an important finding:
+    <strong>model complexity doesn&rsquo;t always win</strong>. On this dataset with properly engineered features,
+    the relationships between features and churn are approximately linear &mdash; a well-configured logistic
+    regression on good features is highly effective. This result also makes the model much easier to explain
+    to stakeholders and more efficient to deploy.
+  </p>
+
+  <h4>Why Not Random Forest?</h4>
+  <p>
+    Random Forest had the highest accuracy (0.7861) and precision (0.6229) but the <strong>lowest recall
+    (0.4947)</strong> &mdash; it only caught 49% of actual churners, missing more than half. In a churn context,
+    this model would let 51% of at-risk customers walk out the door unidentified. High precision (fewer false
+    alarms) is meaningless if you&rsquo;re missing the majority of churners.
+  </p>
+
+  <h3>Metric Definitions Reference</h3>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>What It Measures</th><th>For Churn, Higher Is Better?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Accuracy</td><td>Overall correct predictions</td><td>Yes, but misleading with imbalanced classes (73.4% baseline)</td></tr>
+      <tr><td>Precision</td><td>Of predicted churners, how many actually churned</td><td>Yes &mdash; fewer false alarms</td></tr>
+      <tr><td>Recall</td><td>Of actual churners, how many did we catch</td><td><strong>YES &mdash; priority metric</strong></td></tr>
+      <tr><td>F1</td><td>Harmonic mean of precision and recall</td><td>Yes &mdash; balanced tradeoff</td></tr>
+      <tr><td>ROC-AUC</td><td>Discriminative ability across all thresholds</td><td>Yes &mdash; overall model quality</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Charts Generated</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Description</th><th>Reused In</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>model_comparison.png</code></td>
+        <td>Bar chart comparing AUC, Recall, F1 across all 5 models</td>
+        <td>Streamlit app (Page 2), portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>roc_curves.png</code></td>
+        <td>ROC curves overlay for all 5 models + random baseline</td>
+        <td>Streamlit app (Page 2), portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>confusion_matrix.png</code></td>
+        <td>5 confusion matrices side by side</td>
+        <td>Streamlit app (Page 2), portfolio page</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Saved Artifacts</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Contents</th><th>Consumed By</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>models/best_model.pkl</code></td>
+        <td>Fitted Logistic Regression (<code>class_weight='balanced'</code>)</td>
+        <td>Phase 5&ndash;6 notebook, Streamlit app</td>
+      </tr>
+      <tr>
+        <td><code>models/all_models.pkl</code></td>
+        <td>Dictionary of all 5 fitted models</td>
+        <td>Phase 5 notebook (comparison reference)</td>
+      </tr>
+      <tr>
+        <td><code>outputs/metrics/model_comparison.csv</code></td>
+        <td>Full results table (all models, all metrics)</td>
+        <td>Streamlit app (Page 2)</td>
+      </tr>
+    </tbody>
+  </table>
+
 </details>
 
 <details class="dropdown-section">
