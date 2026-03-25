@@ -112,207 +112,6 @@ description: "End-to-end ML pipeline: 5 classification models, hyperparameter tu
     </tbody>
   </table>
 
-  <h3>Key Code: Shared Feature Engineering Function</h3>
-  <p>
-    Feature engineering must be identical between training notebooks and the deployed Streamlit app. To guarantee
-    consistency, all feature logic lives in a single shared function in <code>feature_helpers.py</code>, used by
-    both the notebooks and the app:
-  </p>
-
-  <pre><code class="language-python">def engineer_features(df):
-    """
-    Apply all feature engineering transformations.
-    Single source of truth — used by BOTH training notebooks and Streamlit app.
-    """
-    df = df.copy()
-    service_cols = ['OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
-                    'TechSupport', 'StreamingTV', 'StreamingMovies']
-    df['ServiceCount'] = df[service_cols].apply(
-        lambda row: (row == 'Yes').sum(), axis=1
-    )
-    df['HasInternet'] = (df['InternetService'] != 'No').astype(int)
-    df['HasPhone'] = (df['PhoneService'] == 'Yes').astype(int)
-    df['AvgMonthlyCharge'] = df.apply(
-        lambda row: row['TotalCharges'] / row['tenure'] if row['tenure'] > 0
-        else row['MonthlyCharges'], axis=1
-    )
-    def tenure_bucket(t):
-        if t <= 12: return 0
-        elif t <= 24: return 1
-        elif t <= 48: return 2
-        else: return 3
-    df['TenureGroup'] = df['tenure'].apply(tenure_bucket)
-    return df</code></pre>
-
-  <h3>Key Code: Preprocessing Pipeline</h3>
-  <p>
-    The preprocessing pipeline uses scikit-learn's <code>ColumnTransformer</code> to apply <code>StandardScaler</code>
-    to 9 numeric features and <code>OneHotEncoder</code> (with <code>drop='first'</code> to avoid the dummy variable
-    trap) to 15 categorical features. The pipeline is fit on training data only, then applied to both train and test
-    sets to prevent data leakage:
-  </p>
-
-  <pre><code class="language-python">from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-
-numeric_features = ['SeniorCitizen', 'tenure', 'MonthlyCharges', 'TotalCharges',
-                    'ServiceCount', 'HasInternet', 'HasPhone', 'AvgMonthlyCharge',
-                    'TenureGroup']
-
-categorical_features = ['gender', 'Partner', 'Dependents', 'PhoneService',
-                        'MultipleLines', 'InternetService', 'OnlineSecurity',
-                        'OnlineBackup', 'DeviceProtection', 'TechSupport',
-                        'StreamingTV', 'StreamingMovies', 'Contract',
-                        'PaperlessBilling', 'PaymentMethod']
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('num', StandardScaler(), numeric_features),
-        ('cat', OneHotEncoder(drop='first', sparse_output=False,
-                              handle_unknown='ignore'), categorical_features)
-    ]
-)
-
-# Fit on training data ONLY — transform both
-X_train_processed = preprocessor.fit_transform(X_train)
-X_test_processed = preprocessor.transform(X_test)</code></pre>
-
-  <h3>Key Code: 5-Model Training &amp; Cross-Validation</h3>
-  <p>
-    Five classification algorithms &mdash; covering linear, ensemble, gradient boosting, and geometric model
-    families &mdash; are trained and evaluated with 5-fold stratified cross-validation. All five models include
-    explicit class imbalance handling:
-  </p>
-
-  <pre><code class="language-python">from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
-from sklearn.svm import SVC
-
-# Class weight ratio for gradient boosting models
-pos_weight = y_train.value_counts()[0] / y_train.value_counts()[1]  # ≈ 2.76
-
-models = {
-    'Logistic Regression': LogisticRegression(
-        class_weight='balanced', max_iter=1000, random_state=42
-    ),
-    'Random Forest': RandomForestClassifier(
-        class_weight='balanced', n_estimators=100, random_state=42
-    ),
-    'XGBoost': XGBClassifier(
-        scale_pos_weight=pos_weight, n_estimators=100,
-        random_state=42, eval_metric='logloss'
-    ),
-    'LightGBM': LGBMClassifier(
-        scale_pos_weight=pos_weight, n_estimators=100,
-        random_state=42, verbose=-1
-    ),
-    'SVM': SVC(
-        class_weight='balanced', probability=True, random_state=42
-    ),
-}
-
-# 5-fold stratified cross-validation per model
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-for name, model in models.items():
-    cv_auc = cross_val_score(model, X_train_processed, y_train,
-                              cv=cv, scoring='roc_auc')
-    print(f"{name}: AUC={cv_auc.mean():.4f} (±{cv_auc.std():.4f})")</code></pre>
-
-  <h3>Key Code: Hyperparameter Tuning (RandomizedSearchCV)</h3>
-  <p>
-    After Logistic Regression was identified as the best model, hyperparameter tuning was performed using
-    <code>RandomizedSearchCV</code> with 50 random combinations across 5 CV folds, optimizing for AUC:
-  </p>
-
-  <pre><code class="language-python">from sklearn.model_selection import RandomizedSearchCV
-
-param_dist = {
-    'C': [0.001, 0.01, 0.1, 0.5, 1, 5, 10, 50, 100],
-    'penalty': ['l1', 'l2'],
-    'solver': ['liblinear', 'saga'],
-    'class_weight': ['balanced', None],
-    'max_iter': [1000]
-}
-
-search = RandomizedSearchCV(
-    LogisticRegression(random_state=42),
-    param_distributions=param_dist,
-    n_iter=50, scoring='roc_auc',
-    cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=42),
-    random_state=42, n_jobs=-1
-)
-search.fit(X_train_processed, y_train)
-# Best CV AUC: 0.8459</code></pre>
-
-  <h3>Key Code: SHAP Explainability</h3>
-  <p>
-    SHAP (SHapley Additive exPlanations) values are computed for all 1,407 test set customers using
-    <code>LinearExplainer</code>. The beeswarm summary plot shows global feature importance with direction
-    of impact, and waterfall plots explain individual predictions feature-by-feature:
-  </p>
-
-  <pre><code class="language-python">import shap
-
-# Create explainer for logistic regression
-explainer = shap.LinearExplainer(model, X_train_processed,
-                                  feature_names=all_feature_names)
-shap_values = explainer.shap_values(X_test_processed)
-
-# Global importance — beeswarm summary plot
-shap.summary_plot(shap_values, X_test_processed,
-                  feature_names=all_feature_names, show=False)
-plt.savefig('outputs/figures/shap_summary.png', dpi=150, bbox_inches='tight')
-
-# Individual explanation — waterfall for highest-risk customer
-high_risk_idx = y_prob_final.argmax()
-explanation = shap.Explanation(
-    values=shap_values[high_risk_idx],
-    base_values=explainer.expected_value,
-    data=X_test_processed[high_risk_idx],
-    feature_names=all_feature_names
-)
-shap.waterfall_plot(explanation, max_display=10, show=False)
-plt.savefig('outputs/figures/shap_waterfall_example.png', dpi=150,
-            bbox_inches='tight')</code></pre>
-
-  <h3>Key Code: Streamlit Prediction Pipeline</h3>
-  <p>
-    The deployed Streamlit app loads the serialized model and preprocessor, accepts customer attribute inputs,
-    engineers features using the same shared function, and produces a churn probability with a SHAP waterfall
-    explanation:
-  </p>
-
-  <pre><code class="language-python"># Load serialized artifacts
-model = joblib.load('best_model.pkl')
-preprocessor = joblib.load('preprocessor.pkl')
-
-# User submits customer attributes via Streamlit form...
-# Build DataFrame from inputs, auto-compute TotalCharges
-input_data['TotalCharges'] = input_data['MonthlyCharges'] * input_data['tenure']
-
-# Apply shared feature engineering (identical to training)
-input_engineered = engineer_features(input_data)
-input_final = input_engineered[numeric_features + categorical_features]
-
-# Preprocess and predict
-input_processed = preprocessor.transform(input_final)
-churn_prob = model.predict_proba(input_processed)[0][1]
-
-# Generate per-prediction SHAP explanation
-explainer = shap.LinearExplainer(model, input_processed,
-                                  feature_names=all_names)
-shap_values = explainer.shap_values(input_processed)
-
-# Display: risk level (High/Medium/Low) + SHAP waterfall plot
-if churn_prob >= 0.5:
-    st.error(f"⚠️ HIGH RISK — Churn Probability: {churn_prob:.1%}")
-elif churn_prob >= 0.3:
-    st.warning(f"⚡ MEDIUM RISK — Churn Probability: {churn_prob:.1%}")
-else:
-    st.success(f"✅ LOW RISK — Churn Probability: {churn_prob:.1%}")</code></pre>
-
   <h3>Key Results at a Glance</h3>
   <table>
     <thead>
@@ -412,34 +211,6 @@ else:
       <tr><td>Class Distribution</td><td>73.4% No Churn (5,163) / 26.6% Churn (1,869) &mdash; moderately imbalanced</td></tr>
     </tbody>
   </table>
-
-  <h3>Key Code: Loading &amp; Initial Inspection</h3>
-  <p>
-    The raw dataset was loaded and inspected in <code>01_data_cleaning.ipynb</code>. The first inspection
-    confirmed 7,043 rows, identified <code>TotalCharges</code> as an incorrectly typed object column, and
-    verified zero explicit nulls and zero duplicates in the raw data:
-  </p>
-
-  <pre><code class="language-python">import pandas as pd
-import numpy as np
-
-# Load the raw dataset
-df = pd.read_csv('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
-
-print(f"Shape: {df.shape}")
-print(f"\nColumn dtypes:\n{df.dtypes}")
-# Output: Shape: (7043, 21)
-# TotalCharges shows as 'object' — should be numeric
-
-# Confirm no explicit nulls and no duplicates
-print(f"Missing values per column:\n{df.isnull().sum()}")
-print(f"\nDuplicate rows: {df.duplicated().sum()}")
-# Output: 0 missing values across all columns, 0 duplicates
-
-# Check cardinality of each column
-print(f"\nUnique values per column:\n{df.nunique()}")
-# Output: customerID=7043 (unique), gender=2, SeniorCitizen=2,
-# tenure=73, MonthlyCharges=1585, TotalCharges=6531, etc.</code></pre>
 
   <h3>Column Descriptions &mdash; Customer Demographics (5 columns)</h3>
   <table>
@@ -625,107 +396,13 @@ print(df['Churn'].value_counts(normalize=True).round(4))
 pos_weight = y_train.value_counts()[0] / y_train.value_counts()[1]
 # pos_weight ≈ 2.76</code></pre>
 
-  <h3>Known Data Issues Handled</h3>
+  <h3>Known Data Issues</h3>
   <p>
-    The dataset is relatively clean &mdash; no explicit missing values and no duplicate rows in the raw data.
-    However, three data issues required attention during cleaning:
+    Three data issues were identified and handled during cleaning (see Phase 1 for full details and code):
+    <code>TotalCharges</code> stored as string with 11 whitespace entries for tenure=0 customers (converted and dropped),
+    <code>SeniorCitizen</code> already encoded as 0/1 (routed to numeric features),
+    and "No internet service" / "No phone service" values preserved as distinct categories during encoding.
   </p>
-
-  <h4>Issue 1: TotalCharges Stored as String</h4>
-  <p>
-    The <code>TotalCharges</code> column was loaded as <code>object</code> dtype instead of numeric. Investigation
-    revealed that 11 rows contained whitespace strings instead of numeric values &mdash; all corresponding to
-    customers with <code>tenure=0</code> (brand new customers with no billing history). Converting with
-    <code>pd.to_numeric(errors='coerce')</code> turned these into NaN, and the 11 rows were dropped (0.16% of
-    data &mdash; negligible impact on model training).
-  </p>
-
-  <pre><code class="language-python"># Fix TotalCharges: convert from string to numeric
-# Whitespace entries (tenure=0 customers) will become NaN
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
-
-# Check how many NaNs this created
-print(f"TotalCharges NaNs after conversion: {df['TotalCharges'].isna().sum()}")
-# Output: TotalCharges NaNs after conversion: 11
-
-# Investigate: all NaN rows are tenure=0 customers
-print(df[df['TotalCharges'].isna()][['customerID', 'tenure', 'MonthlyCharges', 'TotalCharges']])
-# Output:
-#       customerID  tenure  MonthlyCharges  TotalCharges
-# 488   4472-LVYGI       0           52.55           NaN
-# 753   3115-CZMZD       0           20.25           NaN
-# 936   5709-LVOEQ       0           80.85           NaN
-# 1082  4367-NUYAO       0           25.75           NaN
-# 1340  1371-DWPAZ       0           56.05           NaN
-# 3331  7644-OMVMY       0           19.85           NaN
-# 3826  3213-VVOLG       0           25.35           NaN
-# 4380  2520-SGTTA       0           20.00           NaN
-# 5218  2923-ARZLG       0           19.70           NaN
-# 6670  4075-WKNIU       0           73.35           NaN
-# 6754  2775-SEFEE       0           61.90           NaN
-
-# Drop the 11 rows — 0.16% of data, all tenure=0 with no billing history
-df = df.dropna(subset=['TotalCharges'])</code></pre>
-
-  <h4>Issue 2: SeniorCitizen Already Encoded as 0/1</h4>
-  <p>
-    Unlike every other binary column in the dataset (which uses Yes/No string values), <code>SeniorCitizen</code>
-    is already encoded as 0/1 integers. This means it does not need one-hot encoding and is treated as a
-    <strong>numeric feature</strong> during preprocessing. Applying <code>StandardScaler</code> to a 0/1 column
-    is harmless and maintains pipeline consistency.
-  </p>
-
-  <h4>Issue 3: "No internet service" and "No phone service" Values</h4>
-  <p>
-    Six service columns (<code>OnlineSecurity</code>, <code>OnlineBackup</code>, <code>DeviceProtection</code>,
-    <code>TechSupport</code>, <code>StreamingTV</code>, <code>StreamingMovies</code>) contain the value
-    "No internet service" for customers who do not have internet at all, and <code>MultipleLines</code> contains
-    "No phone service" for customers without phone service. These are <strong>informative categories, not missing
-    data</strong> &mdash; they carry meaningful signal (a customer who doesn't have internet at all is different
-    from a customer who has internet but opted out of a specific add-on). These values are preserved as distinct
-    categories during one-hot encoding with <code>handle_unknown='ignore'</code>.
-  </p>
-
-  <h3>Key Code: Complete Cleaning Pipeline</h3>
-  <p>
-    The full cleaning pipeline runs in <code>01_data_cleaning.ipynb</code> and produces the cleaned CSV consumed
-    by all downstream notebooks:
-  </p>
-
-  <pre><code class="language-python"># 1. Load raw data
-df = pd.read_csv('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
-# Shape: (7043, 21)
-
-# 2. Fix TotalCharges dtype (string → float)
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
-# 11 whitespace entries become NaN
-
-# 3. Drop 11 NaN rows (all tenure=0, no billing history, 0.16% of data)
-df = df.dropna(subset=['TotalCharges'])
-
-# 4. Drop customerID (not a predictive feature)
-df = df.drop('customerID', axis=1)
-
-# 5. Encode target variable: Yes=1, No=0
-df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
-
-# 6. Verify final state
-print(f"Shape after cleaning: {df.shape}")
-# Output: Shape after cleaning: (7032, 20)
-print(f"\nTotalCharges dtype: {df['TotalCharges'].dtype}")
-# Output: TotalCharges dtype: float64
-print(f"\nChurn distribution:\n{df['Churn'].value_counts(normalize=True).round(4)}")
-# Output: 0 = 0.7342, 1 = 0.2658
-
-# 7. Save cleaned dataset for subsequent notebooks
-df.to_csv('../data/telco_churn_cleaned.csv', index=False)
-print(f"Cleaned dataset saved: {df.shape[0]} rows × {df.shape[1]} columns")
-# Output: Cleaned dataset saved: 7032 rows × 20 columns
-# Columns: ['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure',
-#   'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
-#   'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV',
-#   'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod',
-#   'MonthlyCharges', 'TotalCharges', 'Churn']</code></pre>
 
   <h3>Feature Categorization Summary</h3>
   <p>
@@ -3764,117 +3441,47 @@ joblib</code></pre>
       <tr>
         <td>1</td>
         <td><strong>Contract type is the single strongest churn predictor</strong></td>
-        <td>Month-to-month: 42.7% churn rate vs. One year: 11.3% vs. Two year: 2.8% &mdash; a 15&times; spread. <code>Contract_Two year</code> is the #2 SHAP feature globally.</td>
+        <td>42.7% vs 11.3% vs 2.8% churn rates (Phase 2); SHAP #2 feature (Phase 6)</td>
         <td>EDA (Phase 2), SHAP (Phase 6)</td>
       </tr>
       <tr>
         <td>2</td>
         <td><strong>Churn is heavily front-loaded by tenure</strong></td>
-        <td>Most churners leave within the first 12 months. Customers who survive the first year are significantly more likely to stay. <code>tenure</code> is the #1 SHAP feature globally (correlation: &minus;0.35).</td>
+        <td>Front-loaded in first 12 months (Phase 2); SHAP #1 feature, correlation &minus;0.35 (Phase 6)</td>
         <td>EDA (Phase 2), SHAP (Phase 6), Feature Engineering (Phase 3 &mdash; motivated <code>TenureGroup</code>)</td>
       </tr>
       <tr>
         <td>3</td>
         <td><strong>Fiber optic customers churn more despite paying more</strong></td>
-        <td>Fiber optic internet has significantly higher churn than DSL or no internet &mdash; suggesting a service quality or expectations gap, not a pricing problem. <code>InternetService_Fiber optic</code> is the #3 SHAP feature.</td>
+        <td>Higher churn despite higher price (Phase 2); SHAP #3 feature (Phase 6)</td>
         <td>EDA (Phase 2), SHAP (Phase 6)</td>
       </tr>
       <tr>
         <td>4</td>
         <td><strong>Support add-ons (OnlineSecurity, TechSupport) significantly reduce churn</strong></td>
-        <td>Customers without these services churn at notably higher rates. <code>OnlineSecurity_Yes</code> is SHAP #9, <code>TechSupport_Yes</code> is SHAP #11 &mdash; both push strongly away from churn when present.</td>
+        <td>Absence correlates with higher churn (Phase 2); OnlineSecurity SHAP #9, TechSupport #11 (Phase 6)</td>
         <td>EDA (Phase 2), SHAP (Phase 6), Feature Engineering (Phase 3 &mdash; motivated <code>ServiceCount</code>)</td>
       </tr>
       <tr>
         <td>5</td>
         <td><strong>Electronic check payment method correlates with higher churn</strong></td>
-        <td><code>PaymentMethod_Electronic check</code> is SHAP #8. Manual payment creates less friction to cancel compared to automatic payment methods.</td>
+        <td>SHAP #8 feature (Phase 6); visible in EDA categorical grid (Phase 2)</td>
         <td>EDA (Phase 2), SHAP (Phase 6)</td>
       </tr>
       <tr>
         <td>6</td>
         <td><strong>The simplest model outperformed ensemble methods</strong></td>
-        <td>Logistic Regression achieved the highest AUC (0.8344) and highest recall (0.7888) &mdash; beating Random Forest, XGBoost, LightGBM, and SVM. This means the churn relationships in this dataset are approximately linear, and a well-configured simple model on properly engineered features is highly effective.</td>
+        <td>LR beat all 4 complex models on AUC and recall (Phase 4)</td>
         <td>Model Training (Phase 4)</td>
       </tr>
       <tr>
         <td>7</td>
         <td><strong>Hyperparameter tuning improved precision but sacrificed recall &mdash; the default was kept</strong></td>
-        <td>The tuned model gained +14.6pp precision but lost &minus;22pp recall (from 79% down to 57%). Since the cost of missing a churner far exceeds the cost of a false alarm, the default balanced model was the better business choice. This demonstrates principled model selection based on cost asymmetry.</td>
+        <td>&minus;22pp recall for +0.0002 AUC; default kept (Phase 5)</td>
         <td>Hyperparameter Tuning (Phase 5)</td>
       </tr>
     </tbody>
   </table>
-
-  <h3>Key Code: Evidence Behind the Top Finding</h3>
-  <p>
-    The contract type finding emerged independently from two completely different analytical approaches
-    &mdash; EDA churn rate calculations and SHAP model-learned importance &mdash; which strengthens
-    confidence in the conclusion:
-  </p>
-
-  <pre><code class="language-python"># Evidence 1: EDA — raw churn rates by contract type (Phase 2)
-contract_churn = df.groupby('Contract')['Churn'].mean()
-print(contract_churn.sort_values(ascending=False))
-# Output:
-# Contract
-# Month-to-month    0.4271
-# One year          0.1129
-# Two year          0.0283
-
-# Evidence 2: SHAP — model-learned feature importance (Phase 6)
-# Contract_Two year is the #2 global SHAP feature
-# Contract_One year is the #6 global SHAP feature
-# Both push strongly AWAY from churn when present
-# (relative to the dropped baseline: month-to-month)</code></pre>
-
-  <h3>Key Code: Evidence Behind Tenure as #1 Predictor</h3>
-
-  <pre><code class="language-python"># Correlation: tenure vs Churn (Phase 2)
-print(f"tenure vs Churn correlation: {df['tenure'].corr(df['Churn']):.4f}")
-# Output: tenure vs Churn correlation: -0.3530
-
-# SHAP: tenure is the #1 feature globally (Phase 6)
-# Low tenure → SHAP value of +1.22 for highest-risk customer
-# High tenure → SHAP values strongly negative (pushes away from churn)
-
-# Feature Engineering response (Phase 3)
-# Created TenureGroup to capture the non-linear relationship:
-def tenure_bucket(t):
-    if t <= 12: return 0    # Danger zone
-    elif t <= 24: return 1  # Transition period
-    elif t <= 48: return 2  # Established
-    else: return 3          # Loyal
-df['TenureGroup'] = df['tenure'].apply(tenure_bucket)</code></pre>
-
-  <h3>Key Code: The Cost Asymmetry That Drove Model Selection</h3>
-
-  <pre><code class="language-python"># Phase 5: Why we kept the default model despite tuning finding
-# a "better" model by standard metrics
-
-# Default model (class_weight='balanced'):
-#   Recall = 0.7888 → catches 295 of 374 churners → misses 79
-#   False alarms = 309 loyal customers flagged
-
-# Tuned model (class_weight=None):
-#   Recall = 0.5668 → catches 212 of 374 churners → misses 162
-#   False alarms = 122 loyal customers flagged
-
-# Business cost comparison:
-extra_false_alarms = 309 - 122          # 187 more false alarms
-extra_missed_churners = 162 - 79        # 83 more missed churners
-cost_per_false_alarm = 10               # $10 retention offer
-cost_per_missed_churner = 500           # $500 lifetime value lost
-
-cost_of_extra_false_alarms = extra_false_alarms * cost_per_false_alarm
-cost_of_extra_missed = extra_missed_churners * cost_per_missed_churner
-
-print(f"Cost of extra false alarms:  ${cost_of_extra_false_alarms:,}")
-print(f"Cost of extra missed churners: ${cost_of_extra_missed:,}")
-# Output:
-# Cost of extra false alarms:  $1,870
-# Cost of extra missed churners: $41,500
-# → Default model is clearly the better business choice</code></pre>
 
   <h3>Business Recommendations</h3>
 
@@ -3912,28 +3519,6 @@ print(f"Cost of extra missed churners: ${cost_of_extra_missed:,}")
         <td><strong>Migrate electronic check users to automatic payment methods</strong></td>
         <td>Electronic check is SHAP #8, pushing toward churn. Manual payment = lower friction to cancel. Automatic payments (bank transfer, credit card) create passive retention.</td>
         <td>Offer a small discount or incentive for switching to autopay &mdash; even a $5/month discount costs less than losing the customer</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>Modeling Insights</h3>
-  <p>
-    Beyond the business recommendations, the project produced two modeling insights worth documenting:
-  </p>
-  <table>
-    <thead>
-      <tr><th>Insight</th><th>What It Means</th><th>Why It Matters</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Simplest model won</strong></td>
-        <td>Logistic Regression outperformed Random Forest, XGBoost, LightGBM, and SVM on the two priority metrics (AUC and recall)</td>
-        <td>Demonstrates that model complexity doesn&rsquo;t always win &mdash; well-engineered features on approximately linear relationships make simple models highly effective. Also makes deployment and explainability far easier.</td>
-      </tr>
-      <tr>
-        <td><strong>Knowing when <em>not</em> to tune</strong></td>
-        <td>Hyperparameter tuning found a &ldquo;better&rdquo; model by accuracy (+7.4pp) but a worse model by recall (&minus;22pp) &mdash; the default was kept</td>
-        <td>Demonstrates principled model selection based on business cost asymmetry rather than blind optimization. The tuned model would have missed 83 additional churners to avoid 187 false alarms &mdash; a $41,500 loss to save $1,870.</td>
       </tr>
     </tbody>
   </table>
@@ -4073,26 +3658,9 @@ pip install pandas numpy scikit-learn xgboost lightgbm shap \
     Everything runs locally on any modern machine.
   </p>
 
-  <h3>Final Model Specification</h3>
-  <table>
-    <thead>
-      <tr><th>Property</th><th>Value</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Algorithm</td><td>Logistic Regression (<code>sklearn.linear_model.LogisticRegression</code>)</td></tr>
-      <tr><td>Key Parameter</td><td><code>class_weight='balanced'</code></td></tr>
-      <tr><td>Other Parameters</td><td><code>max_iter=1000, random_state=42</code></td></tr>
-      <tr><td>Input Features</td><td>35 (9 numeric + 26 one-hot encoded from 15 categorical)</td></tr>
-      <tr><td>Training Rows</td><td>5,625 (80% of 7,032)</td></tr>
-      <tr><td>Test Rows</td><td>1,407 (20% of 7,032)</td></tr>
-      <tr><td>Test AUC</td><td>0.8344</td></tr>
-      <tr><td>Test Recall</td><td>0.7888 (catches 79% of churners)</td></tr>
-      <tr><td>Test F1</td><td>0.6033</td></tr>
-      <tr><td>Test Accuracy</td><td>0.7242</td></tr>
-      <tr><td>Serialized File</td><td><code>models/best_model.pkl</code> (also copied to <code>app/best_model.pkl</code>)</td></tr>
-      <tr><td>Explainer</td><td><code>shap.LinearExplainer</code></td></tr>
-    </tbody>
-  </table>
+  <p>
+    See Phase 5 for the final model specification.
+  </p>
 
   <h3>How to Reproduce</h3>
   <ol>
@@ -4128,44 +3696,9 @@ streamlit run app.py</code></pre>
     </li>
   </ol>
 
-  <h3>Notebook Pipeline &amp; Data Flow</h3>
-  <table>
-    <thead>
-      <tr><th>Notebook</th><th>Input</th><th>Output</th><th>Phase</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>01_data_cleaning.ipynb</code></td>
-        <td>Raw CSV (7,043 &times; 21)</td>
-        <td><code>data/telco_churn_cleaned.csv</code> (7,032 &times; 20)</td>
-        <td>Phase 1</td>
-      </tr>
-      <tr>
-        <td><code>02_eda.ipynb</code></td>
-        <td>Cleaned CSV</td>
-        <td>7 chart PNGs in <code>outputs/figures/</code></td>
-        <td>Phase 2</td>
-      </tr>
-      <tr>
-        <td><code>03_feature_engineering.ipynb</code></td>
-        <td>Cleaned CSV</td>
-        <td><code>models/preprocessor.pkl</code>, <code>feature_names.pkl</code>, <code>train_test_split.pkl</code>, <code>processed_data.pkl</code></td>
-        <td>Phase 3</td>
-      </tr>
-      <tr>
-        <td><code>04_model_training.ipynb</code></td>
-        <td>Preprocessed splits from Phase 3</td>
-        <td><code>models/best_model.pkl</code>, <code>all_models.pkl</code>, <code>model_comparison.csv</code>, 3 chart PNGs</td>
-        <td>Phase 4</td>
-      </tr>
-      <tr>
-        <td><code>05_tuning_evaluation.ipynb</code></td>
-        <td>Best model + preprocessed data from Phases 3&ndash;4</td>
-        <td>Tuning results, 3 SHAP chart PNGs, <code>sample_predictions.csv</code>, final model confirmation</td>
-        <td>Phases 5&ndash;6</td>
-      </tr>
-    </tbody>
-  </table>
+  <p>
+    See Project Overview for the pipeline architecture.
+  </p>
 
   <h3>Project Structure</h3>
 
@@ -4234,74 +3767,9 @@ streamlit run app.py</code></pre>
     (copied into <code>app/figures/</code> for deployment).
   </p>
 
-  <h3>Serialized Artifacts &amp; Data Flow</h3>
-  <table>
-    <thead>
-      <tr><th>Artifact</th><th>Created By</th><th>Consumed By</th><th>Contents</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>telco_churn_cleaned.csv</code></td>
-        <td>Notebook 01</td>
-        <td>Notebooks 02, 03</td>
-        <td>7,032 &times; 20 cleaned dataset</td>
-      </tr>
-      <tr>
-        <td><code>preprocessor.pkl</code></td>
-        <td>Notebook 03</td>
-        <td>Notebooks 04, 05, Streamlit app</td>
-        <td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td>
-      </tr>
-      <tr>
-        <td><code>feature_names.pkl</code></td>
-        <td>Notebook 03</td>
-        <td>Notebooks 04, 05</td>
-        <td>List of 35 post-encoding feature names (for SHAP)</td>
-      </tr>
-      <tr>
-        <td><code>train_test_split.pkl</code></td>
-        <td>Notebook 03</td>
-        <td>Notebook 04</td>
-        <td>(X_train, X_test, y_train, y_test) before encoding</td>
-      </tr>
-      <tr>
-        <td><code>processed_data.pkl</code></td>
-        <td>Notebook 03</td>
-        <td>Notebooks 04, 05</td>
-        <td>(X_train_processed, X_test_processed) after encoding</td>
-      </tr>
-      <tr>
-        <td><code>best_model.pkl</code></td>
-        <td>Notebook 04 (confirmed in 05)</td>
-        <td>Notebook 05, Streamlit app</td>
-        <td>Fitted LogisticRegression (<code>class_weight='balanced'</code>)</td>
-      </tr>
-      <tr>
-        <td><code>all_models.pkl</code></td>
-        <td>Notebook 04</td>
-        <td>Notebook 05 (reference)</td>
-        <td>Dictionary of all 5 fitted models</td>
-      </tr>
-      <tr>
-        <td><code>model_comparison.csv</code></td>
-        <td>Notebook 04</td>
-        <td>Streamlit app (Page 2)</td>
-        <td>5-model results table (all metrics)</td>
-      </tr>
-      <tr>
-        <td><code>sample_predictions.csv</code></td>
-        <td>Notebook 05</td>
-        <td>Streamlit app (Page 4)</td>
-        <td>15 test customers with actual, predicted, probability</td>
-      </tr>
-      <tr>
-        <td><code>feature_helpers.py</code></td>
-        <td>Written once</td>
-        <td>Notebooks 03&ndash;05, Streamlit app</td>
-        <td>Shared <code>engineer_features()</code> function &mdash; single source of truth</td>
-      </tr>
-    </tbody>
-  </table>
+  <p>
+    See Phases 3&ndash;6 for artifact details.
+  </p>
 
   <h3>Environment &amp; Runtime</h3>
   <table>
@@ -4353,38 +3821,28 @@ streamlit run app.py</code></pre>
   <h3>Notebooks (execute in order)</h3>
   <table>
     <thead>
-      <tr><th>Notebook</th><th>Phase</th><th>Description</th><th>Key Outputs</th></tr>
+      <tr><th>Notebook</th><th>Description</th></tr>
     </thead>
     <tbody>
       <tr>
         <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/01_data_cleaning.ipynb" target="_blank"><code>01_data_cleaning.ipynb</code></a></td>
-        <td>Phase 1</td>
-        <td>Load raw CSV, fix TotalCharges dtype, drop 11 NaN rows, drop customerID, encode target, save cleaned CSV</td>
-        <td><code>data/telco_churn_cleaned.csv</code></td>
+        <td>Phase 1 &mdash; Data Cleaning</td>
       </tr>
       <tr>
         <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/02_eda.ipynb" target="_blank"><code>02_eda.ipynb</code></a></td>
-        <td>Phase 2</td>
-        <td>7 EDA visualizations, churn rate analysis across all features, correlation heatmap, scatter plots, key findings documentation</td>
-        <td>7 chart PNGs in <code>outputs/figures/</code></td>
+        <td>Phase 2 &mdash; Exploratory Data Analysis</td>
       </tr>
       <tr>
         <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/03_feature_engineering.ipynb" target="_blank"><code>03_feature_engineering.ipynb</code></a></td>
-        <td>Phase 3</td>
-        <td>Apply 5 engineered features via shared module, define numeric/categorical lists, stratified 80/20 split, build ColumnTransformer pipeline</td>
-        <td><code>preprocessor.pkl</code>, <code>feature_names.pkl</code>, <code>train_test_split.pkl</code>, <code>processed_data.pkl</code></td>
+        <td>Phase 3 &mdash; Feature Engineering &amp; Preprocessing</td>
       </tr>
       <tr>
         <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/04_model_training.ipynb" target="_blank"><code>04_model_training.ipynb</code></a></td>
-        <td>Phase 4</td>
-        <td>Train 5 models (LR, RF, XGBoost, LightGBM, SVM), 5-fold stratified CV, test set evaluation, comparison charts, best model selection</td>
-        <td><code>best_model.pkl</code>, <code>all_models.pkl</code>, <code>model_comparison.csv</code>, 3 chart PNGs</td>
+        <td>Phase 4 &mdash; Model Training &amp; Comparison</td>
       </tr>
       <tr>
         <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/05_tuning_evaluation.ipynb" target="_blank"><code>05_tuning_evaluation.ipynb</code></a></td>
-        <td>Phases 5&ndash;6</td>
-        <td>RandomizedSearchCV (50 iter), default vs tuned comparison, decision to keep default, SHAP LinearExplainer, beeswarm/bar/waterfall plots, classification report</td>
-        <td>3 SHAP chart PNGs, <code>sample_predictions.csv</code>, final model confirmed</td>
+        <td>Phases 5&ndash;6 &mdash; Tuning &amp; SHAP</td>
       </tr>
     </tbody>
   </table>
@@ -4403,62 +3861,15 @@ streamlit run app.py</code></pre>
     </tbody>
   </table>
 
-  <h3>Streamlit App Files</h3>
-  <table>
-    <thead>
-      <tr><th>File</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/app/app.py" target="_blank"><code>app/app.py</code></a></td>
-        <td>Main Streamlit application &mdash; 4 pages: Predict Churn Risk, Model Performance, Data Insights, Sample Predictions</td>
-      </tr>
-      <tr>
-        <td><code>app/best_model.pkl</code></td>
-        <td>Serialized LogisticRegression model (<code>class_weight='balanced'</code>)</td>
-      </tr>
-      <tr>
-        <td><code>app/preprocessor.pkl</code></td>
-        <td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td>
-      </tr>
-      <tr>
-        <td><code>app/model_comparison.csv</code></td>
-        <td>5-model results table displayed on Page 2</td>
-      </tr>
-      <tr>
-        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/app/requirements.txt" target="_blank"><code>app/requirements.txt</code></a></td>
-        <td>Streamlit-specific dependencies (streamlit, pandas, numpy, scikit-learn, shap, matplotlib, joblib)</td>
-      </tr>
-      <tr>
-        <td><code>app/figures/</code></td>
-        <td>6 pre-generated chart PNGs used by Pages 2 and 3 (churn_by_contract, confusion_matrix, model_comparison, roc_curves, shap_summary, tenure_by_churn)</td>
-      </tr>
-    </tbody>
-  </table>
+  <p>
+    See the Streamlit App section for deployment file details.
+  </p>
 
   <h3>Output Artifacts</h3>
 
-  <h4>Visualizations (13 charts)</h4>
-  <table>
-    <thead>
-      <tr><th>File</th><th>Generated By</th><th>Description</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>outputs/figures/churn_distribution.png</code></td><td>Notebook 02</td><td>Overall churn bar chart: 5,163 No / 1,869 Yes</td></tr>
-      <tr><td><code>outputs/figures/churn_by_contract.png</code></td><td>Notebook 02</td><td>Churn rate by contract type: 42.7% / 11.3% / 2.8%</td></tr>
-      <tr><td><code>outputs/figures/tenure_by_churn.png</code></td><td>Notebook 02</td><td>Overlapping histograms of tenure by churn status</td></tr>
-      <tr><td><code>outputs/figures/monthly_charges_by_churn.png</code></td><td>Notebook 02</td><td>Overlapping histograms of monthly charges by churn</td></tr>
-      <tr><td><code>outputs/figures/churn_by_categories.png</code></td><td>Notebook 02</td><td>4&times;4 grid of churn rate across all 16 categorical features</td></tr>
-      <tr><td><code>outputs/figures/correlation_heatmap.png</code></td><td>Notebook 02</td><td>Heatmap of numeric feature correlations + Churn</td></tr>
-      <tr><td><code>outputs/figures/tenure_vs_charges_scatter.png</code></td><td>Notebook 02</td><td>Scatter: tenure vs monthly charges colored by churn</td></tr>
-      <tr><td><code>outputs/figures/model_comparison.png</code></td><td>Notebook 04</td><td>Bar chart: AUC, Recall, F1 for all 5 models</td></tr>
-      <tr><td><code>outputs/figures/roc_curves.png</code></td><td>Notebook 04</td><td>ROC curves overlay for all 5 models + random baseline</td></tr>
-      <tr><td><code>outputs/figures/confusion_matrix.png</code></td><td>Notebook 04</td><td>5 confusion matrices side by side</td></tr>
-      <tr><td><code>outputs/figures/shap_summary.png</code></td><td>Notebook 05</td><td>SHAP beeswarm: top 15 features with direction + magnitude</td></tr>
-      <tr><td><code>outputs/figures/shap_bar.png</code></td><td>Notebook 05</td><td>SHAP bar plot: mean absolute values</td></tr>
-      <tr><td><code>outputs/figures/shap_waterfall_example.png</code></td><td>Notebook 05</td><td>SHAP waterfall: single high-risk customer feature breakdown</td></tr>
-    </tbody>
-  </table>
+  <p>
+    See Phases 2, 4, and 6 for chart descriptions.
+  </p>
 
   <h4>Data &amp; Metrics</h4>
   <table>
@@ -4479,19 +3890,8 @@ streamlit run app.py</code></pre>
     </tbody>
   </table>
 
-  <h4>Serialized Models &amp; Artifacts</h4>
-  <table>
-    <thead>
-      <tr><th>File</th><th>Generated By</th><th>Contents</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>models/best_model.pkl</code></td><td>Notebook 04 (confirmed in 05)</td><td>Fitted LogisticRegression (<code>class_weight='balanced'</code>)</td></tr>
-      <tr><td><code>models/preprocessor.pkl</code></td><td>Notebook 03</td><td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td></tr>
-      <tr><td><code>models/feature_names.pkl</code></td><td>Notebook 03</td><td>List of 35 post-encoding feature names</td></tr>
-      <tr><td><code>models/all_models.pkl</code></td><td>Notebook 04</td><td>Dictionary of all 5 fitted models</td></tr>
-      <tr><td><code>models/train_test_split.pkl</code></td><td>Notebook 03</td><td>(X_train, X_test, y_train, y_test) before encoding</td></tr>
-      <tr><td><code>models/processed_data.pkl</code></td><td>Notebook 03</td><td>(X_train_processed, X_test_processed) after encoding</td></tr>
-    </tbody>
-  </table>
+  <p>
+    See Phases 3&ndash;6 for serialized artifact details.
+  </p>
 
 </details>
