@@ -28,11 +28,17 @@ My portfolio reflects end-to-end analytical work across SQL, Excel, Tableau, Pow
 ---
 
 ## Tools Used
-- **SQL & Databases:** BigQuery, MySQL, Joins, CTEs, Window Functions, DDL/DML
+- **SQL & Databases:** BigQuery, MySQL, Oracle SQL, Joins, CTEs, Window Functions, DDL/DML
 - **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query
-- **Visualization & BI:** Tableau, Power BI (DAX, Star Schema), Data Storytelling
-- **Programming:** Python, R (tidyverse, ggplot2), Jupyter Notebooks
+- **Visualization & BI:** Tableau, Power BI (DAX, Star Schema), Looker Studio, Data Storytelling
+- **Programming:** Python, R (tidyverse, ggplot2), Jupyter Notebooks, VS Code
+- **AI:** Claude, Claude Code, ChatGPT, Codex, Gemini
 - **Version Control:** Git, GitHub
+
+---
+
+## How I have used AI
+I have used the following AI tools in the following ways: Claude Code and Codex to link directly to my GitHub repository to build and edit this portfolio website; Claude, ChatGPT, and Gemini to brainstorm project ideas for this portfolio; Claude to draft project outlines for my portfolio projects; Claude to help generate and debug SQL queries, Python code, and R code; Claude to guide me through using BI tools and creating dashboards; Claude Projects/Gemini Gems/ChatGPT Projects to upload files as references when wanting specified and consistent contexts; Claude to generate thorough and exact instructions that I then feed to Claude Code to execute large and specific coding tasks; Claude to analyze csv files themselves and draw key findings and actionable insights within specified business contexts; Claude to help me create my resume; Julius AI to analyze csv files and create specified visualizations; ChatGPT and Gemini to quiz me on SQL and technical terminology.
 
 ---
 
