@@ -1111,8 +1111,472 @@ print(f"Columns: {list(df.columns)}")
 
 <details class="dropdown-section">
   <summary><strong>Phase 2 &mdash; Exploratory Data Analysis</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Key findings, all 7 charts with captions -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 2 explores the cleaned dataset visually and statistically to identify which features are strong
+    churn predictors and which carry no signal. The goal is to build intuition about churn drivers before
+    any modeling, and to produce publication-quality visualizations that document the findings. All work
+    runs in <code>notebooks/02_eda.ipynb</code>, with 7 chart files saved to <code>outputs/figures/</code>
+    for reuse in the Streamlit app and this portfolio page.
+  </p>
+
+  <h3>Key Code: Setup &amp; Load Cleaned Data</h3>
+
+  <pre><code class="language-python">import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set consistent plot style
+sns.set_style('whitegrid')
+plt.rcParams['figure.figsize'] = (10, 6)
+plt.rcParams['font.size'] = 12
+
+# Load cleaned dataset from Phase 1
+df = pd.read_csv('../data/telco_churn_cleaned.csv')
+print(f"Loaded: {df.shape[0]} rows × {df.shape[1]} columns")
+# Output: Loaded: 7032 rows × 20 columns</code></pre>
+
+  <h3>Chart 1: Overall Churn Distribution</h3>
+  <p>
+    The first visualization confirms the class distribution: 73.4% of customers did not churn (5,163) while
+    26.6% did churn (1,869). This moderate imbalance is important context &mdash; it means accuracy alone is
+    a misleading metric (a model predicting "no churn" for everyone scores 73.4%), which is why recall and AUC
+    were prioritized throughout the project.
+  </p>
+
+  <pre><code class="language-python"># Overall churn distribution
+fig, ax = plt.subplots(figsize=(8, 5))
+churn_counts = df['Churn'].value_counts()
+bars = ax.bar(['No Churn (0)', 'Churn (1)'], churn_counts.values,
+              color=['#2ecc71', '#e74c3c'], edgecolor='black', linewidth=0.5)
+
+# Add value labels on bars
+for bar, count in zip(bars, churn_counts.values):
+    pct = count / len(df) * 100
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 50,
+            f'{count:,}\n({pct:.1f}%)', ha='center', fontsize=12, fontweight='bold')
+
+ax.set_title('Customer Churn Distribution', fontsize=14, fontweight='bold')
+ax.set_ylabel('Number of Customers')
+plt.tight_layout()
+plt.savefig('../outputs/figures/churn_distribution.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/churn_distribution.png"
+      alt="Bar chart showing churn distribution: 5,163 No Churn (73.4%) vs 1,869 Churn (26.6%)"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Overall churn distribution &mdash; 5,163 customers retained (73.4%) vs. 1,869 churned (26.6%).
+      The moderate imbalance drives the decision to use <code>class_weight='balanced'</code> in modeling and
+      evaluate with recall/AUC rather than accuracy.
+    </figcaption>
+  </figure>
+
+  <h3>Chart 2: Churn Rate by Contract Type</h3>
+  <p>
+    This is the single most impactful chart from the entire EDA. Contract type is the strongest churn predictor
+    by a wide margin: month-to-month customers churn at <strong>42.7%</strong>, one-year contract customers at
+    <strong>11.3%</strong>, and two-year contract customers at just <strong>2.8%</strong>. This 15&times;
+    difference between the highest and lowest churn rates makes contract type the clearest lever for retention
+    strategy.
+  </p>
+
+  <pre><code class="language-python"># Churn rate by contract type — the single most impactful EDA chart
+contract_churn = df.groupby('Contract')['Churn'].mean().sort_values(ascending=False)
+
+fig, ax = plt.subplots(figsize=(8, 5))
+colors = ['#e74c3c', '#f39c12', '#2ecc71']
+bars = ax.bar(contract_churn.index, contract_churn.values * 100,
+              color=colors, edgecolor='black', linewidth=0.5)
+
+for bar, rate in zip(bars, contract_churn.values):
+    ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.8,
+            f'{rate*100:.1f}%', ha='center', fontsize=13, fontweight='bold')
+
+ax.set_title('Churn Rate by Contract Type', fontsize=14, fontweight='bold')
+ax.set_ylabel('Churn Rate (%)')
+ax.set_ylim(0, 50)
+plt.tight_layout()
+plt.savefig('../outputs/figures/churn_by_contract.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/churn_by_contract.png"
+      alt="Bar chart showing churn rate by contract type: Month-to-month 42.7%, One year 11.3%, Two year 2.8%"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Churn rate by contract type &mdash; month-to-month customers churn at 42.7% vs. just 2.8% for two-year
+      contracts. This chart was reused in the Streamlit app's Data Insights page. The 15&times; spread directly
+      informed the top business recommendation: incentivize annual contracts.
+    </figcaption>
+  </figure>
+
+  <h3>Chart 3: Tenure Distribution by Churn Status</h3>
+  <p>
+    This visualization confirms that <strong>churn is heavily front-loaded</strong>. Customers who churned
+    are concentrated in the first 0&ndash;12 months of tenure, while retained customers are distributed more
+    evenly across the full 0&ndash;72 month range. Long-tenured customers (60+ months) rarely churn. This
+    pattern directly motivated the <code>TenureGroup</code> and <code>is_new_customer</code> engineered
+    features in Phase 3.
+  </p>
+
+  <pre><code class="language-python"># Tenure distribution by churn status — overlapping histograms
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(df[df['Churn'] == 0]['tenure'], bins=40, alpha=0.6,
+        label='No Churn', color='#2ecc71', edgecolor='black', linewidth=0.3)
+ax.hist(df[df['Churn'] == 1]['tenure'], bins=40, alpha=0.6,
+        label='Churn', color='#e74c3c', edgecolor='black', linewidth=0.3)
+
+ax.set_title('Tenure Distribution by Churn Status', fontsize=14, fontweight='bold')
+ax.set_xlabel('Tenure (months)')
+ax.set_ylabel('Number of Customers')
+ax.legend(fontsize=12)
+plt.tight_layout()
+plt.savefig('../outputs/figures/tenure_by_churn.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/tenure_by_churn.png"
+      alt="Overlapping histograms showing tenure distribution by churn status — churners concentrated in first 12 months"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Tenure distribution by churn status &mdash; churners (red) are concentrated in the first 0&ndash;12 months,
+      while retained customers (green) spread across the full range. Also reused in the Streamlit app.
+    </figcaption>
+  </figure>
+
+  <h3>Chart 4: Monthly Charges Distribution by Churn Status</h3>
+  <p>
+    Customers who churned skew toward <strong>higher monthly charges ($70&ndash;$100/month)</strong>, while retained
+    customers cluster at the low end (~$20). This aligns with the fiber optic finding (fiber costs more) and
+    suggests that higher-paying customers may feel they're not getting enough value for the premium.
+  </p>
+
+  <pre><code class="language-python"># Monthly charges distribution by churn status
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(df[df['Churn'] == 0]['MonthlyCharges'], bins=40, alpha=0.6,
+        label='No Churn', color='#2ecc71', edgecolor='black', linewidth=0.3)
+ax.hist(df[df['Churn'] == 1]['MonthlyCharges'], bins=40, alpha=0.6,
+        label='Churn', color='#e74c3c', edgecolor='black', linewidth=0.3)
+
+ax.set_title('Monthly Charges by Churn Status', fontsize=14, fontweight='bold')
+ax.set_xlabel('Monthly Charges ($)')
+ax.set_ylabel('Number of Customers')
+ax.legend(fontsize=12)
+plt.tight_layout()
+plt.savefig('../outputs/figures/monthly_charges_by_churn.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/monthly_charges_by_churn.png"
+      alt="Overlapping histograms showing monthly charges by churn — churners skew toward higher charges"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Monthly charges by churn status &mdash; churners (red) skew toward $70&ndash;$100/month,
+      while retained customers (green) cluster at the low end (~$20/month).
+    </figcaption>
+  </figure>
+
+  <h3>Chart 5: Churn Rate Across All Categorical Features</h3>
+  <p>
+    A 4&times;4 grid of bar charts shows the churn rate across all 16 categorical features in a single view.
+    This comprehensive visual makes it easy to spot which features have a strong signal (Contract, InternetService,
+    OnlineSecurity, TechSupport, PaymentMethod) versus those with little or no signal (gender, PhoneService).
+  </p>
+
+  <pre><code class="language-python"># Churn rate by ALL categorical features — 4×4 grid
+cat_cols = ['gender', 'SeniorCitizen', 'Partner', 'Dependents',
+            'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
+            'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV',
+            'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']
+
+fig, axes = plt.subplots(4, 4, figsize=(20, 16))
+axes = axes.flatten()
+
+for i, col in enumerate(cat_cols):
+    churn_rate = df.groupby(col)['Churn'].mean().sort_values(ascending=False)
+    axes[i].bar(range(len(churn_rate)), churn_rate.values * 100,
+                color='#3498db', edgecolor='black', linewidth=0.3)
+    axes[i].set_title(col, fontsize=11, fontweight='bold')
+    axes[i].set_xticks(range(len(churn_rate)))
+    axes[i].set_xticklabels(churn_rate.index, rotation=45, ha='right', fontsize=8)
+    axes[i].set_ylabel('Churn %')
+
+    # Add value labels
+    for j, (rate, label) in enumerate(zip(churn_rate.values, churn_rate.index)):
+        axes[i].text(j, rate * 100 + 0.5, f'{rate*100:.1f}%',
+                     ha='center', fontsize=7, fontweight='bold')
+
+plt.suptitle('Churn Rate by Categorical Feature', fontsize=16, fontweight='bold', y=1.01)
+plt.tight_layout()
+plt.savefig('../outputs/figures/churn_by_categories.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/churn_by_categories.png"
+      alt="4x4 grid of bar charts showing churn rate across all 16 categorical features"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Churn rate across all 16 categorical features &mdash; Contract, InternetService, OnlineSecurity,
+      TechSupport, and PaymentMethod show the strongest signals. Gender and PhoneService show virtually
+      no difference in churn rates.
+    </figcaption>
+  </figure>
+
+  <h3>Chart 6: Correlation Heatmap</h3>
+  <p>
+    The correlation heatmap quantifies relationships between the numeric features and the encoded churn target.
+    Key correlations: <code>tenure</code> vs. Churn is <strong>&minus;0.35</strong> (the strongest single
+    predictor), <code>TotalCharges</code> vs. <code>tenure</code> is <strong>0.83</strong> (expected &mdash;
+    charges accumulate with time), <code>MonthlyCharges</code> vs. Churn is <strong>0.19</strong> (moderate
+    positive), and <code>TotalCharges</code> vs. Churn is <strong>&minus;0.20</strong> (loyal customers
+    accumulate more charges). The high correlation between TotalCharges and tenure (0.83) was noted but
+    both were kept because the model can handle multicollinearity in tree-based methods, and the linear model
+    benefits from their distinct information.
+  </p>
+
+  <pre><code class="language-python"># Correlation heatmap for numeric features + target
+numeric_cols = ['SeniorCitizen', 'tenure', 'MonthlyCharges', 'TotalCharges', 'Churn']
+corr_matrix = df[numeric_cols].corr()
+
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
+            square=True, linewidths=0.5, ax=ax,
+            vmin=-1, vmax=1, cbar_kws={'shrink': 0.8})
+ax.set_title('Correlation Heatmap — Numeric Features + Churn', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('../outputs/figures/correlation_heatmap.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/correlation_heatmap.png"
+      alt="Correlation heatmap showing relationships between numeric features and Churn"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Correlation heatmap &mdash; tenure has the strongest correlation with churn (&minus;0.35), while
+      TotalCharges and tenure are highly correlated (0.83) as expected. MonthlyCharges shows a moderate
+      positive correlation with churn (0.19).
+    </figcaption>
+  </figure>
+
+  <h3>Chart 7: Tenure vs. Monthly Charges Scatter Plot</h3>
+  <p>
+    This scatter plot explores whether there is a visible boundary between churners and non-churners in
+    the tenure&ndash;MonthlyCharges feature space. The pattern shows that churners (red) tend to cluster in the
+    <strong>low-tenure, high-charge</strong> region (bottom-right area), while retained customers are spread
+    more broadly. This confirms the intuition that customers paying a lot as new subscribers are the highest
+    risk &mdash; a pattern captured by the <code>AvgMonthlyCharge</code> engineered feature in Phase 3.
+  </p>
+
+  <pre><code class="language-python"># Scatter plot: tenure vs monthly charges colored by churn
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Plot retained customers first (background), then churners (foreground)
+retained = df[df['Churn'] == 0]
+churned = df[df['Churn'] == 1]
+
+ax.scatter(retained['tenure'], retained['MonthlyCharges'],
+           alpha=0.3, c='#2ecc71', label='No Churn', s=15, edgecolors='none')
+ax.scatter(churned['tenure'], churned['MonthlyCharges'],
+           alpha=0.5, c='#e74c3c', label='Churn', s=15, edgecolors='none')
+
+ax.set_title('Tenure vs Monthly Charges by Churn Status', fontsize=14, fontweight='bold')
+ax.set_xlabel('Tenure (months)')
+ax.set_ylabel('Monthly Charges ($)')
+ax.legend(fontsize=12)
+plt.tight_layout()
+plt.savefig('../outputs/figures/tenure_vs_charges_scatter.png', dpi=150, bbox_inches='tight')
+plt.show()</code></pre>
+
+  <figure style="margin: 20px 0;">
+    <img
+      src="./outputs/figures/tenure_vs_charges_scatter.png"
+      alt="Scatter plot of tenure vs monthly charges colored by churn status"
+      loading="lazy"
+      style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
+    >
+    <figcaption style="font-size: 0.95em; color: #555; margin-top: 8px;">
+      Tenure vs. monthly charges &mdash; churners (red) cluster in the low-tenure, high-charge region,
+      while retained customers (green) spread more broadly. No clean linear boundary, confirming that
+      multiple features interact to drive churn.
+    </figcaption>
+  </figure>
+
+  <h3>Key Findings Summary</h3>
+  <p>
+    The EDA findings are ranked by importance to churn prediction. These directly informed feature engineering
+    decisions in Phase 3 and business recommendations at the end of the project:
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>Finding</th><th>Evidence</th><th>Impact on Later Phases</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Contract type is the strongest predictor</strong></td>
+        <td>Month-to-month: 42.7% churn, One year: 11.3%, Two year: 2.8%</td>
+        <td>Became the #2 SHAP feature (<code>Contract_Two year</code>); drove the top business recommendation</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Churn is front-loaded by tenure</strong></td>
+        <td>Most churners leave within first 12 months; 60+ month customers rarely churn</td>
+        <td>Motivated <code>TenureGroup</code> engineered feature; tenure became #1 SHAP feature</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Higher monthly charges correlate with churn</strong></td>
+        <td>Churners skew $70&ndash;$100/month; retained cluster at ~$20</td>
+        <td>MonthlyCharges kept as numeric feature; correlation = 0.19 with churn</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Fiber optic customers churn more</strong></td>
+        <td>Higher churn despite paying more &mdash; suggests service quality issue</td>
+        <td>Became #3 SHAP feature (<code>InternetService_Fiber optic</code>); drove business recommendation</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Lack of support add-ons increases churn</strong></td>
+        <td>No OnlineSecurity / No TechSupport have significantly higher churn rates</td>
+        <td>Motivated <code>ServiceCount</code> and <code>HasInternet</code> engineered features</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Electronic check has higher churn</strong></td>
+        <td>Noticeably higher churn rate than mailed check, bank transfer, or credit card</td>
+        <td>Became #8 SHAP feature; drove "migrate payment methods" recommendation</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><strong>Gender and phone service have no signal</strong></td>
+        <td>Virtually identical churn rates across categories</td>
+        <td>Kept in model (let the model confirm) but expected near-zero SHAP importance &mdash; confirmed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Correlation Highlights</h3>
+  <table>
+    <thead>
+      <tr><th>Feature Pair</th><th>Correlation</th><th>Interpretation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>tenure</code> vs. <code>Churn</code></td>
+        <td>&minus;0.35</td>
+        <td>Strongest single numeric predictor &mdash; longer tenure = less churn</td>
+      </tr>
+      <tr>
+        <td><code>TotalCharges</code> vs. <code>tenure</code></td>
+        <td>0.83</td>
+        <td>High positive &mdash; expected, as charges accumulate over time</td>
+      </tr>
+      <tr>
+        <td><code>MonthlyCharges</code> vs. <code>Churn</code></td>
+        <td>0.19</td>
+        <td>Moderate positive &mdash; higher monthly bills correlate with more churn</td>
+      </tr>
+      <tr>
+        <td><code>TotalCharges</code> vs. <code>Churn</code></td>
+        <td>&minus;0.20</td>
+        <td>Negative &mdash; loyal customers accumulate more total charges</td>
+      </tr>
+      <tr>
+        <td><code>SeniorCitizen</code> vs. <code>Churn</code></td>
+        <td>0.15</td>
+        <td>Slight positive &mdash; senior citizens churn somewhat more</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Charts Generated</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Description</th><th>Reused In</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>churn_distribution.png</code></td>
+        <td>Overall churn bar chart: 5,163 No (73.4%) / 1,869 Yes (26.6%)</td>
+        <td>Portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>churn_by_contract.png</code></td>
+        <td>Churn rate by contract type: 42.7% / 11.3% / 2.8%</td>
+        <td>Streamlit app (Page 3), portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>tenure_by_churn.png</code></td>
+        <td>Overlapping histograms of tenure by churn status</td>
+        <td>Streamlit app (Page 3), portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>monthly_charges_by_churn.png</code></td>
+        <td>Overlapping histograms of monthly charges by churn</td>
+        <td>Portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>churn_by_categories.png</code></td>
+        <td>4&times;4 grid of churn rate across all 16 categorical features</td>
+        <td>Portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>correlation_heatmap.png</code></td>
+        <td>Heatmap of numeric feature correlations including Churn</td>
+        <td>Portfolio page</td>
+      </tr>
+      <tr>
+        <td><code>tenure_vs_charges_scatter.png</code></td>
+        <td>Scatter: tenure vs. monthly charges colored by churn</td>
+        <td>Portfolio page</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>EDA &rarr; Feature Engineering Connection</h3>
+  <p>
+    The EDA findings directly shaped the five engineered features created in Phase 3. The front-loaded tenure
+    pattern motivated <code>TenureGroup</code> (bucketing tenure into 0&ndash;12, 13&ndash;24, 25&ndash;48,
+    49+ month bins). The support add-on signal motivated <code>ServiceCount</code> (counting how many optional
+    services a customer has &mdash; more services = more switching cost = stickier customer). The
+    internet/phone service patterns motivated <code>HasInternet</code> and <code>HasPhone</code> as binary
+    consolidation features. And the observation that churners cluster in the low-tenure, high-charge region
+    motivated <code>AvgMonthlyCharge</code> (TotalCharges / tenure) to capture the cost-to-loyalty ratio.
+  </p>
+  <p>
+    Two additional EDA-only analyses were performed but <strong>intentionally excluded from the model</strong>:
+    <code>tenure_group</code> (binned churn rates for visualization only &mdash; redundant with raw
+    <code>tenure</code> for modeling) and a <code>TotalCharges / (tenure + 1)</code> validation check
+    (confirming data consistency &mdash; nearly identical to MonthlyCharges, would add multicollinearity if
+    used as a feature).
+  </p>
+
 </details>
 
 <details class="dropdown-section">
