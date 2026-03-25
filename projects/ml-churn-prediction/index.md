@@ -4322,6 +4322,176 @@ streamlit run app.py</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Project Files &amp; Repository</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Links to repo, notebooks, app, shared module, models -->
+
+  <h3>Live Links</h3>
+  <table>
+    <thead>
+      <tr><th>Resource</th><th>Link</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Live Streamlit App</strong></td>
+        <td><a href="https://nadeaujonnyappio-ba7xf6aknjidd9ppd5ww3t.streamlit.app" target="_blank">nadeaujonnyappio-ba7xf6aknjidd9ppd5ww3t.streamlit.app</a></td>
+      </tr>
+      <tr>
+        <td><strong>GitHub Repository</strong></td>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/tree/main/projects/ml-churn-prediction" target="_blank">github.com/nadeaujonny/&hellip;/ml-churn-prediction</a></td>
+      </tr>
+      <tr>
+        <td><strong>Portfolio Page</strong></td>
+        <td><a href="https://nadeaujonny.github.io/projects/ml-churn-prediction/" target="_blank">nadeaujonny.github.io/projects/ml-churn-prediction</a></td>
+      </tr>
+      <tr>
+        <td><strong>Dataset (Kaggle)</strong></td>
+        <td><a href="https://www.kaggle.com/datasets/blastchar/telco-customer-churn" target="_blank">kaggle.com/datasets/blastchar/telco-customer-churn</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Notebooks (execute in order)</h3>
+  <table>
+    <thead>
+      <tr><th>Notebook</th><th>Phase</th><th>Description</th><th>Key Outputs</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/01_data_cleaning.ipynb" target="_blank"><code>01_data_cleaning.ipynb</code></a></td>
+        <td>Phase 1</td>
+        <td>Load raw CSV, fix TotalCharges dtype, drop 11 NaN rows, drop customerID, encode target, save cleaned CSV</td>
+        <td><code>data/telco_churn_cleaned.csv</code></td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/02_eda.ipynb" target="_blank"><code>02_eda.ipynb</code></a></td>
+        <td>Phase 2</td>
+        <td>7 EDA visualizations, churn rate analysis across all features, correlation heatmap, scatter plots, key findings documentation</td>
+        <td>7 chart PNGs in <code>outputs/figures/</code></td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/03_feature_engineering.ipynb" target="_blank"><code>03_feature_engineering.ipynb</code></a></td>
+        <td>Phase 3</td>
+        <td>Apply 5 engineered features via shared module, define numeric/categorical lists, stratified 80/20 split, build ColumnTransformer pipeline</td>
+        <td><code>preprocessor.pkl</code>, <code>feature_names.pkl</code>, <code>train_test_split.pkl</code>, <code>processed_data.pkl</code></td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/04_model_training.ipynb" target="_blank"><code>04_model_training.ipynb</code></a></td>
+        <td>Phase 4</td>
+        <td>Train 5 models (LR, RF, XGBoost, LightGBM, SVM), 5-fold stratified CV, test set evaluation, comparison charts, best model selection</td>
+        <td><code>best_model.pkl</code>, <code>all_models.pkl</code>, <code>model_comparison.csv</code>, 3 chart PNGs</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/notebooks/05_tuning_evaluation.ipynb" target="_blank"><code>05_tuning_evaluation.ipynb</code></a></td>
+        <td>Phases 5&ndash;6</td>
+        <td>RandomizedSearchCV (50 iter), default vs tuned comparison, decision to keep default, SHAP LinearExplainer, beeswarm/bar/waterfall plots, classification report</td>
+        <td>3 SHAP chart PNGs, <code>sample_predictions.csv</code>, final model confirmed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Shared Module</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Purpose</th><th>Locations</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/app/feature_helpers.py" target="_blank"><code>feature_helpers.py</code></a></td>
+        <td>Single source of truth for the <code>engineer_features()</code> function &mdash; creates ServiceCount, HasInternet, HasPhone, AvgMonthlyCharge, and TenureGroup. Guarantees identical feature transformations at training time and serve time.</td>
+        <td><code>notebooks/feature_helpers.py</code> (training) and <code>app/feature_helpers.py</code> (deployment) &mdash; identical copies</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Streamlit App Files</h3>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/app/app.py" target="_blank"><code>app/app.py</code></a></td>
+        <td>Main Streamlit application &mdash; 4 pages: Predict Churn Risk, Model Performance, Data Insights, Sample Predictions</td>
+      </tr>
+      <tr>
+        <td><code>app/best_model.pkl</code></td>
+        <td>Serialized LogisticRegression model (<code>class_weight='balanced'</code>)</td>
+      </tr>
+      <tr>
+        <td><code>app/preprocessor.pkl</code></td>
+        <td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td>
+      </tr>
+      <tr>
+        <td><code>app/model_comparison.csv</code></td>
+        <td>5-model results table displayed on Page 2</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/app/requirements.txt" target="_blank"><code>app/requirements.txt</code></a></td>
+        <td>Streamlit-specific dependencies (streamlit, pandas, numpy, scikit-learn, shap, matplotlib, joblib)</td>
+      </tr>
+      <tr>
+        <td><code>app/figures/</code></td>
+        <td>6 pre-generated chart PNGs used by Pages 2 and 3 (churn_by_contract, confusion_matrix, model_comparison, roc_curves, shap_summary, tenure_by_churn)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Output Artifacts</h3>
+
+  <h4>Visualizations (13 charts)</h4>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Generated By</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>outputs/figures/churn_distribution.png</code></td><td>Notebook 02</td><td>Overall churn bar chart: 5,163 No / 1,869 Yes</td></tr>
+      <tr><td><code>outputs/figures/churn_by_contract.png</code></td><td>Notebook 02</td><td>Churn rate by contract type: 42.7% / 11.3% / 2.8%</td></tr>
+      <tr><td><code>outputs/figures/tenure_by_churn.png</code></td><td>Notebook 02</td><td>Overlapping histograms of tenure by churn status</td></tr>
+      <tr><td><code>outputs/figures/monthly_charges_by_churn.png</code></td><td>Notebook 02</td><td>Overlapping histograms of monthly charges by churn</td></tr>
+      <tr><td><code>outputs/figures/churn_by_categories.png</code></td><td>Notebook 02</td><td>4&times;4 grid of churn rate across all 16 categorical features</td></tr>
+      <tr><td><code>outputs/figures/correlation_heatmap.png</code></td><td>Notebook 02</td><td>Heatmap of numeric feature correlations + Churn</td></tr>
+      <tr><td><code>outputs/figures/tenure_vs_charges_scatter.png</code></td><td>Notebook 02</td><td>Scatter: tenure vs monthly charges colored by churn</td></tr>
+      <tr><td><code>outputs/figures/model_comparison.png</code></td><td>Notebook 04</td><td>Bar chart: AUC, Recall, F1 for all 5 models</td></tr>
+      <tr><td><code>outputs/figures/roc_curves.png</code></td><td>Notebook 04</td><td>ROC curves overlay for all 5 models + random baseline</td></tr>
+      <tr><td><code>outputs/figures/confusion_matrix.png</code></td><td>Notebook 04</td><td>5 confusion matrices side by side</td></tr>
+      <tr><td><code>outputs/figures/shap_summary.png</code></td><td>Notebook 05</td><td>SHAP beeswarm: top 15 features with direction + magnitude</td></tr>
+      <tr><td><code>outputs/figures/shap_bar.png</code></td><td>Notebook 05</td><td>SHAP bar plot: mean absolute values</td></tr>
+      <tr><td><code>outputs/figures/shap_waterfall_example.png</code></td><td>Notebook 05</td><td>SHAP waterfall: single high-risk customer feature breakdown</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Data &amp; Metrics</h4>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Generated By</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/outputs/metrics/model_comparison.csv" target="_blank"><code>outputs/metrics/model_comparison.csv</code></a></td>
+        <td>Notebook 04</td>
+        <td>5-model comparison table (CV AUC, Accuracy, Precision, Recall, F1, AUC)</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/nadeaujonny/nadeaujonny.github.io/blob/main/projects/ml-churn-prediction/outputs/metrics/sample_predictions.csv" target="_blank"><code>outputs/metrics/sample_predictions.csv</code></a></td>
+        <td>Notebook 05</td>
+        <td>15 test customers: Actual, Predicted, Churn_Probability</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>Serialized Models &amp; Artifacts</h4>
+  <table>
+    <thead>
+      <tr><th>File</th><th>Generated By</th><th>Contents</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>models/best_model.pkl</code></td><td>Notebook 04 (confirmed in 05)</td><td>Fitted LogisticRegression (<code>class_weight='balanced'</code>)</td></tr>
+      <tr><td><code>models/preprocessor.pkl</code></td><td>Notebook 03</td><td>Fitted ColumnTransformer (StandardScaler + OneHotEncoder)</td></tr>
+      <tr><td><code>models/feature_names.pkl</code></td><td>Notebook 03</td><td>List of 35 post-encoding feature names</td></tr>
+      <tr><td><code>models/all_models.pkl</code></td><td>Notebook 04</td><td>Dictionary of all 5 fitted models</td></tr>
+      <tr><td><code>models/train_test_split.pkl</code></td><td>Notebook 03</td><td>(X_train, X_test, y_train, y_test) before encoding</td></tr>
+      <tr><td><code>models/processed_data.pkl</code></td><td>Notebook 03</td><td>(X_train_processed, X_test_processed) after encoding</td></tr>
+    </tbody>
+  </table>
+
 </details>
