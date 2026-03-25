@@ -3741,8 +3741,228 @@ joblib</code></pre>
 
 <details class="dropdown-section">
   <summary><strong>Key Findings &amp; Business Recommendations</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Findings list, recommendations list -->
+
+  <h3>Overview</h3>
+  <p>
+    This section synthesizes the &ldquo;so what&rdquo; of the entire project &mdash; the analytical findings
+    and modeling insights that translate into concrete, actionable business recommendations. Every finding
+    listed below is supported by evidence from multiple phases: EDA visualizations (Phase 2), SHAP feature
+    importance rankings (Phase 6), and the model selection and tuning decisions (Phases 4&ndash;5). These
+    aren&rsquo;t hypothetical suggestions &mdash; they are data-driven conclusions backed by a trained,
+    validated, and explainable model.
+  </p>
+
+  <h3>Key Findings</h3>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>Finding</th><th>Evidence</th><th>Where Discovered</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Contract type is the single strongest churn predictor</strong></td>
+        <td>Month-to-month: 42.7% churn rate vs. One year: 11.3% vs. Two year: 2.8% &mdash; a 15&times; spread. <code>Contract_Two year</code> is the #2 SHAP feature globally.</td>
+        <td>EDA (Phase 2), SHAP (Phase 6)</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Churn is heavily front-loaded by tenure</strong></td>
+        <td>Most churners leave within the first 12 months. Customers who survive the first year are significantly more likely to stay. <code>tenure</code> is the #1 SHAP feature globally (correlation: &minus;0.35).</td>
+        <td>EDA (Phase 2), SHAP (Phase 6), Feature Engineering (Phase 3 &mdash; motivated <code>TenureGroup</code>)</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Fiber optic customers churn more despite paying more</strong></td>
+        <td>Fiber optic internet has significantly higher churn than DSL or no internet &mdash; suggesting a service quality or expectations gap, not a pricing problem. <code>InternetService_Fiber optic</code> is the #3 SHAP feature.</td>
+        <td>EDA (Phase 2), SHAP (Phase 6)</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Support add-ons (OnlineSecurity, TechSupport) significantly reduce churn</strong></td>
+        <td>Customers without these services churn at notably higher rates. <code>OnlineSecurity_Yes</code> is SHAP #9, <code>TechSupport_Yes</code> is SHAP #11 &mdash; both push strongly away from churn when present.</td>
+        <td>EDA (Phase 2), SHAP (Phase 6), Feature Engineering (Phase 3 &mdash; motivated <code>ServiceCount</code>)</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Electronic check payment method correlates with higher churn</strong></td>
+        <td><code>PaymentMethod_Electronic check</code> is SHAP #8. Manual payment creates less friction to cancel compared to automatic payment methods.</td>
+        <td>EDA (Phase 2), SHAP (Phase 6)</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>The simplest model outperformed ensemble methods</strong></td>
+        <td>Logistic Regression achieved the highest AUC (0.8344) and highest recall (0.7888) &mdash; beating Random Forest, XGBoost, LightGBM, and SVM. This means the churn relationships in this dataset are approximately linear, and a well-configured simple model on properly engineered features is highly effective.</td>
+        <td>Model Training (Phase 4)</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><strong>Hyperparameter tuning improved precision but sacrificed recall &mdash; the default was kept</strong></td>
+        <td>The tuned model gained +14.6pp precision but lost &minus;22pp recall (from 79% down to 57%). Since the cost of missing a churner far exceeds the cost of a false alarm, the default balanced model was the better business choice. This demonstrates principled model selection based on cost asymmetry.</td>
+        <td>Hyperparameter Tuning (Phase 5)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Key Code: Evidence Behind the Top Finding</h3>
+  <p>
+    The contract type finding emerged independently from two completely different analytical approaches
+    &mdash; EDA churn rate calculations and SHAP model-learned importance &mdash; which strengthens
+    confidence in the conclusion:
+  </p>
+
+  <pre><code class="language-python"># Evidence 1: EDA — raw churn rates by contract type (Phase 2)
+contract_churn = df.groupby('Contract')['Churn'].mean()
+print(contract_churn.sort_values(ascending=False))
+# Output:
+# Contract
+# Month-to-month    0.4271
+# One year          0.1129
+# Two year          0.0283
+
+# Evidence 2: SHAP — model-learned feature importance (Phase 6)
+# Contract_Two year is the #2 global SHAP feature
+# Contract_One year is the #6 global SHAP feature
+# Both push strongly AWAY from churn when present
+# (relative to the dropped baseline: month-to-month)</code></pre>
+
+  <h3>Key Code: Evidence Behind Tenure as #1 Predictor</h3>
+
+  <pre><code class="language-python"># Correlation: tenure vs Churn (Phase 2)
+print(f"tenure vs Churn correlation: {df['tenure'].corr(df['Churn']):.4f}")
+# Output: tenure vs Churn correlation: -0.3530
+
+# SHAP: tenure is the #1 feature globally (Phase 6)
+# Low tenure → SHAP value of +1.22 for highest-risk customer
+# High tenure → SHAP values strongly negative (pushes away from churn)
+
+# Feature Engineering response (Phase 3)
+# Created TenureGroup to capture the non-linear relationship:
+def tenure_bucket(t):
+    if t <= 12: return 0    # Danger zone
+    elif t <= 24: return 1  # Transition period
+    elif t <= 48: return 2  # Established
+    else: return 3          # Loyal
+df['TenureGroup'] = df['tenure'].apply(tenure_bucket)</code></pre>
+
+  <h3>Key Code: The Cost Asymmetry That Drove Model Selection</h3>
+
+  <pre><code class="language-python"># Phase 5: Why we kept the default model despite tuning finding
+# a "better" model by standard metrics
+
+# Default model (class_weight='balanced'):
+#   Recall = 0.7888 → catches 295 of 374 churners → misses 79
+#   False alarms = 309 loyal customers flagged
+
+# Tuned model (class_weight=None):
+#   Recall = 0.5668 → catches 212 of 374 churners → misses 162
+#   False alarms = 122 loyal customers flagged
+
+# Business cost comparison:
+extra_false_alarms = 309 - 122          # 187 more false alarms
+extra_missed_churners = 162 - 79        # 83 more missed churners
+cost_per_false_alarm = 10               # $10 retention offer
+cost_per_missed_churner = 500           # $500 lifetime value lost
+
+cost_of_extra_false_alarms = extra_false_alarms * cost_per_false_alarm
+cost_of_extra_missed = extra_missed_churners * cost_per_missed_churner
+
+print(f"Cost of extra false alarms:  ${cost_of_extra_false_alarms:,}")
+print(f"Cost of extra missed churners: ${cost_of_extra_missed:,}")
+# Output:
+# Cost of extra false alarms:  $1,870
+# Cost of extra missed churners: $41,500
+# → Default model is clearly the better business choice</code></pre>
+
+  <h3>Business Recommendations</h3>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>Recommendation</th><th>Rationale</th><th>Expected Impact</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Incentivize annual contracts</strong></td>
+        <td>Month-to-month customers churn at 42.7% vs. 2.8% for two-year contracts. Contract type is the #2 SHAP feature. Even small discounts on annual plans would likely pay for themselves through reduced churn.</td>
+        <td>Highest-impact single intervention &mdash; converting even 10% of month-to-month customers to annual would significantly reduce overall churn rate</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Focus retention efforts on new customers (first 12 months)</strong></td>
+        <td>Tenure is the #1 SHAP feature. Most churn happens in the first year. Customers who survive 12 months are far more likely to stay long-term.</td>
+        <td>Targeted onboarding programs, check-in calls at 30/60/90 days, early loyalty incentives for first-year customers</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Bundle OnlineSecurity and TechSupport add-ons</strong></td>
+        <td>Both reduce churn when present (SHAP #9 and #11). Customers with support add-ons have more perceived value and higher switching costs.</td>
+        <td>Offer these services at reduced cost or include by default for at-risk segments &mdash; the retention value likely exceeds the cost of the service</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Investigate fiber optic service quality</strong></td>
+        <td>Fiber optic is the #3 SHAP feature pushing toward churn, despite being the highest-revenue internet tier. Higher churn at higher price points signals an experience problem, not a pricing problem.</td>
+        <td>Audit fiber optic speed consistency, installation experience, and support response times. The revenue-at-risk from fiber churn likely justifies investment in service quality.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Migrate electronic check users to automatic payment methods</strong></td>
+        <td>Electronic check is SHAP #8, pushing toward churn. Manual payment = lower friction to cancel. Automatic payments (bank transfer, credit card) create passive retention.</td>
+        <td>Offer a small discount or incentive for switching to autopay &mdash; even a $5/month discount costs less than losing the customer</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Modeling Insights</h3>
+  <p>
+    Beyond the business recommendations, the project produced two modeling insights worth documenting:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Insight</th><th>What It Means</th><th>Why It Matters</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Simplest model won</strong></td>
+        <td>Logistic Regression outperformed Random Forest, XGBoost, LightGBM, and SVM on the two priority metrics (AUC and recall)</td>
+        <td>Demonstrates that model complexity doesn&rsquo;t always win &mdash; well-engineered features on approximately linear relationships make simple models highly effective. Also makes deployment and explainability far easier.</td>
+      </tr>
+      <tr>
+        <td><strong>Knowing when <em>not</em> to tune</strong></td>
+        <td>Hyperparameter tuning found a &ldquo;better&rdquo; model by accuracy (+7.4pp) but a worse model by recall (&minus;22pp) &mdash; the default was kept</td>
+        <td>Demonstrates principled model selection based on business cost asymmetry rather than blind optimization. The tuned model would have missed 83 additional churners to avoid 187 false alarms &mdash; a $41,500 loss to save $1,870.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>EDA &rarr; SHAP Alignment</h3>
+  <p>
+    A strong validation of the project&rsquo;s analytical integrity is that the EDA findings (computed from
+    raw churn rates with no model involved) align closely with the SHAP feature importance rankings (learned
+    by the trained model). The features that showed the strongest churn signal in EDA &mdash; contract type,
+    tenure, internet service type, support add-ons, payment method &mdash; are the same features that SHAP
+    ranks as most important. This convergence from two independent methods means the findings are robust,
+    not artifacts of a particular analytical approach.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>EDA Rank (by churn rate spread)</th><th>SHAP Rank (by mean |SHAP value|)</th><th>Aligned?</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Contract type</td><td>#1</td><td>#2 and #6 (Two year, One year)</td><td>Yes</td></tr>
+      <tr><td>Tenure</td><td>#2</td><td>#1</td><td>Yes</td></tr>
+      <tr><td>Internet service type</td><td>#3 (fiber optic)</td><td>#3</td><td>Yes</td></tr>
+      <tr><td>Monthly charges</td><td>#4</td><td>#5</td><td>Yes</td></tr>
+      <tr><td>Support add-ons</td><td>#5</td><td>#9 and #11</td><td>Yes</td></tr>
+      <tr><td>Payment method</td><td>#6</td><td>#8</td><td>Yes</td></tr>
+      <tr><td>Gender</td><td>No signal</td><td>Not in top 15</td><td>Yes</td></tr>
+    </tbody>
+  </table>
+
 </details>
 
 <details class="dropdown-section">
