@@ -770,8 +770,343 @@ print(f"Cleaned dataset saved: {df.shape[0]} rows × {df.shape[1]} columns")
 
 <details class="dropdown-section">
   <summary><strong>Phase 1 &mdash; Data Cleaning</strong></summary>
+
   <div style="margin-top: 12px;"></div>
-  <!-- TODO: Cleaning steps, code highlight, result -->
+
+  <h3>Overview</h3>
+  <p>
+    Phase 1 loads the raw Telco Customer Churn CSV, inspects its structure for data quality issues, fixes the
+    one significant dtype problem (<code>TotalCharges</code> stored as string), handles the resulting NaN rows,
+    drops the non-predictive <code>customerID</code> column, encodes the target variable, and saves a cleaned
+    dataset for all downstream notebooks. The entire phase runs in
+    <code>notebooks/01_data_cleaning.ipynb</code>.
+  </p>
+
+  <h3>Step 1: Load &amp; Confirm Shape</h3>
+  <p>
+    The raw dataset is loaded and the shape and column dtypes are immediately checked. This first inspection
+    flagged that <code>TotalCharges</code> was stored as <code>object</code> dtype (string) instead of numeric
+    &mdash; the key data issue that drives the rest of the cleaning logic.
+  </p>
+
+  <pre><code class="language-python">import pandas as pd
+import numpy as np
+
+# Load the raw dataset
+df = pd.read_csv('../data/WA_Fn-UseC_-Telco-Customer-Churn.csv')
+
+# Confirm shape and inspect dtypes
+print(f"Shape: {df.shape}")
+print(f"\nColumn dtypes:\n{df.dtypes}")
+# Output:
+# Shape: (7043, 21)
+#
+# customerID           object
+# gender               object
+# SeniorCitizen         int64    ← already numeric (0/1)
+# Partner              object
+# Dependents           object
+# tenure                int64
+# PhoneService         object
+# MultipleLines        object
+# InternetService      object
+# OnlineSecurity       object
+# OnlineBackup         object
+# DeviceProtection     object
+# TechSupport          object
+# StreamingTV          object
+# StreamingMovies      object
+# Contract             object
+# PaperlessBilling     object
+# PaymentMethod        object
+# MonthlyCharges      float64
+# TotalCharges         object   ← should be numeric — flagged for investigation
+# Churn                object</code></pre>
+
+  <h3>Step 2: Visual Inspection</h3>
+  <p>
+    A quick look at the first 10 rows confirms the general structure &mdash; categorical columns use readable
+    string values (Yes/No, Male/Female, Month-to-month, etc.), numeric columns look reasonable, and
+    <code>TotalCharges</code> appears numeric in most rows but is typed as <code>object</code>:
+  </p>
+
+  <pre><code class="language-python"># First look at the data
+df.head(10)
+# Output (abbreviated):
+#    customerID  gender  SeniorCitizen Partner Dependents  tenure  ...
+# 0  7590-VHVEG  Female              0     Yes         No       1  ...
+# 1  5575-GNVDE    Male              0      No         No      34  ...
+# 2  3668-QPYBK    Male              0      No         No       2  ...
+# 3  7795-CFOCW    Male              0      No         No      45  ...
+# 4  9237-HQITU  Female              0      No         No       2  ...
+# ...
+# [10 rows × 21 columns]</code></pre>
+
+  <h3>Step 3: Check for Missing Values, Duplicates &amp; Cardinality</h3>
+  <p>
+    This step checks for explicit nulls, duplicate rows, and the number of unique values per column. The result
+    was clean on the surface &mdash; zero missing values across all 21 columns and zero duplicates &mdash; but
+    this was misleading for <code>TotalCharges</code>, where whitespace strings were hiding the real nulls.
+    The cardinality check also confirmed <code>customerID</code> had 7,043 unique values (one per row, confirming
+    it's just an identifier to drop).
+  </p>
+
+  <pre><code class="language-python"># Check for missing values and duplicates
+print(f"Missing values per column:\n{df.isnull().sum()}\n")
+print(f"Duplicate rows: {df.duplicated().sum()}")
+print(f"\nUnique values per column:\n{df.nunique()}")
+# Output:
+# Missing values per column:
+# customerID          0
+# gender              0
+# SeniorCitizen       0
+# Partner             0
+# Dependents          0
+# tenure              0
+# PhoneService        0
+# MultipleLines       0
+# InternetService     0
+# OnlineSecurity      0
+# OnlineBackup        0
+# DeviceProtection    0
+# TechSupport         0
+# StreamingTV         0
+# StreamingMovies     0
+# Contract            0
+# PaperlessBilling    0
+# PaymentMethod       0
+# MonthlyCharges      0
+# TotalCharges        0   ← 0 "missing" — but whitespace strings aren't caught by .isnull()
+# Churn               0
+#
+# Duplicate rows: 0
+#
+# Unique values per column:
+# customerID          7043   ← unique identifier, will drop
+# gender                 2
+# SeniorCitizen          2
+# Partner                2
+# Dependents             2
+# tenure                73   ← 0–72 months
+# PhoneService           2
+# MultipleLines          3   ← Yes, No, No phone service
+# InternetService        3   ← DSL, Fiber optic, No
+# OnlineSecurity         3
+# OnlineBackup           3
+# DeviceProtection       3
+# TechSupport            3
+# StreamingTV            3
+# StreamingMovies        3
+# Contract               3
+# PaperlessBilling       2
+# PaymentMethod          4   ← 4 payment methods
+# MonthlyCharges      1585
+# TotalCharges        6531
+# Churn                  2</code></pre>
+
+  <h3>Step 4: Fix TotalCharges Dtype &amp; Investigate NaN Rows</h3>
+  <p>
+    This is the most important cleaning step. <code>TotalCharges</code> was stored as a string because 11 rows
+    contained whitespace instead of a numeric value. Converting with <code>pd.to_numeric(errors='coerce')</code>
+    turned these whitespace entries into <code>NaN</code>. Investigation confirmed a clear pattern: <strong>all
+    11 NaN rows had <code>tenure=0</code></strong> &mdash; brand new customers who had not yet been billed.
+  </p>
+
+  <pre><code class="language-python"># Fix TotalCharges: convert from string to numeric
+# Whitespace entries (tenure=0 customers) will become NaN
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+
+# Check how many NaNs this created
+print(f"TotalCharges NaNs after conversion: {df['TotalCharges'].isna().sum()}")
+# Output: TotalCharges NaNs after conversion: 11
+
+# Investigate: show all 11 NaN rows
+print(f"\nRows with NaN TotalCharges:")
+print(df[df['TotalCharges'].isna()][['customerID', 'tenure', 'MonthlyCharges', 'TotalCharges']])
+# Output:
+#       customerID  tenure  MonthlyCharges  TotalCharges
+# 488   4472-LVYGI       0           52.55           NaN
+# 753   3115-CZMZD       0           20.25           NaN
+# 936   5709-LVOEQ       0           80.85           NaN
+# 1082  4367-NUYAO       0           25.75           NaN
+# 1340  1371-DWPAZ       0           56.05           NaN
+# 3331  7644-OMVMY       0           19.85           NaN
+# 3826  3213-VVOLG       0           25.35           NaN
+# 4380  2520-SGTTA       0           20.00           NaN
+# 5218  2923-ARZLG       0           19.70           NaN
+# 6670  4075-WKNIU       0           73.35           NaN
+# 6754  2775-SEFEE       0           61.90           NaN</code></pre>
+
+  <h4>Decision: Drop vs. Impute</h4>
+  <p>
+    Two options were considered for handling these 11 rows:
+  </p>
+  <table>
+    <thead>
+      <tr><th>Option</th><th>Approach</th><th>Tradeoff</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A &mdash; Drop (chosen)</strong></td>
+        <td>Remove the 11 rows entirely</td>
+        <td>Loses 0.16% of data &mdash; negligible impact on a 7K-row dataset. Clean and simple.</td>
+      </tr>
+      <tr>
+        <td>B &mdash; Impute with 0</td>
+        <td>Set TotalCharges = 0 for tenure=0 customers</td>
+        <td>Logically valid (no billing history = $0), but introduces 11 rows where tenure=0 and TotalCharges=0, which could create a misleading signal during modeling.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    <strong>Option A was chosen</strong> because dropping 11 rows from a 7,043-row dataset has no meaningful
+    impact on model training, and it avoids any edge-case artifacts from imputed values. This is the kind of
+    pragmatic cleaning decision that matters in practice &mdash; the data loss is negligible, so the simpler
+    approach wins.
+  </p>
+
+  <h3>Step 5: Drop customerID, Encode Target &amp; Verify</h3>
+  <p>
+    After handling TotalCharges, three remaining transformations complete the cleaning pipeline:
+    drop <code>customerID</code> (an identifier, not a predictive feature), encode the <code>Churn</code>
+    target variable from Yes/No strings to 1/0 binary integers, and verify the final shape and class distribution.
+  </p>
+
+  <pre><code class="language-python"># Drop the 11 rows with NaN TotalCharges (0.16% of data — negligible)
+# These are tenure=0 customers with no billing history
+df = df.dropna(subset=['TotalCharges'])
+
+# Drop customerID — not a predictive feature
+df = df.drop('customerID', axis=1)
+
+# Encode target variable: Yes=1, No=0
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+
+# Verify final state
+print(f"Shape after cleaning: {df.shape}")
+print(f"\nTotalCharges dtype: {df['TotalCharges'].dtype}")
+print(f"\nChurn distribution:\n{df['Churn'].value_counts(normalize=True).round(4)}")
+# Output:
+# Shape after cleaning: (7032, 20)
+#
+# TotalCharges dtype: float64
+#
+# Churn distribution:
+# Churn
+# 0    0.7342
+# 1    0.2658
+# Name: proportion, dtype: float64</code></pre>
+
+  <h3>Step 6: Save Cleaned Dataset</h3>
+  <p>
+    The cleaned DataFrame is saved to CSV for consumption by all subsequent notebooks (EDA, feature engineering,
+    model training, tuning/SHAP). This establishes a clean handoff point &mdash; downstream notebooks load the
+    cleaned file and never touch the raw data.
+  </p>
+
+  <pre><code class="language-python"># Save cleaned dataset for use in subsequent notebooks
+df.to_csv('../data/telco_churn_cleaned.csv', index=False)
+
+print(f"Cleaned dataset saved: {df.shape[0]} rows × {df.shape[1]} columns")
+print(f"Columns: {list(df.columns)}")
+# Output:
+# Cleaned dataset saved: 7032 rows × 20 columns
+# Columns: ['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'tenure',
+#   'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
+#   'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV',
+#   'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod',
+#   'MonthlyCharges', 'TotalCharges', 'Churn']</code></pre>
+
+  <h3>Phase 1 Summary</h3>
+
+  <table>
+    <thead>
+      <tr><th>Step</th><th>Action</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Load raw CSV</td>
+        <td>7,043 rows &times; 21 columns</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Visual inspection (<code>df.head(10)</code>)</td>
+        <td>Confirmed structure; noted <code>TotalCharges</code> as object dtype</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Check nulls, duplicates, cardinality</td>
+        <td>0 explicit nulls, 0 duplicates &mdash; but whitespace strings in <code>TotalCharges</code> were hiding the real issue</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Convert <code>TotalCharges</code> to float64</td>
+        <td>11 whitespace entries &rarr; NaN; all 11 had <code>tenure=0</code></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Drop 11 NaN rows</td>
+        <td>0.16% data loss &mdash; negligible</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Drop <code>customerID</code></td>
+        <td>Not a predictive feature</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Encode target: Churn Yes &rarr; 1, No &rarr; 0</td>
+        <td>Binary classification target ready</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Save cleaned CSV</td>
+        <td><code>data/telco_churn_cleaned.csv</code> &mdash; 7,032 rows &times; 20 columns</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Cleaning Results at a Glance</h3>
+
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Before</th><th>After</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Rows</td><td>7,043</td><td>7,032</td></tr>
+      <tr><td>Columns</td><td>21</td><td>20</td></tr>
+      <tr><td>TotalCharges dtype</td><td>object (string)</td><td>float64</td></tr>
+      <tr><td>Null values</td><td>11 hidden (whitespace strings)</td><td>0</td></tr>
+      <tr><td>Duplicate rows</td><td>0</td><td>0</td></tr>
+      <tr><td>Churn encoding</td><td>Yes / No (string)</td><td>1 / 0 (int)</td></tr>
+      <tr><td>Class distribution</td><td>&mdash;</td><td>73.4% No Churn / 26.6% Churn</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Key Observations Carried Forward</h3>
+  <p>
+    Three observations from the cleaning phase informed decisions in later phases:
+  </p>
+  <p>
+    <strong>1. SeniorCitizen is already 0/1.</strong> Unlike every other binary column (which uses Yes/No strings),
+    <code>SeniorCitizen</code> was pre-encoded as integers. In Phase 3, this column was routed to the numeric
+    feature list (processed with <code>StandardScaler</code>) rather than the categorical list (processed with
+    <code>OneHotEncoder</code>).
+  </p>
+  <p>
+    <strong>2. "No internet service" and "No phone service" are informative categories.</strong> Six service
+    columns contain "No internet service" and <code>MultipleLines</code> contains "No phone service." These are
+    not missing data &mdash; they indicate a customer who simply doesn't have that base service. They were
+    preserved as distinct categories during one-hot encoding in Phase 3.
+  </p>
+  <p>
+    <strong>3. Moderate class imbalance (73/27) requires explicit handling.</strong> The 26.6% churn rate is
+    enough to bias a model toward always predicting "no churn." In Phase 4, all five models used explicit
+    imbalance handling (<code>class_weight='balanced'</code> or <code>scale_pos_weight</code>), and evaluation
+    prioritized recall and AUC over raw accuracy.
+  </p>
+
 </details>
 
 <details class="dropdown-section">
