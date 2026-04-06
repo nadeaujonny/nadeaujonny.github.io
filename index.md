@@ -35,14 +35,10 @@ I grew up in Torrance, California, and have always been driven by problem-solvin
 
 ## AI Tools in My Workflow
 I use AI as a force multiplier across every stage of my work. Here's how these tools fit into my process:
-
-**Claude, ChatGPT, Gemini** — Brainstorming project ideas, drafting outlines, researching job descriptions, and studying technical concepts through quizzing and conversation.
-
-**Claude** — Generating and debugging code (SQL, Python, R), building Excel workbooks, configuring cloud services, navigating BI tools, analyzing datasets for key findings and actionable insights, and drafting resume templates.
-
-**Claude + Claude Code, ChatGPT Codex** — Building and editing this portfolio website, with Claude generating structured instructions for Claude Code to execute.
-
-**Julius AI** — Analyzing CSV files and creating targeted visualizations.
+- **Claude, ChatGPT, Gemini:** Brainstorming project ideas, drafting outlines, researching job descriptions, and studying technical concepts through quizzing and conversation.
+- **Claude:** Generating and debugging code (SQL, Python, R), building Excel workbooks, configuring cloud services, navigating BI tools, analyzing datasets for key findings and actionable insights, and drafting resume templates.
+- **Claude + Claude Code, ChatGPT Codex:** Building and editing this portfolio website, with Claude generating structured instructions for Claude Code to execute.
+- **Julius AI:** Analyzing CSV files and creating targeted visualizations.
 
 ---
 
