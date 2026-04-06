@@ -19,7 +19,7 @@ Mathematics Graduate | Google Data Analytics Certified | End-to-end Analytics Pr
 </p>
 
 ## About Me
-I grew up in Torrance, California, and have always been driven by problem-solving. I studied Mathematics at UC Santa Barbara, then pursued education — teaching and tutoring across multiple organizations while earning my teaching credential at CSULB with a 4.0 GPA. That experience sharpened my ability to communicate complex ideas clearly to any audience. I transitioned into data analytics because I wanted work where analytical rigor directly drives business decisions. I've since built a portfolio spanning SQL, Excel, Power BI, Tableau, Looker Studio, Python, and R — grounded in real-world datasets and end-to-end workflows from data cleaning to dashboarding. The field is evolving fast, and I'm focused on leveraging every tool available to deliver results. Fun fact about me: I can hacksquat 305 pounds.
+I grew up in Torrance, California, and have always been driven by problem-solving. I studied Mathematics at UC Santa Barbara, then pursued education — teaching and tutoring across multiple organizations while earning my teaching credential at CSULB with a 4.0 GPA. That experience sharpened my ability to communicate complex ideas clearly to any audience. I transitioned into data analytics because I wanted work where analytical rigor directly drives business decisions. I've since built a portfolio spanning SQL, Excel, Power BI, Tableau, Looker Studio, Python, and R — grounded in real-world datasets and end-to-end workflows from data cleaning to dashboarding. The field is evolving fast, and I'm focused on leveraging every tool available to deliver results. Fun fact about me: I hacksquat 355 pounds.
 
 ---
 
