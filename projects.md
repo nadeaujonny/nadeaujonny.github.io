@@ -144,12 +144,12 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <div class="project-card-link multiagent-card coming-soon-card" aria-label="Coming Soon: Multi-Agent Data Analysis Pipeline">
+    <div class="project-card-link fpa-card coming-soon-card" aria-label="Coming Soon: FP&A Financial Model — Skechers U.S.A.">
       <div class="project-card-content">
         <span class="coming-soon-badge">Coming Soon</span>
-        <h2>Python · Claude API</h2>
-        <h3>Multi-Agent Data Analysis Pipeline</h3>
-        <p>Python pipeline orchestrating 5 specialized Claude AI agents to collaboratively profile, clean, analyze, narrate, and review CSV datasets — with structured JSON handoffs, automated code execution, a reviewer feedback loop, and a deployed Streamlit walkthrough app.</p>
+        <h2>Excel</h2>
+        <h3>FP&A Financial Model — Skechers U.S.A.</h3>
+        <p>3-statement financial model built from SEC 10-K filings — 5 years of historical data with 3-year forward projections, segment-level revenue modeling, working capital forecasting via DSO/DIO/DPO, variance analysis, scenario planning with sensitivity tables, and a KPI dashboard with model integrity checks.</p>
       </div>
     </div>
   </div>

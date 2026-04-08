@@ -1112,9 +1112,9 @@ code, pre {
   color: #fff !important;
 }
 
-/* ── Multi-Agent Pipeline card ── */
-.multiagent-card {
-  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 40%, #4a1a6b 100%);
+/* ── FP&A Financial Model card ── */
+.fpa-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #1b3a2e 40%, #2d5016 100%);
 }
 
 /* ── Coming Soon shared styles ── */
