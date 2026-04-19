@@ -9,8 +9,7 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
      alt="Los Angeles skyline banner"
      style="width:100%; max-height:300px; object-fit:cover; object-position:center 15%; border-radius:12px; margin: 12px 0 18px 0;">
 
-### Data Analyst
-Mathematics Graduate | Google Data Analytics Certified | End-to-end Analytics Projects
+Leveraging cutting-edge tools and technologies to optimize analysis and produce quality deliverables. 
 
 ---
 
