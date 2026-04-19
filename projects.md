@@ -11,7 +11,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 
 <div class="grid">
 
-  <div class="col-12">
+  <div class="col-6">
     <a class="project-card-link sql-card sql-ecommerce-card" href="/projects/sql-ecommerce-analysis/" aria-label="Open SQL project: E-commerce Business Optimization Analysis">
       <div class="project-card-content">
         <h2>SQL</h2>
@@ -150,6 +150,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
         <h2>Excel</h2>
         <h3>FP&A Financial Model — Skechers U.S.A.</h3>
         <p>3-statement financial model built from SEC 10-K filings — 5 years of historical data with 3-year forward projections, segment-level revenue modeling, working capital forecasting via DSO/DIO/DPO, variance analysis, scenario planning with sensitivity tables, and a KPI dashboard with model integrity checks.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="project-card-link college-card coming-soon-card" aria-label="Coming Soon: College Match Finder">
+      <div class="project-card-content">
+        <span class="coming-soon-badge">Coming Soon</span>
+        <h2>Python · Streamlit</h2>
+        <h3>College Match Finder</h3>
+        <p>Interactive Streamlit app using U.S. Department of Education College Scorecard data — weighted multi-criteria scoring, distance filtering, acceptance likelihood badges, side-by-side comparison, and exportable reports.</p>
       </div>
     </div>
   </div>
