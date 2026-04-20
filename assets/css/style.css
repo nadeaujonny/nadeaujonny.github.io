@@ -48,10 +48,10 @@ body{
   color:var(--text);
   line-height:1.65;
 
-  /* Space background */
-  background-image:url("../space.png");
+  /* LA banner background shown through the page margins */
+  background-image:url("/assets/la-banner.png");
   background-repeat:no-repeat;
-  background-position:center top;
+  background-position:center;
   background-size:cover;
   background-attachment:fixed;
 }
@@ -381,12 +381,12 @@ main > :not(details):not(.card) a,
 main > :not(details):not(.card) a:hover,
 .page-content > :not(details):not(.card) a:hover{ color:#fff; }
 
-/* Keep content centered and mostly show space on the sides */
+/* Keep content centered and show the LA banner on the sides */
 .page-content .wrapper,
 main .wrapper{
   max-width:980px;
   margin:0 auto;
-  background:rgba(245,247,250,.98);
+  background:#fff;
   border-radius:18px;
   padding:32px 28px;
   box-shadow:0 12px 30px rgba(0,0,0,.25);
