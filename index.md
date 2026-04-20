@@ -5,9 +5,9 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 
 # Jonathan Nadeau
 
-<img src="assets/la-banner.png"
-     alt="Los Angeles skyline banner"
-     style="width:100%; max-height:300px; object-fit:cover; object-position:center 15%; border-radius:12px; margin: 12px 0 18px 0;">
+<img src="assets/profile-pic.jpeg"
+     alt="Jonathan Nadeau profile photo"
+     style="display:block; margin:12px auto 18px; max-width:200px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
 
 Leveraging cutting-edge tools and technologies to optimize analysis and produce quality deliverables. 
 
