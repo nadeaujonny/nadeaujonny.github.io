@@ -543,6 +543,31 @@ main .wrapper a:hover{
 }
 
 /* =========================================================
+   ABOUT SECTION — Side-by-side profile pic + About Me
+   ========================================================= */
+.about-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-pic {
+  flex-shrink: 0;
+}
+
+.about-text {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* =========================================================
    HOMEPAGE HERO SECTION — Clean, centered, BLACK titles
    ========================================================= */
 

@@ -5,17 +5,12 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 
 # Jonathan Nadeau
 
-<img src="assets/profile-pic.jpeg"
-     alt="Jonathan Nadeau profile photo"
-     style="display:block; margin:12px auto 18px; max-width:400px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
-
-Leveraging cutting-edge tools and technologies to optimize analysis and produce quality deliverables. 
-
----
-
-<p style="text-align:center; margin:28px 0 10px;">
-  <a href="projects" class="btn btn-primary" style="font-size:1.05rem; padding:10px 28px;">View My Projects</a>
-</p>
+<div class="about-section">
+  <img src="assets/profile-pic.jpeg"
+       alt="Jonathan Nadeau profile photo"
+       class="profile-pic"
+       style="display:block; margin:12px auto 18px; max-width:400px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
+  <div class="about-text" markdown="1">
 
 ## About Me
 * Grew up in Torrance, California — always driven by problem-solving
@@ -26,6 +21,17 @@ Leveraging cutting-edge tools and technologies to optimize analysis and produce 
 * Built a portfolio spanning SQL, Excel, Power BI, Tableau, Looker Studio, Python, and R — grounded in real-world datasets and end-to-end workflows from data cleaning to dashboarding
 * The field is evolving fast, and I'm focused on leveraging every tool available to deliver results
 * Fun fact: I hack squat 355 pounds
+
+  </div>
+</div>
+
+Leveraging cutting-edge tools and technologies to optimize analysis and produce quality deliverables. 
+
+---
+
+<p style="text-align:center; margin:28px 0 10px;">
+  <a href="projects" class="btn btn-primary" style="font-size:1.05rem; padding:10px 28px;">View My Projects</a>
+</p>
 
 ---
 
