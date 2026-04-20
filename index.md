@@ -5,9 +5,13 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 
 # Jonathan Nadeau
 
-<img src="assets/profile-pic.jpeg"
-     alt="Jonathan Nadeau profile photo"
-     style="display:block; margin:12px auto 18px; max-width:400px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
+<div class="about-section">
+  <img src="assets/profile-pic.jpeg" alt="Jonny Nadeau" class="profile-pic">
+  <div class="about-text">
+    <h2>About Me</h2>
+    <p>Mathematics graduate from UC Santa Barbara with a Google Data Analytics Professional Certificate. I bring 1,500+ hours of math instruction experience across five organizations, which sharpened my ability to translate complex analysis into clear, actionable insights. My portfolio spans 12 projects covering SQL, Python, Excel, Power BI, Tableau, and machine learning. Currently seeking Data Analyst, FP&A Analyst, and BI Analyst roles in the South Bay area.</p>
+  </div>
+</div>
 
 Leveraging cutting-edge tools and technologies to optimize analysis and produce quality deliverables. 
 
