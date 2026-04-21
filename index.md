@@ -9,7 +9,7 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
      alt="Jonathan Nadeau profile photo"
      style="display:block; margin:12px auto 18px; max-width:600px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
 
-Leveraging powerful tools and technologies to optimize analysis and produce quality deliverables. 
+<p style="text-align:center;">Leveraging powerful tools to efficiently produce quality deliverables.</p>
 
 ---
 
