@@ -1,0 +1,2203 @@
+"11.07":
+  name: "Computer Science"
+  overview: >
+    Computer Science is the study of computation, algorithms, and the principles
+    underlying software and hardware systems. Students learn to design programs,
+    reason about efficiency, and build systems that solve real-world problems —
+    from web applications to machine learning pipelines. The field trains you to
+    think abstractly: breaking complex problems into logical steps, proving
+    correctness, and managing tradeoffs between speed, memory, and reliability.
+    Graduates enter careers in software engineering, data science, research, and
+    virtually every industry that runs on software.
+  what_youll_learn:
+    - "Algorithm design and complexity analysis"
+    - "Data structures: arrays, trees, graphs, and hash tables"
+    - "Systems programming and operating systems fundamentals"
+    - "Software design patterns and object-oriented architecture"
+    - "Theoretical foundations: logic, automata, and computability"
+  typical_classes:
+    - "Introduction to Programming (Python or Java)"
+    - "Data Structures and Algorithms"
+    - "Computer Organization and Architecture"
+    - "Operating Systems"
+    - "Database Systems"
+    - "Theory of Computation"
+    - "Software Engineering"
+    - "Machine Learning"
+  related_majors:
+    - "Software Engineering"
+    - "Information Systems"
+    - "Mathematics"
+    - "Computer Engineering"
+
+"14.19":
+  name: "Mechanical Engineering"
+  overview: >
+    Mechanical Engineering applies physics, materials science, and mathematics
+    to the design, analysis, and manufacture of physical systems — from jet
+    engines to medical devices to consumer products. Students learn to model
+    how forces, heat, and fluids behave, then use that knowledge to build
+    things that work reliably under real-world constraints. The degree develops
+    a problem-solving mindset: meet the performance specification, stay within
+    budget, and ensure safety. Graduates work in aerospace, automotive,
+    manufacturing, robotics, and energy sectors.
+  what_youll_learn:
+    - "Statics and dynamics: forces, motion, and structural loads"
+    - "Thermodynamics and heat transfer"
+    - "Fluid mechanics and aerodynamics"
+    - "Strength of materials and failure analysis"
+    - "Computer-aided design (CAD) and manufacturing processes"
+  typical_classes:
+    - "Engineering Mechanics: Statics"
+    - "Engineering Mechanics: Dynamics"
+    - "Thermodynamics"
+    - "Fluid Mechanics"
+    - "Mechanics of Materials"
+    - "Machine Design"
+    - "Manufacturing Processes"
+    - "Control Systems"
+  related_majors:
+    - "Aerospace Engineering"
+    - "Civil Engineering"
+    - "Materials Science and Engineering"
+    - "Industrial Engineering"
+
+"42.01":
+  name: "Psychology"
+  overview: >
+    Psychology is the scientific study of human behavior, cognition, and emotion.
+    Students examine how people perceive, learn, remember, and make decisions, as
+    well as how mental health, social context, and biology shape experience.
+    Coursework draws on both experimental methods — designing studies, analyzing
+    data, evaluating evidence — and applied domains like clinical practice,
+    organizational behavior, and human development. The major builds skills in
+    critical thinking, research design, and written communication that transfer
+    broadly into healthcare, education, business, and public policy careers.
+  what_youll_learn:
+    - "Research methods and statistical analysis in the behavioral sciences"
+    - "Biological bases of behavior: neuroscience and psychopharmacology"
+    - "Cognitive processes: memory, attention, language, and decision-making"
+    - "Developmental psychology across the lifespan"
+    - "Social and cultural influences on behavior and identity"
+  typical_classes:
+    - "Introduction to Psychology"
+    - "Research Methods in Psychology"
+    - "Statistics for the Behavioral Sciences"
+    - "Abnormal Psychology"
+    - "Social Psychology"
+    - "Cognitive Psychology"
+    - "Developmental Psychology"
+    - "Biological Psychology"
+  related_majors:
+    - "Sociology"
+    - "Neuroscience"
+    - "Social Work"
+    - "Human Development"
+
+"52.02":
+  name: "Business Administration and Management"
+  overview: >
+    Business Administration and Management is the study of how organizations
+    plan, operate, and grow. Students develop a working knowledge of every
+    functional area — accounting, finance, marketing, operations, and human
+    resources — alongside the strategic and analytical thinking required to
+    coordinate them. Coursework emphasizes decision-making under uncertainty,
+    interpreting financial statements, leading teams, and translating data
+    into action. The major is intentionally broad: it prepares graduates for
+    roles in nearly every industry, from corporate management training
+    programs to startups, consulting, banking, and government. It also serves
+    as a foundation for an MBA or specialized graduate study.
+  what_youll_learn:
+    - "Financial and managerial accounting fundamentals"
+    - "Strategic decision-making and competitive analysis"
+    - "Marketing principles and consumer behavior"
+    - "Operations management and supply chain logistics"
+    - "Organizational behavior and team leadership"
+  typical_classes:
+    - "Principles of Management"
+    - "Financial Accounting"
+    - "Managerial Accounting"
+    - "Principles of Marketing"
+    - "Business Statistics"
+    - "Operations Management"
+    - "Organizational Behavior"
+    - "Strategic Management"
+  related_majors:
+    - "Finance"
+    - "Marketing"
+    - "Accounting"
+    - "Economics"
+
+"51.38":
+  name: "Registered Nursing"
+  overview: >
+    Registered Nursing prepares students to provide patient care across
+    hospitals, clinics, and community health settings. The curriculum blends
+    biological sciences with hands-on clinical training: pharmacology,
+    pathophysiology, and patient assessment paired with rotations in
+    medical-surgical, pediatric, psychiatric, and obstetric care. Students
+    learn to evaluate symptoms, administer treatments, coordinate with
+    physicians and specialists, and educate patients and families. The degree
+    emphasizes evidence-based practice, ethical decision-making, and
+    communication under pressure. Graduates qualify for the NCLEX-RN
+    licensure exam and enter one of the largest and most stable career fields
+    in the U.S., with paths into specialization, advanced practice, and
+    healthcare leadership.
+  what_youll_learn:
+    - "Patient assessment and clinical reasoning across the lifespan"
+    - "Pharmacology and safe medication administration"
+    - "Evidence-based nursing practice and care planning"
+    - "Pathophysiology and how disease processes affect the body"
+    - "Healthcare ethics, patient advocacy, and interdisciplinary communication"
+  typical_classes:
+    - "Anatomy and Physiology"
+    - "Microbiology"
+    - "Pharmacology for Nursing"
+    - "Health Assessment"
+    - "Medical-Surgical Nursing"
+    - "Maternal and Child Health Nursing"
+    - "Mental Health Nursing"
+    - "Community and Public Health Nursing"
+  related_majors:
+    - "Public Health"
+    - "Health Sciences"
+    - "Allied Health Professions"
+    - "Biology"
+
+"26.01":
+  name: "Biology"
+  overview: >
+    Biology is the study of living organisms — how they function, evolve,
+    interact, and respond to their environments. Students explore life at
+    every scale, from molecules and cells to ecosystems and global
+    biodiversity. Coursework integrates lectures with substantial laboratory
+    and often field work, training students to design experiments, interpret
+    data, and reason from evidence. The major develops broad scientific
+    literacy and quantitative skills that apply across medicine, research,
+    biotechnology, conservation, education, and public health. Many students
+    use Biology as a pre-professional foundation for medical, dental,
+    veterinary, or graduate science programs, while others enter the
+    workforce directly in lab, environmental, or healthcare-adjacent roles.
+  what_youll_learn:
+    - "Cellular and molecular biology, including genetics and gene expression"
+    - "Evolutionary theory and the diversity of life"
+    - "Ecology, organism interactions, and environmental systems"
+    - "Experimental design, data analysis, and the scientific method"
+    - "Laboratory techniques: microscopy, PCR, electrophoresis, and culture work"
+  typical_classes:
+    - "General Biology I and II"
+    - "General Chemistry"
+    - "Organic Chemistry"
+    - "Genetics"
+    - "Cell Biology"
+    - "Ecology"
+    - "Evolution"
+    - "Microbiology"
+  related_majors:
+    - "Biochemistry"
+    - "Neuroscience"
+    - "Environmental Science"
+    - "Public Health"
+
+"09.01":
+  name: "Communication and Media Studies"
+  overview: >
+    Communication and Media Studies examines how messages are created,
+    transmitted, and interpreted across personal, organizational, and mass
+    contexts. Students study the strategies behind effective communication —
+    verbal, written, and visual — and the social, technological, and cultural
+    forces that shape how audiences receive information. Coursework typically
+    spans rhetoric, media theory, public speaking, digital production, and
+    research methods. The major builds practical skills in writing, editing,
+    presentation, and analysis, plus a critical understanding of how news,
+    advertising, and entertainment industries operate. Graduates pursue
+    careers in marketing, public relations, journalism, corporate
+    communications, and increasingly in digital and content strategy roles.
+  what_youll_learn:
+    - "Rhetorical theory and persuasive communication strategies"
+    - "Media effects and the role of communication in society"
+    - "Research methods for analyzing audiences and messages"
+    - "Writing and editing for diverse platforms and audiences"
+    - "Public speaking, presentation, and interpersonal communication"
+  typical_classes:
+    - "Introduction to Communication Studies"
+    - "Public Speaking"
+    - "Media and Society"
+    - "Communication Theory"
+    - "Interpersonal Communication"
+    - "Communication Research Methods"
+    - "Persuasion and Rhetoric"
+    - "Digital Media Production"
+  related_majors:
+    - "Public Relations and Advertising"
+    - "Journalism"
+    - "Marketing"
+    - "Film and Media Production"
+
+"52.03":
+  name: "Accounting"
+  overview: >
+    Accounting is the language of business: the systematic recording,
+    analysis, and reporting of financial information. Students learn to
+    prepare financial statements, audit records for accuracy, navigate tax
+    regulations, and translate raw transactions into reports that inform
+    management decisions and investor judgment. The curriculum emphasizes
+    precision, ethical responsibility, and a deep understanding of GAAP and
+    increasingly IFRS standards. Many programs prepare students directly for
+    the CPA exam, with coursework structured around the four exam sections.
+    Graduates work in public accounting firms, corporate finance departments,
+    government agencies, and nonprofits, with strong demand and clear
+    advancement paths into controller, CFO, and partner roles.
+  what_youll_learn:
+    - "Financial statement preparation and analysis under GAAP"
+    - "Cost accounting and managerial decision support"
+    - "Federal income taxation for individuals and businesses"
+    - "Auditing standards and internal control evaluation"
+    - "Accounting information systems and data integrity"
+  typical_classes:
+    - "Financial Accounting"
+    - "Managerial Accounting"
+    - "Intermediate Accounting I and II"
+    - "Cost Accounting"
+    - "Federal Income Tax"
+    - "Auditing"
+    - "Accounting Information Systems"
+    - "Advanced Accounting"
+  related_majors:
+    - "Finance"
+    - "Business Administration"
+    - "Economics"
+    - "Management Information Systems"
+
+"43.01":
+  name: "Criminal Justice"
+  overview: >
+    Criminal Justice studies how societies define, prevent, and respond to
+    crime through law enforcement, courts, and corrections. Students examine
+    the structure of the U.S. legal system, theories of why people commit
+    crimes, and the practical workings of police agencies, prosecutorial
+    offices, and correctional institutions. Coursework typically combines
+    sociology and political science with applied content on investigation,
+    evidence, and criminal procedure. The major develops analytical writing,
+    research literacy, and an understanding of constitutional law and ethical
+    decision-making in high-stakes settings. Graduates pursue careers in
+    policing, federal investigation, probation and parole, victim advocacy,
+    homeland security, and increasingly in private-sector compliance and
+    investigation roles.
+  what_youll_learn:
+    - "Structure and operation of the U.S. criminal justice system"
+    - "Criminological theories explaining the causes of crime"
+    - "Constitutional law and rules of criminal procedure"
+    - "Investigation techniques and forensic evidence handling"
+    - "Ethics, civil rights, and the limits of law enforcement authority"
+  typical_classes:
+    - "Introduction to Criminal Justice"
+    - "Criminology"
+    - "Criminal Law"
+    - "Criminal Procedure"
+    - "Policing in America"
+    - "Corrections"
+    - "Criminal Investigation"
+    - "Juvenile Justice"
+  related_majors:
+    - "Sociology"
+    - "Political Science"
+    - "Psychology"
+    - "Homeland Security"
+
+"13.12":
+  name: "Teacher Education (Elementary and Secondary)"
+  overview: >
+    Teacher Education prepares students to enter K–12 classrooms as licensed
+    teachers, with programs typically structured around a specific grade
+    band — early childhood, elementary, middle, or secondary. Coursework
+    blends educational psychology, curriculum design, and pedagogy with
+    extensive supervised classroom experience that culminates in student
+    teaching. Students learn to plan lessons aligned with state standards,
+    assess learning, manage classroom environments, and adapt instruction
+    for diverse learners, including students with special needs and English
+    language learners. The major leads directly to state licensure
+    requirements and prepares graduates for careers as classroom teachers,
+    with later paths into curriculum specialization, educational leadership,
+    counseling, and educational policy.
+  what_youll_learn:
+    - "Educational psychology and theories of how students learn"
+    - "Lesson planning aligned with state and Common Core standards"
+    - "Classroom management and creating inclusive learning environments"
+    - "Assessment design and using data to guide instruction"
+    - "Adapting instruction for diverse learners and special populations"
+  typical_classes:
+    - "Foundations of Education"
+    - "Educational Psychology"
+    - "Child and Adolescent Development"
+    - "Curriculum and Instruction"
+    - "Classroom Management"
+    - "Teaching Methods (subject-specific)"
+    - "Assessment and Evaluation"
+    - "Student Teaching Practicum"
+  related_majors:
+    - "Special Education"
+    - "Educational Studies"
+    - "Child Development"
+    - "Educational Psychology"
+
+"31.05":
+  name: "Health and Physical Education / Fitness"
+  overview: >
+    Health and Physical Education / Fitness combines exercise science with
+    pedagogy and wellness promotion, preparing students to teach physical
+    education in schools, lead community health programs, or work in fitness
+    and athletic training settings. Coursework covers the biological
+    foundations of human movement — anatomy, physiology, biomechanics — plus
+    nutrition, motor learning, and instructional methods. Programs typically
+    include practical training in coaching, fitness assessment, and program
+    design for diverse populations and ability levels. Many students pursue
+    teacher licensure tracks; others move into personal training, strength
+    and conditioning, recreation management, or graduate study in physical
+    therapy and occupational therapy. The major emphasizes both the science
+    of human performance and the communication skills needed to motivate
+    others.
+  what_youll_learn:
+    - "Human anatomy, physiology, and exercise biomechanics"
+    - "Principles of motor learning and skill development"
+    - "Nutrition and its role in health and performance"
+    - "Instructional methods for teaching physical education K–12"
+    - "Fitness assessment and program design for varied populations"
+  typical_classes:
+    - "Anatomy and Physiology"
+    - "Exercise Physiology"
+    - "Kinesiology and Biomechanics"
+    - "Motor Learning and Development"
+    - "Nutrition and Wellness"
+    - "Methods of Teaching Physical Education"
+    - "Fitness Assessment and Program Design"
+    - "First Aid and Athletic Training"
+  related_majors:
+    - "Kinesiology"
+    - "Athletic Training"
+    - "Public Health"
+    - "Recreation and Leisure Studies"
+
+"52.08":
+  name: "Finance"
+  overview: >
+    Finance is the study of how individuals, companies, and markets allocate
+    capital under conditions of risk and uncertainty. Students learn to value
+    assets, evaluate investment opportunities, manage corporate funding
+    decisions, and analyze how financial markets price securities. The
+    curriculum is heavily quantitative, building skills in financial
+    modeling, statistical analysis, and the use of spreadsheets and
+    industry-standard tools. Coursework typically progresses from foundational
+    accounting and economics into corporate finance, investments, and
+    derivatives. Graduates pursue careers in investment banking, asset
+    management, corporate finance, commercial banking, and financial
+    planning, with strong pathways into MBA programs and professional
+    credentials like the CFA charter.
+  what_youll_learn:
+    - "Time value of money and core valuation techniques"
+    - "Capital budgeting and corporate financial decision-making"
+    - "Portfolio theory and the analysis of stocks, bonds, and derivatives"
+    - "Financial statement analysis and ratio interpretation"
+    - "Risk management and the role of financial markets"
+  typical_classes:
+    - "Principles of Finance"
+    - "Corporate Finance"
+    - "Investments"
+    - "Financial Markets and Institutions"
+    - "Financial Modeling"
+    - "Derivatives and Risk Management"
+    - "International Finance"
+    - "Financial Statement Analysis"
+  related_majors:
+    - "Accounting"
+    - "Economics"
+    - "Business Administration"
+    - "Management Information Systems"
+
+"52.14":
+  name: "Marketing"
+  overview: >
+    Marketing studies how organizations identify customer needs and design
+    products, messages, and experiences that meet them profitably. Students
+    learn to research markets, segment audiences, position offerings against
+    competitors, and measure campaign performance across traditional and
+    digital channels. Coursework blends consumer psychology with quantitative
+    analysis: regression for pricing decisions, A/B testing for digital
+    campaigns, customer lifetime value modeling, and increasingly the use of
+    analytics platforms and customer data. The major develops both creative
+    and analytical capabilities — strong writing and storytelling alongside
+    spreadsheet work and data interpretation. Graduates work in brand
+    management, digital marketing, market research, advertising, sales, and
+    product management roles across nearly every industry.
+  what_youll_learn:
+    - "Consumer behavior and the psychology of purchase decisions"
+    - "Market research methods and segmentation analysis"
+    - "Brand strategy, positioning, and competitive differentiation"
+    - "Digital marketing channels and performance measurement"
+    - "Pricing, distribution, and integrated marketing communications"
+  typical_classes:
+    - "Principles of Marketing"
+    - "Consumer Behavior"
+    - "Marketing Research"
+    - "Digital Marketing and Analytics"
+    - "Brand Management"
+    - "Advertising and Promotion"
+    - "Sales Management"
+    - "Marketing Strategy"
+  related_majors:
+    - "Business Administration"
+    - "Communication and Media Studies"
+    - "Public Relations and Advertising"
+    - "Psychology"
+
+"24.01":
+  name: "Liberal Arts and General Studies"
+  overview: >
+    Liberal Arts and General Studies is a broad, interdisciplinary major
+    drawing from the humanities, social sciences, and natural sciences.
+    Rather than specializing early, students build flexible competencies in
+    writing, critical reading, quantitative reasoning, and cross-cultural
+    understanding while sampling fields ranging from literature and history
+    to psychology and biology. Many programs allow students to design a
+    coherent thematic concentration or pair the major with a minor in a
+    practical field. The degree appeals to students who value intellectual
+    breadth, those preparing for graduate programs in law, education, or
+    business, and adult learners completing a degree. Graduates enter
+    diverse fields where adaptability, communication, and analytical
+    thinking matter more than narrow technical training.
+  what_youll_learn:
+    - "Critical reading and analytical writing across disciplines"
+    - "Quantitative reasoning and basic statistical literacy"
+    - "Historical and cultural analysis of texts and ideas"
+    - "Research methods spanning humanities and social sciences"
+    - "Synthesizing knowledge across multiple fields of study"
+  typical_classes:
+    - "College Writing and Composition"
+    - "Introduction to Philosophy"
+    - "World History or Western Civilization"
+    - "Introduction to Literature"
+    - "Introduction to Psychology or Sociology"
+    - "Quantitative Reasoning or Statistics"
+    - "Natural Science with Lab"
+    - "Capstone Seminar or Senior Project"
+  related_majors:
+    - "Interdisciplinary Studies"
+    - "English"
+    - "History"
+    - "Philosophy"
+
+"45.10":
+  name: "Political Science and Government"
+  overview: >
+    Political Science is the systematic study of how power, governance, and
+    public policy are structured and contested. Students examine political
+    institutions, voter behavior, international relations, and the
+    philosophical foundations of political authority. Coursework builds
+    skills in research design, statistical analysis of survey and electoral
+    data, and the close reading of legal and historical documents. The
+    major develops strong writing, argumentation, and analytical capabilities
+    that translate broadly into careers in law, public administration,
+    journalism, advocacy, and consulting. Many students use the degree as a
+    pre-law track or as preparation for graduate programs in public policy,
+    international affairs, or political science research.
+  what_youll_learn:
+    - "Structure and function of American political institutions"
+    - "Comparative politics across democratic and authoritarian systems"
+    - "International relations theory and global political economy"
+    - "Political philosophy from classical to contemporary thinkers"
+    - "Quantitative and qualitative research methods in political science"
+  typical_classes:
+    - "American Government and Politics"
+    - "Comparative Politics"
+    - "International Relations"
+    - "Political Theory or Philosophy"
+    - "Constitutional Law"
+    - "Research Methods in Political Science"
+    - "Public Policy Analysis"
+    - "American Foreign Policy"
+  related_majors:
+    - "International Relations"
+    - "History"
+    - "Economics"
+    - "Public Policy"
+
+"45.06":
+  name: "Economics"
+  overview: >
+    Economics studies how individuals, firms, and governments make decisions
+    when resources are limited and how those decisions aggregate into
+    markets, growth, and inequality. Students learn to model behavior using
+    mathematics, test theories against real-world data, and reason about
+    incentives, tradeoffs, and unintended consequences. The curriculum
+    progresses from foundational micro and macro theory into specialized
+    fields like labor, public finance, international trade, and behavioral
+    economics, with substantial use of statistics and econometrics.
+    Graduates pursue careers in finance, consulting, government and
+    international agencies, technology, and research, with strong pathways
+    into law school, MBA programs, and graduate study in economics, public
+    policy, and data science.
+  what_youll_learn:
+    - "Microeconomic theory: consumer choice, firm behavior, and market structure"
+    - "Macroeconomic theory: growth, inflation, unemployment, and monetary policy"
+    - "Econometrics and the use of statistics to test economic hypotheses"
+    - "Mathematical modeling of economic decision-making"
+    - "Applied analysis in fields like labor, trade, finance, or public policy"
+  typical_classes:
+    - "Principles of Microeconomics"
+    - "Principles of Macroeconomics"
+    - "Intermediate Microeconomic Theory"
+    - "Intermediate Macroeconomic Theory"
+    - "Econometrics"
+    - "Statistics for Economists"
+    - "International Economics"
+    - "Public Finance or Labor Economics"
+  related_majors:
+    - "Mathematics"
+    - "Finance"
+    - "Political Science"
+    - "Statistics"
+
+"11.01":
+  name: "Computer and Information Sciences, General"
+  overview: >
+    Computer and Information Sciences is a broad computing major that covers
+    programming, systems, data management, and information technology
+    without committing to the deep theoretical focus of pure Computer
+    Science or the hardware emphasis of Computer Engineering. Programs
+    typically blend software development, networking, databases, and
+    increasingly cybersecurity and data analytics. The degree builds
+    practical skills in writing code, designing and querying databases,
+    administering systems, and reasoning about computational problems.
+    Graduates enter a wide range of technology roles — software developer,
+    systems analyst, IT specialist, database administrator, and network
+    engineer — across nearly every industry. The major suits students who
+    want a versatile applied computing degree rather than a narrowly
+    specialized one.
+  what_youll_learn:
+    - "Programming fundamentals in languages such as Python, Java, or C++"
+    - "Database design and SQL for managing structured data"
+    - "Computer networking, protocols, and basic cybersecurity"
+    - "Operating systems and the basics of how software runs on hardware"
+    - "Software development practices including version control and testing"
+  typical_classes:
+    - "Introduction to Programming"
+    - "Data Structures"
+    - "Database Systems"
+    - "Computer Networks"
+    - "Operating Systems"
+    - "Web Development"
+    - "Software Engineering"
+    - "Introduction to Cybersecurity"
+  related_majors:
+    - "Computer Science"
+    - "Information Systems"
+    - "Cybersecurity"
+    - "Software Engineering"
+
+"23.01":
+  name: "English Language and Literature"
+  overview: >
+    English Language and Literature centers on the close reading,
+    interpretation, and historical study of literary texts in English.
+    Students engage with poetry, fiction, drama, and nonfiction across eras
+    and cultures, developing skills in textual analysis, argumentative
+    writing, and the construction of evidence-based interpretation.
+    Coursework typically combines literary history with critical theory and
+    creative or expository writing. The major builds strong communication,
+    research, and analytical capabilities that transfer broadly into
+    publishing, education, law, content strategy, and corporate
+    communications. Many students use English as a foundation for graduate
+    school in literature, library science, education, or law, while others
+    enter writing-intensive professional roles directly.
+  what_youll_learn:
+    - "Close reading and analysis of literary texts across genres and eras"
+    - "Argumentative and analytical writing in academic and professional contexts"
+    - "Literary history and major movements from antiquity to the present"
+    - "Critical theory and approaches to interpreting culture and meaning"
+    - "Research methods and the use of secondary sources in humanistic inquiry"
+  typical_classes:
+    - "Introduction to Literary Studies"
+    - "Survey of British Literature"
+    - "Survey of American Literature"
+    - "Shakespeare"
+    - "Critical Theory and Literary Criticism"
+    - "Creative Writing or Advanced Composition"
+    - "World Literature"
+    - "Senior Seminar in Literature"
+  related_majors:
+    - "Creative Writing"
+    - "Comparative Literature"
+    - "History"
+    - "Linguistics"
+
+"45.11":
+  name: "Sociology"
+  overview: >
+    Sociology is the systematic study of social behavior, institutions, and
+    inequality. Students examine how class, race, gender, family, work,
+    education, and politics interact to shape individual lives and group
+    outcomes. Coursework develops both qualitative and quantitative research
+    skills — interviewing, ethnography, survey design, and statistical
+    analysis of social data — while building familiarity with the major
+    theoretical traditions that explain social change and stratification.
+    The major sharpens critical thinking about how policies and institutions
+    actually work in practice. Graduates pursue careers in social services,
+    public administration, market and user research, human resources,
+    journalism, and nonprofit work, with strong paths into graduate study in
+    sociology, social work, public policy, and law.
+  what_youll_learn:
+    - "Social theory from classical and contemporary perspectives"
+    - "Quantitative research methods and statistical analysis of social data"
+    - "Qualitative methods including interviewing and ethnographic observation"
+    - "Social stratification: race, class, gender, and inequality"
+    - "How institutions like family, education, and work shape life outcomes"
+  typical_classes:
+    - "Introduction to Sociology"
+    - "Sociological Theory"
+    - "Research Methods in Sociology"
+    - "Social Statistics"
+    - "Race and Ethnicity"
+    - "Sociology of Gender"
+    - "Social Stratification"
+    - "Sociology of Family or Work"
+  related_majors:
+    - "Anthropology"
+    - "Social Work"
+    - "Psychology"
+    - "Criminology"
+
+"54.01":
+  name: "History"
+  overview: >
+    History is the study of the human past, focused on understanding how
+    societies, cultures, and ideas change over time. Students develop the
+    ability to evaluate primary and secondary sources, weigh competing
+    interpretations, and construct evidence-based arguments about
+    causation and significance. Coursework typically spans U.S., European,
+    and world history, with opportunities to specialize in particular
+    regions, eras, or thematic areas like military, economic, or social
+    history. The major builds strong research, writing, and analytical
+    skills, plus the ability to synthesize complex information from diverse
+    sources. Graduates enter careers in education, law, journalism,
+    archives and museum work, public administration, and consulting, with
+    history serving as a common pre-law and graduate school foundation.
+  what_youll_learn:
+    - "Critical evaluation of primary and secondary historical sources"
+    - "Historical research methods and archival investigation"
+    - "Major themes and turning points in U.S., European, and world history"
+    - "Historiography: how historical interpretation has changed over time"
+    - "Argumentative writing supported by evidence and source citation"
+  typical_classes:
+    - "U.S. History Survey"
+    - "Western Civilization or European History Survey"
+    - "World History"
+    - "Historiography and Historical Methods"
+    - "American Revolution or Civil War"
+    - "Modern Europe"
+    - "Topics in Asian, African, or Latin American History"
+    - "Senior Research Seminar or Thesis"
+  related_majors:
+    - "Political Science"
+    - "International Relations"
+    - "Anthropology"
+    - "English"
+
+"30.99":
+  name: "Multi/Interdisciplinary Studies"
+  overview: >
+    Multi/Interdisciplinary Studies allows students to design a customized
+    program drawing from two or more academic departments, typically with
+    faculty guidance and a coherent intellectual rationale. Common
+    combinations include topics like environmental sustainability, global
+    studies, health and society, technology and ethics, or media and
+    culture. Students complete foundational coursework in each component
+    discipline plus integrative seminars that connect the threads. The
+    major suits students with focused interests that don't fit a
+    traditional department, those returning to complete a degree, and
+    students preparing for fields where breadth matters. The degree
+    emphasizes intellectual independence, written communication, and the
+    ability to synthesize knowledge across disciplinary boundaries.
+  what_youll_learn:
+    - "Synthesizing concepts and methods from multiple disciplines"
+    - "Designing a coherent program of study around a focused theme"
+    - "Critical thinking that draws on diverse intellectual traditions"
+    - "Research and writing skills tailored to interdisciplinary inquiry"
+    - "Communicating complex ideas to varied audiences"
+  typical_classes:
+    - "Introduction to Interdisciplinary Studies"
+    - "Capstone Seminar or Integrative Project"
+    - "Foundational courses in two or more chosen disciplines"
+    - "Research Methods (often varies by concentration)"
+    - "Topics courses aligned with the student's theme"
+    - "Senior Thesis or Portfolio"
+    - "Writing in the Disciplines"
+    - "Ethics or Critical Theory (program-dependent)"
+  related_majors:
+    - "Liberal Arts and General Studies"
+    - "Global Studies"
+    - "Environmental Studies"
+    - "American Studies"
+
+"50.07":
+  name: "Fine and Studio Arts"
+  overview: >
+    Fine and Studio Arts trains students as visual artists through hands-on
+    studio practice combined with art history and critical theory. Programs
+    typically begin with foundational courses in drawing, design, and
+    color, then move into specialization in media such as painting,
+    sculpture, printmaking, ceramics, photography, or digital and new
+    media. Students develop a personal artistic voice through intensive
+    studio work, regular critique sessions, and the production of a final
+    portfolio or thesis exhibition. Coursework integrates technical
+    craft with art-historical context and contemporary critical
+    discourse. Graduates pursue careers as practicing artists, art
+    educators, gallery and museum professionals, illustrators, designers,
+    and arts administrators, with many continuing to MFA programs.
+  what_youll_learn:
+    - "Foundational drawing, design, and color theory"
+    - "Specialized studio techniques in painting, sculpture, or another medium"
+    - "Critical analysis of artwork in studio critique settings"
+    - "Art history from prehistoric to contemporary periods"
+    - "Portfolio development and presenting work professionally"
+  typical_classes:
+    - "Drawing I and II"
+    - "Two-Dimensional Design"
+    - "Three-Dimensional Design"
+    - "Color Theory"
+    - "Art History Survey I and II"
+    - "Specialization Studio (Painting, Sculpture, etc.)"
+    - "Contemporary Art and Theory"
+    - "Senior Studio or Thesis Exhibition"
+  related_majors:
+    - "Design and Applied Arts"
+    - "Art History"
+    - "Film and Photography"
+    - "Art Education"
+
+"52.01":
+  name: "Business/Commerce, General"
+  overview: >
+    Business/Commerce, General is a broad business degree that introduces
+    students to the major functional areas — accounting, finance,
+    management, marketing, and operations — without requiring early
+    specialization. The curriculum builds foundational quantitative and
+    analytical skills alongside an understanding of how organizations
+    operate, compete, and adapt to changing markets. Coursework typically
+    includes business statistics, business law, ethics, and increasingly
+    data analytics and digital business topics. The major suits students
+    who want versatile preparation for careers in business without
+    committing to a narrow specialization, and is common at smaller
+    institutions or as a transfer pathway. Graduates enter sales,
+    operations, management training programs, banking, and small business
+    roles across industries.
+  what_youll_learn:
+    - "Foundational concepts across accounting, finance, marketing, and management"
+    - "Business statistics and quantitative analysis for decision-making"
+    - "Business law, ethics, and the regulatory environment"
+    - "Communication skills for professional business contexts"
+    - "Strategic thinking about how organizations create and capture value"
+  typical_classes:
+    - "Introduction to Business"
+    - "Financial Accounting"
+    - "Principles of Management"
+    - "Principles of Marketing"
+    - "Business Statistics"
+    - "Business Law"
+    - "Microeconomics for Business"
+    - "Business Strategy or Capstone"
+  related_majors:
+    - "Business Administration"
+    - "Accounting"
+    - "Finance"
+    - "Economics"
+
+"27.01":
+  name: "Mathematics"
+  overview: >
+    Mathematics is the rigorous study of structure, quantity, change, and
+    abstract reasoning. Students learn to construct logical proofs,
+    formulate precise definitions, and reason from axioms to non-obvious
+    conclusions. The curriculum builds from calculus and linear algebra into
+    abstract algebra, real analysis, and topology, with applied tracks in
+    statistics, numerical methods, and mathematical modeling. The major
+    develops a depth of analytical thinking that few other fields require,
+    and is highly valued in domains where precision matters. Graduates
+    pursue careers in actuarial science, data analysis, software
+    development, finance, cryptography, teaching, and research, with strong
+    pathways into graduate programs in mathematics, statistics, computer
+    science, economics, and operations research.
+  what_youll_learn:
+    - "Calculus, linear algebra, and differential equations"
+    - "Proof techniques and the foundations of mathematical reasoning"
+    - "Abstract algebra: groups, rings, and fields"
+    - "Real and complex analysis"
+    - "Probability theory and mathematical statistics"
+  typical_classes:
+    - "Calculus I, II, and III"
+    - "Linear Algebra"
+    - "Differential Equations"
+    - "Discrete Mathematics or Introduction to Proofs"
+    - "Abstract Algebra"
+    - "Real Analysis"
+    - "Probability and Statistics"
+    - "Topology or Complex Analysis"
+  related_majors:
+    - "Statistics"
+    - "Computer Science"
+    - "Physics"
+    - "Economics"
+
+"44.07":
+  name: "Social Work"
+  overview: >
+    Social Work prepares students to support individuals, families, and
+    communities navigating challenges related to mental health, poverty,
+    abuse, addiction, disability, and systemic inequality. The curriculum
+    blends human behavior theory with practical skills in case management,
+    counseling, advocacy, and community organizing. Students complete
+    extensive supervised field placements in social service agencies,
+    schools, hospitals, or government offices, gaining hands-on experience
+    alongside coursework in social policy and ethics. The Bachelor of Social
+    Work (BSW) prepares graduates for entry-level practice and for
+    advanced standing in MSW programs. Careers include child welfare,
+    school social work, mental health support, substance abuse counseling,
+    healthcare social work, and nonprofit administration.
+  what_youll_learn:
+    - "Theories of human behavior across the lifespan and social environments"
+    - "Case management, assessment, and intervention planning"
+    - "Social welfare policy and the history of social services"
+    - "Cultural competence and working with diverse populations"
+    - "Ethical decision-making and the NASW Code of Ethics"
+  typical_classes:
+    - "Introduction to Social Work"
+    - "Human Behavior in the Social Environment"
+    - "Social Welfare Policy"
+    - "Social Work Practice with Individuals and Families"
+    - "Social Work Practice with Groups and Communities"
+    - "Research Methods in Social Work"
+    - "Diversity and Social Justice"
+    - "Field Practicum (typically two semesters)"
+  related_majors:
+    - "Psychology"
+    - "Sociology"
+    - "Human Development"
+    - "Public Health"
+
+"13.13":
+  name: "Teacher Education, Specific Subject Areas"
+  overview: >
+    Teacher Education in Specific Subject Areas prepares students to teach
+    a particular discipline — most commonly mathematics, science, English,
+    social studies, world languages, or the arts — typically at the middle
+    or high school level. The curriculum combines deep content knowledge
+    in the subject area with pedagogical training: how students learn that
+    discipline, how to design lessons aligned with standards, and how to
+    assess understanding and adapt instruction. Programs include extensive
+    classroom observation and a culminating student teaching placement.
+    Graduates qualify for state licensure in their content area and enter
+    careers as classroom teachers, with later paths into department
+    leadership, curriculum specialization, and educational consulting.
+  what_youll_learn:
+    - "Subject-area content knowledge at depth beyond what's taught in K–12"
+    - "Pedagogical content knowledge: how students learn this specific subject"
+    - "Lesson and unit design aligned with state and national standards"
+    - "Subject-specific assessment and how to interpret student work"
+    - "Adapting instruction for diverse learners and varying readiness levels"
+  typical_classes:
+    - "Foundations of Education"
+    - "Educational Psychology"
+    - "Adolescent Development"
+    - "Teaching Methods in [Subject Area]"
+    - "Curriculum Design in [Subject Area]"
+    - "Reading and Literacy in the Content Areas"
+    - "Classroom Management"
+    - "Student Teaching Practicum"
+  related_majors:
+    - "Teacher Education (Elementary and Secondary)"
+    - "Special Education"
+    - "Educational Studies"
+    - "The relevant content discipline (Mathematics, English, History, etc.)"
+
+"50.04":
+  name: "Design and Applied Arts"
+  overview: >
+    Design and Applied Arts trains students as visual designers across
+    fields such as graphic design, interaction design, illustration,
+    industrial design, and increasingly user experience and digital product
+    design. Programs combine studio-based creative work with technical
+    proficiency in industry-standard software and an understanding of
+    typography, color theory, layout, and visual communication. Students
+    build a professional portfolio through iterative project work, regular
+    critiques, and often a senior thesis or capstone. Coursework integrates
+    design history, contemporary practice, and the business side of
+    creative work. Graduates pursue careers as graphic designers, UX/UI
+    designers, art directors, illustrators, and product designers in
+    agencies, in-house creative teams, technology companies, and freelance
+    practice.
+  what_youll_learn:
+    - "Design fundamentals: typography, color, composition, and visual hierarchy"
+    - "Industry-standard software (Adobe Creative Suite, Figma, etc.)"
+    - "Design process: research, ideation, prototyping, and iteration"
+    - "Brand identity, marketing collateral, and digital product design"
+    - "Portfolio development and presenting design work to clients"
+  typical_classes:
+    - "Foundations of Design"
+    - "Typography"
+    - "Color and Composition"
+    - "Digital Design Tools"
+    - "Web and Interaction Design"
+    - "Design History"
+    - "Brand Identity and Visual Systems"
+    - "Senior Portfolio or Capstone"
+  related_majors:
+    - "Fine and Studio Arts"
+    - "Communication and Media Studies"
+    - "Computer Science"
+    - "Marketing"
+
+"51.22":
+  name: "Public Health"
+  overview: >
+    Public Health is the study of how to prevent disease, promote health,
+    and improve population well-being through research, policy, education,
+    and community programs. Students examine the social, environmental,
+    behavioral, and biological factors that drive health outcomes across
+    populations rather than focusing on individual patient care. The
+    curriculum draws from epidemiology, biostatistics, health policy,
+    environmental health, and the social and behavioral sciences. Coursework
+    builds quantitative analysis skills alongside an understanding of
+    healthcare systems and community-based interventions. Graduates work in
+    health departments, nonprofits, hospitals, government agencies,
+    international organizations, and private-sector health roles, with
+    strong pathways into MPH programs, medical school, and graduate
+    research.
+  what_youll_learn:
+    - "Epidemiology: how disease patterns are studied across populations"
+    - "Biostatistics and analyzing public health data"
+    - "Health policy and the structure of healthcare systems"
+    - "Environmental and occupational health hazards"
+    - "Social and behavioral determinants of health and disease"
+  typical_classes:
+    - "Introduction to Public Health"
+    - "Epidemiology"
+    - "Biostatistics"
+    - "Environmental Health"
+    - "Health Policy and Management"
+    - "Social and Behavioral Health"
+    - "Global Health"
+    - "Public Health Capstone or Practicum"
+  related_majors:
+    - "Health Sciences"
+    - "Biology"
+    - "Sociology"
+    - "Environmental Science"
+
+"51.07":
+  name: "Health and Medical Administrative Services"
+  overview: >
+    Health and Medical Administrative Services prepares students to manage
+    the operations of healthcare organizations — hospitals, clinics, nursing
+    homes, insurance companies, and public health agencies. The curriculum
+    combines business fundamentals with healthcare-specific content:
+    medical terminology, healthcare law and ethics, health information
+    systems, insurance and reimbursement, and the regulatory environment
+    governing patient privacy and care quality. Students learn to navigate
+    the unique complexities of healthcare as an industry — its mix of
+    public and private payers, regulatory oversight, and ethical
+    obligations. Graduates enter roles in healthcare administration,
+    medical office management, health insurance, hospital operations, and
+    increasingly in health informatics and revenue cycle management.
+  what_youll_learn:
+    - "Healthcare delivery systems and the U.S. health insurance landscape"
+    - "Medical terminology and clinical workflow basics"
+    - "Healthcare law, ethics, and patient privacy regulations (HIPAA)"
+    - "Health information systems and electronic health records"
+    - "Healthcare finance, billing, and reimbursement"
+  typical_classes:
+    - "Introduction to Healthcare Administration"
+    - "Medical Terminology"
+    - "Health Information Systems"
+    - "Healthcare Law and Ethics"
+    - "Health Insurance and Reimbursement"
+    - "Healthcare Finance"
+    - "Quality Improvement in Healthcare"
+    - "Healthcare Operations Management"
+  related_majors:
+    - "Health Services / Allied Health, General"
+    - "Public Health"
+    - "Business Administration"
+    - "Management Information Systems"
+
+"14.10":
+  name: "Electrical and Electronics Engineering"
+  overview: >
+    Electrical and Electronics Engineering applies physics and mathematics
+    to the design of systems that generate, transmit, process, and use
+    electrical signals and power. Students learn to analyze circuits, design
+    digital logic, work with semiconductors, and build everything from
+    integrated circuits to communication networks to power grids. The
+    curriculum is mathematically intensive, combining calculus and
+    differential equations with hands-on lab work in circuits,
+    microcontrollers, and signal processing. The major increasingly
+    overlaps with computer engineering, control systems, and renewable
+    energy. Graduates work in semiconductor design, telecommunications,
+    aerospace, automotive (especially EVs), power generation, consumer
+    electronics, and increasingly in software-adjacent roles where deep
+    hardware understanding is valuable.
+  what_youll_learn:
+    - "Circuit analysis: DC, AC, and transient behavior"
+    - "Electromagnetic theory and signal propagation"
+    - "Digital logic design and computer architecture"
+    - "Signals and systems, including Fourier and Laplace analysis"
+    - "Semiconductor devices and the basics of integrated circuit design"
+  typical_classes:
+    - "Circuit Analysis I and II"
+    - "Digital Logic Design"
+    - "Electromagnetic Fields"
+    - "Signals and Systems"
+    - "Microelectronics"
+    - "Embedded Systems or Microcontrollers"
+    - "Control Systems"
+    - "Communications or Power Systems"
+  related_majors:
+    - "Computer Engineering"
+    - "Mechanical Engineering"
+    - "Computer Science"
+    - "Physics"
+
+"51.00":
+  name: "Health Services / Allied Health, General"
+  overview: >
+    Health Services / Allied Health, General is a broad pre-professional
+    health major designed for students preparing for careers across the
+    healthcare system without committing to a single clinical path.
+    Coursework typically combines foundational science — anatomy,
+    physiology, biology, chemistry — with introductions to public health,
+    healthcare delivery, medical terminology, and health policy. The major
+    is common as a pre-nursing, pre-physician-assistant, pre-occupational
+    therapy, or general pre-health track, allowing students to complete
+    prerequisites and clinical exposure before applying to professional
+    programs. Graduates also enter direct-entry roles in healthcare
+    administration, health education, community health, and patient
+    advocacy. The major suits students drawn to healthcare who want
+    flexibility in choosing a specific path.
+  what_youll_learn:
+    - "Foundational sciences underlying health and disease"
+    - "Structure of the U.S. healthcare system and delivery models"
+    - "Medical terminology and basic clinical concepts"
+    - "Health behavior, health promotion, and disease prevention"
+    - "Healthcare ethics and professional roles across allied health fields"
+  typical_classes:
+    - "Anatomy and Physiology I and II"
+    - "Introduction to Public Health"
+    - "Medical Terminology"
+    - "Healthcare Delivery Systems"
+    - "Health and Wellness"
+    - "Nutrition"
+    - "Pathophysiology"
+    - "Healthcare Ethics"
+  related_majors:
+    - "Public Health"
+    - "Registered Nursing"
+    - "Health and Medical Administrative Services"
+    - "Biology"
+
+"03.01":
+  name: "Natural Resources Conservation and Research"
+  overview: >
+    Natural Resources Conservation and Research prepares students to manage
+    and protect ecosystems, wildlife, forests, fisheries, water, and other
+    natural systems. The curriculum integrates ecology, environmental
+    science, and applied management with policy, economics, and field
+    methods. Students typically complete substantial field and lab work,
+    learning to assess habitats, monitor populations, analyze
+    environmental data, and apply scientific findings to real management
+    decisions. Coursework also addresses the human dimensions of
+    conservation — land use, environmental policy, stakeholder engagement,
+    and sustainability. Graduates work for federal and state agencies (Park
+    Service, Forest Service, Fish and Wildlife), nonprofits, environmental
+    consulting firms, and increasingly in corporate sustainability roles.
+    The major appeals to students who want hands-on, outdoor-oriented
+    science careers.
+  what_youll_learn:
+    - "Ecological principles and ecosystem dynamics"
+    - "Wildlife biology, fisheries, or forestry depending on track"
+    - "Field methods: vegetation sampling, wildlife survey, water quality"
+    - "Environmental policy, land use, and conservation law"
+    - "GIS and spatial analysis for environmental management"
+  typical_classes:
+    - "Introduction to Natural Resources or Conservation"
+    - "General Ecology"
+    - "Wildlife Biology or Fisheries Science"
+    - "Forestry or Range Management"
+    - "Soils and Water Resources"
+    - "Geographic Information Systems (GIS)"
+    - "Environmental Policy and Law"
+    - "Field Techniques or Senior Research Project"
+  related_majors:
+    - "Environmental Science"
+    - "Biology"
+    - "Earth Sciences / Geology"
+    - "Sustainability Studies"
+
+"09.09":
+  name: "Public Relations, Advertising, and Applied Communication"
+  overview: >
+    Public Relations, Advertising, and Applied Communication prepares
+    students to manage how organizations communicate with their audiences,
+    customers, and the public. The curriculum blends strategic
+    communication theory with practical skills in media writing, campaign
+    development, brand storytelling, social media management, and crisis
+    communication. Students learn to research target audiences, craft
+    messages that align with organizational goals, and measure campaign
+    performance across earned, owned, and paid media. Coursework
+    integrates ethics, media law, and increasingly digital analytics. The
+    major develops both creative and strategic capabilities — strong
+    writing, visual literacy, and data-informed decision-making. Graduates
+    work in PR firms, advertising agencies, in-house communications teams,
+    nonprofits, political campaigns, and corporate marketing roles.
+  what_youll_learn:
+    - "Strategic communication planning and audience research"
+    - "Media writing for press releases, campaigns, and digital content"
+    - "Campaign design, execution, and measurement"
+    - "Brand storytelling and integrated communication strategy"
+    - "Crisis communication and reputation management"
+  typical_classes:
+    - "Introduction to Public Relations"
+    - "Introduction to Advertising"
+    - "Media Writing and Editing"
+    - "Strategic Communication Campaigns"
+    - "Social Media Strategy"
+    - "Communication Research Methods"
+    - "Media Law and Ethics"
+    - "Public Relations or Advertising Capstone"
+  related_majors:
+    - "Communication and Media Studies"
+    - "Marketing"
+    - "Journalism"
+    - "Digital Media"
+
+"50.09":
+  name: "Music"
+  overview: >
+    Music as a college major combines rigorous performance training with
+    deep study of theory, history, and musicianship. Students develop
+    instrumental or vocal proficiency through private lessons, ensemble
+    participation, and recital performances, while building academic
+    competency in harmony, counterpoint, ear training, and music history.
+    Programs typically offer concentrations in performance, music
+    education, composition, theory, or jazz studies, and many include
+    options in music technology and recording. The major demands serious
+    daily practice alongside coursework. Graduates pursue careers as
+    performers, music teachers (typically with K–12 licensure tracks),
+    composers, conductors, music therapists, recording engineers, and
+    music administrators, with many continuing to graduate study or
+    conservatory training.
+  what_youll_learn:
+    - "Music theory: harmony, counterpoint, and form analysis"
+    - "Aural skills: ear training, sight-singing, and dictation"
+    - "Music history from medieval through contemporary periods"
+    - "Performance technique on a primary instrument or voice"
+    - "Ensemble musicianship and collaborative performance"
+  typical_classes:
+    - "Music Theory I, II, III, and IV"
+    - "Aural Skills (paired with theory sequence)"
+    - "Music History I and II"
+    - "Applied Music Lessons (private instruction)"
+    - "Ensemble (orchestra, choir, band, or chamber)"
+    - "Conducting"
+    - "Form and Analysis"
+    - "Senior Recital or Capstone Project"
+  related_majors:
+    - "Music Education"
+    - "Music Therapy"
+    - "Theatre Arts"
+    - "Audio Production"
+
+"40.05":
+  name: "Chemistry"
+  overview: >
+    Chemistry is the study of matter, its composition, properties, and the
+    transformations it undergoes. Students examine chemical phenomena
+    across multiple scales — from individual atoms and molecules to
+    macroscopic reactions and industrial processes — using both theoretical
+    frameworks and extensive laboratory work. The curriculum builds
+    progressively from general chemistry through organic, physical,
+    inorganic, and analytical subdisciplines, with substantial wet-lab
+    training in instrumentation, technique, and quantitative analysis. The
+    major develops rigorous scientific reasoning and hands-on technical
+    skills. Graduates work in pharmaceuticals, biotechnology, materials
+    science, environmental analysis, forensics, and quality control, and
+    many continue to medical school, graduate study in chemistry or
+    biochemistry, or interdisciplinary programs in materials and energy.
+  what_youll_learn:
+    - "Atomic and molecular structure, bonding, and periodicity"
+    - "Organic chemistry: reactions, mechanisms, and synthesis"
+    - "Physical chemistry: thermodynamics, kinetics, and quantum mechanics"
+    - "Analytical methods including spectroscopy and chromatography"
+    - "Laboratory technique, safety, and quantitative measurement"
+  typical_classes:
+    - "General Chemistry I and II"
+    - "Organic Chemistry I and II"
+    - "Analytical Chemistry"
+    - "Physical Chemistry I and II"
+    - "Inorganic Chemistry"
+    - "Biochemistry"
+    - "Instrumental Analysis"
+    - "Senior Research or Independent Study"
+  related_majors:
+    - "Biochemistry"
+    - "Biology"
+    - "Chemical Engineering"
+    - "Physics"
+
+"14.08":
+  name: "Civil Engineering"
+  overview: >
+    Civil Engineering applies mathematics, physics, and materials science to
+    the design, construction, and maintenance of the built environment —
+    bridges, highways, buildings, water systems, dams, and transportation
+    networks. Students learn to analyze structural loads, design systems
+    that perform safely under real-world conditions, and manage
+    construction projects from concept through completion. The curriculum
+    spans structural engineering, geotechnical engineering, transportation,
+    water resources, environmental engineering, and construction
+    management. Coursework integrates theory with hands-on lab work and
+    increasingly with computer-aided design and modeling tools. Graduates
+    work for engineering consulting firms, construction companies, and
+    federal, state, and municipal agencies, with strong demand driven by
+    aging infrastructure and the path toward Professional Engineer (PE)
+    licensure.
+  what_youll_learn:
+    - "Statics, dynamics, and structural analysis"
+    - "Mechanics of materials and structural design (steel, concrete, timber)"
+    - "Geotechnical engineering: soil mechanics and foundation design"
+    - "Transportation engineering and infrastructure planning"
+    - "Water resources engineering and environmental systems"
+  typical_classes:
+    - "Engineering Statics"
+    - "Engineering Dynamics"
+    - "Mechanics of Materials"
+    - "Structural Analysis"
+    - "Soil Mechanics"
+    - "Reinforced Concrete or Steel Design"
+    - "Hydraulics and Hydrology"
+    - "Transportation Engineering"
+  related_majors:
+    - "Mechanical Engineering"
+    - "Environmental Engineering"
+    - "Architectural Engineering"
+    - "Construction Management"
+
+"50.05":
+  name: "Drama/Theatre Arts"
+  overview: >
+    Drama/Theatre Arts trains students in the craft of theatrical
+    performance and production. Programs typically combine acting and voice
+    work with directing, playwriting, dramatic literature, and the
+    technical and design dimensions of theatre — set, lighting, costume,
+    and sound. Students participate extensively in productions throughout
+    their training, gaining hands-on experience in rehearsal,
+    collaboration, and performance under deadline pressure. Coursework
+    integrates studio practice with the study of theatre history,
+    dramatic theory, and contemporary performance. The major develops
+    strong communication skills, creative problem-solving, and
+    comfort with public presentation. Graduates pursue careers as actors,
+    directors, designers, stage managers, and theatre educators, with
+    many also entering film and television, arts administration, and
+    related creative industries.
+  what_youll_learn:
+    - "Acting technique, voice, movement, and character development"
+    - "Theatre history from classical Greek through contemporary forms"
+    - "Dramatic literature and play analysis"
+    - "Production fundamentals: set, lighting, costume, and sound design"
+    - "Collaborative theatre-making and the rehearsal process"
+  typical_classes:
+    - "Acting I, II, and III"
+    - "Voice and Movement"
+    - "Theatre History I and II"
+    - "Play Analysis or Dramatic Literature"
+    - "Stagecraft and Technical Theatre"
+    - "Directing"
+    - "Theatre Design (lighting, set, or costume)"
+    - "Senior Production or Performance Capstone"
+  related_majors:
+    - "Music"
+    - "Film and Photography"
+    - "Communication and Media Studies"
+    - "English"
+
+"19.07":
+  name: "Human Development and Family Studies"
+  overview: >
+    Human Development and Family Studies examines how individuals grow and
+    change across the lifespan, and how families, communities, and
+    cultures shape that development. Drawing from psychology, sociology,
+    biology, and the helping professions, the curriculum covers child and
+    adolescent development, adult and aging populations, family dynamics,
+    and the institutional contexts of education, healthcare, and social
+    services. Students often complete supervised practicum experience in
+    early childhood centers, family service agencies, schools, or
+    eldercare settings. The major develops both theoretical understanding
+    and practical skills in observation, communication, and program
+    development. Graduates work in early childhood education, family
+    services, eldercare, parent education, and youth programs, with strong
+    pathways into social work, counseling, and child life specialist
+    careers.
+  what_youll_learn:
+    - "Human development from prenatal through late adulthood"
+    - "Family systems theory and family dynamics"
+    - "Child observation and developmentally appropriate practice"
+    - "Cultural, socioeconomic, and policy contexts of family life"
+    - "Program development and evaluation in family service settings"
+  typical_classes:
+    - "Introduction to Human Development"
+    - "Child Development"
+    - "Adolescent Development"
+    - "Adult Development and Aging"
+    - "Family Relationships"
+    - "Parenting and Family Education"
+    - "Research Methods in Human Development"
+    - "Practicum or Field Experience"
+  related_majors:
+    - "Psychology"
+    - "Social Work"
+    - "Early Childhood Education"
+    - "Sociology"
+
+"42.27":
+  name: "Research and Experimental Psychology"
+  overview: >
+    Research and Experimental Psychology is a research-focused track within
+    psychology, emphasizing the design, conduct, and analysis of empirical
+    studies of mind, brain, and behavior. Compared to a general psychology
+    major, programs in this area typically require deeper coursework in
+    statistics, research methods, and specialized topics like cognitive
+    neuroscience, perception, learning, or behavioral neuroscience.
+    Students often participate in faculty research labs, contribute to
+    studies, and complete a senior thesis. The major builds rigorous
+    quantitative and analytical skills alongside familiarity with
+    laboratory techniques, statistical software, and the academic
+    publication process. Graduates pursue careers in research, data
+    analysis, user research, and applied science, with strong pathways
+    into PhD programs in psychology, neuroscience, and cognitive science.
+  what_youll_learn:
+    - "Experimental design and quasi-experimental research methods"
+    - "Advanced statistics including ANOVA and regression"
+    - "Cognitive psychology and theories of perception, attention, and memory"
+    - "Behavioral and cognitive neuroscience"
+    - "Scientific writing and the research publication process"
+  typical_classes:
+    - "Research Methods in Psychology"
+    - "Statistics for Psychological Research"
+    - "Advanced Experimental Design"
+    - "Cognitive Psychology"
+    - "Behavioral Neuroscience"
+    - "Sensation and Perception"
+    - "Learning and Memory"
+    - "Senior Honors Thesis or Independent Research"
+  related_majors:
+    - "Psychology"
+    - "Neuroscience"
+    - "Cognitive Science"
+    - "Statistics"
+
+"16.09":
+  name: "Romance Languages, Literatures, and Linguistics"
+  overview: >
+    Romance Languages, Literatures, and Linguistics centers on the study of
+    languages descended from Latin — most commonly Spanish, French,
+    Italian, and Portuguese — along with their literatures, cultures, and
+    linguistic structures. Students develop advanced proficiency in at
+    least one Romance language while studying its literary tradition,
+    cultural history, and connections to other Romance languages.
+    Coursework typically blends language acquisition with literary
+    analysis, cultural studies, and often comparative linguistics or
+    translation. Most programs encourage or require study abroad. The
+    major builds strong reading, writing, and cross-cultural communication
+    skills along with deep cultural fluency. Graduates pursue careers in
+    education, translation and interpretation, international business,
+    diplomacy, journalism, and global nonprofits, with many continuing to
+    graduate study or professional fields like law and medicine.
+  what_youll_learn:
+    - "Advanced proficiency in speaking, reading, and writing the target language"
+    - "Literary analysis of texts in the original Romance language"
+    - "Cultural and historical context of Romance-language societies"
+    - "Linguistic structure and the comparative roots of Romance languages"
+    - "Cross-cultural communication and translation"
+  typical_classes:
+    - "Intermediate and Advanced Language (Spanish, French, etc.)"
+    - "Composition and Conversation in the Target Language"
+    - "Survey of Spanish (or French, Italian, Portuguese) Literature"
+    - "Latin American Literature and Culture"
+    - "Phonetics and Linguistics of the Target Language"
+    - "Translation and Interpretation"
+    - "Cinema and Cultural Studies"
+    - "Senior Seminar or Capstone in the Target Language"
+  related_majors:
+    - "Linguistics"
+    - "International Relations"
+    - "Comparative Literature"
+    - "Anthropology"
+
+"26.02":
+  name: "Biochemistry, Biophysics and Molecular Biology"
+  overview: >
+    Biochemistry, Biophysics, and Molecular Biology operates at the
+    interface of chemistry, physics, and biology to explain life at the
+    molecular level. Students study the structure and function of proteins,
+    nucleic acids, lipids, and carbohydrates, and the chemical and physical
+    processes that drive cellular life — metabolism, gene expression,
+    signal transduction, and molecular evolution. The curriculum is
+    rigorous and lab-intensive, drawing heavily on organic chemistry,
+    physical chemistry, and molecular techniques like cloning, PCR,
+    protein expression, and structural analysis. The major prepares
+    students exceptionally well for medical school, graduate research,
+    pharmaceutical and biotech careers, and increasingly for emerging
+    fields like computational biology and bioengineering. Many programs
+    include a senior research thesis.
+  what_youll_learn:
+    - "Macromolecular structure: proteins, DNA, RNA, and lipids"
+    - "Enzyme kinetics, metabolism, and bioenergetics"
+    - "Molecular biology of gene expression and regulation"
+    - "Laboratory techniques in molecular cloning, PCR, and protein analysis"
+    - "Quantitative reasoning and the application of physics and chemistry to biology"
+  typical_classes:
+    - "General and Organic Chemistry"
+    - "General Biology and Cell Biology"
+    - "Biochemistry I and II"
+    - "Molecular Biology"
+    - "Physical Chemistry"
+    - "Genetics"
+    - "Biophysical Chemistry or Structural Biology"
+    - "Independent Research or Senior Thesis"
+  related_majors:
+    - "Biology"
+    - "Chemistry"
+    - "Neuroscience"
+    - "Bioengineering"
+
+"09.04":
+  name: "Journalism"
+  overview: >
+    Journalism trains students to research, report, and tell stories about
+    public affairs, communities, and current events across print,
+    broadcast, and digital platforms. The curriculum emphasizes accurate
+    reporting, ethical decision-making, source verification, and clear
+    writing under deadline pressure. Students learn to conduct interviews,
+    investigate documents and data, structure stories for different media,
+    and increasingly to work with multimedia tools and data visualization.
+    Coursework integrates media law, history, and ethics with hands-on
+    production, often including internships at student or local news
+    outlets. The major develops strong writing, critical thinking, and
+    research skills. Graduates work as reporters, editors, producers, and
+    multimedia journalists, with paths into communications, content
+    strategy, documentary work, and increasingly nonprofit and
+    investigative journalism organizations.
+  what_youll_learn:
+    - "News reporting, interviewing, and source verification"
+    - "Clear and concise writing across multiple journalistic formats"
+    - "Media law, ethics, and the role of journalism in democracy"
+    - "Multimedia storytelling: audio, video, and digital platforms"
+    - "Data journalism and investigative research methods"
+  typical_classes:
+    - "Introduction to Journalism"
+    - "News Reporting and Writing"
+    - "Editing and News Production"
+    - "Media Law and Ethics"
+    - "Multimedia Journalism"
+    - "Feature Writing or Magazine Journalism"
+    - "Broadcast or Digital News"
+    - "Journalism Capstone or Internship"
+  related_majors:
+    - "Public Relations and Advertising"
+    - "Communication and Media Studies"
+    - "English"
+    - "Political Science"
+
+"50.06":
+  name: "Film/Video and Photographic Arts"
+  overview: >
+    Film/Video and Photographic Arts trains students as visual storytellers
+    working in moving and still image media. Programs combine technical
+    craft — camera operation, lighting, editing, sound design,
+    post-production — with conceptual development, visual storytelling,
+    and the study of film and photographic history. Students typically
+    move from foundational skills through increasingly complex production
+    projects, culminating in a senior thesis film, documentary, or
+    portfolio. Coursework integrates production with screenwriting,
+    cinematography, directing, and critical analysis of the medium. The
+    major develops both technical proficiency and creative vision.
+    Graduates work in film and television production, documentary,
+    advertising and commercial work, journalism, photography, and digital
+    content creation, with many entering freelance careers or independent
+    production paths.
+  what_youll_learn:
+    - "Camera operation, lighting, and cinematography fundamentals"
+    - "Editing and post-production using industry-standard software"
+    - "Sound design and audio recording for film and video"
+    - "Visual storytelling, screenwriting, and narrative construction"
+    - "Film and photographic history and critical analysis"
+  typical_classes:
+    - "Introduction to Film Production"
+    - "Cinematography"
+    - "Editing and Post-Production"
+    - "Sound for Film and Video"
+    - "Screenwriting"
+    - "Documentary Production"
+    - "Film History or Photography History"
+    - "Senior Thesis Film or Portfolio"
+  related_majors:
+    - "Drama/Theatre Arts"
+    - "Fine and Studio Arts"
+    - "Communication and Media Studies"
+    - "Journalism"
+
+"14.09":
+  name: "Computer Engineering"
+  overview: >
+    Computer Engineering bridges electrical engineering and computer science,
+    focused on the design of computing hardware and the systems software
+    that runs on it. Students study digital logic, computer architecture,
+    embedded systems, and integrated circuits alongside programming, data
+    structures, and operating systems. The curriculum is mathematically
+    rigorous and lab-intensive, with substantial work in designing,
+    building, and debugging hardware-software systems. Graduates are
+    well-positioned for roles where deep understanding of both hardware and
+    software matters: chip design, embedded systems, robotics, networking
+    equipment, autonomous vehicles, and Internet-of-Things devices. Many
+    also enter pure software roles where their hardware knowledge gives
+    them an edge in performance optimization, systems programming, and
+    security.
+  what_youll_learn:
+    - "Digital logic design and computer architecture"
+    - "Embedded systems and microcontroller programming"
+    - "Operating systems and low-level systems programming"
+    - "VLSI and integrated circuit design fundamentals"
+    - "Networking, hardware-software interfaces, and hardware security"
+  typical_classes:
+    - "Digital Logic Design"
+    - "Computer Architecture"
+    - "Data Structures and Algorithms"
+    - "Operating Systems"
+    - "Embedded Systems"
+    - "Microprocessors and Microcontrollers"
+    - "VLSI Design or Computer Networks"
+    - "Senior Capstone Design Project"
+  related_majors:
+    - "Electrical and Electronics Engineering"
+    - "Computer Science"
+    - "Software Engineering"
+    - "Cybersecurity"
+
+"52.10":
+  name: "Human Resources Management"
+  overview: >
+    Human Resources Management prepares students to manage the workforce
+    function within organizations — recruiting, hiring, training,
+    compensation, employee relations, and the legal and regulatory
+    environment governing employment. Coursework integrates organizational
+    behavior, labor and employment law, compensation and benefits design,
+    talent development, and increasingly people analytics and HR
+    technology. Students learn to align workforce strategy with business
+    goals, navigate complex employee situations, and use data to inform
+    decisions about hiring, performance, and retention. The major develops
+    interpersonal communication, ethical judgment, and analytical skills.
+    Graduates work as HR generalists, recruiters, compensation analysts,
+    training specialists, and employee relations professionals, with
+    pathways into HR leadership, organizational development, and
+    professional certifications like SHRM-CP and PHR.
+  what_youll_learn:
+    - "Strategic human resource planning and talent acquisition"
+    - "Compensation, benefits, and reward systems design"
+    - "Employment law and the regulatory environment of HR"
+    - "Training, development, and performance management"
+    - "Employee relations, diversity, and organizational culture"
+  typical_classes:
+    - "Introduction to Human Resource Management"
+    - "Organizational Behavior"
+    - "Compensation and Benefits"
+    - "Employment Law"
+    - "Training and Development"
+    - "Talent Acquisition and Recruiting"
+    - "HR Analytics or HRIS"
+    - "Strategic Human Resource Management"
+  related_majors:
+    - "Business Administration"
+    - "Psychology"
+    - "Organizational Communication"
+    - "Management Information Systems"
+
+"09.07":
+  name: "Radio, Television, and Digital Communication"
+  overview: >
+    Radio, Television, and Digital Communication trains students in the
+    production, programming, and business of broadcast and digital media.
+    The curriculum combines hands-on production work — studio operation,
+    field reporting, podcast and video production, editing, and live
+    broadcasting — with the study of media history, audience research, and
+    the regulatory and economic environment of broadcasting. Programs
+    typically include studio time, on-air or on-camera experience, and
+    internship opportunities at local stations or digital media outlets.
+    The major increasingly emphasizes streaming, podcasting, and digital
+    distribution alongside traditional broadcast skills. Graduates work in
+    television and radio production, podcasting, sports broadcasting,
+    streaming media, news production, and increasingly in branded content
+    and corporate video roles.
+  what_youll_learn:
+    - "Audio and video production for broadcast and digital platforms"
+    - "On-air and on-camera performance fundamentals"
+    - "Editing, post-production, and storytelling for time-based media"
+    - "Broadcast journalism, news production, and audience research"
+    - "Media business, regulation, and the economics of distribution"
+  typical_classes:
+    - "Introduction to Mass Communication"
+    - "Audio Production"
+    - "Video Production"
+    - "Broadcast News Writing"
+    - "Studio and Field Production"
+    - "Media Law and Ethics"
+    - "Sports or Entertainment Broadcasting"
+    - "Senior Capstone or Internship"
+  related_majors:
+    - "Communication and Media Studies"
+    - "Journalism"
+    - "Film and Photography"
+    - "Public Relations and Advertising"
+
+"51.02":
+  name: "Communication Disorders Sciences and Services"
+  overview: >
+    Communication Disorders Sciences and Services prepares students for
+    careers helping people with speech, language, hearing, and swallowing
+    disorders. The undergraduate degree typically functions as a
+    pre-professional program, providing the foundational coursework
+    required for graduate study in speech-language pathology or audiology
+    — both fields requiring a master's or doctorate for clinical practice.
+    Coursework covers anatomy of speech and hearing, normal language
+    development, phonetics, acoustics, and an introduction to disorder
+    assessment and treatment. Students often complete supervised clinical
+    observation hours. Graduates who continue to graduate study become
+    speech-language pathologists or audiologists working in schools,
+    hospitals, rehabilitation centers, and private practice. The
+    bachelor's degree alone supports entry-level work as a speech-language
+    pathology assistant or in related rehabilitation roles.
+  what_youll_learn:
+    - "Anatomy and physiology of speech, hearing, and swallowing"
+    - "Normal speech and language development across the lifespan"
+    - "Phonetics and the acoustics of speech sounds"
+    - "Introduction to communication disorders and assessment principles"
+    - "Audiology fundamentals and hearing science"
+  typical_classes:
+    - "Introduction to Communication Disorders"
+    - "Anatomy and Physiology of Speech and Hearing"
+    - "Phonetics"
+    - "Speech and Language Development"
+    - "Audiology"
+    - "Speech Science"
+    - "Language Disorders or Articulation Disorders"
+    - "Clinical Methods and Observation"
+  related_majors:
+    - "Linguistics"
+    - "Psychology"
+    - "Human Development"
+    - "Health Sciences"
+
+"14.07":
+  name: "Chemical Engineering"
+  overview: >
+    Chemical Engineering applies chemistry, physics, and mathematics to the
+    design and operation of processes that transform raw materials into
+    useful products at industrial scale — pharmaceuticals, fuels,
+    polymers, semiconductors, food, and increasingly biotechnology and
+    sustainable energy. Students learn to design reactors, separation
+    systems, and entire production processes, accounting for thermodynamics,
+    fluid flow, heat and mass transfer, and reaction kinetics. The
+    curriculum is mathematically intensive and includes substantial
+    laboratory and process simulation work. Graduates work in oil and
+    gas, pharmaceuticals, biotech, materials, semiconductors, food
+    processing, and renewable energy. The degree also serves as strong
+    preparation for medical school, business school, and graduate study in
+    chemical or biological engineering.
+  what_youll_learn:
+    - "Material and energy balances on chemical processes"
+    - "Thermodynamics and phase equilibrium"
+    - "Fluid flow, heat transfer, and mass transfer (transport phenomena)"
+    - "Reaction engineering and kinetics"
+    - "Process design, control, and optimization"
+  typical_classes:
+    - "Material and Energy Balances"
+    - "Chemical Engineering Thermodynamics"
+    - "Fluid Mechanics"
+    - "Heat and Mass Transfer"
+    - "Reactor Design and Kinetics"
+    - "Process Control"
+    - "Separation Processes"
+    - "Senior Process Design Capstone"
+  related_majors:
+    - "Chemistry"
+    - "Mechanical Engineering"
+    - "Biochemistry"
+    - "Materials Science and Engineering"
+
+"52.09":
+  name: "Hospitality Administration and Management"
+  overview: >
+    Hospitality Administration and Management prepares students for
+    leadership roles in hotels, restaurants, resorts, event venues, cruise
+    lines, theme parks, and tourism organizations. The curriculum combines
+    core business fundamentals — accounting, marketing, finance,
+    operations — with industry-specific content covering food and
+    beverage management, lodging operations, event planning, and revenue
+    management. Programs typically require substantial practical
+    experience through internships at hotels, resorts, or food service
+    operations. Coursework integrates customer service, cultural
+    awareness, and the unique operational challenges of round-the-clock,
+    customer-facing businesses. Graduates enter management training
+    programs at major hotel chains, restaurant groups, and resort
+    operators, with pathways into general management, food and beverage
+    leadership, event planning, tourism marketing, and hospitality
+    consulting.
+  what_youll_learn:
+    - "Hotel and lodging operations management"
+    - "Food and beverage management, including restaurant operations"
+    - "Hospitality accounting, finance, and revenue management"
+    - "Marketing and brand management for hospitality and tourism"
+    - "Event planning, meetings, and convention management"
+  typical_classes:
+    - "Introduction to Hospitality Management"
+    - "Food and Beverage Operations"
+    - "Lodging Operations"
+    - "Hospitality Accounting and Finance"
+    - "Hospitality Marketing"
+    - "Event and Meeting Management"
+    - "Hospitality Law and Ethics"
+    - "Hospitality Internship or Capstone"
+  related_majors:
+    - "Business Administration"
+    - "Marketing"
+    - "Tourism and Travel Services"
+    - "Culinary Arts"
+
+"51.09":
+  name: "Allied Health Diagnostic, Intervention, and Treatment"
+  overview: >
+    Allied Health Diagnostic, Intervention, and Treatment encompasses a
+    range of clinical health professions outside nursing and medicine —
+    fields like respiratory therapy, radiologic technology, sonography,
+    surgical technology, and dental hygiene. Programs are typically
+    structured around a specific clinical track and combine foundational
+    sciences (anatomy, physiology, pathology) with specialized technical
+    training and supervised clinical rotations. Students learn to operate
+    diagnostic equipment, perform clinical procedures, and provide direct
+    patient care under physician or specialist supervision. Programs lead
+    to specialty-specific licensure or certification. Graduates work in
+    hospitals, outpatient clinics, imaging centers, and specialty
+    practices. The major suits students who want hands-on patient care
+    work in a focused clinical specialty without the longer training path
+    of medicine or nursing leadership.
+  what_youll_learn:
+    - "Anatomy, physiology, and pathology relevant to the clinical specialty"
+    - "Specialty-specific technical procedures and equipment operation"
+    - "Patient assessment, communication, and care fundamentals"
+    - "Healthcare ethics, safety protocols, and infection control"
+    - "Clinical reasoning under supervision"
+  typical_classes:
+    - "Anatomy and Physiology I and II"
+    - "Pathophysiology"
+    - "Medical Terminology"
+    - "Specialty Procedures (varies by track: imaging, respiratory, etc.)"
+    - "Patient Care and Communication"
+    - "Pharmacology Basics"
+    - "Healthcare Ethics and Law"
+    - "Clinical Practicum or Externship"
+  related_majors:
+    - "Health Services / Allied Health, General"
+    - "Registered Nursing"
+    - "Health and Medical Administrative Services"
+    - "Public Health"
+
+"52.13":
+  name: "Management Sciences and Quantitative Methods"
+  overview: >
+    Management Sciences and Quantitative Methods applies mathematics,
+    statistics, and computer modeling to business decision-making. Often
+    called operations research or business analytics, the field uses
+    optimization, simulation, statistical analysis, and increasingly
+    machine learning to solve problems in supply chain, logistics,
+    finance, marketing, and operations. The curriculum is more
+    quantitatively rigorous than a typical business degree, with
+    substantial coursework in calculus, statistics, linear programming,
+    and database management. Students learn to translate messy business
+    problems into mathematical models, build solutions using analytical
+    tools, and communicate results to non-technical decision-makers.
+    Graduates enter careers in business analytics, supply chain analysis,
+    consulting, financial analysis, and increasingly data science roles
+    where business context matters.
+  what_youll_learn:
+    - "Optimization and linear programming for decision problems"
+    - "Statistical modeling and forecasting techniques"
+    - "Simulation and stochastic modeling"
+    - "Database systems and SQL for business data"
+    - "Translating business problems into mathematical models"
+  typical_classes:
+    - "Calculus for Business"
+    - "Business Statistics"
+    - "Operations Management"
+    - "Management Science or Operations Research"
+    - "Decision Modeling and Spreadsheet Analytics"
+    - "Database Management"
+    - "Forecasting and Time Series Analysis"
+    - "Business Analytics Capstone"
+  related_majors:
+    - "Business Administration"
+    - "Mathematics"
+    - "Information Systems"
+    - "Economics"
+
+"11.04":
+  name: "Information Science / Studies"
+  overview: >
+    Information Science / Studies examines how information is created,
+    organized, stored, retrieved, and used by people and systems. Often
+    sitting between computer science and the humanities, the field
+    combines technical skills in databases, web technologies, and data
+    management with study of how people search for and interact with
+    information. Coursework covers information architecture, user
+    experience, knowledge organization, information policy, and ethics.
+    Many programs include tracks in user experience design, data
+    management, library and information science, or information systems.
+    The major develops both technical capability and an analytical
+    understanding of how information shapes individuals and society.
+    Graduates work as UX researchers, information architects, data
+    analysts, librarians, and digital content strategists, with strong
+    pathways into Master of Library and Information Science (MLIS) and
+    HCI programs.
+  what_youll_learn:
+    - "Information organization, classification, and retrieval"
+    - "Database design and information systems fundamentals"
+    - "Human-computer interaction and user experience research"
+    - "Information policy, ethics, and intellectual property"
+    - "Web technologies and digital content management"
+  typical_classes:
+    - "Introduction to Information Science"
+    - "Information Organization and Access"
+    - "Database Systems"
+    - "Human-Computer Interaction"
+    - "Information Architecture"
+    - "Data Management and Analytics"
+    - "Information Policy and Ethics"
+    - "User Experience Research Methods"
+  related_majors:
+    - "Computer and Information Sciences, General"
+    - "Computer Science"
+    - "Communication and Media Studies"
+    - "Management Information Systems"
+
+"45.09":
+  name: "International Relations and National Security"
+  overview: >
+    International Relations and National Security Studies examines how
+    states, institutions, and non-state actors interact across borders —
+    through diplomacy, conflict, trade, cooperation, and the global
+    institutions that shape world affairs. Drawing from political science,
+    economics, history, and area studies, the curriculum covers
+    international security, foreign policy, international political
+    economy, comparative governance, and global development. Students
+    typically develop expertise in a regional area (East Asia, the Middle
+    East, Latin America, Europe) and often pursue language study and
+    study abroad. The major builds analytical writing, research, and
+    cross-cultural competency. Graduates work in foreign service,
+    intelligence and defense agencies, international NGOs, multinational
+    corporations, journalism, and consulting, with strong pathways into
+    graduate programs in international affairs and law school.
+  what_youll_learn:
+    - "International relations theory and the structure of the global system"
+    - "International security and the causes and consequences of conflict"
+    - "International political economy and global trade"
+    - "Comparative politics and regional studies"
+    - "Foreign policy analysis and diplomatic practice"
+  typical_classes:
+    - "Introduction to International Relations"
+    - "Comparative Politics"
+    - "American Foreign Policy"
+    - "International Political Economy"
+    - "International Security or Conflict Studies"
+    - "International Organizations and Law"
+    - "Regional Studies (East Asia, Middle East, etc.)"
+    - "Senior Seminar or Capstone in International Affairs"
+  related_majors:
+    - "Political Science"
+    - "Economics"
+    - "History"
+    - "Romance Languages and Literatures"
+
+"52.12":
+  name: "Management Information Systems"
+  overview: >
+    Management Information Systems (MIS) sits at the intersection of
+    business and technology, training students to design, implement, and
+    manage the information systems organizations rely on to operate.
+    Coursework combines business fundamentals — accounting, finance,
+    operations, strategy — with technical skills in databases, networks,
+    systems analysis, and increasingly data analytics, cybersecurity, and
+    cloud computing. The major emphasizes how to align technology
+    investments with business goals: choosing the right systems, managing
+    implementation projects, and using data to support decision-making.
+    Graduates work as business analysts, systems analysts, IT project
+    managers, database administrators, and increasingly in data
+    analytics, ERP consulting, and digital transformation roles. The
+    degree offers strong demand and salary outcomes among business
+    majors, with clear pathways into both technical and managerial
+    careers.
+  what_youll_learn:
+    - "Database design and SQL for business applications"
+    - "Systems analysis, design, and project management"
+    - "Networking, security, and IT infrastructure fundamentals"
+    - "Business intelligence and data analytics"
+    - "Aligning IT strategy with business strategy"
+  typical_classes:
+    - "Introduction to MIS"
+    - "Database Management Systems"
+    - "Systems Analysis and Design"
+    - "Business Programming (Python, Java, or similar)"
+    - "Networking and IT Infrastructure"
+    - "Business Intelligence and Analytics"
+    - "Project Management"
+    - "IT Strategy or Capstone Project"
+  related_majors:
+    - "Computer and Information Sciences, General"
+    - "Business Administration"
+    - "Information Science / Studies"
+    - "Management Sciences and Quantitative Methods"
+
+"26.15":
+  name: "Neurobiology and Neurosciences"
+  overview: >
+    Neurobiology and Neurosciences is the interdisciplinary study of the
+    nervous system — how neurons function individually and in networks,
+    how the brain produces perception, cognition, emotion, and behavior,
+    and what goes wrong in neurological and psychiatric disorders.
+    Programs draw heavily from biology, chemistry, psychology, and
+    increasingly computer science and statistics. Students study at
+    multiple scales, from molecular and cellular neurobiology through
+    systems and cognitive neuroscience, often with substantial laboratory
+    and research opportunities. The curriculum is rigorous and
+    research-oriented, preparing students exceptionally well for medical
+    school, graduate research, and emerging fields like computational
+    neuroscience and neural engineering. Many programs include a senior
+    research thesis. Graduates also enter careers in pharmaceuticals,
+    biotech, science writing, and clinical research roles.
+  what_youll_learn:
+    - "Cellular and molecular neuroscience: how neurons signal and connect"
+    - "Systems neuroscience: how brain regions and circuits produce behavior"
+    - "Cognitive neuroscience: the brain basis of perception, memory, and attention"
+    - "Neuroanatomy and the structure of the nervous system"
+    - "Research methods and laboratory techniques in neuroscience"
+  typical_classes:
+    - "Introduction to Neuroscience"
+    - "Cellular and Molecular Neuroscience"
+    - "Systems Neuroscience"
+    - "Cognitive Neuroscience"
+    - "Neuroanatomy"
+    - "Behavioral Neuroscience"
+    - "Neuropharmacology or Neurogenetics"
+    - "Senior Research Thesis or Capstone"
+  related_majors:
+    - "Biology"
+    - "Psychology"
+    - "Biochemistry"
+    - "Cognitive Science"
+
+"45.02":
+  name: "Anthropology"
+  overview: >
+    Anthropology is the comparative study of humanity across time, cultures,
+    and biological lineages. Programs typically span four traditional
+    subfields: cultural anthropology (the study of contemporary human
+    societies), archaeology (past human societies through material remains),
+    biological anthropology (human evolution and primate biology), and
+    linguistic anthropology (language as a cultural and cognitive
+    phenomenon). Students learn ethnographic and archaeological field
+    methods, comparative analysis, and a holistic perspective on what
+    makes humans distinctive and diverse. Coursework develops strong
+    research, writing, and cross-cultural analytical skills, often
+    including fieldwork or museum-based projects. Graduates work in
+    museums and cultural heritage, international development, public
+    health, market and user research, education, and government, with
+    strong pathways into graduate study in anthropology, archaeology, or
+    public health.
+  what_youll_learn:
+    - "Cultural anthropology and ethnographic field methods"
+    - "Archaeological theory and excavation techniques"
+    - "Human evolution, primatology, and biological anthropology"
+    - "Linguistic anthropology and language as cultural practice"
+    - "Cross-cultural comparison and the holistic anthropological perspective"
+  typical_classes:
+    - "Introduction to Anthropology (or four-field overview)"
+    - "Cultural Anthropology"
+    - "Archaeology"
+    - "Biological Anthropology or Human Evolution"
+    - "Linguistic Anthropology"
+    - "Ethnographic Methods"
+    - "Regional or Topical Anthropology Course"
+    - "Senior Seminar or Field School"
+  related_majors:
+    - "Sociology"
+    - "Archaeology"
+    - "History"
+    - "International Relations"
+
+"13.10":
+  name: "Special Education and Teaching"
+  overview: >
+    Special Education and Teaching prepares students to work with learners
+    who have disabilities — including learning, intellectual,
+    developmental, behavioral, physical, and sensory disabilities — across
+    K–12 settings. The curriculum combines foundational education
+    coursework with specialized training in disability law (IDEA, Section
+    504, ADA), individualized education program (IEP) development,
+    behavioral intervention, assessment for special needs learners, and
+    inclusive instructional strategies. Programs require extensive
+    supervised classroom experience including a culminating student
+    teaching placement, often across multiple disability categories or age
+    ranges. The field is in chronic high demand. Graduates qualify for
+    state licensure in special education and enter careers as special
+    education teachers, with later paths into autism specialization,
+    behavioral analysis, transition coordination, and educational
+    leadership.
+  what_youll_learn:
+    - "Disability categories and how they affect learning"
+    - "Special education law: IDEA, Section 504, and ADA"
+    - "Individualized Education Program (IEP) design and implementation"
+    - "Behavior management and applied behavior analysis basics"
+    - "Adapting curriculum and assessment for diverse learners"
+  typical_classes:
+    - "Introduction to Special Education"
+    - "Educational Psychology"
+    - "Characteristics of Learners with Disabilities"
+    - "Assessment in Special Education"
+    - "Behavior Management and Positive Behavior Supports"
+    - "Methods for Teaching Students with Disabilities"
+    - "Inclusive Education and Co-Teaching"
+    - "Student Teaching in Special Education"
+  related_majors:
+    - "Teacher Education (Elementary and Secondary)"
+    - "Educational Psychology"
+    - "Human Development"
+    - "Psychology"
+
+"45.04":
+  name: "Criminology"
+  overview: >
+    Criminology is the scientific study of crime, criminal behavior, and
+    societal responses to crime. While it overlaps with criminal justice,
+    criminology is more research-oriented and theoretical, focused on the
+    causes and patterns of criminal behavior rather than the operational
+    workings of the justice system. Drawing from sociology, psychology,
+    economics, and statistics, the curriculum examines theories of why
+    people commit crimes, how communities and institutions shape offending
+    and victimization, and how policy interventions affect crime rates.
+    Coursework develops quantitative analytical skills alongside
+    theoretical understanding. Graduates pursue careers in research,
+    policy analysis, victim services, federal investigation, corrections
+    administration, and increasingly in private-sector fraud and risk
+    analysis. Many continue to graduate study in criminology, sociology,
+    public policy, or law school.
+  what_youll_learn:
+    - "Criminological theories explaining the causes of crime"
+    - "Quantitative research methods and crime data analysis"
+    - "Patterns of victimization and the experience of crime"
+    - "Crime policy evaluation and the effects of criminal justice intervention"
+    - "Specialized topics: white-collar crime, juvenile delinquency, terrorism"
+  typical_classes:
+    - "Introduction to Criminology"
+    - "Criminological Theory"
+    - "Research Methods in Criminology"
+    - "Criminal Justice Statistics"
+    - "Juvenile Delinquency"
+    - "Victimology"
+    - "Corrections and Punishment"
+    - "Senior Seminar or Capstone in Criminology"
+  related_majors:
+    - "Criminal Justice"
+    - "Sociology"
+    - "Psychology"
+    - "Political Science"
+
+"11.10":
+  name: "Information Technology Administration and Management"
+  overview: >
+    Information Technology Administration and Management trains students
+    to plan, deploy, and manage the technology infrastructure that
+    organizations depend on — networks, servers, cloud services, security
+    systems, and end-user support. The curriculum is more applied than a
+    Computer Science degree, focusing on operational IT skills: network
+    administration, system installation and configuration, cybersecurity,
+    cloud platforms, and IT project management. Programs typically
+    integrate hands-on lab work with industry certifications like CompTIA,
+    Cisco, and Microsoft credentials. Coursework also includes
+    communication, ethics, and the management dimensions of IT — vendor
+    relationships, budgeting, and aligning IT operations with business
+    needs. Graduates work as systems administrators, network engineers,
+    IT support specialists, cybersecurity analysts, and cloud
+    administrators, with pathways into IT leadership and specialization.
+  what_youll_learn:
+    - "Network administration: configuration, troubleshooting, and security"
+    - "Server and operating system administration (Windows and Linux)"
+    - "Cybersecurity fundamentals and risk management"
+    - "Cloud platforms and virtualization technologies"
+    - "IT project management and service delivery"
+  typical_classes:
+    - "Introduction to Information Technology"
+    - "Computer Networks and Administration"
+    - "Operating Systems Administration"
+    - "Cybersecurity Fundamentals"
+    - "Cloud Computing"
+    - "Database Administration"
+    - "IT Project Management"
+    - "Senior Capstone or Internship"
+  related_majors:
+    - "Computer and Information Sciences, General"
+    - "Cybersecurity"
+    - "Information Science / Studies"
+    - "Management Information Systems"
+
+"40.08":
+  name: "Physics"
+  overview: >
+    Physics is the study of matter, energy, space, and time at the deepest
+    level — the fundamental laws underlying everything from subatomic
+    particles to the structure of the universe. Students learn to model
+    physical systems mathematically, design experiments to test
+    predictions, and reason from first principles. The curriculum is
+    mathematically intensive, progressing from classical mechanics and
+    electromagnetism through quantum mechanics, thermodynamics, and
+    relativity, with substantial laboratory work and often a research
+    thesis. The major develops exceptional problem-solving skills,
+    quantitative reasoning, and comfort with abstraction that transfer
+    across many fields. Graduates pursue careers in scientific research,
+    engineering, software development, finance (especially quantitative
+    finance), data science, education, and medical physics, with strong
+    pathways into graduate study in physics, engineering, and applied
+    mathematics.
+  what_youll_learn:
+    - "Classical mechanics: Newton's laws, energy, and rotational motion"
+    - "Electromagnetism and Maxwell's equations"
+    - "Quantum mechanics and the structure of atoms"
+    - "Thermodynamics and statistical mechanics"
+    - "Mathematical methods for physics: differential equations, vector calculus"
+  typical_classes:
+    - "Introductory Physics with Calculus I and II"
+    - "Modern Physics"
+    - "Classical Mechanics"
+    - "Electromagnetism I and II"
+    - "Quantum Mechanics"
+    - "Thermodynamics and Statistical Mechanics"
+    - "Mathematical Methods for Physicists"
+    - "Senior Research or Advanced Lab"
+  related_majors:
+    - "Mathematics"
+    - "Engineering Physics"
+    - "Astronomy and Astrophysics"
+    - "Electrical Engineering"

@@ -1,0 +1,379 @@
+# NY Fed Labor Market Outcomes by Major → CIP4 crosswalk
+# Source: NY Fed Labor Market for Recent College Graduates, Feb 4, 2026 release
+# Each NY Fed label maps to a list of CIP4 codes that share that label's labor outcomes.
+#
+# Judgment calls (locked in Phase 11.2A):
+#   - 13.12 Teacher Ed → Elementary Education only (not Early Childhood)
+#   - 50.07 Fine and Studio Arts → both Art History and Fine Arts (averaged at runtime)
+#   - 45.04 Criminology → Sociology (not Criminal Justice)
+
+"Agriculture":
+  - "01.00"  # Agriculture, General
+  - "01.01"  # Agricultural Business and Management
+
+"Animal and Plant Sciences":
+  - "01.09"  # Animal Sciences
+  - "01.11"  # Plant Sciences
+  - "26.07"  # Zoology / Animal Biology
+
+"Environmental Studies":
+  - "03.01"  # Natural Resources Conservation and Research
+  - "03.02"  # Natural Resources Management
+  - "03.03"  # Fishing and Fisheries
+  - "03.05"  # Forestry
+  - "03.06"  # Wildlife and Wildlands Science
+  - "26.13"  # Ecology, Evolution, Systematics
+  - "30.01"  # Biological and Physical Sciences
+  - "30.33"  # Sustainability Studies
+
+"Architecture":
+  - "04.02"  # Architecture
+  - "04.03"  # City/Urban Planning
+  - "04.05"  # Interior Architecture
+  - "04.06"  # Landscape Architecture
+
+"Ethnic Studies":
+  - "05.01"  # Area Studies
+  - "05.02"  # Ethnic, Cultural Minority, Gender, and Group Studies
+
+"Communications":
+  - "09.01"  # Communication and Media Studies
+
+"Journalism":
+  - "09.04"  # Journalism
+
+"Mass Media":
+  - "09.07"  # Radio, Television, and Digital Communication
+  - "10.02"  # Audiovisual Communications Technologies
+
+"Advertising and Public Relations":
+  - "09.09"  # Public Relations, Advertising, and Applied Communication
+
+"Information Systems & Management":
+  - "11.01"  # Computer and Information Sciences, General
+  - "11.04"  # Information Science / Studies
+  - "11.10"  # IT Administration and Management
+  - "52.12"  # Management Information Systems
+
+"Computer Science":
+  - "11.07"  # Computer Science
+
+"General Education":
+  - "13.01"  # Education, General
+
+"Early Childhood Education":
+  - "13.14"  # Teaching English as a Second Language (sometimes early-ed adjacent)
+  # Note: 13.12 is mapped to Elementary Education only per Phase 11.2A decision.
+  # If 13.14 doesn't fit either, this label may have no clean CIP4 mapping
+  # and will simply not surface for any CIP4. That's acceptable.
+
+"Elementary Education":
+  - "13.12"  # Teacher Ed, Specific Levels and Methods
+
+"Secondary Education":
+  - "13.13"  # Teacher Ed, Specific Subject Areas
+
+"Special Education":
+  - "13.10"  # Special Education and Teaching
+
+"Miscellaneous Education":
+  - "13.04"  # Educational Administration
+  - "13.11"  # Counselor Education / Counseling
+  - "13.99"  # Education, Other
+
+"General Engineering":
+  - "14.01"  # Engineering, General
+  - "14.05"  # Biomedical/Medical Engineering
+  - "14.13"  # Engineering Science
+  - "14.39"  # Geological Engineering
+
+"Aerospace Engineering":
+  - "14.02"  # Aerospace, Aeronautical, Astronautical
+
+"Chemical Engineering":
+  - "14.07"  # Chemical Engineering
+
+"Civil Engineering":
+  - "14.08"  # Civil Engineering
+
+"Computer Engineering":
+  - "14.09"  # Computer Engineering
+
+"Electrical Engineering":
+  - "14.10"  # Electrical, Electronics, and Communications Engineering
+
+"Industrial Engineering":
+  - "14.27"  # Systems Engineering
+  - "14.35"  # Industrial Engineering
+  - "14.36"  # Manufacturing Engineering
+
+"Mechanical Engineering":
+  - "14.19"  # Mechanical Engineering
+
+"Miscellaneous Engineering":
+  - "14.04"  # Architectural Engineering
+  - "14.06"  # Ceramic Sciences and Engineering
+  - "14.11"  # Engineering Mechanics
+  - "14.14"  # Environmental/Environmental Health Engineering
+  - "14.18"  # Materials Engineering
+  - "14.20"  # Metallurgical Engineering
+  - "14.21"  # Mining and Mineral Engineering
+  - "14.22"  # Naval Architecture and Marine Engineering
+  - "14.23"  # Nuclear Engineering
+  - "14.24"  # Ocean Engineering
+  - "14.25"  # Petroleum Engineering
+  - "14.28"  # Textile Sciences and Engineering
+  - "14.32"  # Polymer/Plastics Engineering
+  - "14.33"  # Construction Engineering
+  - "14.34"  # Forest Engineering
+  - "14.37"  # Operations Research
+  - "14.38"  # Surveying Engineering
+  - "14.99"  # Engineering, Other
+
+"Foreign Language":
+  - "16.01"  # Linguistic, Comparative, and Related Language Studies
+  - "16.03"  # East Asian Languages and Literatures
+  - "16.04"  # Slavic, Baltic, and Albanian Languages
+  - "16.05"  # Germanic Languages
+  - "16.09"  # Romance Languages, Literatures, Linguistics
+  - "16.11"  # Middle/Near Eastern and Semitic Languages
+  - "16.12"  # Classical Greek/Latin
+  - "16.13"  # Celtic Languages
+  - "16.14"  # South Asian Languages
+  - "16.15"  # Turkic, Ural-Altaic, Caucasian Languages
+  - "16.16"  # Sign Language Interpretation
+  - "16.17"  # Second Language Learning
+  - "16.99"  # Foreign Languages, Literatures, Linguistics, Other
+
+"Family and Consumer Sciences":
+  - "19.00"  # Work and Family Studies
+  - "19.01"  # Family and Consumer Sciences/Human Sciences, General
+  - "19.04"  # Family and Consumer Economics
+  - "19.06"  # Housing and Human Environments
+  - "19.07"  # Human Development, Family Studies
+  - "19.09"  # Apparel and Textiles
+  - "19.99"  # Family and Consumer Sciences, Other
+
+"English Language":
+  - "23.01"  # English Language and Literature
+  - "23.13"  # Rhetoric and Composition / Writing Studies
+  - "23.14"  # Literature
+  - "23.99"  # English Language and Literature, Other
+
+"Liberal Arts":
+  - "24.01"  # Liberal Arts and General Studies
+
+"Biology":
+  - "26.01"  # Biology, General
+
+"Biochemistry":
+  - "26.02"  # Biochemistry, Biophysics, Molecular Biology
+
+"Miscellaneous Biological Science":
+  - "26.03"  # Botany / Plant Biology
+  - "26.04"  # Cell / Cellular Biology
+  - "26.05"  # Microbiological Sciences and Immunology
+  - "26.08"  # Genetics
+  - "26.09"  # Physiology, Pathology
+  - "26.10"  # Pharmacology / Toxicology
+  - "26.11"  # Biomathematics, Bioinformatics, Computational Biology
+  - "26.12"  # Biotechnology
+  - "26.15"  # Neurobiology and Neurosciences
+  - "26.99"  # Biological/Biomedical Sciences, Other
+
+"Mathematics":
+  - "27.01"  # Mathematics
+  - "27.03"  # Applied Mathematics
+  - "27.05"  # Statistics
+  - "27.99"  # Mathematics and Statistics, Other
+
+"Interdisciplinary Studies":
+  - "30.99"  # Multi/Interdisciplinary Studies, Other
+  - "30.20"  # International/Global Studies
+
+"Nutrition Sciences":
+  - "19.05"  # Foods, Nutrition, and Related Services
+  - "30.19"  # Nutrition Sciences
+
+"Leisure and Hospitality":
+  - "31.01"  # Parks, Recreation, Leisure Studies
+  - "31.03"  # Parks, Recreation and Leisure Facilities Management
+  - "31.05"  # Health and Physical Education / Fitness
+  - "52.09"  # Hospitality Administration / Management
+
+"Philosophy":
+  - "38.01"  # Philosophy
+
+"Theology and Religion":
+  - "38.02"  # Religion / Religious Studies
+  - "39.06"  # Theological and Ministerial Studies
+  - "39.07"  # Pastoral Counseling and Specialized Ministries
+
+"Chemistry":
+  - "40.05"  # Chemistry
+
+"Earth Sciences":
+  - "40.06"  # Geological and Earth Sciences/Geosciences
+
+"Physics":
+  - "40.08"  # Physics
+
+"Miscellaneous Physical Sciences":
+  - "40.01"  # Physical Sciences
+  - "40.02"  # Astronomy and Astrophysics
+  - "40.04"  # Atmospheric Sciences and Meteorology
+  - "40.10"  # Materials Sciences
+  - "40.99"  # Physical Sciences, Other
+
+"Psychology":
+  - "42.01"  # Psychology, General
+  - "42.27"  # Research and Experimental Psychology
+  - "42.28"  # Clinical, Counseling, and Applied Psychology
+  - "42.99"  # Psychology, Other
+
+"Criminal Justice":
+  - "43.01"  # Criminal Justice and Corrections
+  - "43.02"  # Fire Protection
+  - "43.03"  # Homeland Security
+  - "43.04"  # Security Science and Technology
+
+"Public Policy and Law":
+  - "22.00"  # Non-Professional General Legal Studies (Pre-Law)
+  - "22.01"  # Law
+  - "44.04"  # Public Administration
+  - "44.05"  # Public Policy Analysis
+
+"Social Services":
+  - "44.07"  # Social Work
+  - "44.00"  # Human Services, General
+  - "44.02"  # Community Organization and Advocacy
+
+"Anthropology":
+  - "45.02"  # Anthropology
+
+"Economics":
+  - "45.06"  # Economics
+
+"Geography":
+  - "45.07"  # Geography and Cartography
+
+"Political Science":
+  - "45.10"  # Political Science and Government
+  - "45.09"  # International Relations and National Security
+
+"Sociology":
+  - "45.11"  # Sociology
+  - "45.04"  # Criminology
+
+"General Social Sciences":
+  - "45.01"  # Social Sciences, General
+  - "45.12"  # Urban Studies/Affairs
+  - "45.99"  # Social Sciences, Other
+
+"Construction Services":
+  - "46.00"  # Construction Trades, General
+  - "46.04"  # Building/Construction Finishing
+  - "52.20"  # Construction Management
+
+"Art History":
+  - "50.07"  # Fine and Studio Arts (averaged with Fine Arts at runtime)
+
+"Fine Arts":
+  - "50.07"  # Fine and Studio Arts (averaged with Art History at runtime)
+
+"Performing Arts":
+  - "50.05"  # Drama/Theatre Arts
+  - "50.09"  # Music
+  - "50.03"  # Dance
+
+"Commercial Art & Graphic Design":
+  - "50.04"  # Design and Applied Arts
+  - "50.06"  # Film/Video and Photographic Arts
+
+"Health Services":
+  - "51.00"  # Health Services / Allied Health, General
+  - "51.07"  # Health and Medical Administrative Services
+  - "51.22"  # Public Health
+
+"Medical Technicians":
+  - "51.09"  # Allied Health Diagnostic, Intervention, Treatment
+  - "51.10"  # Clinical/Medical Laboratory Science
+  - "51.99"  # Health Professions and Related Programs, Other
+
+"Nursing":
+  - "51.38"  # Registered Nursing
+  - "51.39"  # Practical Nursing, Vocational Nursing
+
+"Pharmacy":
+  - "51.20"  # Pharmacy, Pharmaceutical Sciences, and Administration
+
+"Treatment Therapy":
+  - "51.02"  # Communication Disorders Sciences and Services
+  - "51.23"  # Rehabilitation and Therapeutic Professions
+
+"General Business":
+  - "52.01"  # Business/Commerce, General
+
+"Accounting":
+  - "52.03"  # Accounting and Related Services
+
+"Business Management":
+  - "52.02"  # Business Administration, Management and Operations
+  - "52.05"  # Business/Corporate Communications
+  - "52.06"  # Business/Managerial Economics
+  - "52.07"  # Entrepreneurial and Small Business Operations
+  - "52.10"  # Human Resources Management and Services
+  - "52.11"  # International Business
+  - "52.18"  # General Sales, Merchandising, Related Marketing Operations
+
+"Business Analytics":
+  - "52.13"  # Management Sciences and Quantitative Methods
+
+"Marketing":
+  - "52.14"  # Marketing
+
+"Finance":
+  - "52.08"  # Finance and Financial Management Services
+
+"International Affairs":
+  - "30.20"  # International/Global Studies (also in Interdisciplinary; metric still applies)
+
+"History":
+  - "54.01"  # History
+
+"Engineering Technologies":
+  - "15.00"  # Engineering Technologies, General
+  - "15.01"  # Architectural Engineering Technologies
+  - "15.02"  # Civil Engineering Technologies
+  - "15.03"  # Electrical Engineering Technologies
+  - "15.04"  # Electromechanical Instrumentation
+  - "15.05"  # Environmental Control Technologies
+  - "15.06"  # Industrial Production Technologies
+  - "15.07"  # Quality Control and Safety Technologies
+  - "15.08"  # Mechanical Engineering Technologies
+  - "15.09"  # Mining and Petroleum Technologies
+  - "15.10"  # Construction Engineering Technologies
+  - "15.11"  # Engineering-Related Technologies
+  - "15.12"  # Computer Engineering Technologies
+  - "15.13"  # Drafting/Design Engineering Technologies
+  - "15.14"  # Nuclear Engineering Technologies
+  - "15.15"  # Engineering-Related Fields
+  - "15.16"  # Nanotechnology
+  - "15.17"  # Energy Systems Technologies
+  - "15.99"  # Engineering Technologies, Other
+
+"Miscellaneous Technologies":
+  - "10.01"  # Communications Technology, General
+  - "10.03"  # Graphic Communications
+  - "10.99"  # Communications Technologies, Other
+  - "11.02"  # Computer Programming
+  - "11.03"  # Data Processing
+  - "11.05"  # Computer Systems Analysis
+  - "11.06"  # Data Entry/Microcomputer Applications
+  - "11.08"  # Computer Software and Media Applications
+  - "11.09"  # Computer Systems Networking
+  - "11.99"  # Computer and Information Sciences, Other
+  - "29.00"  # Military Technologies
+  - "47.00"  # Mechanic and Repair Technologies
+  - "48.00"  # Precision Production
+  - "49.00"  # Transportation and Materials Moving

@@ -1,0 +1,2619 @@
+cip4,SOC2018Code,SOC2018Title,source_cip6_count
+01.00,19-1011,Animal Scientists,1
+01.00,19-1012,Food Scientists and Technologists,1
+01.00,19-1013,Soil and Plant Scientists,1
+01.00,19-4012,Agricultural Technicians,1
+01.00,25-1041,"Agricultural Sciences Teachers, Postsecondary",1
+01.01,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",4
+01.01,13-1021,"Buyers and Purchasing Agents, Farm Products",1
+01.01,15-1232,Computer User Support Specialists,1
+01.01,19-3011,Economists,1
+01.01,25-1041,"Agricultural Sciences Teachers, Postsecondary",6
+01.01,25-1063,"Economics Teachers, Postsecondary",1
+01.01,25-9021,Farm and Home Management Educators,1
+01.01,41-4012,"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",1
+01.01,43-1011,First-Line Supervisors of Office and Administrative Support Workers,1
+01.01,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",3
+01.02,25-1041,"Agricultural Sciences Teachers, Postsecondary",3
+01.02,25-1194,"Career/Technical Education Teachers, Postsecondary",1
+01.02,45-2091,Agricultural Equipment Operators,1
+01.02,49-3011,Aircraft Mechanics and Service Technicians,1
+01.02,49-3041,Farm Equipment Mechanics and Service Technicians,5
+01.02,49-3042,"Mobile Heavy Equipment Mechanics, Except Engines",1
+01.03,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",9
+01.03,19-1011,Animal Scientists,1
+01.03,19-1013,Soil and Plant Scientists,1
+01.03,19-1031,Conservation Scientists,1
+01.03,25-1041,"Agricultural Sciences Teachers, Postsecondary",7
+01.03,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+01.03,25-9021,Farm and Home Management Educators,5
+01.03,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",9
+01.03,45-2021,Animal Breeders,3
+01.03,45-2093,"Farmworkers, Farm, Ranch, and Aquacultural Animals",1
+01.04,19-4013,Food Science Technicians,1
+01.04,25-1041,"Agricultural Sciences Teachers, Postsecondary",1
+01.04,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",1
+01.04,45-2011,Agricultural Inspectors,1
+01.05,25-1041,"Agricultural Sciences Teachers, Postsecondary",2
+01.05,25-1194,"Career/Technical Education Teachers, Postsecondary",2
+01.05,39-2011,Animal Trainers,2
+01.05,39-2021,Animal Caretakers,2
+01.06,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",6
+01.06,25-1041,"Agricultural Sciences Teachers, Postsecondary",6
+01.06,25-9021,Farm and Home Management Educators,3
+01.06,37-1012,"First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",6
+01.06,37-3011,Landscaping and Groundskeeping Workers,6
+01.06,37-3012,"Pesticide Handlers, Sprayers, and Applicators, Vegetation",3
+01.06,41-1011,First-Line Supervisors of Retail Sales Workers,1
+01.06,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",2
+01.06,45-4011,Forest and Conservation Workers,1
+01.07,19-1012,Food Scientists and Technologists,1
+01.07,25-1041,"Agricultural Sciences Teachers, Postsecondary",1
+01.08,25-9021,Farm and Home Management Educators,1
+01.08,27-3023,"News Analysts, Reporters, and Journalists",1
+01.08,27-4011,Audio and Video Technicians,1
+01.09,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",8
+01.09,19-1011,Animal Scientists,7
+01.09,19-4012,Agricultural Technicians,3
+01.09,25-1041,"Agricultural Sciences Teachers, Postsecondary",8
+01.09,25-9021,Farm and Home Management Educators,7
+01.09,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",5
+01.10,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",1
+01.10,19-1012,Food Scientists and Technologists,6
+01.10,19-1013,Soil and Plant Scientists,1
+01.10,19-4013,Food Science Technicians,5
+01.10,25-1041,"Agricultural Sciences Teachers, Postsecondary",3
+01.10,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",1
+01.10,51-3092,Food Batchmakers,2
+01.10,51-9012,"Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",3
+01.11,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",5
+01.11,19-1011,Animal Scientists,1
+01.11,19-1013,Soil and Plant Scientists,7
+01.11,19-1031,Conservation Scientists,1
+01.11,19-4012,Agricultural Technicians,2
+01.11,25-1041,"Agricultural Sciences Teachers, Postsecondary",7
+01.11,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+01.11,25-9021,Farm and Home Management Educators,5
+01.11,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",2
+01.12,19-1013,Soil and Plant Scientists,4
+01.12,19-1022,Microbiologists,1
+01.12,19-4012,Agricultural Technicians,1
+01.12,25-1041,"Agricultural Sciences Teachers, Postsecondary",4
+01.13,19-4012,Agricultural Technicians,1
+01.80,25-1071,"Health Specialties Teachers, Postsecondary",1
+01.80,29-1131,Veterinarians,1
+01.81,19-1011,Animal Scientists,9
+01.81,25-1071,"Health Specialties Teachers, Postsecondary",12
+01.81,29-1131,Veterinarians,12
+01.82,11-1021,General and Operations Managers,1
+01.82,11-3012,Administrative Services Managers,1
+01.82,11-9111,Medical and Health Services Managers,2
+01.82,43-1011,First-Line Supervisors of Office and Administrative Support Workers,4
+01.82,43-4171,Receptionists and Information Clerks,1
+01.82,43-6013,Medical Secretaries and Administrative Assistants,2
+01.83,25-1071,"Health Specialties Teachers, Postsecondary",1
+01.83,29-2056,Veterinary Technologists and Technicians,2
+01.83,31-9096,Veterinary Assistants and Laboratory Animal Caretakers,2
+03.01,13-1041,Compliance Officers,2
+03.01,19-1031,Conservation Scientists,1
+03.01,19-1032,Foresters,1
+03.01,19-2041,"Environmental Scientists and Specialists, Including Health",2
+03.01,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+03.01,19-4071,Forest and Conservation Technicians,2
+03.01,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+03.01,25-1053,"Environmental Science Teachers, Postsecondary",2
+03.02,11-9072,"Entertainment and Recreation Managers, Except Gambling",1
+03.02,11-9199,"Managers, All Other",1
+03.02,13-1041,Compliance Officers,2
+03.02,19-1031,Conservation Scientists,3
+03.02,19-1032,Foresters,1
+03.02,19-3011,Economists,1
+03.02,19-3099,"Social Scientists and Related Workers, All Other",1
+03.02,19-4061,Social Science Research Assistants,1
+03.02,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",4
+03.02,25-1063,"Economics Teachers, Postsecondary",1
+03.02,25-1111,"Criminal Justice and Law Enforcement Teachers, Postsecondary",1
+03.02,33-1012,First-Line Supervisors of Police and Detectives,1
+03.02,33-1021,First-Line Supervisors of Firefighting and Prevention Workers,1
+03.02,33-2011,Firefighters,1
+03.02,33-2022,Forest Fire Inspectors and Prevention Specialists,1
+03.02,33-3021,Detectives and Criminal Investigators,1
+03.02,33-3031,Fish and Game Wardens,1
+03.02,33-3051,Police and Sheriff’s Patrol Officers,1
+03.02,33-9092,"Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers",1
+03.03,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",1
+03.03,45-3031,Fishing and Hunting Workers,1
+03.05,19-1031,Conservation Scientists,3
+03.05,19-1032,Foresters,7
+03.05,19-4071,Forest and Conservation Technicians,4
+03.05,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",7
+03.05,45-1011,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",2
+03.05,45-4011,Forest and Conservation Workers,3
+03.06,19-1023,Zoologists and Wildlife Biologists,1
+03.06,19-1031,Conservation Scientists,1
+03.06,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+03.99,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+04.02,11-9041,Architectural and Engineering Managers,2
+04.02,17-1011,"Architects, Except Landscape and Naval",2
+04.02,25-1031,"Architecture Teachers, Postsecondary",3
+04.03,11-9041,Architectural and Engineering Managers,1
+04.03,19-3051,Urban and Regional Planners,1
+04.03,25-1031,"Architecture Teachers, Postsecondary",1
+04.03,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+04.04,11-9041,Architectural and Engineering Managers,2
+04.04,17-1011,"Architects, Except Landscape and Naval",1
+04.04,17-1012,Landscape Architects,1
+04.04,19-3051,Urban and Regional Planners,1
+04.04,25-1031,"Architecture Teachers, Postsecondary",4
+04.04,27-1025,Interior Designers,1
+04.05,11-9041,Architectural and Engineering Managers,1
+04.05,25-1031,"Architecture Teachers, Postsecondary",1
+04.05,27-1025,Interior Designers,1
+04.06,11-9041,Architectural and Engineering Managers,1
+04.06,17-1012,Landscape Architects,1
+04.06,25-1031,"Architecture Teachers, Postsecondary",1
+04.08,17-1011,"Architects, Except Landscape and Naval",1
+04.08,19-3093,Historians,2
+04.08,25-1031,"Architecture Teachers, Postsecondary",3
+04.09,11-9041,Architectural and Engineering Managers,1
+04.09,17-3011,Architectural and Civil Drafters,3
+04.09,25-1031,"Architecture Teachers, Postsecondary",2
+04.10,11-9141,"Property, Real Estate, and Community Association Managers",1
+04.10,13-2023,Appraisers and Assessors of Real Estate,1
+04.10,19-3051,Urban and Regional Planners,1
+04.10,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+04.10,41-9021,Real Estate Brokers,1
+04.10,41-9022,Real Estate Sales Agents,1
+05.01,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",37
+05.02,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",12
+05.02,27-3091,Interpreters and Translators,1
+05.99,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+09.01,11-2032,Public Relations Managers,3
+09.01,11-2033,Fundraising Managers,1
+09.01,13-1131,Fundraisers,1
+09.01,25-1122,"Communications Teachers, Postsecondary",3
+09.01,27-3011,Broadcast Announcers and Radio Disc Jockeys,2
+09.01,27-3023,"News Analysts, Reporters, and Journalists",2
+09.01,27-3031,Public Relations Specialists,2
+09.01,27-3041,Editors,2
+09.01,27-3043,Writers and Authors,3
+09.01,27-3099,"Media and Communication Workers, All Other",1
+09.04,25-1122,"Communications Teachers, Postsecondary",6
+09.04,27-3011,Broadcast Announcers and Radio Disc Jockeys,1
+09.04,27-3023,"News Analysts, Reporters, and Journalists",7
+09.04,27-3041,Editors,2
+09.04,27-3043,Writers and Authors,2
+09.04,27-4021,Photographers,1
+09.04,27-4032,Film and Video Editors,1
+09.04,43-9081,Proofreaders and Copy Markers,1
+09.07,11-9199,"Managers, All Other",1
+09.07,15-1255,Web and Digital Interface Designers,1
+09.07,25-1122,"Communications Teachers, Postsecondary",2
+09.07,27-2012,Producers and Directors,1
+09.07,27-3011,Broadcast Announcers and Radio Disc Jockeys,1
+09.07,27-3023,"News Analysts, Reporters, and Journalists",1
+09.07,27-3099,"Media and Communication Workers, All Other",1
+09.07,27-4032,Film and Video Editors,1
+09.09,11-2011,Advertising and Promotions Managers,3
+09.09,11-2032,Public Relations Managers,5
+09.09,11-2033,Fundraising Managers,3
+09.09,11-3121,Human Resources Managers,1
+09.09,11-3131,Training and Development Managers,1
+09.09,13-1011,"Agents and Business Managers of Artists, Performers, and Athletes",1
+09.09,13-1131,Fundraisers,3
+09.09,13-1151,Training and Development Specialists,1
+09.09,21-1091,Health Education Specialists,1
+09.09,21-1094,Community Health Workers,1
+09.09,25-1122,"Communications Teachers, Postsecondary",8
+09.09,27-2099,"Entertainers and Performers, Sports and Related Workers, All Other",1
+09.09,27-3011,Broadcast Announcers and Radio Disc Jockeys,1
+09.09,27-3023,"News Analysts, Reporters, and Journalists",3
+09.09,27-3031,Public Relations Specialists,6
+09.09,27-3041,Editors,1
+09.09,27-3042,Technical Writers,1
+09.10,27-3041,Editors,1
+09.99,25-1122,"Communications Teachers, Postsecondary",1
+09.99,27-3041,Editors,1
+09.99,27-3043,Writers and Authors,1
+10.01,27-3099,"Media and Communication Workers, All Other",1
+10.01,27-4012,Broadcast Technicians,1
+10.01,27-4014,Sound Engineering Technicians,1
+10.01,27-4032,Film and Video Editors,1
+10.02,27-2091,"Disc Jockeys, Except Radio",1
+10.02,27-3092,Court Reporters and Simultaneous Captioners,1
+10.02,27-4011,Audio and Video Technicians,2
+10.02,27-4012,Broadcast Technicians,2
+10.02,27-4014,Sound Engineering Technicians,1
+10.02,27-4015,Lighting Technicians,2
+10.02,27-4031,"Camera Operators, Television, Video, and Film",2
+10.02,27-4032,Film and Video Editors,2
+10.03,27-1014,Special Effects Artists and Animators,1
+10.03,43-9021,Data Entry Keyers,1
+10.03,43-9031,Desktop Publishers,2
+10.03,51-5111,Prepress Technicians and Workers,8
+10.03,51-5112,Printing Press Operators,4
+10.03,51-9194,Etchers and Engravers,1
+11.01,11-3021,Computer and Information Systems Managers,2
+11.01,15-1211,Computer Systems Analysts,2
+11.01,15-1212,Information Security Analysts,1
+11.01,15-1221,Computer and Information Research Scientists,5
+11.01,15-1241,Computer Network Architects,2
+11.01,15-1242,Database Administrators,1
+11.01,15-1243,Database Architects,2
+11.01,15-1244,Network and Computer Systems Administrators,1
+11.01,15-1252,Software Developers,3
+11.01,15-1253,Software Quality Assurance Analysts and Testers,3
+11.01,15-1255,Web and Digital Interface Designers,3
+11.01,15-1299,"Computer Occupations, All Other",1
+11.01,15-2051,Data Scientists,2
+11.01,25-1021,"Computer Science Teachers, Postsecondary",3
+11.02,15-1231,Computer Network Support Specialists,1
+11.02,15-1251,Computer Programmers,6
+11.02,15-1252,Software Developers,5
+11.02,15-1253,Software Quality Assurance Analysts and Testers,5
+11.02,15-1254,Web Developers,1
+11.02,15-1255,Web and Digital Interface Designers,1
+11.02,25-1021,"Computer Science Teachers, Postsecondary",1
+11.03,15-1299,"Computer Occupations, All Other",1
+11.04,11-3021,Computer and Information Systems Managers,1
+11.04,15-1221,Computer and Information Research Scientists,1
+11.04,15-1243,Database Architects,1
+11.04,15-1252,Software Developers,1
+11.04,15-1255,Web and Digital Interface Designers,1
+11.04,15-1299,"Computer Occupations, All Other",1
+11.04,25-1021,"Computer Science Teachers, Postsecondary",1
+11.05,15-1211,Computer Systems Analysts,1
+11.05,15-1231,Computer Network Support Specialists,1
+11.05,15-1241,Computer Network Architects,1
+11.05,15-1243,Database Architects,1
+11.05,15-1253,Software Quality Assurance Analysts and Testers,1
+11.05,25-1021,"Computer Science Teachers, Postsecondary",1
+11.06,43-9021,Data Entry Keyers,1
+11.06,43-9022,Word Processors and Typists,1
+11.07,11-3021,Computer and Information Systems Managers,1
+11.07,15-1212,Information Security Analysts,1
+11.07,15-1221,Computer and Information Research Scientists,1
+11.07,15-1231,Computer Network Support Specialists,1
+11.07,15-1243,Database Architects,1
+11.07,15-1251,Computer Programmers,1
+11.07,15-1252,Software Developers,1
+11.07,15-1253,Software Quality Assurance Analysts and Testers,1
+11.07,15-1254,Web Developers,1
+11.07,15-1255,Web and Digital Interface Designers,1
+11.07,15-1299,"Computer Occupations, All Other",1
+11.07,15-2051,Data Scientists,1
+11.07,25-1021,"Computer Science Teachers, Postsecondary",1
+11.08,11-3021,Computer and Information Systems Managers,1
+11.08,15-1221,Computer and Information Research Scientists,1
+11.08,15-1242,Database Administrators,1
+11.08,15-1243,Database Architects,1
+11.08,15-1251,Computer Programmers,2
+11.08,15-1252,Software Developers,1
+11.08,15-1254,Web Developers,1
+11.08,15-1255,Web and Digital Interface Designers,1
+11.08,15-2051,Data Scientists,2
+11.08,25-1021,"Computer Science Teachers, Postsecondary",1
+11.08,25-1194,"Career/Technical Education Teachers, Postsecondary",3
+11.08,27-1014,Special Effects Artists and Animators,2
+11.08,27-1024,Graphic Designers,2
+11.09,11-3021,Computer and Information Systems Managers,1
+11.09,15-1211,Computer Systems Analysts,1
+11.09,15-1212,Information Security Analysts,1
+11.09,15-1221,Computer and Information Research Scientists,1
+11.09,15-1231,Computer Network Support Specialists,2
+11.09,15-1241,Computer Network Architects,2
+11.09,15-1243,Database Architects,1
+11.09,15-1251,Computer Programmers,1
+11.09,15-1252,Software Developers,1
+11.09,25-1021,"Computer Science Teachers, Postsecondary",2
+11.10,11-3021,Computer and Information Systems Managers,4
+11.10,11-9199,"Managers, All Other",1
+11.10,13-1082,Project Management Specialists,1
+11.10,15-1212,Information Security Analysts,4
+11.10,15-1231,Computer Network Support Specialists,4
+11.10,15-1232,Computer User Support Specialists,1
+11.10,15-1241,Computer Network Architects,2
+11.10,15-1242,Database Administrators,1
+11.10,15-1243,Database Architects,1
+11.10,15-1244,Network and Computer Systems Administrators,2
+11.10,15-1254,Web Developers,1
+11.10,15-1255,Web and Digital Interface Designers,1
+11.10,15-1299,"Computer Occupations, All Other",1
+12.03,11-9171,Funeral Home Managers,3
+12.03,39-4011,Embalmers,2
+12.03,39-4012,Crematory Operators,2
+12.03,39-4031,"Morticians, Undertakers, and Funeral Arrangers",3
+12.04,11-9179,"Personal Service Managers, All Other",1
+12.04,39-1022,First-Line Supervisors of Personal Service Workers,1
+12.04,39-5011,Barbers,4
+12.04,39-5012,"Hairdressers, Hairstylists, and Cosmetologists",8
+12.04,39-5091,"Makeup Artists, Theatrical and Performance",3
+12.04,39-5092,Manicurists and Pedicurists,2
+12.04,39-5093,Shampooers,1
+12.04,39-5094,Skincare Specialists,4
+12.05,11-9051,Food Service Managers,3
+12.05,13-1022,"Wholesale and Retail Buyers, Except Farm Products",1
+12.05,19-1012,Food Scientists and Technologists,1
+12.05,25-1199,"Postsecondary Teachers, All Other",1
+12.05,35-1011,Chefs and Head Cooks,5
+12.05,35-1012,First-Line Supervisors of Food Preparation and Serving Workers,4
+12.05,35-2012,"Cooks, Institution and Cafeteria",3
+12.05,35-2013,"Cooks, Private Household",3
+12.05,35-2014,"Cooks, Restaurant",2
+12.05,35-2019,"Cooks, All Other",4
+12.05,35-3011,Bartenders,1
+12.05,51-3011,Bakers,1
+12.05,51-3021,Butchers and Meat Cutters,1
+12.05,51-3023,Slaughterers and Meat Packers,1
+12.06,33-9031,Gambling Surveillance Officers and Gambling Investigators,1
+12.06,39-1013,First-Line Supervisors of Gambling Services Workers,2
+12.06,39-3011,Gambling Dealers,1
+12.06,43-3041,Gambling Cage Workers,1
+12.99,39-6012,Concierges,1
+13.01,25-1081,"Education Teachers, Postsecondary",1
+13.01,25-9042,"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",1
+13.01,25-9043,"Teaching Assistants, Special Education",1
+13.02,25-1081,"Education Teachers, Postsecondary",4
+13.02,25-2011,"Preschool Teachers, Except Special Education",1
+13.02,25-2012,"Kindergarten Teachers, Except Special Education",1
+13.02,25-2021,"Elementary School Teachers, Except Special Education",1
+13.02,25-2022,"Middle School Teachers, Except Special and Career/Technical Education",1
+13.02,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+13.02,25-3011,"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",3
+13.02,25-3099,"Teachers and Instructors, All Other",3
+13.03,25-1081,"Education Teachers, Postsecondary",1
+13.03,25-9031,Instructional Coordinators,1
+13.04,11-3131,Training and Development Managers,1
+13.04,11-9031,"Education and Childcare Administrators, Preschool and Daycare",5
+13.04,11-9032,"Education Administrators, Kindergarten through Secondary",7
+13.04,11-9033,"Education Administrators, Postsecondary",5
+13.04,11-9039,"Education Administrators, All Other",10
+13.05,13-1151,Training and Development Specialists,1
+13.05,25-4022,Librarians and Media Collections Specialists,1
+13.05,25-9031,Instructional Coordinators,1
+13.06,11-3131,Training and Development Managers,1
+13.06,13-1111,Management Analysts,5
+13.06,15-2041,Statisticians,4
+13.06,19-3022,Survey Researchers,1
+13.06,19-3099,"Social Scientists and Related Workers, All Other",5
+13.06,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+13.06,25-1081,"Education Teachers, Postsecondary",5
+13.06,25-9099,"Educational Instruction and Library Workers, All Other",1
+13.09,25-1081,"Education Teachers, Postsecondary",1
+13.10,25-1081,"Education Teachers, Postsecondary",15
+13.10,25-2051,"Special Education Teachers, Preschool",13
+13.10,25-2055,"Special Education Teachers, Kindergarten",13
+13.10,25-2056,"Special Education Teachers, Elementary School",13
+13.10,25-2057,"Special Education Teachers, Middle School",13
+13.10,25-2058,"Special Education Teachers, Secondary School",13
+13.10,25-2059,"Special Education Teachers, All Other",13
+13.10,25-9043,"Teaching Assistants, Special Education",1
+13.10,27-3091,Interpreters and Translators,1
+13.11,21-1012,"Educational, Guidance, and Career Counselors and Advisors",3
+13.11,39-9041,Residential Advisors,2
+13.12,13-1151,Training and Development Specialists,1
+13.12,25-1081,"Education Teachers, Postsecondary",11
+13.12,25-1199,"Postsecondary Teachers, All Other",1
+13.12,25-2011,"Preschool Teachers, Except Special Education",6
+13.12,25-2012,"Kindergarten Teachers, Except Special Education",6
+13.12,25-2021,"Elementary School Teachers, Except Special Education",8
+13.12,25-2022,"Middle School Teachers, Except Special and Career/Technical Education",7
+13.12,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",8
+13.12,25-3011,"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",1
+13.12,25-3021,Self-Enrichment Teachers,2
+13.12,25-3099,"Teachers and Instructors, All Other",3
+13.12,25-9042,"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",1
+13.12,25-9043,"Teaching Assistants, Special Education",1
+13.13,25-1011,"Business Teachers, Postsecondary",2
+13.13,25-1021,"Computer Science Teachers, Postsecondary",1
+13.13,25-1022,"Mathematical Science Teachers, Postsecondary",1
+13.13,25-1041,"Agricultural Sciences Teachers, Postsecondary",2
+13.13,25-1042,"Biological Science Teachers, Postsecondary",2
+13.13,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+13.13,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",2
+13.13,25-1052,"Chemistry Teachers, Postsecondary",2
+13.13,25-1053,"Environmental Science Teachers, Postsecondary",1
+13.13,25-1054,"Physics Teachers, Postsecondary",2
+13.13,25-1064,"Geography Teachers, Postsecondary",1
+13.13,25-1066,"Psychology Teachers, Postsecondary",1
+13.13,25-1071,"Health Specialties Teachers, Postsecondary",1
+13.13,25-1081,"Education Teachers, Postsecondary",33
+13.13,25-1121,"Art, Drama, and Music Teachers, Postsecondary",3
+13.13,25-1123,"English Language and Literature Teachers, Postsecondary",1
+13.13,25-1124,"Foreign Language and Literature Teachers, Postsecondary",5
+13.13,25-1125,"History Teachers, Postsecondary",1
+13.13,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",1
+13.13,25-1193,"Recreation and Fitness Studies Teachers, Postsecondary",1
+13.13,25-1194,"Career/Technical Education Teachers, Postsecondary",7
+13.13,25-2021,"Elementary School Teachers, Except Special Education",2
+13.13,25-2022,"Middle School Teachers, Except Special and Career/Technical Education",28
+13.13,25-2023,"Career/Technical Education Teachers, Middle School",8
+13.13,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",30
+13.13,25-2032,"Career/Technical Education Teachers, Secondary School",8
+13.13,25-3099,"Teachers and Instructors, All Other",2
+13.13,25-4022,Librarians and Media Collections Specialists,1
+13.13,27-2022,Coaches and Scouts,1
+13.13,39-9031,Exercise Trainers and Group Fitness Instructors,1
+13.14,25-2011,"Preschool Teachers, Except Special Education",3
+13.14,25-2012,"Kindergarten Teachers, Except Special Education",3
+13.14,25-2021,"Elementary School Teachers, Except Special Education",3
+13.14,25-2022,"Middle School Teachers, Except Special and Career/Technical Education",3
+13.14,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",3
+13.14,25-3011,"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",3
+13.15,25-3011,"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",1
+13.15,25-9042,"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",2
+13.15,25-9043,"Teaching Assistants, Special Education",2
+13.15,25-9044,"Teaching Assistants, Postsecondary",1
+13.15,25-9049,"Teaching Assistants, All Other",3
+13.15,25-9099,"Educational Instruction and Library Workers, All Other",1
+13.99,25-1081,"Education Teachers, Postsecondary",1
+13.99,25-3099,"Teachers and Instructors, All Other",1
+14.01,11-9041,Architectural and Engineering Managers,1
+14.01,17-2199,"Engineers, All Other",2
+14.01,25-1032,"Engineering Teachers, Postsecondary",1
+14.02,11-9041,Architectural and Engineering Managers,3
+14.02,17-2011,Aerospace Engineers,3
+14.02,17-3021,Aerospace Engineering and Operations Technologists and Technicians,1
+14.02,25-1032,"Engineering Teachers, Postsecondary",3
+14.02,49-2091,Avionics Technicians,1
+14.03,11-9041,Architectural and Engineering Managers,1
+14.03,17-2021,Agricultural Engineers,1
+14.03,25-1032,"Engineering Teachers, Postsecondary",1
+14.04,11-9041,Architectural and Engineering Managers,1
+14.04,17-2199,"Engineers, All Other",1
+14.04,25-1031,"Architecture Teachers, Postsecondary",1
+14.04,25-1032,"Engineering Teachers, Postsecondary",1
+14.05,11-9041,Architectural and Engineering Managers,1
+14.05,17-2031,Bioengineers and Biomedical Engineers,1
+14.05,25-1032,"Engineering Teachers, Postsecondary",1
+14.06,11-9041,Architectural and Engineering Managers,1
+14.06,17-2041,Chemical Engineers,1
+14.06,17-2131,Materials Engineers,1
+14.06,25-1032,"Engineering Teachers, Postsecondary",1
+14.07,11-9041,Architectural and Engineering Managers,3
+14.07,17-2031,Bioengineers and Biomedical Engineers,1
+14.07,17-2041,Chemical Engineers,3
+14.07,17-2199,"Engineers, All Other",1
+14.07,25-1032,"Engineering Teachers, Postsecondary",3
+14.08,11-9041,Architectural and Engineering Managers,6
+14.08,17-2051,Civil Engineers,6
+14.08,17-2081,Environmental Engineers,2
+14.08,17-2151,"Mining and Geological Engineers, Including Mining Safety Engineers",1
+14.08,17-2171,Petroleum Engineers,1
+14.08,17-2199,"Engineers, All Other",2
+14.08,25-1032,"Engineering Teachers, Postsecondary",6
+14.09,11-9041,Architectural and Engineering Managers,4
+14.09,15-1241,Computer Network Architects,2
+14.09,15-1243,Database Architects,2
+14.09,15-1252,Software Developers,2
+14.09,15-1253,Software Quality Assurance Analysts and Testers,2
+14.09,17-2061,Computer Hardware Engineers,2
+14.09,25-1032,"Engineering Teachers, Postsecondary",4
+14.10,11-9041,Architectural and Engineering Managers,4
+14.10,17-2011,Aerospace Engineers,1
+14.10,17-2061,Computer Hardware Engineers,1
+14.10,17-2071,Electrical Engineers,2
+14.10,17-2072,"Electronics Engineers, Except Computer",3
+14.10,17-2199,"Engineers, All Other",2
+14.10,25-1032,"Engineering Teachers, Postsecondary",4
+14.11,11-9041,Architectural and Engineering Managers,1
+14.11,17-2141,Mechanical Engineers,1
+14.11,17-2199,"Engineers, All Other",1
+14.11,25-1032,"Engineering Teachers, Postsecondary",1
+14.12,11-9041,Architectural and Engineering Managers,1
+14.12,11-9121,Natural Sciences Managers,1
+14.12,17-2199,"Engineers, All Other",1
+14.12,19-2012,Physicists,1
+14.12,25-1032,"Engineering Teachers, Postsecondary",1
+14.13,11-9041,Architectural and Engineering Managers,1
+14.13,17-2199,"Engineers, All Other",1
+14.13,25-1032,"Engineering Teachers, Postsecondary",1
+14.14,11-9041,Architectural and Engineering Managers,1
+14.14,17-2081,Environmental Engineers,1
+14.14,17-2111,"Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",1
+14.14,25-1032,"Engineering Teachers, Postsecondary",1
+14.18,11-9041,Architectural and Engineering Managers,1
+14.18,13-1051,Cost Estimators,1
+14.18,17-2131,Materials Engineers,1
+14.18,25-1032,"Engineering Teachers, Postsecondary",1
+14.19,11-9041,Architectural and Engineering Managers,1
+14.19,13-1051,Cost Estimators,1
+14.19,17-2011,Aerospace Engineers,1
+14.19,17-2141,Mechanical Engineers,1
+14.19,25-1032,"Engineering Teachers, Postsecondary",1
+14.20,11-9041,Architectural and Engineering Managers,1
+14.20,17-2131,Materials Engineers,1
+14.20,25-1032,"Engineering Teachers, Postsecondary",1
+14.21,11-9041,Architectural and Engineering Managers,1
+14.21,17-2151,"Mining and Geological Engineers, Including Mining Safety Engineers",1
+14.21,25-1032,"Engineering Teachers, Postsecondary",1
+14.22,11-9041,Architectural and Engineering Managers,1
+14.22,17-2121,Marine Engineers and Naval Architects,1
+14.22,25-1032,"Engineering Teachers, Postsecondary",1
+14.23,11-9041,Architectural and Engineering Managers,1
+14.23,17-2161,Nuclear Engineers,1
+14.23,25-1032,"Engineering Teachers, Postsecondary",1
+14.24,11-9041,Architectural and Engineering Managers,1
+14.24,17-2199,"Engineers, All Other",1
+14.24,25-1032,"Engineering Teachers, Postsecondary",1
+14.25,11-9041,Architectural and Engineering Managers,1
+14.25,17-2171,Petroleum Engineers,1
+14.25,25-1032,"Engineering Teachers, Postsecondary",1
+14.27,11-9041,Architectural and Engineering Managers,1
+14.27,15-1243,Database Architects,1
+14.27,17-2112,Industrial Engineers,1
+14.27,17-2199,"Engineers, All Other",1
+14.27,25-1032,"Engineering Teachers, Postsecondary",1
+14.28,11-9041,Architectural and Engineering Managers,1
+14.28,17-2131,Materials Engineers,1
+14.28,25-1032,"Engineering Teachers, Postsecondary",1
+14.32,11-9041,Architectural and Engineering Managers,1
+14.32,17-2041,Chemical Engineers,1
+14.32,17-2131,Materials Engineers,1
+14.32,25-1032,"Engineering Teachers, Postsecondary",1
+14.33,11-9041,Architectural and Engineering Managers,1
+14.33,13-1051,Cost Estimators,1
+14.33,17-2051,Civil Engineers,1
+14.33,17-2199,"Engineers, All Other",1
+14.33,25-1032,"Engineering Teachers, Postsecondary",1
+14.34,11-9041,Architectural and Engineering Managers,1
+14.34,17-2199,"Engineers, All Other",1
+14.34,25-1032,"Engineering Teachers, Postsecondary",1
+14.35,11-3051,Industrial Production Managers,1
+14.35,11-9041,Architectural and Engineering Managers,1
+14.35,17-2112,Industrial Engineers,1
+14.35,25-1032,"Engineering Teachers, Postsecondary",1
+14.36,11-9041,Architectural and Engineering Managers,1
+14.36,13-1051,Cost Estimators,1
+14.36,17-2112,Industrial Engineers,1
+14.36,17-2199,"Engineers, All Other",1
+14.36,25-1032,"Engineering Teachers, Postsecondary",1
+14.37,11-9121,Natural Sciences Managers,1
+14.37,15-2031,Operations Research Analysts,1
+14.37,25-1032,"Engineering Teachers, Postsecondary",1
+14.38,11-9041,Architectural and Engineering Managers,1
+14.38,17-1021,Cartographers and Photogrammetrists,1
+14.38,17-1022,Surveyors,1
+14.38,17-2199,"Engineers, All Other",1
+14.38,25-1032,"Engineering Teachers, Postsecondary",1
+14.39,11-9041,Architectural and Engineering Managers,1
+14.39,17-2151,"Mining and Geological Engineers, Including Mining Safety Engineers",1
+14.39,17-2199,"Engineers, All Other",1
+14.39,25-1032,"Engineering Teachers, Postsecondary",1
+14.40,11-9041,Architectural and Engineering Managers,1
+14.40,17-2041,Chemical Engineers,1
+14.40,17-2199,"Engineers, All Other",1
+14.40,25-1032,"Engineering Teachers, Postsecondary",1
+14.41,11-9041,Architectural and Engineering Managers,1
+14.41,17-2071,Electrical Engineers,1
+14.41,17-2141,Mechanical Engineers,1
+14.41,17-2199,"Engineers, All Other",1
+14.41,25-1032,"Engineering Teachers, Postsecondary",1
+14.42,11-9041,Architectural and Engineering Managers,1
+14.42,17-2199,"Engineers, All Other",1
+14.42,25-1032,"Engineering Teachers, Postsecondary",1
+14.43,11-9041,Architectural and Engineering Managers,1
+14.43,17-2041,Chemical Engineers,1
+14.43,17-2199,"Engineers, All Other",1
+14.43,25-1032,"Engineering Teachers, Postsecondary",1
+14.44,11-9041,Architectural and Engineering Managers,1
+14.44,17-2041,Chemical Engineers,1
+14.44,17-2199,"Engineers, All Other",1
+14.44,25-1032,"Engineering Teachers, Postsecondary",1
+14.45,11-9041,Architectural and Engineering Managers,1
+14.45,17-2031,Bioengineers and Biomedical Engineers,1
+14.45,17-2199,"Engineers, All Other",1
+14.45,25-1032,"Engineering Teachers, Postsecondary",1
+14.47,11-9041,Architectural and Engineering Managers,1
+14.47,17-2061,Computer Hardware Engineers,1
+14.47,17-2071,Electrical Engineers,1
+14.47,17-2199,"Engineers, All Other",1
+14.47,25-1032,"Engineering Teachers, Postsecondary",1
+14.48,11-9041,Architectural and Engineering Managers,3
+14.48,17-2199,"Engineers, All Other",3
+14.48,25-1032,"Engineering Teachers, Postsecondary",3
+14.99,11-9041,Architectural and Engineering Managers,1
+14.99,17-2111,"Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",1
+14.99,17-2199,"Engineers, All Other",1
+14.99,25-1032,"Engineering Teachers, Postsecondary",1
+15.00,17-3021,Aerospace Engineering and Operations Technologists and Technicians,1
+15.00,17-3022,Civil Engineering Technologists and Technicians,1
+15.00,17-3023,Electrical and Electronic Engineering Technologists and Technicians,1
+15.00,17-3024,Electro-Mechanical and Mechatronics Technologists and Technicians,2
+15.00,17-3026,Industrial Engineering Technologists and Technicians,1
+15.00,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.01,17-3011,Architectural and Civil Drafters,1
+15.01,17-3022,Civil Engineering Technologists and Technicians,1
+15.01,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.02,17-3022,Civil Engineering Technologists and Technicians,1
+15.02,53-6041,Traffic Technicians,1
+15.03,17-3012,Electrical and Electronics Drafters,2
+15.03,17-3021,Aerospace Engineering and Operations Technologists and Technicians,1
+15.03,17-3023,Electrical and Electronic Engineering Technologists and Technicians,4
+15.03,17-3024,Electro-Mechanical and Mechatronics Technologists and Technicians,1
+15.03,17-3028,Calibration Technologists and Technicians,1
+15.03,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",2
+15.03,27-2091,"Disc Jockeys, Except Radio",1
+15.03,27-4014,Sound Engineering Technicians,1
+15.03,49-2095,"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",1
+15.04,17-3012,Electrical and Electronics Drafters,1
+15.04,17-3023,Electrical and Electronic Engineering Technologists and Technicians,1
+15.04,17-3024,Electro-Mechanical and Mechatronics Technologists and Technicians,6
+15.04,17-3028,Calibration Technologists and Technicians,2
+15.04,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.04,49-9062,Medical Equipment Repairers,1
+15.04,49-9069,"Precision Instrument and Equipment Repairers, All Other",1
+15.05,17-3025,Environmental Engineering Technologists and Technicians,3
+15.05,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",2
+15.05,19-4042,"Environmental Science and Protection Technicians, Including Health",3
+15.05,47-4041,Hazardous Materials Removal Workers,1
+15.05,49-9021,"Heating, Air Conditioning, and Refrigeration Mechanics and Installers",1
+15.05,51-8031,Water and Wastewater Treatment Plant and System Operators,1
+15.06,17-3023,Electrical and Electronic Engineering Technologists and Technicians,1
+15.06,17-3026,Industrial Engineering Technologists and Technicians,3
+15.06,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",5
+15.06,51-4121,"Welders, Cutters, Solderers, and Brazers",1
+15.06,51-9141,Semiconductor Processing Technicians,1
+15.07,17-3025,Environmental Engineering Technologists and Technicians,1
+15.07,17-3026,Industrial Engineering Technologists and Technicians,2
+15.07,19-5011,Occupational Health and Safety Specialists,2
+15.07,19-5012,Occupational Health and Safety Technicians,1
+15.07,51-9061,"Inspectors, Testers, Sorters, Samplers, and Weighers",1
+15.08,17-3013,Mechanical Drafters,3
+15.08,17-3021,Aerospace Engineering and Operations Technologists and Technicians,1
+15.08,17-3024,Electro-Mechanical and Mechatronics Technologists and Technicians,1
+15.08,17-3027,Mechanical Engineering Technologists and Technicians,3
+15.08,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",2
+15.08,49-3023,Automotive Service Technicians and Mechanics,2
+15.08,49-3051,Motorboat Mechanics and Service Technicians,1
+15.09,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.09,19-4043,"Geological Technicians, Except Hydrologic Technicians",3
+15.09,47-5013,"Service Unit Operators, Oil and Gas",1
+15.09,51-8092,Gas Plant Operators,1
+15.10,11-9021,Construction Managers,1
+15.10,13-1051,Cost Estimators,1
+15.10,17-3022,Civil Engineering Technologists and Technicians,1
+15.11,17-1021,Cartographers and Photogrammetrists,1
+15.11,17-1022,Surveyors,1
+15.11,17-3019,"Drafters, All Other",1
+15.11,17-3027,Mechanical Engineering Technologists and Technicians,1
+15.11,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.11,17-3031,Surveying and Mapping Technicians,1
+15.12,15-1251,Computer Programmers,1
+15.12,15-1252,Software Developers,1
+15.12,15-1253,Software Quality Assurance Analysts and Testers,3
+15.12,17-3023,Electrical and Electronic Engineering Technologists and Technicians,2
+15.12,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",5
+15.13,17-3011,Architectural and Civil Drafters,5
+15.13,17-3012,Electrical and Electronics Drafters,4
+15.13,17-3013,Mechanical Drafters,4
+15.13,17-3019,"Drafters, All Other",4
+15.14,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.14,19-4051,Nuclear Technicians,1
+15.15,11-3013,Facilities Managers,1
+15.15,11-3051,Industrial Production Managers,1
+15.15,11-9041,Architectural and Engineering Managers,3
+15.15,17-2112,Industrial Engineers,2
+15.15,17-2199,"Engineers, All Other",1
+15.15,17-3026,Industrial Engineering Technologists and Technicians,2
+15.15,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+15.15,25-1032,"Engineering Teachers, Postsecondary",2
+15.15,25-1199,"Postsecondary Teachers, All Other",1
+15.15,27-1021,Commercial and Industrial Designers,1
+15.16,17-2199,"Engineers, All Other",1
+15.17,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",7
+15.17,27-1021,Commercial and Industrial Designers,1
+15.17,47-2231,Solar Photovoltaic Installers,1
+15.17,49-2095,"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",1
+15.17,49-9081,Wind Turbine Service Technicians,1
+15.17,51-8013,Power Plant Operators,2
+16.01,19-3099,"Social Scientists and Related Workers, All Other",1
+16.01,25-1123,"English Language and Literature Teachers, Postsecondary",1
+16.01,25-1124,"Foreign Language and Literature Teachers, Postsecondary",4
+16.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+16.01,27-3091,Interpreters and Translators,4
+16.02,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.02,27-3091,Interpreters and Translators,1
+16.03,25-1124,"Foreign Language and Literature Teachers, Postsecondary",6
+16.03,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",5
+16.03,27-3091,Interpreters and Translators,6
+16.04,25-1124,"Foreign Language and Literature Teachers, Postsecondary",11
+16.04,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+16.04,27-3091,Interpreters and Translators,11
+16.05,25-1124,"Foreign Language and Literature Teachers, Postsecondary",8
+16.05,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",3
+16.05,27-3091,Interpreters and Translators,8
+16.06,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.06,27-3091,Interpreters and Translators,1
+16.07,25-1124,"Foreign Language and Literature Teachers, Postsecondary",8
+16.07,27-3091,Interpreters and Translators,8
+16.08,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.08,27-3091,Interpreters and Translators,1
+16.09,25-1124,"Foreign Language and Literature Teachers, Postsecondary",9
+16.09,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",5
+16.09,27-3091,Interpreters and Translators,9
+16.10,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.10,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+16.10,27-3091,Interpreters and Translators,1
+16.11,25-1124,"Foreign Language and Literature Teachers, Postsecondary",5
+16.11,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",2
+16.11,27-3091,Interpreters and Translators,5
+16.12,25-1124,"Foreign Language and Literature Teachers, Postsecondary",4
+16.12,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",4
+16.12,27-3091,Interpreters and Translators,4
+16.13,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.13,27-3091,Interpreters and Translators,1
+16.14,25-1124,"Foreign Language and Literature Teachers, Postsecondary",11
+16.14,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",2
+16.14,27-3091,Interpreters and Translators,11
+16.15,25-1124,"Foreign Language and Literature Teachers, Postsecondary",5
+16.15,27-3091,Interpreters and Translators,5
+16.16,25-1124,"Foreign Language and Literature Teachers, Postsecondary",2
+16.16,25-1199,"Postsecondary Teachers, All Other",1
+16.16,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",2
+16.16,27-3091,Interpreters and Translators,4
+16.18,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.18,27-3091,Interpreters and Translators,1
+16.99,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+16.99,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+16.99,27-3091,Interpreters and Translators,1
+19.01,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",1
+19.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+19.01,25-9021,Farm and Home Management Educators,1
+19.02,11-2021,Marketing Managers,1
+19.02,11-2022,Sales Managers,1
+19.02,13-1161,Market Research Analysts and Marketing Specialists,1
+19.02,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",3
+19.02,25-9021,Farm and Home Management Educators,2
+19.02,27-3031,Public Relations Specialists,1
+19.02,27-3042,Technical Writers,1
+19.02,27-3043,Writers and Authors,1
+19.02,41-1011,First-Line Supervisors of Retail Sales Workers,1
+19.04,13-2052,Personal Financial Advisors,1
+19.04,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",4
+19.04,25-9021,Farm and Home Management Educators,4
+19.05,11-9051,Food Service Managers,1
+19.05,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",4
+19.05,29-1031,Dietitians and Nutritionists,4
+19.05,29-2051,Dietetic Technicians,1
+19.05,35-1012,First-Line Supervisors of Food Preparation and Serving Workers,1
+19.05,35-2012,"Cooks, Institution and Cafeteria",1
+19.06,11-3013,Facilities Managers,1
+19.06,13-1121,"Meeting, Convention, and Event Planners",1
+19.06,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",1
+19.06,25-9021,Farm and Home Management Educators,2
+19.06,27-1025,Interior Designers,2
+19.07,19-3039,"Psychologists, All Other",3
+19.07,19-3099,"Social Scientists and Related Workers, All Other",1
+19.07,21-1093,Social and Human Service Assistants,1
+19.07,21-1099,"Community and Social Service Specialists, All Other",3
+19.07,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",5
+19.07,25-2011,"Preschool Teachers, Except Special Education",2
+19.07,25-9021,Farm and Home Management Educators,5
+19.07,25-9042,"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",1
+19.07,25-9043,"Teaching Assistants, Special Education",1
+19.07,39-9011,Childcare Workers,3
+19.09,11-2021,Marketing Managers,1
+19.09,13-1022,"Wholesale and Retail Buyers, Except Farm Products",1
+19.09,13-1161,Market Research Analysts and Marketing Specialists,1
+19.09,19-2032,Materials Scientists,1
+19.09,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",3
+19.09,25-9021,Farm and Home Management Educators,1
+19.09,27-1022,Fashion Designers,3
+19.09,27-1025,Interior Designers,1
+19.09,51-6092,Fabric and Apparel Patternmakers,1
+19.10,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+19.10,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",1
+22.00,23-2011,Paralegals and Legal Assistants,1
+22.00,23-2099,"Legal Support Workers, All Other",1
+22.01,23-1011,Lawyers,1
+22.01,23-1012,Judicial Law Clerks,1
+22.01,23-1021,"Administrative Law Judges, Adjudicators, and Hearing Officers",1
+22.01,23-1022,"Arbitrators, Mediators, and Conciliators",1
+22.01,23-1023,"Judges, Magistrate Judges, and Magistrates",1
+22.01,25-1112,"Law Teachers, Postsecondary",1
+22.02,23-1011,Lawyers,25
+22.02,25-1112,"Law Teachers, Postsecondary",24
+22.03,23-2011,Paralegals and Legal Assistants,1
+22.03,23-2093,"Title Examiners, Abstractors, and Searchers",1
+22.03,23-2099,"Legal Support Workers, All Other",2
+22.03,27-3091,Interpreters and Translators,1
+22.03,27-3092,Court Reporters and Simultaneous Captioners,3
+22.03,43-6012,Legal Secretaries and Administrative Assistants,1
+23.01,25-1123,"English Language and Literature Teachers, Postsecondary",1
+23.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+23.01,43-9081,Proofreaders and Copy Markers,1
+23.13,25-1123,"English Language and Literature Teachers, Postsecondary",5
+23.13,25-1199,"Postsecondary Teachers, All Other",4
+23.13,27-3041,Editors,5
+23.13,27-3042,Technical Writers,2
+23.13,27-3043,Writers and Authors,5
+23.13,43-9081,Proofreaders and Copy Markers,2
+23.14,25-1123,"English Language and Literature Teachers, Postsecondary",6
+23.14,27-3041,Editors,3
+23.14,27-3043,Writers and Authors,3
+23.99,25-1123,"English Language and Literature Teachers, Postsecondary",1
+24.01,25-1199,"Postsecondary Teachers, All Other",3
+25.01,11-9199,"Managers, All Other",2
+25.01,25-1082,"Library Science Teachers, Postsecondary",2
+25.01,25-4011,Archivists,1
+25.01,25-4022,Librarians and Media Collections Specialists,3
+25.03,25-4031,Library Technicians,1
+26.01,11-9121,Natural Sciences Managers,1
+26.01,19-1029,"Biological Scientists, All Other",1
+26.01,19-1042,"Medical Scientists, Except Epidemiologists",1
+26.01,19-1099,"Life Scientists, All Other",1
+26.01,19-4012,Agricultural Technicians,1
+26.01,19-4013,Food Science Technicians,1
+26.01,19-4021,Biological Technicians,2
+26.01,19-4092,Forensic Science Technicians,1
+26.01,25-1042,"Biological Science Teachers, Postsecondary",2
+26.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+26.02,11-9121,Natural Sciences Managers,10
+26.02,19-1021,Biochemists and Biophysicists,6
+26.02,19-1022,Microbiologists,1
+26.02,19-1029,"Biological Scientists, All Other",6
+26.02,19-1042,"Medical Scientists, Except Epidemiologists",4
+26.02,19-4013,Food Science Technicians,1
+26.02,19-4021,Biological Technicians,2
+26.02,25-1042,"Biological Science Teachers, Postsecondary",10
+26.03,11-9121,Natural Sciences Managers,4
+26.03,19-1013,Soil and Plant Scientists,5
+26.03,19-1029,"Biological Scientists, All Other",5
+26.03,25-1042,"Biological Science Teachers, Postsecondary",4
+26.04,11-9121,Natural Sciences Managers,4
+26.04,19-1021,Biochemists and Biophysicists,1
+26.04,19-1022,Microbiologists,1
+26.04,19-1029,"Biological Scientists, All Other",6
+26.04,19-1041,Epidemiologists,1
+26.04,19-1042,"Medical Scientists, Except Epidemiologists",5
+26.04,19-4021,Biological Technicians,1
+26.04,25-1042,"Biological Science Teachers, Postsecondary",6
+26.04,25-1071,"Health Specialties Teachers, Postsecondary",3
+26.04,29-2011,Medical and Clinical Laboratory Technologists,1
+26.05,11-9111,Medical and Health Services Managers,1
+26.05,11-9121,Natural Sciences Managers,7
+26.05,19-1022,Microbiologists,6
+26.05,19-1029,"Biological Scientists, All Other",7
+26.05,19-1041,Epidemiologists,1
+26.05,19-1042,"Medical Scientists, Except Epidemiologists",6
+26.05,19-4013,Food Science Technicians,1
+26.05,19-4021,Biological Technicians,3
+26.05,25-1042,"Biological Science Teachers, Postsecondary",8
+26.05,25-1071,"Health Specialties Teachers, Postsecondary",1
+26.07,11-9121,Natural Sciences Managers,4
+26.07,19-1023,Zoologists and Wildlife Biologists,6
+26.07,19-1029,"Biological Scientists, All Other",2
+26.07,19-4021,Biological Technicians,3
+26.07,25-1042,"Biological Science Teachers, Postsecondary",4
+26.08,11-9121,Natural Sciences Managers,5
+26.08,19-1029,"Biological Scientists, All Other",7
+26.08,19-1042,"Medical Scientists, Except Epidemiologists",1
+26.08,19-4021,Biological Technicians,1
+26.08,25-1042,"Biological Science Teachers, Postsecondary",8
+26.08,29-9092,Genetic Counselors,5
+26.09,11-9121,Natural Sciences Managers,2
+26.09,19-1021,Biochemists and Biophysicists,1
+26.09,19-1029,"Biological Scientists, All Other",1
+26.09,19-1042,"Medical Scientists, Except Epidemiologists",13
+26.09,25-1042,"Biological Science Teachers, Postsecondary",12
+26.09,25-1071,"Health Specialties Teachers, Postsecondary",2
+26.09,29-1128,Exercise Physiologists,1
+26.10,11-9121,Natural Sciences Managers,2
+26.10,17-3025,Environmental Engineering Technologists and Technicians,1
+26.10,19-1029,"Biological Scientists, All Other",2
+26.10,19-1042,"Medical Scientists, Except Epidemiologists",8
+26.10,19-2041,"Environmental Scientists and Specialists, Including Health",3
+26.10,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+26.10,19-5011,Occupational Health and Safety Specialists,1
+26.10,19-5012,Occupational Health and Safety Technicians,1
+26.10,25-1042,"Biological Science Teachers, Postsecondary",2
+26.10,25-1071,"Health Specialties Teachers, Postsecondary",8
+26.11,11-9121,Natural Sciences Managers,4
+26.11,15-1221,Computer and Information Research Scientists,1
+26.11,15-1299,"Computer Occupations, All Other",2
+26.11,15-2021,Mathematicians,1
+26.11,15-2041,Statisticians,2
+26.11,15-2051,Data Scientists,3
+26.11,15-2099,"Mathematical Science Occupations, All Other",2
+26.11,19-1029,"Biological Scientists, All Other",4
+26.11,19-1042,"Medical Scientists, Except Epidemiologists",1
+26.11,19-4021,Biological Technicians,3
+26.11,25-1022,"Mathematical Science Teachers, Postsecondary",1
+26.11,25-1042,"Biological Science Teachers, Postsecondary",3
+26.11,25-1071,"Health Specialties Teachers, Postsecondary",1
+26.12,11-9121,Natural Sciences Managers,1
+26.12,19-1029,"Biological Scientists, All Other",1
+26.12,25-1042,"Biological Science Teachers, Postsecondary",1
+26.13,11-9121,Natural Sciences Managers,6
+26.13,15-2041,Statisticians,1
+26.13,19-1023,Zoologists and Wildlife Biologists,4
+26.13,19-1029,"Biological Scientists, All Other",11
+26.13,19-1031,Conservation Scientists,5
+26.13,19-1041,Epidemiologists,2
+26.13,19-1042,"Medical Scientists, Except Epidemiologists",1
+26.13,19-1099,"Life Scientists, All Other",2
+26.13,19-4021,Biological Technicians,2
+26.13,25-1042,"Biological Science Teachers, Postsecondary",10
+26.13,25-1043,"Forestry and Conservation Science Teachers, Postsecondary",1
+26.13,25-1053,"Environmental Science Teachers, Postsecondary",3
+26.13,25-1071,"Health Specialties Teachers, Postsecondary",2
+26.14,11-9121,Natural Sciences Managers,1
+26.14,19-1042,"Medical Scientists, Except Epidemiologists",1
+26.14,25-1042,"Biological Science Teachers, Postsecondary",1
+26.15,11-9121,Natural Sciences Managers,5
+26.15,19-1029,"Biological Scientists, All Other",5
+26.15,19-1042,"Medical Scientists, Except Epidemiologists",4
+26.15,19-4021,Biological Technicians,1
+26.15,25-1042,"Biological Science Teachers, Postsecondary",5
+26.99,11-9121,Natural Sciences Managers,1
+26.99,19-1029,"Biological Scientists, All Other",1
+26.99,19-1099,"Life Scientists, All Other",1
+26.99,25-1042,"Biological Science Teachers, Postsecondary",1
+27.01,11-9121,Natural Sciences Managers,6
+27.01,15-2021,Mathematicians,6
+27.01,15-2041,Statisticians,1
+27.01,15-2051,Data Scientists,1
+27.01,15-2099,"Mathematical Science Occupations, All Other",1
+27.01,25-1022,"Mathematical Science Teachers, Postsecondary",6
+27.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+27.03,11-9121,Natural Sciences Managers,6
+27.03,13-2051,Financial and Investment Analysts,1
+27.03,13-2054,Financial Risk Specialists,1
+27.03,13-2099,"Financial Specialists, All Other",1
+27.03,15-2011,Actuaries,2
+27.03,15-2021,Mathematicians,6
+27.03,15-2041,Statisticians,2
+27.03,15-2051,Data Scientists,6
+27.03,15-2099,"Mathematical Science Occupations, All Other",6
+27.03,19-1029,"Biological Scientists, All Other",1
+27.03,19-3011,Economists,1
+27.03,25-1022,"Mathematical Science Teachers, Postsecondary",5
+27.05,11-9121,Natural Sciences Managers,3
+27.05,15-2011,Actuaries,4
+27.05,15-2021,Mathematicians,2
+27.05,15-2041,Statisticians,4
+27.05,15-2051,Data Scientists,3
+27.05,19-3022,Survey Researchers,1
+27.05,25-1022,"Mathematical Science Teachers, Postsecondary",4
+27.06,11-9121,Natural Sciences Managers,1
+27.06,13-1111,Management Analysts,1
+27.06,15-2011,Actuaries,1
+27.06,15-2041,Statisticians,1
+27.06,15-2051,Data Scientists,1
+27.06,19-3022,Survey Researchers,1
+27.06,25-1022,"Mathematical Science Teachers, Postsecondary",1
+27.99,11-9121,Natural Sciences Managers,1
+27.99,15-2021,Mathematicians,1
+27.99,15-2051,Data Scientists,1
+27.99,15-2099,"Mathematical Science Occupations, All Other",1
+27.99,25-1022,"Mathematical Science Teachers, Postsecondary",1
+28.05,55-1017,Special Forces Officers,1
+28.05,55-1019,"Military Officer Special and Tactical Operations Leaders, All Other",4
+28.05,55-3018,Special Forces,1
+28.05,55-3019,"Military Enlisted Tactical Operations and Air/Weapons Specialists and Crew Members, All Other",1
+28.06,55-1014,Artillery and Missile Officers,1
+28.06,55-1016,Infantry Officers,1
+28.06,55-1019,"Military Officer Special and Tactical Operations Leaders, All Other",3
+28.06,55-3014,Artillery and Missile Crew Members,1
+29.02,17-1021,Cartographers and Photogrammetrists,1
+29.02,33-1012,First-Line Supervisors of Police and Detectives,1
+29.02,33-3021,Detectives and Criminal Investigators,1
+29.02,55-1015,Command and Control Center Officers,5
+29.02,55-1017,Special Forces Officers,3
+29.02,55-3015,Command and Control Center Specialists,5
+29.02,55-3018,Special Forces,3
+29.03,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",3
+29.03,55-1019,"Military Officer Special and Tactical Operations Leaders, All Other",1
+29.04,17-3021,Aerospace Engineering and Operations Technologists and Technicians,2
+29.04,17-3029,"Engineering Technologists and Technicians, Except Drafters, All Other",1
+29.04,55-1014,Artillery and Missile Officers,1
+29.04,55-1015,Command and Control Center Officers,2
+29.04,55-1017,Special Forces Officers,1
+29.04,55-3012,Aircraft Launch and Recovery Specialists,1
+29.04,55-3014,Artillery and Missile Crew Members,2
+29.04,55-3015,Command and Control Center Specialists,2
+29.04,55-3018,Special Forces,1
+30.01,11-9121,Natural Sciences Managers,1
+30.01,25-1199,"Postsecondary Teachers, All Other",1
+30.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+30.05,19-3099,"Social Scientists and Related Workers, All Other",1
+30.05,23-1022,"Arbitrators, Mediators, and Conciliators",1
+30.05,25-1199,"Postsecondary Teachers, All Other",1
+30.06,11-9199,"Managers, All Other",1
+30.06,25-1199,"Postsecondary Teachers, All Other",1
+30.08,11-3021,Computer and Information Systems Managers,1
+30.08,11-9121,Natural Sciences Managers,1
+30.08,15-1252,Software Developers,1
+30.08,15-1299,"Computer Occupations, All Other",1
+30.08,15-2021,Mathematicians,1
+30.08,15-2051,Data Scientists,1
+30.08,15-2099,"Mathematical Science Occupations, All Other",1
+30.08,25-1021,"Computer Science Teachers, Postsecondary",1
+30.08,25-1022,"Mathematical Science Teachers, Postsecondary",1
+30.10,11-9121,Natural Sciences Managers,1
+30.10,19-1042,"Medical Scientists, Except Epidemiologists",1
+30.10,19-3099,"Social Scientists and Related Workers, All Other",1
+30.10,25-1042,"Biological Science Teachers, Postsecondary",1
+30.10,25-1066,"Psychology Teachers, Postsecondary",1
+30.11,19-1042,"Medical Scientists, Except Epidemiologists",1
+30.11,19-3099,"Social Scientists and Related Workers, All Other",1
+30.11,25-1071,"Health Specialties Teachers, Postsecondary",1
+30.11,25-1113,"Social Work Teachers, Postsecondary",1
+30.12,11-3013,Facilities Managers,2
+30.12,11-9199,"Managers, All Other",1
+30.12,19-3093,Historians,3
+30.12,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.12,25-1199,"Postsecondary Teachers, All Other",2
+30.12,25-4011,Archivists,3
+30.13,19-3093,Historians,1
+30.13,25-1125,"History Teachers, Postsecondary",1
+30.14,25-1199,"Postsecondary Teachers, All Other",1
+30.14,25-4011,Archivists,1
+30.14,25-4012,Curators,1
+30.14,25-4013,Museum Technicians and Conservators,1
+30.15,11-9121,Natural Sciences Managers,1
+30.15,25-1199,"Postsecondary Teachers, All Other",1
+30.16,11-3021,Computer and Information Systems Managers,1
+30.16,11-3031,Financial Managers,1
+30.16,13-2011,Accountants and Auditors,1
+30.16,15-1252,Software Developers,1
+30.16,15-1299,"Computer Occupations, All Other",1
+30.16,25-1011,"Business Teachers, Postsecondary",1
+30.16,25-1021,"Computer Science Teachers, Postsecondary",1
+30.17,11-9151,Social and Community Service Managers,1
+30.17,19-1099,"Life Scientists, All Other",1
+30.17,19-3039,"Psychologists, All Other",1
+30.17,19-3099,"Social Scientists and Related Workers, All Other",1
+30.17,19-4061,Social Science Research Assistants,1
+30.17,21-1099,"Community and Social Service Specialists, All Other",1
+30.17,25-1066,"Psychology Teachers, Postsecondary",1
+30.18,11-9121,Natural Sciences Managers,1
+30.18,19-1099,"Life Scientists, All Other",1
+30.18,19-2099,"Physical Scientists, All Other",1
+30.18,25-1199,"Postsecondary Teachers, All Other",1
+30.19,11-9121,Natural Sciences Managers,1
+30.19,19-1029,"Biological Scientists, All Other",1
+30.19,19-1099,"Life Scientists, All Other",1
+30.19,25-1042,"Biological Science Teachers, Postsecondary",1
+30.19,25-1071,"Health Specialties Teachers, Postsecondary",1
+30.19,25-1192,"Family and Consumer Sciences Teachers, Postsecondary",1
+30.19,25-9021,Farm and Home Management Educators,1
+30.19,29-1031,Dietitians and Nutritionists,1
+30.19,29-2051,Dietetic Technicians,1
+30.20,19-3094,Political Scientists,1
+30.20,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+30.21,19-3093,Historians,1
+30.21,19-3099,"Social Scientists and Related Workers, All Other",1
+30.21,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+30.21,25-1125,"History Teachers, Postsecondary",1
+30.22,19-3091,Anthropologists and Archeologists,2
+30.22,19-3093,Historians,3
+30.22,25-1061,"Anthropology and Archeology Teachers, Postsecondary",3
+30.22,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",3
+30.22,25-1125,"History Teachers, Postsecondary",3
+30.23,19-3099,"Social Scientists and Related Workers, All Other",1
+30.23,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.25,11-9121,Natural Sciences Managers,2
+30.25,21-1099,"Community and Social Service Specialists, All Other",1
+30.25,21-2021,"Directors, Religious Activities and Education",1
+30.25,21-2099,"Religious Workers, All Other",1
+30.25,25-1199,"Postsecondary Teachers, All Other",3
+30.25,25-3021,Self-Enrichment Teachers,1
+30.26,19-3099,"Social Scientists and Related Workers, All Other",1
+30.26,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.26,25-1199,"Postsecondary Teachers, All Other",1
+30.27,11-9121,Natural Sciences Managers,1
+30.27,19-1029,"Biological Scientists, All Other",1
+30.27,19-3091,Anthropologists and Archeologists,1
+30.27,19-3099,"Social Scientists and Related Workers, All Other",1
+30.27,25-1042,"Biological Science Teachers, Postsecondary",1
+30.27,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+30.28,13-1075,Labor Relations Specialists,1
+30.28,23-1022,"Arbitrators, Mediators, and Conciliators",1
+30.28,25-1011,"Business Teachers, Postsecondary",1
+30.28,25-1112,"Law Teachers, Postsecondary",1
+30.29,19-3093,Historians,1
+30.29,25-1199,"Postsecondary Teachers, All Other",1
+30.30,11-9121,Natural Sciences Managers,1
+30.30,15-1251,Computer Programmers,1
+30.30,15-1299,"Computer Occupations, All Other",1
+30.30,15-2051,Data Scientists,1
+30.30,15-2099,"Mathematical Science Occupations, All Other",1
+30.30,25-1021,"Computer Science Teachers, Postsecondary",1
+30.30,25-1199,"Postsecondary Teachers, All Other",1
+30.31,11-3021,Computer and Information Systems Managers,1
+30.31,15-1221,Computer and Information Research Scientists,1
+30.31,15-1255,Web and Digital Interface Designers,1
+30.31,15-1299,"Computer Occupations, All Other",1
+30.31,25-1021,"Computer Science Teachers, Postsecondary",1
+30.32,11-9121,Natural Sciences Managers,1
+30.32,19-1023,Zoologists and Wildlife Biologists,1
+30.32,19-1029,"Biological Scientists, All Other",1
+30.32,19-2041,"Environmental Scientists and Specialists, Including Health",1
+30.32,19-2042,"Geoscientists, Except Hydrologists and Geographers",1
+30.32,19-2099,"Physical Scientists, All Other",1
+30.32,25-1199,"Postsecondary Teachers, All Other",1
+30.33,11-9121,Natural Sciences Managers,1
+30.33,19-1031,Conservation Scientists,1
+30.33,19-2041,"Environmental Scientists and Specialists, Including Health",1
+30.33,19-3051,Urban and Regional Planners,1
+30.33,19-3099,"Social Scientists and Related Workers, All Other",1
+30.33,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+30.33,25-1053,"Environmental Science Teachers, Postsecondary",1
+30.33,25-1199,"Postsecondary Teachers, All Other",1
+30.34,11-9013,"Farmers, Ranchers, and Other Agricultural Managers",1
+30.34,11-9121,Natural Sciences Managers,1
+30.34,19-1011,Animal Scientists,1
+30.34,19-3099,"Social Scientists and Related Workers, All Other",1
+30.34,25-1199,"Postsecondary Teachers, All Other",1
+30.34,39-2011,Animal Trainers,1
+30.34,39-2021,Animal Caretakers,1
+30.35,11-9121,Natural Sciences Managers,1
+30.35,19-2021,Atmospheric and Space Scientists,1
+30.35,19-3092,Geographers,1
+30.35,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",1
+30.36,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.36,25-1123,"English Language and Literature Teachers, Postsecondary",1
+30.36,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+30.37,19-3051,Urban and Regional Planners,1
+30.37,25-1031,"Architecture Teachers, Postsecondary",1
+30.37,27-1025,Interior Designers,1
+30.38,11-9121,Natural Sciences Managers,1
+30.38,19-2042,"Geoscientists, Except Hydrologists and Geographers",1
+30.38,19-2043,Hydrologists,1
+30.38,19-3092,Geographers,1
+30.38,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",1
+30.38,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+30.39,11-3021,Computer and Information Systems Managers,1
+30.39,11-9199,"Managers, All Other",1
+30.39,15-1252,Software Developers,1
+30.39,15-2051,Data Scientists,1
+30.39,19-3011,Economists,1
+30.39,25-1021,"Computer Science Teachers, Postsecondary",1
+30.39,25-1063,"Economics Teachers, Postsecondary",1
+30.40,11-9199,"Managers, All Other",1
+30.40,19-3011,Economists,1
+30.40,19-3099,"Social Scientists and Related Workers, All Other",1
+30.40,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.40,25-1063,"Economics Teachers, Postsecondary",1
+30.40,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+30.40,27-3091,Interpreters and Translators,1
+30.41,11-9121,Natural Sciences Managers,1
+30.41,13-1041,Compliance Officers,1
+30.41,19-2041,"Environmental Scientists and Specialists, Including Health",1
+30.41,19-2042,"Geoscientists, Except Hydrologists and Geographers",1
+30.41,19-2043,Hydrologists,1
+30.41,19-3092,Geographers,1
+30.41,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+30.41,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",1
+30.41,25-1053,"Environmental Science Teachers, Postsecondary",1
+30.41,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+30.42,11-9199,"Managers, All Other",1
+30.42,19-2042,"Geoscientists, Except Hydrologists and Geographers",1
+30.42,19-3091,Anthropologists and Archeologists,1
+30.42,19-3099,"Social Scientists and Related Workers, All Other",1
+30.42,25-1061,"Anthropology and Archeology Teachers, Postsecondary",1
+30.42,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+30.43,11-9121,Natural Sciences Managers,1
+30.43,19-1099,"Life Scientists, All Other",1
+30.43,19-2042,"Geoscientists, Except Hydrologists and Geographers",1
+30.43,25-1042,"Biological Science Teachers, Postsecondary",1
+30.43,25-1053,"Environmental Science Teachers, Postsecondary",1
+30.44,11-9121,Natural Sciences Managers,1
+30.44,19-1031,Conservation Scientists,1
+30.44,19-2041,"Environmental Scientists and Specialists, Including Health",1
+30.44,19-3092,Geographers,1
+30.44,19-3099,"Social Scientists and Related Workers, All Other",1
+30.44,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+30.44,25-1053,"Environmental Science Teachers, Postsecondary",1
+30.44,25-1064,"Geography Teachers, Postsecondary",1
+30.45,11-9199,"Managers, All Other",1
+30.45,19-3093,Historians,1
+30.45,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+30.45,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+30.45,25-1125,"History Teachers, Postsecondary",1
+30.45,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+30.45,27-3091,Interpreters and Translators,1
+30.46,11-9199,"Managers, All Other",1
+30.46,19-3093,Historians,1
+30.46,19-3094,Political Scientists,1
+30.46,19-3099,"Social Scientists and Related Workers, All Other",1
+30.46,19-4061,Social Science Research Assistants,1
+30.46,25-1065,"Political Science Teachers, Postsecondary",1
+30.46,25-1125,"History Teachers, Postsecondary",1
+30.47,11-9199,"Managers, All Other",1
+30.47,19-3091,Anthropologists and Archeologists,1
+30.47,19-3099,"Social Scientists and Related Workers, All Other",1
+30.47,25-1061,"Anthropology and Archeology Teachers, Postsecondary",1
+30.47,25-1123,"English Language and Literature Teachers, Postsecondary",1
+30.47,25-1124,"Foreign Language and Literature Teachers, Postsecondary",1
+30.48,15-1252,Software Developers,1
+30.48,15-2051,Data Scientists,1
+30.48,25-1021,"Computer Science Teachers, Postsecondary",1
+30.48,25-1123,"English Language and Literature Teachers, Postsecondary",1
+30.49,11-9121,Natural Sciences Managers,1
+30.49,15-2021,Mathematicians,1
+30.49,15-2041,Statisticians,1
+30.49,15-2099,"Mathematical Science Occupations, All Other",1
+30.49,19-3011,Economists,1
+30.49,25-1063,"Economics Teachers, Postsecondary",1
+30.50,11-9121,Natural Sciences Managers,1
+30.50,15-2021,Mathematicians,1
+30.50,15-2099,"Mathematical Science Occupations, All Other",1
+30.50,19-2021,Atmospheric and Space Scientists,1
+30.50,25-1022,"Mathematical Science Teachers, Postsecondary",1
+30.50,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",1
+30.51,11-9199,"Managers, All Other",1
+30.51,19-3011,Economists,1
+30.51,19-3094,Political Scientists,1
+30.51,19-3099,"Social Scientists and Related Workers, All Other",1
+30.51,25-1063,"Economics Teachers, Postsecondary",1
+30.51,25-1065,"Political Science Teachers, Postsecondary",1
+30.51,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+30.52,11-9199,"Managers, All Other",3
+30.52,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",2
+30.52,25-1123,"English Language and Literature Teachers, Postsecondary",3
+30.52,25-1199,"Postsecondary Teachers, All Other",3
+30.52,25-4011,Archivists,3
+30.52,25-4012,Curators,3
+30.53,11-9151,Social and Community Service Managers,1
+30.53,21-1019,"Counselors, All Other",1
+30.53,21-1022,Healthcare Social Workers,1
+30.53,21-2021,"Directors, Religious Activities and Education",1
+30.53,21-2099,"Religious Workers, All Other",1
+30.53,25-1066,"Psychology Teachers, Postsecondary",1
+30.53,25-1199,"Postsecondary Teachers, All Other",1
+30.53,39-4031,"Morticians, Undertakers, and Funeral Arrangers",1
+30.70,11-3021,Computer and Information Systems Managers,1
+30.70,11-9121,Natural Sciences Managers,2
+30.70,15-1221,Computer and Information Research Scientists,2
+30.70,15-1243,Database Architects,2
+30.70,15-1252,Software Developers,1
+30.70,15-2041,Statisticians,2
+30.70,15-2051,Data Scientists,2
+30.70,25-1199,"Postsecondary Teachers, All Other",2
+30.71,11-3031,Financial Managers,1
+30.71,13-1111,Management Analysts,5
+30.71,13-1161,Market Research Analysts and Marketing Specialists,1
+30.71,13-2051,Financial and Investment Analysts,1
+30.71,15-1251,Computer Programmers,3
+30.71,15-2041,Statisticians,3
+30.71,15-2051,Data Scientists,5
+30.71,25-1011,"Business Teachers, Postsecondary",1
+30.71,25-1199,"Postsecondary Teachers, All Other",3
+31.01,25-1193,"Recreation and Fitness Studies Teachers, Postsecondary",1
+31.03,11-1021,General and Operations Managers,2
+31.03,11-3013,Facilities Managers,1
+31.03,11-9072,"Entertainment and Recreation Managers, Except Gambling",3
+31.03,37-1012,"First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",1
+31.03,37-3011,Landscaping and Groundskeeping Workers,1
+31.05,11-9072,"Entertainment and Recreation Managers, Except Gambling",1
+31.05,25-1193,"Recreation and Fitness Studies Teachers, Postsecondary",3
+31.05,27-2021,Athletes and Sports Competitors,1
+31.05,27-2022,Coaches and Scouts,2
+31.05,29-1128,Exercise Physiologists,1
+31.05,29-9091,Athletic Trainers,1
+31.05,39-9031,Exercise Trainers and Group Fitness Instructors,3
+31.06,39-1014,"First-Line Supervisors of Entertainment and Recreation Workers, Except Gambling Services",1
+31.06,39-9032,Recreation Workers,1
+38.00,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+38.01,11-9121,Natural Sciences Managers,1
+38.01,15-2021,Mathematicians,1
+38.01,25-1022,"Mathematical Science Teachers, Postsecondary",1
+38.01,25-1126,"Philosophy and Religion Teachers, Postsecondary",4
+38.02,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",4
+38.02,25-1126,"Philosophy and Religion Teachers, Postsecondary",5
+38.99,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+39.02,21-2021,"Directors, Religious Activities and Education",1
+39.02,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+39.03,21-2021,"Directors, Religious Activities and Education",1
+39.03,21-2099,"Religious Workers, All Other",2
+39.03,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+39.04,21-2021,"Directors, Religious Activities and Education",1
+39.04,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+39.05,21-2021,"Directors, Religious Activities and Education",2
+39.05,21-2099,"Religious Workers, All Other",1
+39.05,25-1126,"Philosophy and Religion Teachers, Postsecondary",2
+39.05,27-2041,Music Directors and Composers,2
+39.06,21-2011,Clergy,5
+39.06,21-2099,"Religious Workers, All Other",1
+39.06,25-1126,"Philosophy and Religion Teachers, Postsecondary",5
+39.07,21-1019,"Counselors, All Other",2
+39.07,21-1099,"Community and Social Service Specialists, All Other",2
+39.07,21-2011,Clergy,3
+39.07,21-2021,"Directors, Religious Activities and Education",7
+39.07,21-2099,"Religious Workers, All Other",6
+39.07,25-1126,"Philosophy and Religion Teachers, Postsecondary",3
+39.08,11-9199,"Managers, All Other",1
+39.08,13-2099,"Financial Specialists, All Other",1
+39.08,21-2099,"Religious Workers, All Other",1
+39.08,25-1112,"Law Teachers, Postsecondary",1
+39.08,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+40.01,11-9121,Natural Sciences Managers,1
+40.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+40.02,11-9121,Natural Sciences Managers,4
+40.02,19-2011,Astronomers,4
+40.02,19-2012,Physicists,1
+40.02,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",4
+40.02,25-1054,"Physics Teachers, Postsecondary",1
+40.04,11-9121,Natural Sciences Managers,5
+40.04,19-2021,Atmospheric and Space Scientists,5
+40.04,19-4099,"Life, Physical, and Social Science Technicians, All Other",1
+40.04,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",5
+40.05,11-9121,Natural Sciences Managers,12
+40.05,15-1221,Computer and Information Research Scientists,1
+40.05,15-1299,"Computer Occupations, All Other",1
+40.05,15-2051,Data Scientists,1
+40.05,19-2031,Chemists,12
+40.05,19-2041,"Environmental Scientists and Specialists, Including Health",1
+40.05,19-4013,Food Science Technicians,1
+40.05,19-4031,Chemical Technicians,5
+40.05,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+40.05,19-4092,Forensic Science Technicians,2
+40.05,25-1052,"Chemistry Teachers, Postsecondary",12
+40.05,25-1053,"Environmental Science Teachers, Postsecondary",1
+40.05,25-1054,"Physics Teachers, Postsecondary",1
+40.05,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+40.06,11-9121,Natural Sciences Managers,8
+40.06,19-2042,"Geoscientists, Except Hydrologists and Geographers",7
+40.06,19-2043,Hydrologists,3
+40.06,19-4043,"Geological Technicians, Except Hydrologic Technicians",1
+40.06,19-4044,Hydrologic Technicians,1
+40.06,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",8
+40.06,25-1052,"Chemistry Teachers, Postsecondary",1
+40.08,11-9121,Natural Sciences Managers,10
+40.08,19-2012,Physicists,10
+40.08,25-1054,"Physics Teachers, Postsecondary",10
+40.08,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+40.10,11-9041,Architectural and Engineering Managers,1
+40.10,11-9121,Natural Sciences Managers,2
+40.10,19-2031,Chemists,1
+40.10,19-2032,Materials Scientists,3
+40.10,19-4099,"Life, Physical, and Social Science Technicians, All Other",2
+40.10,25-1032,"Engineering Teachers, Postsecondary",1
+40.10,25-1052,"Chemistry Teachers, Postsecondary",1
+40.10,25-1199,"Postsecondary Teachers, All Other",1
+40.11,11-9121,Natural Sciences Managers,1
+40.11,19-2011,Astronomers,1
+40.11,19-2012,Physicists,1
+40.11,25-1051,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",1
+40.11,25-1054,"Physics Teachers, Postsecondary",1
+40.99,11-9121,Natural Sciences Managers,1
+40.99,19-2099,"Physical Scientists, All Other",1
+40.99,25-1199,"Postsecondary Teachers, All Other",1
+41.00,19-4043,"Geological Technicians, Except Hydrologic Technicians",1
+41.00,19-4044,Hydrologic Technicians,1
+41.00,19-4099,"Life, Physical, and Social Science Technicians, All Other",1
+41.01,19-4021,Biological Technicians,1
+41.02,19-4051,Nuclear Technicians,3
+41.02,51-8011,Nuclear Power Reactor Operators,1
+41.03,19-4031,Chemical Technicians,2
+41.03,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+41.03,19-4043,"Geological Technicians, Except Hydrologic Technicians",2
+41.03,19-4044,Hydrologic Technicians,1
+41.03,19-4099,"Life, Physical, and Social Science Technicians, All Other",2
+41.03,51-8091,Chemical Plant and System Operators,2
+41.03,51-9011,Chemical Equipment Operators and Tenders,2
+41.99,19-4042,"Environmental Science and Protection Technicians, Including Health",1
+41.99,19-4043,"Geological Technicians, Except Hydrologic Technicians",1
+41.99,19-4044,Hydrologic Technicians,1
+41.99,19-4099,"Life, Physical, and Social Science Technicians, All Other",1
+42.01,11-9199,"Managers, All Other",1
+42.01,19-3032,Industrial-Organizational Psychologists,1
+42.01,19-3033,Clinical and Counseling Psychologists,1
+42.01,19-3039,"Psychologists, All Other",1
+42.01,19-4061,Social Science Research Assistants,1
+42.01,25-1066,"Psychology Teachers, Postsecondary",1
+42.27,11-9199,"Managers, All Other",11
+42.27,15-2041,Statisticians,1
+42.27,19-1029,"Biological Scientists, All Other",1
+42.27,19-1042,"Medical Scientists, Except Epidemiologists",1
+42.27,19-1099,"Life Scientists, All Other",1
+42.27,19-3033,Clinical and Counseling Psychologists,1
+42.27,19-3039,"Psychologists, All Other",9
+42.27,19-4061,Social Science Research Assistants,1
+42.27,21-1021,"Child, Family, and School Social Workers",2
+42.27,25-1066,"Psychology Teachers, Postsecondary",10
+42.27,25-1071,"Health Specialties Teachers, Postsecondary",1
+42.28,11-3121,Human Resources Managers,1
+42.28,11-3131,Training and Development Managers,1
+42.28,11-9199,"Managers, All Other",15
+42.28,13-1071,Human Resources Specialists,1
+42.28,13-1111,Management Analysts,1
+42.28,13-1151,Training and Development Specialists,1
+42.28,19-3032,Industrial-Organizational Psychologists,1
+42.28,19-3033,Clinical and Counseling Psychologists,7
+42.28,19-3034,School Psychologists,2
+42.28,19-3039,"Psychologists, All Other",13
+42.28,21-1012,"Educational, Guidance, and Career Counselors and Advisors",1
+42.28,21-1014,Mental Health Counselors,1
+42.28,21-1019,"Counselors, All Other",1
+42.28,25-1066,"Psychology Teachers, Postsecondary",18
+42.28,25-9043,"Teaching Assistants, Special Education",1
+42.28,27-2022,Coaches and Scouts,1
+42.99,11-9199,"Managers, All Other",1
+42.99,19-3039,"Psychologists, All Other",1
+42.99,25-1066,"Psychology Teachers, Postsecondary",1
+43.01,11-9161,Emergency Management Directors,2
+43.01,11-9199,"Managers, All Other",3
+43.01,13-1041,Compliance Officers,1
+43.01,13-2061,Financial Examiners,1
+43.01,19-4092,Forensic Science Technicians,1
+43.01,19-4099,"Life, Physical, and Social Science Technicians, All Other",2
+43.01,21-1021,"Child, Family, and School Social Workers",1
+43.01,25-1111,"Criminal Justice and Law Enforcement Teachers, Postsecondary",17
+43.01,33-1011,First-Line Supervisors of Correctional Officers,4
+43.01,33-1012,First-Line Supervisors of Police and Detectives,9
+43.01,33-1091,First-Line Supervisors of Security Workers,2
+43.01,33-1099,"First-Line Supervisors of Protective Service Workers, All Other",2
+43.01,33-3011,Bailiffs,1
+43.01,33-3012,Correctional Officers and Jailers,4
+43.01,33-3021,Detectives and Criminal Investigators,7
+43.01,33-3051,Police and Sheriff’s Patrol Officers,7
+43.01,33-3052,Transit and Railroad Police,1
+43.01,33-9021,Private Detectives and Investigators,5
+43.01,33-9031,Gambling Surveillance Officers and Gambling Investigators,1
+43.01,33-9032,Security Guards,1
+43.02,11-9199,"Managers, All Other",1
+43.02,25-1194,"Career/Technical Education Teachers, Postsecondary",1
+43.02,33-1021,First-Line Supervisors of Firefighting and Prevention Workers,5
+43.02,33-2011,Firefighters,4
+43.02,33-2021,Fire Inspectors and Investigators,3
+43.02,33-2022,Forest Fire Inspectors and Prevention Specialists,2
+43.03,11-9161,Emergency Management Directors,4
+43.03,11-9199,"Managers, All Other",4
+43.03,25-1111,"Criminal Justice and Law Enforcement Teachers, Postsecondary",2
+43.03,25-1199,"Postsecondary Teachers, All Other",1
+43.03,33-1012,First-Line Supervisors of Police and Detectives,4
+43.03,33-1091,First-Line Supervisors of Security Workers,1
+43.03,33-1099,"First-Line Supervisors of Protective Service Workers, All Other",1
+43.03,55-1017,Special Forces Officers,1
+43.03,55-3018,Special Forces,1
+43.04,11-9199,"Managers, All Other",1
+43.04,13-2011,Accountants and Auditors,1
+43.04,13-2061,Financial Examiners,1
+43.04,15-1212,Information Security Analysts,1
+43.04,15-1299,"Computer Occupations, All Other",1
+43.04,17-1021,Cartographers and Photogrammetrists,1
+43.04,19-3092,Geographers,1
+43.04,19-4092,Forensic Science Technicians,2
+43.04,19-4099,"Life, Physical, and Social Science Technicians, All Other",2
+43.04,25-1064,"Geography Teachers, Postsecondary",1
+43.04,25-1111,"Criminal Justice and Law Enforcement Teachers, Postsecondary",9
+43.04,33-1012,First-Line Supervisors of Police and Detectives,4
+43.04,33-1091,First-Line Supervisors of Security Workers,2
+43.04,33-1099,"First-Line Supervisors of Protective Service Workers, All Other",2
+43.04,33-3021,Detectives and Criminal Investigators,5
+43.04,33-3051,Police and Sheriff’s Patrol Officers,1
+43.04,33-9021,Private Detectives and Investigators,2
+43.04,55-1017,Special Forces Officers,2
+43.04,55-3018,Special Forces,2
+44.00,11-9151,Social and Community Service Managers,1
+44.00,21-1093,Social and Human Service Assistants,1
+44.00,21-1099,"Community and Social Service Specialists, All Other",1
+44.02,11-9151,Social and Community Service Managers,1
+44.02,21-1099,"Community and Social Service Specialists, All Other",1
+44.02,43-4061,"Eligibility Interviewers, Government Programs",1
+44.04,11-1011,Chief Executives,1
+44.04,11-1021,General and Operations Managers,1
+44.04,11-1031,Legislators,1
+44.04,11-3071,"Transportation, Storage, and Distribution Managers",2
+44.04,11-9021,Construction Managers,1
+44.04,11-9131,Postmasters and Mail Superintendents,1
+44.04,11-9151,Social and Community Service Managers,1
+44.04,11-9199,"Managers, All Other",3
+44.04,19-3051,Urban and Regional Planners,1
+44.04,53-6041,Traffic Technicians,1
+44.05,11-1031,Legislators,1
+44.05,11-9111,Medical and Health Services Managers,1
+44.05,19-3094,Political Scientists,2
+44.05,19-3099,"Social Scientists and Related Workers, All Other",2
+44.05,19-4061,Social Science Research Assistants,4
+44.05,25-1065,"Political Science Teachers, Postsecondary",3
+44.05,25-1071,"Health Specialties Teachers, Postsecondary",1
+44.05,25-1081,"Education Teachers, Postsecondary",1
+44.07,11-9151,Social and Community Service Managers,4
+44.07,21-1013,Marriage and Family Therapists,1
+44.07,21-1019,"Counselors, All Other",1
+44.07,21-1021,"Child, Family, and School Social Workers",4
+44.07,21-1022,Healthcare Social Workers,3
+44.07,21-1023,Mental Health and Substance Abuse Social Workers,2
+44.07,21-1029,"Social Workers, All Other",3
+44.07,21-1092,Probation Officers and Correctional Treatment Specialists,1
+44.07,25-1113,"Social Work Teachers, Postsecondary",3
+45.01,11-9199,"Managers, All Other",4
+45.01,15-2041,Statisticians,2
+45.01,19-3022,Survey Researchers,1
+45.01,19-3041,Sociologists,2
+45.01,19-3099,"Social Scientists and Related Workers, All Other",4
+45.01,19-4061,Social Science Research Assistants,2
+45.01,25-1067,"Sociology Teachers, Postsecondary",1
+45.01,25-1069,"Social Sciences Teachers, Postsecondary, All Other",4
+45.01,25-2021,"Elementary School Teachers, Except Special Education",1
+45.01,25-2022,"Middle School Teachers, Except Special and Career/Technical Education",1
+45.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",2
+45.02,11-9199,"Managers, All Other",6
+45.02,19-1042,"Medical Scientists, Except Epidemiologists",1
+45.02,19-3091,Anthropologists and Archeologists,6
+45.02,19-4092,Forensic Science Technicians,1
+45.02,25-1061,"Anthropology and Archeology Teachers, Postsecondary",6
+45.02,25-1062,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",1
+45.03,11-9199,"Managers, All Other",1
+45.03,19-3091,Anthropologists and Archeologists,1
+45.03,25-1061,"Anthropology and Archeology Teachers, Postsecondary",1
+45.03,39-7011,Tour Guides and Escorts,1
+45.04,11-9199,"Managers, All Other",1
+45.04,19-3039,"Psychologists, All Other",1
+45.04,19-3041,Sociologists,1
+45.04,19-4099,"Life, Physical, and Social Science Technicians, All Other",1
+45.04,25-1111,"Criminal Justice and Law Enforcement Teachers, Postsecondary",1
+45.05,11-9199,"Managers, All Other",3
+45.05,19-3041,Sociologists,3
+45.05,19-3099,"Social Scientists and Related Workers, All Other",3
+45.05,25-1067,"Sociology Teachers, Postsecondary",3
+45.06,11-9199,"Managers, All Other",6
+45.06,13-1161,Market Research Analysts and Marketing Specialists,1
+45.06,15-2041,Statisticians,1
+45.06,15-2051,Data Scientists,1
+45.06,19-3011,Economists,6
+45.06,19-3022,Survey Researchers,2
+45.06,19-4061,Social Science Research Assistants,4
+45.06,25-1063,"Economics Teachers, Postsecondary",6
+45.06,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+45.07,11-9199,"Managers, All Other",3
+45.07,17-1021,Cartographers and Photogrammetrists,1
+45.07,17-3031,Surveying and Mapping Technicians,2
+45.07,19-3092,Geographers,3
+45.07,25-1064,"Geography Teachers, Postsecondary",3
+45.09,11-9199,"Managers, All Other",3
+45.09,19-3094,Political Scientists,3
+45.09,25-1065,"Political Science Teachers, Postsecondary",3
+45.10,11-9199,"Managers, All Other",5
+45.10,19-3011,Economists,1
+45.10,19-3094,Political Scientists,5
+45.10,19-4061,Social Science Research Assistants,2
+45.10,25-1063,"Economics Teachers, Postsecondary",1
+45.10,25-1065,"Political Science Teachers, Postsecondary",4
+45.10,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",4
+45.11,11-9199,"Managers, All Other",4
+45.11,19-3041,Sociologists,4
+45.11,19-4061,Social Science Research Assistants,2
+45.11,25-1067,"Sociology Teachers, Postsecondary",4
+45.11,25-1069,"Social Sciences Teachers, Postsecondary, All Other",2
+45.12,11-9199,"Managers, All Other",1
+45.12,19-3041,Sociologists,1
+45.12,19-3051,Urban and Regional Planners,1
+45.12,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+45.13,11-9199,"Managers, All Other",1
+45.13,19-3041,Sociologists,1
+45.13,19-3091,Anthropologists and Archeologists,1
+45.13,25-1061,"Anthropology and Archeology Teachers, Postsecondary",1
+45.13,25-1067,"Sociology Teachers, Postsecondary",1
+45.15,11-9199,"Managers, All Other",1
+45.15,19-3091,Anthropologists and Archeologists,1
+45.15,19-3092,Geographers,1
+45.15,25-1061,"Anthropology and Archeology Teachers, Postsecondary",1
+45.15,25-1064,"Geography Teachers, Postsecondary",1
+45.99,11-9199,"Managers, All Other",1
+45.99,19-3099,"Social Scientists and Related Workers, All Other",1
+45.99,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+46.00,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,1
+46.01,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,1
+46.01,47-2021,Brickmasons and Blockmasons,1
+46.01,47-2022,Stonemasons,1
+46.01,47-2044,Tile and Stone Setters,1
+46.02,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,1
+46.02,47-2031,Carpenters,1
+46.03,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,1
+46.03,47-2111,Electricians,1
+46.03,49-1011,"First-Line Supervisors of Mechanics, Installers, and Repairers",2
+46.03,49-2095,"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",1
+46.03,49-2098,Security and Fire Alarm Systems Installers,1
+46.03,49-9051,Electrical Power-Line Installers and Repairers,3
+46.03,49-9097,Signal and Track Switch Repairers,1
+46.04,11-3013,Facilities Managers,2
+46.04,17-3022,Civil Engineering Technologists and Technicians,1
+46.04,37-1011,First-Line Supervisors of Housekeeping and Janitorial Workers,1
+46.04,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,11
+46.04,47-2041,Carpet Installers,1
+46.04,47-2042,"Floor Layers, Except Carpet, Wood, and Hard Tiles",1
+46.04,47-2043,Floor Sanders and Finishers,1
+46.04,47-2044,Tile and Stone Setters,1
+46.04,47-2051,Cement Masons and Concrete Finishers,1
+46.04,47-2053,Terrazzo Workers and Finishers,1
+46.04,47-2081,Drywall and Ceiling Tile Installers,1
+46.04,47-2121,Glaziers,1
+46.04,47-2131,"Insulation Workers, Floor, Ceiling, and Wall",1
+46.04,47-2132,"Insulation Workers, Mechanical",1
+46.04,47-2141,"Painters, Construction and Maintenance",1
+46.04,47-2142,Paperhangers,1
+46.04,47-2181,Roofers,1
+46.04,47-2221,Structural Iron and Steel Workers,1
+46.04,47-2231,Solar Photovoltaic Installers,1
+46.04,47-4011,Construction and Building Inspectors,1
+46.04,49-9071,"Maintenance and Repair Workers, General",1
+46.04,49-9095,Manufactured Building and Mobile Home Installers,1
+46.05,47-1011,First-Line Supervisors of Construction Trades and Extraction Workers,4
+46.05,47-2152,"Plumbers, Pipefitters, and Steamfitters",3
+46.05,47-4071,Septic Tank Servicers and Sewer Pipe Cleaners,1
+46.05,47-5011,"Derrick Operators, Oil and Gas",1
+46.05,47-5012,"Rotary Drill Operators, Oil and Gas",1
+46.05,47-5023,"Earth Drillers, Except Oil and Gas",1
+46.05,47-5032,"Explosives Workers, Ordnance Handling Experts, and Blasters",2
+47.00,49-1011,"First-Line Supervisors of Mechanics, Installers, and Repairers",1
+47.00,49-9099,"Installation, Maintenance, and Repair Workers, All Other",1
+47.01,43-2099,"Communications Equipment Operators, All Other",1
+47.01,49-2011,"Computer, Automated Teller, and Office Machine Repairers",2
+47.01,49-2021,"Radio, Cellular, and Tower Equipment Installers and Repairers",1
+47.01,49-2022,"Telecommunications Equipment Installers and Repairers, Except Line Installers",1
+47.01,49-2092,"Electric Motor, Power Tool, and Related Repairers",1
+47.01,49-2094,"Electrical and Electronics Repairers, Commercial and Industrial Equipment",2
+47.01,49-2095,"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",1
+47.01,49-2097,Audiovisual Equipment Installers and Repairers,1
+47.01,49-2098,Security and Fire Alarm Systems Installers,1
+47.01,49-9031,Home Appliance Repairers,1
+47.01,49-9052,Telecommunications Line Installers and Repairers,1
+47.01,49-9099,"Installation, Maintenance, and Repair Workers, All Other",1
+47.01,51-9141,Semiconductor Processing Technicians,1
+47.02,49-9021,"Heating, Air Conditioning, and Refrigeration Mechanics and Installers",1
+47.03,47-4021,Elevator and Escalator Installers and Repairers,1
+47.03,49-3042,"Mobile Heavy Equipment Mechanics, Except Engines",1
+47.03,49-3043,Rail Car Repairers,1
+47.03,49-9012,"Control and Valve Installers and Repairers, Except Mechanical Door",2
+47.03,49-9041,Industrial Machinery Mechanics,1
+47.03,49-9043,"Maintenance Workers, Machinery",1
+47.03,49-9044,Millwrights,1
+47.03,49-9045,"Refractory Materials Repairers, Except Brickmasons",1
+47.03,49-9081,Wind Turbine Service Technicians,1
+47.04,49-9061,Camera and Photographic Equipment Repairers,1
+47.04,49-9063,Musical Instrument Repairers and Tuners,1
+47.04,49-9064,Watch and Clock Repairers,1
+47.04,49-9069,"Precision Instrument and Equipment Repairers, All Other",1
+47.04,49-9094,Locksmiths and Safe Repairers,1
+47.04,49-9099,"Installation, Maintenance, and Repair Workers, All Other",2
+47.04,51-2061,Timing Device Assemblers and Adjusters,1
+47.04,51-9071,Jewelers and Precious Stone and Metal Workers,1
+47.06,13-1032,"Insurance Appraisers, Auto Damage",1
+47.06,17-3021,Aerospace Engineering and Operations Technologists and Technicians,1
+47.06,49-1011,"First-Line Supervisors of Mechanics, Installers, and Repairers",3
+47.06,49-2091,Avionics Technicians,1
+47.06,49-2093,"Electrical and Electronics Installers and Repairers, Transportation Equipment",1
+47.06,49-2096,"Electronic Equipment Installers and Repairers, Motor Vehicles",1
+47.06,49-3011,Aircraft Mechanics and Service Technicians,2
+47.06,49-3021,Automotive Body and Related Repairers,1
+47.06,49-3022,Automotive Glass Installers and Repairers,1
+47.06,49-3023,Automotive Service Technicians and Mechanics,6
+47.06,49-3031,Bus and Truck Mechanics and Diesel Engine Specialists,2
+47.06,49-3051,Motorboat Mechanics and Service Technicians,2
+47.06,49-3052,Motorcycle Mechanics,1
+47.06,49-3053,Outdoor Power Equipment and Other Small Engine Mechanics,1
+47.06,49-3091,Bicycle Repairers,1
+47.06,49-3092,Recreational Vehicle Service Technicians,1
+47.06,51-2011,"Aircraft Structure, Surfaces, Rigging, and Systems Assemblers",3
+47.06,51-2031,Engine and Other Machine Assemblers,1
+47.06,51-9124,"Coating, Painting, and Spraying Machine Setters, Operators, and Tenders",1
+47.07,47-2231,Solar Photovoltaic Installers,1
+47.07,49-1011,"First-Line Supervisors of Mechanics, Installers, and Repairers",5
+47.07,49-9041,Industrial Machinery Mechanics,3
+47.07,49-9081,Wind Turbine Service Technicians,2
+47.07,49-9099,"Installation, Maintenance, and Repair Workers, All Other",5
+48.03,51-6041,Shoe and Leather Workers and Repairers,1
+48.03,51-6042,Shoe Machine Operators and Tenders,1
+48.03,51-6093,Upholsterers,1
+48.05,47-2211,Sheet Metal Workers,1
+48.05,51-2041,Structural Metal Fabricators and Fitters,2
+48.05,51-4021,"Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic",1
+48.05,51-4022,"Forging Machine Setters, Operators, and Tenders, Metal and Plastic",1
+48.05,51-4023,"Rolling Machine Setters, Operators, and Tenders, Metal and Plastic",2
+48.05,51-4031,"Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic",2
+48.05,51-4032,"Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic",1
+48.05,51-4033,"Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",2
+48.05,51-4034,"Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic",1
+48.05,51-4035,"Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic",1
+48.05,51-4041,Machinists,2
+48.05,51-4061,"Model Makers, Metal and Plastic",1
+48.05,51-4062,"Patternmakers, Metal and Plastic",1
+48.05,51-4071,Foundry Mold and Coremakers,1
+48.05,51-4081,"Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",2
+48.05,51-4111,Tool and Die Makers,1
+48.05,51-4121,"Welders, Cutters, Solderers, and Brazers",1
+48.05,51-4122,"Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders",1
+48.05,51-4191,"Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic",2
+48.05,51-4192,"Layout Workers, Metal and Plastic",2
+48.05,51-4194,"Tool Grinders, Filers, and Sharpeners",1
+48.05,51-4199,"Metal Workers and Plastic Workers, All Other",3
+48.05,51-9161,Computer Numerically Controlled Tool Operators,2
+48.05,51-9162,Computer Numerically Controlled Tool Programmers,1
+48.07,51-7011,Cabinetmakers and Bench Carpenters,1
+48.07,51-7021,Furniture Finishers,1
+48.07,51-7031,"Model Makers, Wood",2
+48.07,51-7032,"Patternmakers, Wood",1
+48.07,51-7041,"Sawing Machine Setters, Operators, and Tenders, Wood",1
+48.07,51-7042,"Woodworking Machine Setters, Operators, and Tenders, Except Sawing",2
+48.07,51-7099,"Woodworkers, All Other",5
+48.08,47-2011,Boilermakers,1
+49.01,11-3071,"Transportation, Storage, and Distribution Managers",2
+49.01,53-1044,First-Line Supervisors of Passenger Attendants,1
+49.01,53-2011,"Airline Pilots, Copilots, and Flight Engineers",2
+49.01,53-2012,Commercial Pilots,2
+49.01,53-2021,Air Traffic Controllers,1
+49.01,53-2022,Airfield Operations Specialists,1
+49.01,53-2031,Flight Attendants,1
+49.02,25-1194,"Career/Technical Education Teachers, Postsecondary",1
+49.02,45-4022,Logging Equipment Operators,1
+49.02,47-2071,"Paving, Surfacing, and Tamping Equipment Operators",1
+49.02,47-2072,Pile Driver Operators,1
+49.02,47-2073,Operating Engineers and Other Construction Equipment Operators,2
+49.02,47-4051,Highway Maintenance Workers,2
+49.02,47-4061,Rail-Track Laying and Maintenance Equipment Operators,1
+49.02,47-5022,"Excavating and Loading Machine and Dragline Operators, Surface Mining",1
+49.02,47-5023,"Earth Drillers, Except Oil and Gas",1
+49.02,47-5032,"Explosives Workers, Ordnance Handling Experts, and Blasters",1
+49.02,47-5041,Continuous Mining Machine Operators,1
+49.02,47-5049,"Underground Mining Machine Operators, All Other",1
+49.02,47-5099,"Extraction Workers, All Other",1
+49.02,53-1043,First-Line Supervisors of Material-Moving Machine and Vehicle Operators,1
+49.02,53-1049,"First-Line Supervisors of Transportation Workers, All Other",1
+49.02,53-3032,Heavy and Tractor-Trailer Truck Drivers,1
+49.02,53-3033,Light Truck Drivers,1
+49.02,53-3051,"Bus Drivers, School",1
+49.02,53-3052,"Bus Drivers, Transit and Intercity",1
+49.02,53-3053,Shuttle Drivers and Chauffeurs,1
+49.02,53-4011,Locomotive Engineers,1
+49.02,53-4013,"Rail Yard Engineers, Dinkey Operators, and Hostlers",1
+49.02,53-4022,"Railroad Brake, Signal, and Switch Operators and Locomotive Firers",1
+49.02,53-4031,Railroad Conductors and Yardmasters,1
+49.02,53-4041,Subway and Streetcar Operators,1
+49.02,53-4099,"Rail Transportation Workers, All Other",1
+49.02,53-7021,Crane and Tower Operators,2
+49.02,53-7031,Dredge Operators,1
+49.02,53-7041,Hoist and Winch Operators,1
+49.02,53-7051,Industrial Truck and Tractor Operators,1
+49.02,53-7199,"Material Moving Workers, All Other",1
+49.03,49-9092,Commercial Divers,1
+49.03,53-5021,"Captains, Mates, and Pilots of Water Vessels",2
+49.03,53-5022,Motorboat Operators,2
+49.03,53-5031,Ship Engineers,1
+50.01,25-1121,"Art, Drama, and Music Teachers, Postsecondary",2
+50.01,27-1011,Art Directors,1
+50.01,27-1012,Craft Artists,1
+50.01,27-1013,"Fine Artists, Including Painters, Sculptors, and Illustrators",1
+50.01,27-1014,Special Effects Artists and Animators,1
+50.01,27-1019,"Artists and Related Workers, All Other",2
+50.01,27-1024,Graphic Designers,1
+50.01,27-4021,Photographers,2
+50.02,25-1121,"Art, Drama, and Music Teachers, Postsecondary",1
+50.02,27-1012,Craft Artists,1
+50.02,27-1019,"Artists and Related Workers, All Other",1
+50.03,25-1121,"Art, Drama, and Music Teachers, Postsecondary",3
+50.03,27-2031,Dancers,3
+50.03,27-2032,Choreographers,3
+50.04,15-1255,Web and Digital Interface Designers,2
+50.04,25-1031,"Architecture Teachers, Postsecondary",1
+50.04,25-1121,"Art, Drama, and Music Teachers, Postsecondary",6
+50.04,25-1199,"Postsecondary Teachers, All Other",1
+50.04,27-1011,Art Directors,1
+50.04,27-1014,Special Effects Artists and Animators,2
+50.04,27-1019,"Artists and Related Workers, All Other",3
+50.04,27-1021,Commercial and Industrial Designers,3
+50.04,27-1022,Fashion Designers,1
+50.04,27-1024,Graphic Designers,4
+50.04,27-1025,Interior Designers,1
+50.04,27-1027,Set and Exhibit Designers,2
+50.04,27-1029,"Designers, All Other",3
+50.04,27-4021,Photographers,1
+50.05,25-1121,"Art, Drama, and Music Teachers, Postsecondary",11
+50.05,27-1022,Fashion Designers,1
+50.05,27-1027,Set and Exhibit Designers,1
+50.05,27-2011,Actors,7
+50.05,27-2012,Producers and Directors,5
+50.05,27-2031,Dancers,2
+50.05,27-2032,Choreographers,2
+50.05,27-2041,Music Directors and Composers,1
+50.05,27-2042,Musicians and Singers,1
+50.05,27-2099,"Entertainers and Performers, Sports and Related Workers, All Other",4
+50.05,27-3043,Writers and Authors,2
+50.05,39-3092,Costume Attendants,1
+50.06,25-1121,"Art, Drama, and Music Teachers, Postsecondary",5
+50.06,25-1122,"Communications Teachers, Postsecondary",1
+50.06,27-2012,Producers and Directors,3
+50.06,27-4021,Photographers,1
+50.06,27-4031,"Camera Operators, Television, Video, and Film",2
+50.06,27-4032,Film and Video Editors,2
+50.07,13-2022,Appraisers of Personal and Business Property,1
+50.07,25-1121,"Art, Drama, and Music Teachers, Postsecondary",13
+50.07,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+50.07,25-4011,Archivists,1
+50.07,25-4012,Curators,1
+50.07,25-4013,Museum Technicians and Conservators,1
+50.07,27-1011,Art Directors,1
+50.07,27-1012,Craft Artists,9
+50.07,27-1013,"Fine Artists, Including Painters, Sculptors, and Illustrators",9
+50.07,27-1014,Special Effects Artists and Animators,3
+50.07,27-1019,"Artists and Related Workers, All Other",2
+50.07,27-4021,Photographers,1
+50.07,51-9071,Jewelers and Precious Stone and Metal Workers,2
+50.09,25-1121,"Art, Drama, and Music Teachers, Postsecondary",16
+50.09,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",1
+50.09,27-2041,Music Directors and Composers,8
+50.09,27-2042,Musicians and Singers,11
+50.09,27-2091,"Disc Jockeys, Except Radio",1
+50.09,27-4014,Sound Engineering Technicians,1
+50.10,11-9199,"Managers, All Other",4
+50.10,13-1011,"Agents and Business Managers of Artists, Performers, and Athletes",3
+50.10,25-1121,"Art, Drama, and Music Teachers, Postsecondary",5
+50.10,27-2012,Producers and Directors,1
+50.10,27-2041,Music Directors and Composers,1
+50.11,25-1121,"Art, Drama, and Music Teachers, Postsecondary",1
+50.11,27-1013,"Fine Artists, Including Painters, Sculptors, and Illustrators",1
+50.11,27-1019,"Artists and Related Workers, All Other",1
+50.99,25-1121,"Art, Drama, and Music Teachers, Postsecondary",1
+51.00,21-1091,Health Education Specialists,1
+51.00,21-1094,Community Health Workers,1
+51.01,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.01,29-1011,Chiropractors,1
+51.02,25-1071,"Health Specialties Teachers, Postsecondary",5
+51.02,29-1127,Speech-Language Pathologists,4
+51.02,29-1181,Audiologists,4
+51.04,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.04,29-1021,"Dentists, General",1
+51.05,21-1091,Health Education Specialists,1
+51.05,25-1071,"Health Specialties Teachers, Postsecondary",14
+51.05,29-1021,"Dentists, General",2
+51.05,29-1022,Oral and Maxillofacial Surgeons,1
+51.05,29-1023,Orthodontists,1
+51.05,29-1024,Prosthodontists,1
+51.05,29-1029,"Dentists, All Other Specialists",10
+51.06,25-1071,"Health Specialties Teachers, Postsecondary",3
+51.06,29-1292,Dental Hygienists,1
+51.06,31-9091,Dental Assistants,1
+51.06,51-9081,Dental Laboratory Technicians,1
+51.07,11-3012,Administrative Services Managers,1
+51.07,11-3013,Facilities Managers,1
+51.07,11-9033,"Education Administrators, Postsecondary",1
+51.07,11-9111,Medical and Health Services Managers,9
+51.07,11-9199,"Managers, All Other",1
+51.07,13-1031,"Claims Adjusters, Examiners, and Investigators",1
+51.07,13-1041,Compliance Officers,2
+51.07,15-1212,Information Security Analysts,1
+51.07,15-1232,Computer User Support Specialists,1
+51.07,15-1251,Computer Programmers,1
+51.07,25-1011,"Business Teachers, Postsecondary",1
+51.07,29-2072,Medical Records Specialists,4
+51.07,29-9021,Health Information Technologists and Medical Registrars,5
+51.07,29-9099,"Healthcare Practitioners and Technical Workers, All Other",1
+51.07,31-9092,Medical Assistants,1
+51.07,31-9094,Medical Transcriptionists,1
+51.07,31-9099,"Healthcare Support Workers, All Other",5
+51.07,43-1011,First-Line Supervisors of Office and Administrative Support Workers,3
+51.07,43-6013,Medical Secretaries and Administrative Assistants,5
+51.08,25-1071,"Health Specialties Teachers, Postsecondary",4
+51.08,29-2012,Medical and Clinical Laboratory Technicians,1
+51.08,29-2052,Pharmacy Technicians,1
+51.08,29-2055,Surgical Technologists,1
+51.08,29-2099,"Health Technologists and Technicians, All Other",2
+51.08,31-2011,Occupational Therapy Assistants,1
+51.08,31-2021,Physical Therapist Assistants,1
+51.08,31-9092,Medical Assistants,3
+51.08,31-9099,"Healthcare Support Workers, All Other",4
+51.08,53-3011,"Ambulance Drivers and Attendants, Except Emergency Medical Technicians",1
+51.09,19-4051,Nuclear Technicians,1
+51.09,19-5012,Occupational Health and Safety Technicians,1
+51.09,25-1071,"Health Specialties Teachers, Postsecondary",23
+51.09,29-1071,Physician Assistants,1
+51.09,29-1124,Radiation Therapists,1
+51.09,29-1126,Respiratory Therapists,1
+51.09,29-2031,Cardiovascular Technologists and Technicians,4
+51.09,29-2032,Diagnostic Medical Sonographers,1
+51.09,29-2033,Nuclear Medicine Technologists,1
+51.09,29-2034,Radiologic Technologists and Technicians,3
+51.09,29-2035,Magnetic Resonance Imaging Technologists,1
+51.09,29-2036,Medical Dosimetrists,1
+51.09,29-2042,Emergency Medical Technicians,1
+51.09,29-2043,Paramedics,1
+51.09,29-2055,Surgical Technologists,1
+51.09,29-2092,Hearing Aid Specialists,1
+51.09,29-2099,"Health Technologists and Technicians, All Other",11
+51.09,29-9091,Athletic Trainers,1
+51.09,29-9093,Surgical Assistants,1
+51.10,25-1071,"Health Specialties Teachers, Postsecondary",13
+51.10,29-2011,Medical and Clinical Laboratory Technologists,5
+51.10,29-2012,Medical and Clinical Laboratory Technicians,6
+51.10,29-2055,Surgical Technologists,1
+51.10,29-2099,"Health Technologists and Technicians, All Other",1
+51.10,31-9093,Medical Equipment Preparers,1
+51.10,31-9097,Phlebotomists,1
+51.10,51-9083,Ophthalmic Laboratory Technicians,1
+51.12,29-1081,Podiatrists,1
+51.12,29-1211,Anesthesiologists,2
+51.12,29-1212,Cardiologists,2
+51.12,29-1213,Dermatologists,2
+51.12,29-1214,Emergency Medicine Physicians,2
+51.12,29-1215,Family Medicine Physicians,2
+51.12,29-1216,General Internal Medicine Physicians,2
+51.12,29-1217,Neurologists,2
+51.12,29-1218,Obstetricians and Gynecologists,2
+51.12,29-1221,"Pediatricians, General",2
+51.12,29-1222,"Physicians, Pathologists",2
+51.12,29-1223,Psychiatrists,2
+51.12,29-1224,Radiologists,2
+51.12,29-1229,"Physicians, All Other",2
+51.12,29-1241,"Ophthalmologists, Except Pediatric",2
+51.12,29-1242,"Orthopedic Surgeons, Except Pediatric",2
+51.12,29-1243,Pediatric Surgeons,2
+51.12,29-1249,"Surgeons, All Other",2
+51.14,11-9121,Natural Sciences Managers,1
+51.14,19-1041,Epidemiologists,1
+51.14,19-1042,"Medical Scientists, Except Epidemiologists",4
+51.14,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.14,29-1029,"Dentists, All Other Specialists",1
+51.14,29-1229,"Physicians, All Other",1
+51.15,19-3033,Clinical and Counseling Psychologists,1
+51.15,21-1011,Substance Abuse and Behavioral Disorder Counselors,2
+51.15,21-1013,Marriage and Family Therapists,4
+51.15,21-1014,Mental Health Counselors,5
+51.15,21-1019,"Counselors, All Other",2
+51.15,21-1021,"Child, Family, and School Social Workers",1
+51.15,21-1022,Healthcare Social Workers,3
+51.15,21-1023,Mental Health and Substance Abuse Social Workers,1
+51.15,21-1029,"Social Workers, All Other",1
+51.15,21-1091,Health Education Specialists,1
+51.15,21-1094,Community Health Workers,1
+51.15,21-2011,Clergy,1
+51.15,21-2021,"Directors, Religious Activities and Education",1
+51.15,25-1066,"Psychology Teachers, Postsecondary",1
+51.15,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.15,25-1113,"Social Work Teachers, Postsecondary",1
+51.15,29-2053,Psychiatric Technicians,1
+51.15,29-9092,Genetic Counselors,1
+51.15,31-1133,Psychiatric Aides,1
+51.17,29-1041,Optometrists,1
+51.18,29-2057,Ophthalmic Medical Technicians,3
+51.18,29-2081,"Opticians, Dispensing",1
+51.20,11-2021,Marketing Managers,1
+51.20,11-2022,Sales Managers,1
+51.20,11-3051,Industrial Production Managers,2
+51.20,11-9111,Medical and Health Services Managers,5
+51.20,11-9121,Natural Sciences Managers,1
+51.20,11-9199,"Managers, All Other",1
+51.20,19-1021,Biochemists and Biophysicists,1
+51.20,19-1042,"Medical Scientists, Except Epidemiologists",4
+51.20,19-2031,Chemists,1
+51.20,19-3011,Economists,1
+51.20,25-1052,"Chemistry Teachers, Postsecondary",1
+51.20,25-1063,"Economics Teachers, Postsecondary",1
+51.20,25-1071,"Health Specialties Teachers, Postsecondary",12
+51.20,29-1051,Pharmacists,2
+51.22,11-9111,Medical and Health Services Managers,7
+51.22,13-1041,Compliance Officers,1
+51.22,19-1041,Epidemiologists,1
+51.22,19-1042,"Medical Scientists, Except Epidemiologists",1
+51.22,19-2012,Physicists,1
+51.22,19-2041,"Environmental Scientists and Specialists, Including Health",1
+51.22,19-5011,Occupational Health and Safety Specialists,3
+51.22,19-5012,Occupational Health and Safety Technicians,3
+51.22,21-1091,Health Education Specialists,5
+51.22,21-1094,Community Health Workers,5
+51.22,25-1054,"Physics Teachers, Postsecondary",1
+51.22,25-1071,"Health Specialties Teachers, Postsecondary",11
+51.22,29-9092,Genetic Counselors,1
+51.23,17-2199,"Engineers, All Other",1
+51.23,19-1099,"Life Scientists, All Other",1
+51.23,21-1015,Rehabilitation Counselors,3
+51.23,25-1071,"Health Specialties Teachers, Postsecondary",15
+51.23,29-1122,Occupational Therapists,1
+51.23,29-1123,Physical Therapists,2
+51.23,29-1125,Recreational Therapists,1
+51.23,29-1128,Exercise Physiologists,1
+51.23,29-1129,"Therapists, All Other",9
+51.23,29-2091,Orthotists and Prosthetists,2
+51.23,51-9082,Medical Appliance Technicians,2
+51.26,31-1121,Home Health Aides,1
+51.26,31-1122,Personal Care Aides,1
+51.26,31-1131,Nursing Assistants,1
+51.26,31-1133,Psychiatric Aides,1
+51.26,31-2012,Occupational Therapy Aides,1
+51.26,31-2022,Physical Therapist Aides,2
+51.26,31-9099,"Healthcare Support Workers, All Other",2
+51.27,15-1221,Computer and Information Research Scientists,1
+51.27,15-1299,"Computer Occupations, All Other",1
+51.27,25-1199,"Postsecondary Teachers, All Other",1
+51.27,27-1013,"Fine Artists, Including Painters, Sculptors, and Illustrators",1
+51.27,29-9021,Health Information Technologists and Medical Registrars,1
+51.31,29-1031,Dietitians and Nutritionists,3
+51.31,29-2051,Dietetic Technicians,3
+51.32,11-9033,"Education Administrators, Postsecondary",2
+51.32,11-9111,Medical and Health Services Managers,2
+51.32,19-3041,Sociologists,1
+51.32,19-3091,Anthropologists and Archeologists,1
+51.32,19-3092,Geographers,1
+51.32,19-3093,Historians,2
+51.32,19-3099,"Social Scientists and Related Workers, All Other",1
+51.32,21-1094,Community Health Workers,1
+51.32,21-2021,"Directors, Religious Activities and Education",1
+51.32,25-1069,"Social Sciences Teachers, Postsecondary, All Other",1
+51.32,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.32,25-1072,"Nursing Instructors and Teachers, Postsecondary",1
+51.32,25-1081,"Education Teachers, Postsecondary",1
+51.32,25-1125,"History Teachers, Postsecondary",1
+51.32,25-1126,"Philosophy and Religion Teachers, Postsecondary",1
+51.32,25-1199,"Postsecondary Teachers, All Other",2
+51.32,29-9099,"Healthcare Practitioners and Technical Workers, All Other",1
+51.33,29-1291,Acupuncturists,1
+51.33,29-1299,"Healthcare Diagnosing or Treating Practitioners, All Other",7
+51.33,29-9099,"Healthcare Practitioners and Technical Workers, All Other",1
+51.34,29-1299,"Healthcare Diagnosing or Treating Practitioners, All Other",2
+51.35,25-1071,"Health Specialties Teachers, Postsecondary",4
+51.35,31-9011,Massage Therapists,4
+51.36,25-1071,"Health Specialties Teachers, Postsecondary",1
+51.36,29-1129,"Therapists, All Other",1
+51.36,39-9031,Exercise Trainers and Group Fitness Instructors,1
+51.37,29-1299,"Healthcare Diagnosing or Treating Practitioners, All Other",5
+51.37,29-9099,"Healthcare Practitioners and Technical Workers, All Other",1
+51.38,11-9111,Medical and Health Services Managers,3
+51.38,25-1072,"Nursing Instructors and Teachers, Postsecondary",22
+51.38,29-1141,Registered Nurses,21
+51.38,29-1151,Nurse Anesthetists,1
+51.38,29-1161,Nurse Midwives,1
+51.38,29-1171,Nurse Practitioners,20
+51.39,29-2061,Licensed Practical and Licensed Vocational Nurses,2
+51.39,31-1131,Nursing Assistants,2
+52.01,11-1011,Chief Executives,1
+52.01,11-1021,General and Operations Managers,1
+52.01,11-2022,Sales Managers,1
+52.01,11-3012,Administrative Services Managers,1
+52.01,11-3013,Facilities Managers,1
+52.01,11-3051,Industrial Production Managers,1
+52.01,11-3071,"Transportation, Storage, and Distribution Managers",1
+52.01,11-9021,Construction Managers,1
+52.01,11-9072,"Entertainment and Recreation Managers, Except Gambling",1
+52.01,11-9151,Social and Community Service Managers,1
+52.01,11-9179,"Personal Service Managers, All Other",1
+52.01,11-9199,"Managers, All Other",1
+52.01,13-1051,Cost Estimators,1
+52.01,13-1082,Project Management Specialists,1
+52.01,13-1111,Management Analysts,1
+52.01,13-2022,Appraisers of Personal and Business Property,1
+52.01,25-1011,"Business Teachers, Postsecondary",1
+52.02,11-1011,Chief Executives,2
+52.02,11-1021,General and Operations Managers,4
+52.02,11-2022,Sales Managers,1
+52.02,11-2033,Fundraising Managers,2
+52.02,11-3012,Administrative Services Managers,4
+52.02,11-3013,Facilities Managers,3
+52.02,11-3021,Computer and Information Systems Managers,1
+52.02,11-3031,Financial Managers,1
+52.02,11-3051,Industrial Production Managers,4
+52.02,11-3061,Purchasing Managers,1
+52.02,11-3071,"Transportation, Storage, and Distribution Managers",3
+52.02,11-3111,Compensation and Benefits Managers,1
+52.02,11-3121,Human Resources Managers,2
+52.02,11-3131,Training and Development Managers,2
+52.02,11-9021,Construction Managers,2
+52.02,11-9033,"Education Administrators, Postsecondary",1
+52.02,11-9039,"Education Administrators, All Other",1
+52.02,11-9041,Architectural and Engineering Managers,1
+52.02,11-9072,"Entertainment and Recreation Managers, Except Gambling",1
+52.02,11-9111,Medical and Health Services Managers,4
+52.02,11-9121,Natural Sciences Managers,3
+52.02,11-9151,Social and Community Service Managers,2
+52.02,11-9179,"Personal Service Managers, All Other",2
+52.02,11-9199,"Managers, All Other",7
+52.02,13-1011,"Agents and Business Managers of Artists, Performers, and Athletes",1
+52.02,13-1023,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",1
+52.02,13-1051,Cost Estimators,1
+52.02,13-1071,Human Resources Specialists,1
+52.02,13-1081,Logisticians,3
+52.02,13-1082,Project Management Specialists,3
+52.02,13-1111,Management Analysts,2
+52.02,13-1131,Fundraisers,1
+52.02,13-1141,"Compensation, Benefits, and Job Analysis Specialists",1
+52.02,13-1199,"Business Operations Specialists, All Other",2
+52.02,13-2053,Insurance Underwriters,1
+52.02,13-2054,Financial Risk Specialists,1
+52.02,13-2099,"Financial Specialists, All Other",1
+52.02,15-2011,Actuaries,1
+52.02,25-1011,"Business Teachers, Postsecondary",9
+52.02,41-1011,First-Line Supervisors of Retail Sales Workers,2
+52.02,43-1011,First-Line Supervisors of Office and Administrative Support Workers,3
+52.02,49-1011,"First-Line Supervisors of Mechanics, Installers, and Repairers",1
+52.02,51-1011,First-Line Supervisors of Production and Operating Workers,1
+52.03,11-3031,Financial Managers,2
+52.03,13-2011,Accountants and Auditors,4
+52.03,13-2022,Appraisers of Personal and Business Property,3
+52.03,13-2031,Budget Analysts,2
+52.03,13-2041,Credit Analysts,1
+52.03,13-2051,Financial and Investment Analysts,2
+52.03,13-2054,Financial Risk Specialists,3
+52.03,13-2061,Financial Examiners,2
+52.03,13-2081,"Tax Examiners and Collectors, and Revenue Agents",1
+52.03,13-2082,Tax Preparers,2
+52.03,25-1011,"Business Teachers, Postsecondary",4
+52.03,43-3031,"Bookkeeping, Accounting, and Auditing Clerks",1
+52.03,43-3051,Payroll and Timekeeping Clerks,1
+52.03,43-4011,Brokerage Clerks,1
+52.03,43-9111,Statistical Assistants,1
+52.04,13-1199,"Business Operations Specialists, All Other",1
+52.04,43-1011,First-Line Supervisors of Office and Administrative Support Workers,2
+52.04,43-3061,Procurement Clerks,1
+52.04,43-4021,Correspondence Clerks,1
+52.04,43-4051,Customer Service Representatives,2
+52.04,43-4071,File Clerks,1
+52.04,43-4151,Order Clerks,3
+52.04,43-4161,"Human Resources Assistants, Except Payroll and Timekeeping",2
+52.04,43-4171,Receptionists and Information Clerks,1
+52.04,43-5011,Cargo and Freight Agents,2
+52.04,43-5032,"Dispatchers, Except Police, Fire, and Ambulance",1
+52.04,43-5061,"Production, Planning, and Expediting Clerks",1
+52.04,43-6011,Executive Secretaries and Executive Administrative Assistants,2
+52.04,43-6014,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",2
+52.04,43-9021,Data Entry Keyers,1
+52.04,43-9022,Word Processors and Typists,1
+52.04,43-9041,Insurance Claims and Policy Processing Clerks,1
+52.04,43-9061,"Office Clerks, General",1
+52.05,11-2032,Public Relations Managers,2
+52.05,11-2033,Fundraising Managers,1
+52.05,13-1131,Fundraisers,1
+52.05,25-1011,"Business Teachers, Postsecondary",2
+52.05,25-1122,"Communications Teachers, Postsecondary",2
+52.05,27-3031,Public Relations Specialists,2
+52.05,27-3041,Editors,3
+52.05,27-3042,Technical Writers,3
+52.05,27-3043,Writers and Authors,2
+52.05,43-9081,Proofreaders and Copy Markers,1
+52.06,13-1111,Management Analysts,1
+52.06,13-2054,Financial Risk Specialists,1
+52.06,19-3011,Economists,1
+52.06,19-3022,Survey Researchers,1
+52.06,25-1063,"Economics Teachers, Postsecondary",1
+52.07,11-1011,Chief Executives,2
+52.07,11-1021,General and Operations Managers,2
+52.07,11-9179,"Personal Service Managers, All Other",1
+52.07,11-9199,"Managers, All Other",4
+52.07,25-1011,"Business Teachers, Postsecondary",2
+52.08,11-1011,Chief Executives,1
+52.08,11-1021,General and Operations Managers,2
+52.08,11-3031,Financial Managers,6
+52.08,13-1141,"Compensation, Benefits, and Job Analysis Specialists",1
+52.08,13-2022,Appraisers of Personal and Business Property,1
+52.08,13-2031,Budget Analysts,2
+52.08,13-2041,Credit Analysts,3
+52.08,13-2051,Financial and Investment Analysts,5
+52.08,13-2052,Personal Financial Advisors,2
+52.08,13-2053,Insurance Underwriters,1
+52.08,13-2054,Financial Risk Specialists,5
+52.08,13-2071,Credit Counselors,3
+52.08,13-2072,Loan Officers,2
+52.08,13-2099,"Financial Specialists, All Other",1
+52.08,25-1011,"Business Teachers, Postsecondary",6
+52.08,41-3031,"Securities, Commodities, and Financial Services Sales Agents",2
+52.08,43-3011,Bill and Account Collectors,1
+52.08,43-3071,Tellers,1
+52.08,43-4041,"Credit Authorizers, Checkers, and Clerks",1
+52.08,43-4131,Loan Interviewers and Clerks,1
+52.08,43-4141,New Accounts Clerks,1
+52.09,11-3013,Facilities Managers,1
+52.09,11-9051,Food Service Managers,6
+52.09,11-9071,Gambling Managers,1
+52.09,11-9072,"Entertainment and Recreation Managers, Except Gambling",2
+52.09,11-9081,Lodging Managers,6
+52.09,11-9179,"Personal Service Managers, All Other",2
+52.09,11-9199,"Managers, All Other",2
+52.09,13-1121,"Meeting, Convention, and Event Planners",1
+52.09,13-1199,"Business Operations Specialists, All Other",1
+52.09,25-1011,"Business Teachers, Postsecondary",1
+52.09,39-1013,First-Line Supervisors of Gambling Services Workers,1
+52.09,39-7012,Travel Guides,1
+52.10,11-3111,Compensation and Benefits Managers,3
+52.10,11-3121,Human Resources Managers,5
+52.10,11-3131,Training and Development Managers,3
+52.10,13-1041,Compliance Officers,2
+52.10,13-1071,Human Resources Specialists,4
+52.10,13-1075,Labor Relations Specialists,3
+52.10,13-1141,"Compensation, Benefits, and Job Analysis Specialists",1
+52.10,13-1151,Training and Development Specialists,3
+52.10,21-1012,"Educational, Guidance, and Career Counselors and Advisors",1
+52.10,21-1019,"Counselors, All Other",1
+52.10,25-1011,"Business Teachers, Postsecondary",4
+52.10,25-1112,"Law Teachers, Postsecondary",1
+52.10,43-4161,"Human Resources Assistants, Except Payroll and Timekeeping",2
+52.11,11-1011,Chief Executives,1
+52.11,11-1021,General and Operations Managers,1
+52.11,13-1199,"Business Operations Specialists, All Other",1
+52.11,25-1011,"Business Teachers, Postsecondary",1
+52.12,11-3021,Computer and Information Systems Managers,4
+52.12,15-1243,Database Architects,1
+52.12,15-1251,Computer Programmers,1
+52.12,25-1021,"Computer Science Teachers, Postsecondary",4
+52.13,11-1011,Chief Executives,1
+52.13,11-1021,General and Operations Managers,1
+52.13,13-1111,Management Analysts,1
+52.13,13-2053,Insurance Underwriters,1
+52.13,13-2054,Financial Risk Specialists,1
+52.13,15-2011,Actuaries,1
+52.13,15-2031,Operations Research Analysts,1
+52.13,15-2041,Statisticians,1
+52.13,15-2051,Data Scientists,2
+52.13,19-3022,Survey Researchers,1
+52.13,25-1011,"Business Teachers, Postsecondary",3
+52.13,25-1022,"Mathematical Science Teachers, Postsecondary",1
+52.14,11-2011,Advertising and Promotions Managers,1
+52.14,11-2021,Marketing Managers,5
+52.14,11-2022,Sales Managers,1
+52.14,11-2033,Fundraising Managers,1
+52.14,13-1131,Fundraisers,1
+52.14,13-1161,Market Research Analysts and Marketing Specialists,5
+52.14,15-1255,Web and Digital Interface Designers,1
+52.14,19-3022,Survey Researchers,1
+52.14,25-1011,"Business Teachers, Postsecondary",5
+52.15,11-9141,"Property, Real Estate, and Community Association Managers",1
+52.15,13-2022,Appraisers of Personal and Business Property,1
+52.15,13-2023,Appraisers and Assessors of Real Estate,1
+52.15,41-9021,Real Estate Brokers,1
+52.15,41-9022,Real Estate Sales Agents,1
+52.16,13-2011,Accountants and Auditors,1
+52.16,13-2022,Appraisers of Personal and Business Property,1
+52.16,13-2061,Financial Examiners,1
+52.16,13-2081,"Tax Examiners and Collectors, and Revenue Agents",1
+52.16,13-2082,Tax Preparers,1
+52.17,11-3111,Compensation and Benefits Managers,1
+52.17,13-1031,"Claims Adjusters, Examiners, and Investigators",1
+52.17,13-1032,"Insurance Appraisers, Auto Damage",1
+52.17,13-1141,"Compensation, Benefits, and Job Analysis Specialists",1
+52.17,13-2022,Appraisers of Personal and Business Property,1
+52.17,13-2053,Insurance Underwriters,1
+52.17,25-1011,"Business Teachers, Postsecondary",1
+52.17,41-3021,Insurance Sales Agents,1
+52.18,13-1022,"Wholesale and Retail Buyers, Except Farm Products",3
+52.18,13-1023,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",2
+52.18,25-1011,"Business Teachers, Postsecondary",1
+52.18,41-1011,First-Line Supervisors of Retail Sales Workers,3
+52.18,41-1012,First-Line Supervisors of Non-Retail Sales Workers,2
+52.18,41-2022,Parts Salespersons,1
+52.18,41-3011,Advertising Sales Agents,1
+52.18,41-3041,Travel Agents,1
+52.18,41-3091,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",2
+52.18,41-4011,"Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",1
+52.18,41-4012,"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",2
+52.18,41-9011,Demonstrators and Product Promoters,1
+52.18,41-9099,"Sales and Related Workers, All Other",2
+52.19,11-2021,Marketing Managers,1
+52.19,13-1022,"Wholesale and Retail Buyers, Except Farm Products",2
+52.19,13-1161,Market Research Analysts and Marketing Specialists,7
+52.19,27-1026,Merchandise Displayers and Window Trimmers,1
+52.19,41-1011,First-Line Supervisors of Retail Sales Workers,1
+52.19,41-1012,First-Line Supervisors of Non-Retail Sales Workers,1
+52.19,41-2022,Parts Salespersons,1
+52.19,41-3031,"Securities, Commodities, and Financial Services Sales Agents",1
+52.19,41-3041,Travel Agents,1
+52.19,41-4012,"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",3
+52.19,41-9012,Models,1
+52.19,41-9099,"Sales and Related Workers, All Other",2
+52.20,11-9021,Construction Managers,3
+52.20,13-1082,Project Management Specialists,1
+52.20,25-1011,"Business Teachers, Postsecondary",2
+52.21,11-3021,Computer and Information Systems Managers,1
+52.21,11-9199,"Managers, All Other",1
+52.21,25-1011,"Business Teachers, Postsecondary",1
+54.01,11-9121,Natural Sciences Managers,1
+54.01,11-9199,"Managers, All Other",9
+54.01,19-3093,Historians,9
+54.01,25-1125,"History Teachers, Postsecondary",9
+54.01,25-2031,"Secondary School Teachers, Except Special and Career/Technical Education",2
+54.01,25-4011,Archivists,1
+54.01,25-4012,Curators,1
+54.01,25-4013,Museum Technicians and Conservators,1
+54.01,39-7011,Tour Guides and Escorts,1
+60.01,29-1021,"Dentists, General",2
+60.01,29-1022,Oral and Maxillofacial Surgeons,1
+60.01,29-1023,Orthodontists,1
+60.01,29-1024,Prosthodontists,2
+60.01,29-1029,"Dentists, All Other Specialists",7
+60.03,29-1131,Veterinarians,21
+60.07,29-1171,Nurse Practitioners,52
+60.08,29-1051,Pharmacists,33
+60.09,29-1071,Physician Assistants,21
+61.01,19-1042,"Medical Scientists, Except Epidemiologists",26
+61.01,25-1071,"Health Specialties Teachers, Postsecondary",26
+61.01,29-1211,Anesthesiologists,3
+61.01,29-1213,Dermatologists,1
+61.01,29-1214,Emergency Medicine Physicians,5
+61.01,29-1215,Family Medicine Physicians,5
+61.01,29-1216,General Internal Medicine Physicians,9
+61.01,29-1217,Neurologists,2
+61.01,29-1221,"Pediatricians, General",6
+61.01,29-1223,Psychiatrists,4
+61.01,29-1224,Radiologists,1
+61.01,29-1229,"Physicians, All Other",10
+61.01,29-1249,"Surgeons, All Other",2
+61.02,11-9033,"Education Administrators, Postsecondary",2
+61.02,19-1042,"Medical Scientists, Except Epidemiologists",15
+61.02,25-1071,"Health Specialties Teachers, Postsecondary",18
+61.02,29-1214,Emergency Medicine Physicians,2
+61.02,29-1222,"Physicians, Pathologists",1
+61.02,29-1229,"Physicians, All Other",12
+61.02,29-1242,"Orthopedic Surgeons, Except Pediatric",1
+61.02,29-1249,"Surgeons, All Other",1
+61.03,19-1042,"Medical Scientists, Except Epidemiologists",2
+61.03,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.03,29-1229,"Physicians, All Other",2
+61.04,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.04,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.04,29-1211,Anesthesiologists,2
+61.05,19-1042,"Medical Scientists, Except Epidemiologists",3
+61.05,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.05,29-1213,Dermatologists,4
+61.05,29-1222,"Physicians, Pathologists",1
+61.06,11-9161,Emergency Management Directors,1
+61.06,19-1042,"Medical Scientists, Except Epidemiologists",3
+61.06,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.06,29-1214,Emergency Medicine Physicians,4
+61.07,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.07,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.07,29-1215,Family Medicine Physicians,2
+61.08,19-1042,"Medical Scientists, Except Epidemiologists",14
+61.08,25-1071,"Health Specialties Teachers, Postsecondary",15
+61.08,29-1212,Cardiologists,3
+61.08,29-1216,General Internal Medicine Physicians,1
+61.08,29-1229,"Physicians, All Other",11
+61.09,19-1042,"Medical Scientists, Except Epidemiologists",5
+61.09,25-1071,"Health Specialties Teachers, Postsecondary",5
+61.09,29-1229,"Physicians, All Other",5
+61.10,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.10,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.10,29-1249,"Surgeons, All Other",2
+61.11,19-1042,"Medical Scientists, Except Epidemiologists",6
+61.11,25-1071,"Health Specialties Teachers, Postsecondary",8
+61.11,29-1217,Neurologists,8
+61.12,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.12,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.12,29-1224,Radiologists,2
+61.13,19-1042,"Medical Scientists, Except Epidemiologists",4
+61.13,25-1071,"Health Specialties Teachers, Postsecondary",5
+61.13,29-1218,Obstetricians and Gynecologists,4
+61.13,29-1229,"Physicians, All Other",1
+61.14,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.14,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.14,29-1241,"Ophthalmologists, Except Pediatric",2
+61.15,19-1042,"Medical Scientists, Except Epidemiologists",5
+61.15,25-1071,"Health Specialties Teachers, Postsecondary",6
+61.15,29-1229,"Physicians, All Other",2
+61.15,29-1242,"Orthopedic Surgeons, Except Pediatric",3
+61.15,29-1243,Pediatric Surgeons,3
+61.16,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.16,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.16,29-1229,"Physicians, All Other",2
+61.17,19-1042,"Medical Scientists, Except Epidemiologists",3
+61.17,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.17,29-1221,"Pediatricians, General",1
+61.17,29-1229,"Physicians, All Other",3
+61.17,29-1243,Pediatric Surgeons,1
+61.17,29-1249,"Surgeons, All Other",3
+61.18,19-1042,"Medical Scientists, Except Epidemiologists",13
+61.18,25-1071,"Health Specialties Teachers, Postsecondary",16
+61.18,29-1222,"Physicians, Pathologists",16
+61.18,29-1229,"Physicians, All Other",1
+61.19,19-1042,"Medical Scientists, Except Epidemiologists",16
+61.19,25-1071,"Health Specialties Teachers, Postsecondary",17
+61.19,29-1212,Cardiologists,1
+61.19,29-1214,Emergency Medicine Physicians,2
+61.19,29-1221,"Pediatricians, General",17
+61.19,29-1229,"Physicians, All Other",1
+61.20,19-1042,"Medical Scientists, Except Epidemiologists",3
+61.20,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.20,29-1221,"Pediatricians, General",1
+61.20,29-1229,"Physicians, All Other",3
+61.21,19-1042,"Medical Scientists, Except Epidemiologists",2
+61.21,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.21,29-1243,Pediatric Surgeons,4
+61.21,29-1249,"Surgeons, All Other",4
+61.22,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.22,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.22,29-1081,Podiatrists,2
+61.23,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.23,25-1071,"Health Specialties Teachers, Postsecondary",4
+61.23,29-1229,"Physicians, All Other",4
+61.24,19-1042,"Medical Scientists, Except Epidemiologists",6
+61.24,25-1071,"Health Specialties Teachers, Postsecondary",7
+61.24,29-1223,Psychiatrists,7
+61.25,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.25,25-1071,"Health Specialties Teachers, Postsecondary",2
+61.25,29-1224,Radiologists,2
+61.25,29-1229,"Physicians, All Other",2
+61.26,19-1042,"Medical Scientists, Except Epidemiologists",7
+61.26,25-1071,"Health Specialties Teachers, Postsecondary",13
+61.26,29-1221,"Pediatricians, General",1
+61.26,29-1224,Radiologists,13
+61.27,19-1042,"Medical Scientists, Except Epidemiologists",7
+61.27,25-1071,"Health Specialties Teachers, Postsecondary",9
+61.27,29-1243,Pediatric Surgeons,2
+61.27,29-1249,"Surgeons, All Other",8
+61.28,19-1042,"Medical Scientists, Except Epidemiologists",2
+61.28,25-1071,"Health Specialties Teachers, Postsecondary",3
+61.28,29-1243,Pediatric Surgeons,1
+61.28,29-1249,"Surgeons, All Other",2
+61.99,19-1042,"Medical Scientists, Except Epidemiologists",1
+61.99,25-1071,"Health Specialties Teachers, Postsecondary",1
+61.99,29-1229,"Physicians, All Other",1
+61.99,29-1249,"Surgeons, All Other",1
+99.99,13-1074,Farm Labor Contractors,1
+99.99,25-3031,"Substitute Teachers, Short-Term",1
+99.99,25-3041,Tutors,1
+99.99,27-1023,Floral Designers,1
+99.99,27-2023,"Umpires, Referees, and Other Sports Officials",1
+99.99,27-4099,"Media and Communication Equipment Workers, All Other",1
+99.99,31-1132,Orderlies,1
+99.99,31-9095,Pharmacy Aides,1
+99.99,33-3041,Parking Enforcement Workers,1
+99.99,33-9011,Animal Control Workers,1
+99.99,33-9091,Crossing Guards and Flaggers,1
+99.99,33-9093,Transportation Security Screeners,1
+99.99,33-9094,School Bus Monitors,1
+99.99,33-9099,"Protective Service Workers, All Other",1
+99.99,35-2011,"Cooks, Fast Food",1
+99.99,35-2015,"Cooks, Short Order",1
+99.99,35-2021,Food Preparation Workers,1
+99.99,35-3023,Fast Food and Counter Workers,1
+99.99,35-3031,Waiters and Waitresses,1
+99.99,35-3041,"Food Servers, Nonrestaurant",1
+99.99,35-9011,Dining Room and Cafeteria Attendants and Bartender Helpers,1
+99.99,35-9021,Dishwashers,1
+99.99,35-9031,"Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop",1
+99.99,35-9099,"Food Preparation and Serving Related Workers, All Other",1
+99.99,37-2011,"Janitors and Cleaners, Except Maids and Housekeeping Cleaners",1
+99.99,37-2012,Maids and Housekeeping Cleaners,1
+99.99,37-2019,"Building Cleaning Workers, All Other",1
+99.99,37-2021,Pest Control Workers,1
+99.99,37-3013,Tree Trimmers and Pruners,1
+99.99,37-3019,"Grounds Maintenance Workers, All Other",1
+99.99,39-3012,Gambling and Sports Book Writers and Runners,1
+99.99,39-3019,"Gambling Service Workers, All Other",1
+99.99,39-3021,Motion Picture Projectionists,1
+99.99,39-3031,"Ushers, Lobby Attendants, and Ticket Takers",1
+99.99,39-3091,Amusement and Recreation Attendants,1
+99.99,39-3093,"Locker Room, Coatroom, and Dressing Room Attendants",1
+99.99,39-3099,"Entertainment Attendants and Related Workers, All Other",1
+99.99,39-4021,Funeral Attendants,1
+99.99,39-6011,Baggage Porters and Bellhops,1
+99.99,39-9099,"Personal Care and Service Workers, All Other",1
+99.99,41-2011,Cashiers,1
+99.99,41-2012,Gambling Change Persons and Booth Cashiers,1
+99.99,41-2021,Counter and Rental Clerks,1
+99.99,41-2031,Retail Salespersons,1
+99.99,41-9031,Sales Engineers,1
+99.99,41-9041,Telemarketers,1
+99.99,41-9091,"Door-to-Door Sales Workers, News and Street Vendors, and Related Workers",1
+99.99,43-2011,"Switchboard Operators, Including Answering Service",1
+99.99,43-2021,Telephone Operators,1
+99.99,43-3021,Billing and Posting Clerks,1
+99.99,43-3099,"Financial Clerks, All Other",1
+99.99,43-4031,"Court, Municipal, and License Clerks",1
+99.99,43-4081,"Hotel, Motel, and Resort Desk Clerks",1
+99.99,43-4111,"Interviewers, Except Eligibility and Loan",1
+99.99,43-4121,"Library Assistants, Clerical",1
+99.99,43-4181,Reservation and Transportation Ticket Agents and Travel Clerks,1
+99.99,43-4199,"Information and Record Clerks, All Other",1
+99.99,43-5021,Couriers and Messengers,1
+99.99,43-5031,Public Safety Telecommunicators,1
+99.99,43-5041,"Meter Readers, Utilities",1
+99.99,43-5051,Postal Service Clerks,1
+99.99,43-5052,Postal Service Mail Carriers,1
+99.99,43-5053,"Postal Service Mail Sorters, Processors, and Processing Machine Operators",1
+99.99,43-5071,"Shipping, Receiving, and Inventory Clerks",1
+99.99,43-5111,"Weighers, Measurers, Checkers, and Samplers, Recordkeeping",1
+99.99,43-9051,"Mail Clerks and Mail Machine Operators, Except Postal Service",1
+99.99,43-9071,"Office Machine Operators, Except Computer",1
+99.99,43-9199,"Office and Administrative Support Workers, All Other",1
+99.99,45-2041,"Graders and Sorters, Agricultural Products",1
+99.99,45-2092,"Farmworkers and Laborers, Crop, Nursery, and Greenhouse",1
+99.99,45-2099,"Agricultural Workers, All Other",1
+99.99,45-4021,Fallers,1
+99.99,45-4023,Log Graders and Scalers,1
+99.99,45-4029,"Logging Workers, All Other",1
+99.99,47-2061,Construction Laborers,1
+99.99,47-2082,Tapers,1
+99.99,47-2151,Pipelayers,1
+99.99,47-2161,Plasterers and Stucco Masons,1
+99.99,47-2171,Reinforcing Iron and Rebar Workers,1
+99.99,47-3011,"Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",1
+99.99,47-3012,Helpers--Carpenters,1
+99.99,47-3013,Helpers--Electricians,1
+99.99,47-3014,"Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",1
+99.99,47-3015,"Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",1
+99.99,47-3016,Helpers--Roofers,1
+99.99,47-3019,"Helpers, Construction Trades, All Other",1
+99.99,47-4031,Fence Erectors,1
+99.99,47-4091,Segmental Pavers,1
+99.99,47-4099,"Construction and Related Workers, All Other",1
+99.99,47-5043,"Roof Bolters, Mining",1
+99.99,47-5044,"Loading and Moving Machine Operators, Underground Mining",1
+99.99,47-5051,"Rock Splitters, Quarry",1
+99.99,47-5071,"Roustabouts, Oil and Gas",1
+99.99,47-5081,Helpers--Extraction Workers,1
+99.99,49-3093,Tire Repairers and Changers,1
+99.99,49-9011,Mechanical Door Repairers,1
+99.99,49-9091,"Coin, Vending, and Amusement Machine Servicers and Repairers",1
+99.99,49-9096,Riggers,1
+99.99,49-9098,"Helpers--Installation, Maintenance, and Repair Workers",1
+99.99,51-2021,"Coil Winders, Tapers, and Finishers",1
+99.99,51-2022,Electrical and Electronic Equipment Assemblers,1
+99.99,51-2023,Electromechanical Equipment Assemblers,1
+99.99,51-2051,Fiberglass Laminators and Fabricators,1
+99.99,51-2092,Team Assemblers,1
+99.99,51-2099,"Assemblers and Fabricators, All Other",1
+99.99,51-3022,"Meat, Poultry, and Fish Cutters and Trimmers",1
+99.99,51-3091,"Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders",1
+99.99,51-3093,Food Cooking Machine Operators and Tenders,1
+99.99,51-3099,"Food Processing Workers, All Other",1
+99.99,51-4051,Metal-Refining Furnace Operators and Tenders,1
+99.99,51-4052,"Pourers and Casters, Metal",1
+99.99,51-4072,"Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic",1
+99.99,51-4193,"Plating Machine Setters, Operators, and Tenders, Metal and Plastic",1
+99.99,51-5113,Print Binding and Finishing Workers,1
+99.99,51-6011,Laundry and Dry-Cleaning Workers,1
+99.99,51-6021,"Pressers, Textile, Garment, and Related Materials",1
+99.99,51-6031,Sewing Machine Operators,1
+99.99,51-6051,"Sewers, Hand",1
+99.99,51-6052,"Tailors, Dressmakers, and Custom Sewers",1
+99.99,51-6061,Textile Bleaching and Dyeing Machine Operators and Tenders,1
+99.99,51-6062,"Textile Cutting Machine Setters, Operators, and Tenders",1
+99.99,51-6063,"Textile Knitting and Weaving Machine Setters, Operators, and Tenders",1
+99.99,51-6064,"Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders",1
+99.99,51-6091,"Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers",1
+99.99,51-6099,"Textile, Apparel, and Furnishings Workers, All Other",1
+99.99,51-8012,Power Distributors and Dispatchers,1
+99.99,51-8021,Stationary Engineers and Boiler Operators,1
+99.99,51-8093,"Petroleum Pump System Operators, Refinery Operators, and Gaugers",1
+99.99,51-8099,"Plant and System Operators, All Other",1
+99.99,51-9021,"Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",1
+99.99,51-9022,"Grinding and Polishing Workers, Hand",1
+99.99,51-9023,"Mixing and Blending Machine Setters, Operators, and Tenders",1
+99.99,51-9031,"Cutters and Trimmers, Hand",1
+99.99,51-9032,"Cutting and Slicing Machine Setters, Operators, and Tenders",1
+99.99,51-9041,"Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",1
+99.99,51-9051,"Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",1
+99.99,51-9111,Packaging and Filling Machine Operators and Tenders,1
+99.99,51-9123,"Painting, Coating, and Decorating Workers",1
+99.99,51-9151,Photographic Process Workers and Processing Machine Operators,1
+99.99,51-9191,Adhesive Bonding Machine Operators and Tenders,1
+99.99,51-9192,"Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",1
+99.99,51-9193,Cooling and Freezing Equipment Operators and Tenders,1
+99.99,51-9195,"Molders, Shapers, and Casters, Except Metal and Plastic",1
+99.99,51-9196,"Paper Goods Machine Setters, Operators, and Tenders",1
+99.99,51-9197,Tire Builders,1
+99.99,51-9198,Helpers--Production Workers,1
+99.99,51-9199,"Production Workers, All Other",1
+99.99,53-1041,Aircraft Cargo Handling Supervisors,1
+99.99,53-1042,"First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand",1
+99.99,53-3031,Driver/Sales Workers,1
+99.99,53-3054,Taxi Drivers,1
+99.99,53-3099,"Motor Vehicle Operators, All Other",1
+99.99,53-5011,Sailors and Marine Oilers,1
+99.99,53-6011,Bridge and Lock Tenders,1
+99.99,53-6021,Parking Attendants,1
+99.99,53-6031,Automotive and Watercraft Service Attendants,1
+99.99,53-6032,Aircraft Service Attendants,1
+99.99,53-6051,Transportation Inspectors,1
+99.99,53-6061,Passenger Attendants,1
+99.99,53-6099,"Transportation Workers, All Other",1
+99.99,53-7011,Conveyor Operators and Tenders,1
+99.99,53-7061,Cleaners of Vehicles and Equipment,1
+99.99,53-7062,"Laborers and Freight, Stock, and Material Movers, Hand",1
+99.99,53-7063,Machine Feeders and Offbearers,1
+99.99,53-7064,"Packers and Packagers, Hand",1
+99.99,53-7065,Stockers and Order Fillers,1
+99.99,53-7071,Gas Compressor and Gas Pumping Station Operators,1
+99.99,53-7072,"Pump Operators, Except Wellhead Pumpers",1
+99.99,53-7073,Wellhead Pumpers,1
+99.99,53-7081,Refuse and Recyclable Material Collectors,1
+99.99,53-7121,"Tank Car, Truck, and Ship Loaders",1
+99.99,55-1011,Air Crew Officers,1
+99.99,55-1012,Aircraft Launch and Recovery Officers,1
+99.99,55-1013,Armored Assault Vehicle Officers,1
+99.99,55-2011,First-Line Supervisors of Air Crew Members,1
+99.99,55-2012,First-Line Supervisors of Weapons Specialists/Crew Members,1
+99.99,55-2013,First-Line Supervisors of All Other Tactical Operations Specialists,1
+99.99,55-3011,Air Crew Members,1
+99.99,55-3013,Armored Assault Vehicle Crew Members,1
+99.99,55-3016,Infantry,1
