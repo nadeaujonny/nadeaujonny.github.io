@@ -1,0 +1,230 @@
+# O*NET Interest Profiler Short Form — 60 items
+#
+# Source: U.S. Department of Labor, Employment & Training Administration.
+# Developed by the National Center for O*NET Development.
+# Public domain. Released 2010 (Rounds, Su, Lewis & Rivkin).
+# Original PDF: https://www.onetcenter.org/dl_tools/ipsf/Interest_Profiler.pdf
+#
+# Each item is a "work activity." Items are grouped by RIASEC dimension:
+#   R = Realistic
+#   I = Investigative
+#   A = Artistic
+#   S = Social
+#   E = Enterprising
+#   C = Conventional
+#
+# Original instrument uses a binary check / no-check response.
+# This app uses the validated 5-point Likert form (Short Form computerized version):
+#   0 = Strongly Dislike
+#   1 = Dislike
+#   2 = Unsure
+#   3 = Like
+#   4 = Strongly Like
+# Per-dimension score range with 5-point scale: 0-40 (10 items x 0-4).
+
+version: "1.0"
+instrument: "O*NET Interest Profiler Short Form"
+source_url: "https://www.onetcenter.org/dl_tools/ipsf/Interest_Profiler.pdf"
+response_scale:
+  type: "likert_5"
+  min: 0
+  max: 4
+  labels:
+    0: "Strongly Dislike"
+    1: "Dislike"
+    2: "Unsure"
+    3: "Like"
+    4: "Strongly Like"
+
+items:
+  # --- Realistic (R) ---
+  - id: R01
+    dimension: R
+    text: "Build kitchen cabinets"
+  - id: R02
+    dimension: R
+    text: "Lay brick or tile"
+  - id: R03
+    dimension: R
+    text: "Repair household appliances"
+  - id: R04
+    dimension: R
+    text: "Raise fish in a fish hatchery"
+  - id: R05
+    dimension: R
+    text: "Assemble electronic parts"
+  - id: R06
+    dimension: R
+    text: "Drive a truck to deliver packages to offices and homes"
+  - id: R07
+    dimension: R
+    text: "Test the quality of parts before shipment"
+  - id: R08
+    dimension: R
+    text: "Repair and install locks"
+  - id: R09
+    dimension: R
+    text: "Set up and operate machines to make products"
+  - id: R10
+    dimension: R
+    text: "Put out forest fires"
+
+  # --- Investigative (I) ---
+  - id: I01
+    dimension: I
+    text: "Develop a new medicine"
+  - id: I02
+    dimension: I
+    text: "Study ways to reduce water pollution"
+  - id: I03
+    dimension: I
+    text: "Conduct chemical experiments"
+  - id: I04
+    dimension: I
+    text: "Study the movement of planets"
+  - id: I05
+    dimension: I
+    text: "Examine blood samples using a microscope"
+  - id: I06
+    dimension: I
+    text: "Investigate the cause of a fire"
+  - id: I07
+    dimension: I
+    text: "Develop a way to better predict the weather"
+  - id: I08
+    dimension: I
+    text: "Work in a biology lab"
+  - id: I09
+    dimension: I
+    text: "Invent a replacement for sugar"
+  - id: I10
+    dimension: I
+    text: "Do laboratory tests to identify diseases"
+
+  # --- Artistic (A) ---
+  - id: A01
+    dimension: A
+    text: "Write books or plays"
+  - id: A02
+    dimension: A
+    text: "Play a musical instrument"
+  - id: A03
+    dimension: A
+    text: "Compose or arrange music"
+  - id: A04
+    dimension: A
+    text: "Draw pictures"
+  - id: A05
+    dimension: A
+    text: "Create special effects for movies"
+  - id: A06
+    dimension: A
+    text: "Paint sets for plays"
+  - id: A07
+    dimension: A
+    text: "Write scripts for movies or television shows"
+  - id: A08
+    dimension: A
+    text: "Perform jazz or tap dance"
+  - id: A09
+    dimension: A
+    text: "Sing in a band"
+  - id: A10
+    dimension: A
+    text: "Edit movies"
+
+  # --- Social (S) ---
+  - id: S01
+    dimension: S
+    text: "Teach an individual an exercise routine"
+  - id: S02
+    dimension: S
+    text: "Help people with personal or emotional problems"
+  - id: S03
+    dimension: S
+    text: "Give career guidance to people"
+  - id: S04
+    dimension: S
+    text: "Perform rehabilitation therapy"
+  - id: S05
+    dimension: S
+    text: "Do volunteer work at a non-profit organization"
+  - id: S06
+    dimension: S
+    text: "Teach children how to play sports"
+  - id: S07
+    dimension: S
+    text: "Teach sign language to people who are deaf or hard of hearing"
+  - id: S08
+    dimension: S
+    text: "Help conduct a group therapy session"
+  - id: S09
+    dimension: S
+    text: "Take care of children at a day-care center"
+  - id: S10
+    dimension: S
+    text: "Teach a high-school class"
+
+  # --- Enterprising (E) ---
+  - id: E01
+    dimension: E
+    text: "Buy and sell stocks and bonds"
+  - id: E02
+    dimension: E
+    text: "Manage a retail store"
+  - id: E03
+    dimension: E
+    text: "Operate a beauty salon or barber shop"
+  - id: E04
+    dimension: E
+    text: "Manage a department within a large company"
+  - id: E05
+    dimension: E
+    text: "Start your own business"
+  - id: E06
+    dimension: E
+    text: "Negotiate business contracts"
+  - id: E07
+    dimension: E
+    text: "Represent a client in a lawsuit"
+  - id: E08
+    dimension: E
+    text: "Market a new line of clothing"
+  - id: E09
+    dimension: E
+    text: "Sell merchandise at a department store"
+  - id: E10
+    dimension: E
+    text: "Manage a clothing store"
+
+  # --- Conventional (C) ---
+  - id: C01
+    dimension: C
+    text: "Develop a spreadsheet using computer software"
+  - id: C02
+    dimension: C
+    text: "Proofread records or forms"
+  - id: C03
+    dimension: C
+    text: "Install software across computers on a large network"
+  - id: C04
+    dimension: C
+    text: "Operate a calculator"
+  - id: C05
+    dimension: C
+    text: "Keep shipping and receiving records"
+  - id: C06
+    dimension: C
+    text: "Calculate the wages of employees"
+  - id: C07
+    dimension: C
+    text: "Inventory supplies using a hand-held computer"
+  - id: C08
+    dimension: C
+    text: "Record rent payments"
+  - id: C09
+    dimension: C
+    text: "Keep inventory records"
+  - id: C10
+    dimension: C
+    text: "Stamp, sort, and distribute mail for an organization"

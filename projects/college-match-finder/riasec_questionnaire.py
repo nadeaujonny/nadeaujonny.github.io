@@ -18,7 +18,7 @@ import yaml
 
 from config import RIASEC_DIMENSIONS
 
-_YAML_PATH = Path(__file__).parent / "data" / "raw" / "riasec_items.yaml"
+_YAML_PATH = Path(__file__).parent / "data" / "riasec_items.yaml"
 _SCALE_MIN = 0
 _SCALE_MAX = 4
 

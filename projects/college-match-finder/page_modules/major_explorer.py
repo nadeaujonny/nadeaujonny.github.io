@@ -12,14 +12,12 @@ Phase 8 status:
   - 8.5: Cross-tab backfill into School Finder detail cards
 """
 
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from config import LQ_CAP_FOR_CHOROPLETH, PALETTE
+from config import DATA_CLEANED_DIR, LQ_CAP_FOR_CHOROPLETH, PALETTE
 from utils import format_cip_code, make_button_key, parse_cip_code
 from major_descriptions import get_description
 from page_modules.school_finder import set_school_finder_cip
@@ -32,18 +30,18 @@ from riasec_matching import get_top_n_matches
 # Constants
 # ---------------------------------------------------------------------------
 
-FOS_CSV_PATH = Path("data/cleaned/field_of_study_cleaned.csv")
+FOS_CSV_PATH = DATA_CLEANED_DIR / "field_of_study_cleaned.csv"
 
 # Phase 9 paths
-OCCUPATIONS_MASTER_PATH = Path("data/cleaned/occupations_master.csv")
-CIP4_TO_SOC_PATH = Path("data/cleaned/cip4_to_soc.csv")
-MAJOR_OUTCOMES_PATH = Path("data/cleaned/major_outcomes.csv")
+OCCUPATIONS_MASTER_PATH = DATA_CLEANED_DIR / "occupations_master.csv"
+CIP4_TO_SOC_PATH = DATA_CLEANED_DIR / "cip4_to_soc.csv"
+MAJOR_OUTCOMES_PATH = DATA_CLEANED_DIR / "major_outcomes.csv"
 
 # Phase 10.4 path
-CIP4_STATE_EMPLOYMENT_PATH = Path("data/cleaned/cip4_state_employment.csv")
+CIP4_STATE_EMPLOYMENT_PATH = DATA_CLEANED_DIR / "cip4_state_employment.csv"
 
 # Phase 10.5 path
-CIP4_WORK_CONTEXT_PATH = Path("data/cleaned/cip4_work_context.csv")
+CIP4_WORK_CONTEXT_PATH = DATA_CLEANED_DIR / "cip4_work_context.csv"
 
 # Session-state key for the currently selected CIP code (stored as int to
 # match the dtype in the source CSV). Read by Steps 8.3-8.5 and by the
