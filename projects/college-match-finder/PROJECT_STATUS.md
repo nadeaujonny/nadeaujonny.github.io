@@ -1,6 +1,6 @@
 # PROJECT_STATUS.md — College Match Finder
 
-**Last updated:** May 5, 2026 (end-of-day, post-6E — Phase 6 complete)
+**Last updated:** May 5, 2026 (Phase 7 in progress — Block 3 complete)
 **Project:** College Match Finder (Streamlit app)
 **Repo root:** local working copy at `C:\Users\nadea\OneDrive\Desktop\Data Analysis\college-match-finder\college-match-finder`
 **Author:** Jonathan Nadeau
@@ -64,7 +64,12 @@ Authoritative planning docs:
 | **V4 Phase 6C-2** | Interactive accessibility (keyboard nav, button labels, badge text fallbacks) | ✅ Complete (May 5, 2026) |
 | **V4 Phase 6D** | Transparency surface (About the Data expansion, freshness badge) | ✅ Complete (May 5, 2026) |
 | **V4 Phase 6E** | Mobile + Dark Mode + Lighthouse | ✅ Complete (May 5, 2026) |
-| **V4 Phase 7** | Deployment & Documentation | ⬜ **NEXT** |
+| **V4 Phase 7 — Block 1** | Repo cleanup, monorepo integration, requirements pinned | ✅ Complete (May 5, 2026) |
+| **V4 Phase 7 — Block 2** | Streamlit Cloud deployment — live at nadeaujonnycollegematchfinder.streamlit.app | ✅ Complete (May 5, 2026) |
+| **V4 Phase 7 — Block 3** | README authoring (Option C scope, LICENSE, screenshots) | ✅ Complete (May 5, 2026) |
+| **V4 Phase 7 — Block 4** | index.md (portfolio page, Jekyll, non-technical audience) | ⬜ **NEXT** |
+| **V4 Phase 7 — Block 5** | Phase 7 close-out, PROJECT_STATUS.md final update | ⬜ Outstanding |
+| **Phase 7.5** | Master Project Narrative (docs/PROJECT_NARRATIVE.md) | ⬜ Outstanding |
 | **Portfolio writeup** | Public consolidation linked from nadeaujonny.github.io | ⬜ Outstanding |
 
 ---
@@ -116,6 +121,22 @@ Run `pytest --collect-only -q` for the authoritative breakdown by file. Updated 
 | **Total** | **~297** | |
 
 When in doubt, run `pytest --collect-only -q`. Total count is what matters. Both `pytest` and `pytest tests/` invocations report the same total (test discovery drift was resolved in audit Batch 1).
+
+---
+
+## What Phase 7 produced (so far)
+
+### Block 3 — README, LICENSE, Screenshots (May 5, 2026)
+
+README authored at Option C scope (~90 lines): live URL, features, "Why this project" framing, Highlights section with specific technical depth (test count, WCAG AA, cross-tab bug catch), tech stack, data sources redirect, quick-start, annotated project structure tree. LICENSE: MIT, Copyright 2026 Jonathan Nadeau. 3 screenshots from the live deployed app embedded in `assets/` folder (`hero.png`, `major-explorer.png`, `find-your-fit.png`). Portfolio page link stubbed with HTML comment — to be uncommented after Block 4 (index.md) ships.
+
+### Block 2 — Deployment (May 5, 2026)
+
+Live at **https://nadeaujonnycollegematchfinder.streamlit.app**. Deployed from `nadeaujonny/nadeaujonny.github.io` monorepo, main file path `projects/college-match-finder/app.py`. Two deployment bugs found and fixed post-deploy: (1) `major_explorer.py` used bare `Path("data/...")` strings that resolved to repo root on Cloud — refactored to `config.DATA_CLEANED_DIR`; (2) `riasec_items.yaml` was in `data/raw/` (gitignored) — moved to `data/`. Both fixed in a single commit, auto-redeployed. All smoke tests passed.
+
+### Block 1 — Repo cleanup & monorepo integration (May 5, 2026)
+
+Architecture pivot from standalone repo to monorepo under `nadeaujonny.github.io/projects/college-match-finder/`. `requirements.txt` pinned to exact versions; pytest removed from production deps; `pillow` added. `data/processed/top_60_cip4.csv` culled (zero runtime references). Initial commit: 74 files, 189,970 insertions.
 
 ---
 
