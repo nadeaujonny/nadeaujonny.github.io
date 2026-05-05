@@ -155,14 +155,14 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <div class="project-card-link college-card coming-soon-card" aria-label="Coming Soon: College Match Finder">
+    <a class="project-card-link college-card" href="/projects/college-match-finder/" aria-label="Open Python project: College Match Finder">
       <div class="project-card-content">
-        <span class="coming-soon-badge">Coming Soon</span>
         <h2>Python · Streamlit</h2>
         <h3>College Match Finder</h3>
         <p>Interactive Streamlit app using U.S. Department of Education College Scorecard data — weighted multi-criteria scoring, distance filtering, acceptance likelihood badges, side-by-side comparison, and exportable reports.</p>
+        <div class="project-card-cta">Open project →</div>
       </div>
-    </div>
+    </a>
   </div>
 
 </div>
