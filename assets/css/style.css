@@ -696,7 +696,8 @@ code, pre {
 .looker-card,
 .pipeline-card,
 .supplychain-card,
-.ml-card {
+.ml-card,
+.car-card {
   position: relative;
   background-size: cover !important;
   background-position: center !important;
@@ -760,6 +761,10 @@ code, pre {
   background-image: url("/projects/college-match-finder/assets/hero.png") !important;
 }
 
+.car-card {
+  background-image: url("/projects/car-catalog/assets/home-light.png") !important;
+}
+
 /* Colored overlay using pseudo-element */
 .sql-card::before,
 .excel-card::before,
@@ -772,7 +777,8 @@ code, pre {
 .looker-card::before,
 .pipeline-card::before,
 .supplychain-card::before,
-.ml-card::before {
+.ml-card::before,
+.car-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -901,6 +907,15 @@ code, pre {
   );
 }
 
+/* Car Catalog card – dark navy overlay */
+.car-card::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 30, 50, 0.62) 0%,
+    rgba(10, 18, 35, 0.82) 100%
+  );
+}
+
 /* Slightly lighter overlay on hover */
 .sql-card:hover::before {
   background: linear-gradient(
@@ -1006,6 +1021,14 @@ code, pre {
   );
 }
 
+.car-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 30, 50, 0.54) 0%,
+    rgba(10, 18, 35, 0.74) 100%
+  );
+}
+
 /* Content positioning above the overlay */
 .project-card-content {
   position: relative;
@@ -1028,6 +1051,7 @@ code, pre {
 .supplychain-card .project-card-content,
 .ml-card .project-card-content,
 .college-card .project-card-content,
+.car-card .project-card-content,
 .sql-card .project-card-content *,
 .excel-card .project-card-content *,
 .tableau-card .project-card-content *,
@@ -1039,7 +1063,8 @@ code, pre {
 .pipeline-card .project-card-content *,
 .supplychain-card .project-card-content *,
 .ml-card .project-card-content *,
-.college-card .project-card-content * {
+.college-card .project-card-content *,
+.car-card .project-card-content * {
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
@@ -1055,7 +1080,8 @@ code, pre {
 .project-card-link.looker-card .project-card-content h2,
 .project-card-link.supplychain-card .project-card-content h2,
 .project-card-link.ml-card .project-card-content h2,
-.project-card-link.college-card .project-card-content h2 {
+.project-card-link.college-card .project-card-content h2,
+.project-card-link.car-card .project-card-content h2 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -1079,7 +1105,8 @@ code, pre {
 .project-card-link.looker-card .project-card-content h3,
 .project-card-link.supplychain-card .project-card-content h3,
 .project-card-link.ml-card .project-card-content h3,
-.project-card-link.college-card .project-card-content h3 {
+.project-card-link.college-card .project-card-content h3,
+.project-card-link.car-card .project-card-content h3 {
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   background: none !important;
@@ -1103,7 +1130,8 @@ code, pre {
 .looker-card .project-card-content p,
 .supplychain-card .project-card-content p,
 .ml-card .project-card-content p,
-.college-card .project-card-content p {
+.college-card .project-card-content p,
+.car-card .project-card-content p {
   color: rgba(255, 255, 255, 0.90) !important;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -1122,7 +1150,8 @@ code, pre {
 .looker-card .project-card-cta,
 .supplychain-card .project-card-cta,
 .ml-card .project-card-cta,
-.college-card .project-card-cta {
+.college-card .project-card-cta,
+.car-card .project-card-cta {
   color: rgba(255, 255, 255, 0.95) !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
@@ -1138,7 +1167,8 @@ code, pre {
 .looker-card:hover .project-card-cta,
 .supplychain-card:hover .project-card-cta,
 .ml-card:hover .project-card-cta,
-.college-card:hover .project-card-cta {
+.college-card:hover .project-card-cta,
+.car-card:hover .project-card-cta {
   color: #fff !important;
 }
 

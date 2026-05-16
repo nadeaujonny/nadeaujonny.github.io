@@ -165,4 +165,15 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
+  <div class="col-6">
+    <a class="project-card-link car-card" href="/projects/car-catalog/" aria-label="Open Car Catalog project: Structured vehicle specs dataset">
+      <div class="project-card-content">
+        <h2>JavaScript · JSON</h2>
+        <h3>Car Catalog</h3>
+        <p>Structured dataset of 1,492 vehicle trims across ~40 fields per row, every value individually sourced and cited under a manufacturer-only policy.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
 </div>
