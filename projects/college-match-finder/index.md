@@ -3,6 +3,8 @@ layout: default
 title: College Match Finder
 ---
 
+<a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
+
 # College Match Finder
 
 College Match Finder is an interactive college recommendation tool that scores and ranks U.S. institutions against a student's personal priorities — academics, cost, outcomes, and career trajectory. Try it at [nadeaujonnycollegematchfinder.streamlit.app](https://nadeaujonnycollegematchfinder.streamlit.app) — source on [GitHub](https://github.com/nadeaujonny/nadeaujonny.github.io/tree/main/projects/college-match-finder). Built for students, parents, and college counselors, it pulls from 12 federal and labor-market data sources to surface schools that match what a student actually cares about, not just the national rankings.
