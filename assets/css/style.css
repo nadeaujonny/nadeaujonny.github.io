@@ -1172,9 +1172,96 @@ code, pre {
   color: #fff !important;
 }
 
-/* ── FP&A Financial Model card ── */
+/* ── FP&A Financial Model card (Skechers) — image background + blue overlay ── */
 .fpa-card {
-  background: linear-gradient(135deg, #1a1a2e 0%, #1b3a2e 40%, #2d5016 100%);
+  position: relative;
+  background-image: url("/projects/skechers-fpa-model/images/kpi-dashboard.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+/* Blue overlay (Skechers blue, top → deeper blue bottom) so white text stays readable */
+.fpa-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--radius);
+  z-index: 1;
+  transition: background 160ms ease;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 86, 179, 0.66) 0%,
+    rgba(10, 35, 92, 0.82) 100%
+  );
+}
+
+.fpa-card:hover::before {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 86, 179, 0.58) 0%,
+    rgba(10, 35, 92, 0.74) 100%
+  );
+}
+
+/* Card content sits above the overlay */
+.fpa-card .project-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* All content text white (matches the other image cards) */
+.fpa-card .project-card-content,
+.fpa-card .project-card-content * {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Tool name (h2) — high specificity to beat the earlier dark-heading rule */
+.project-card-link.fpa-card .project-card-content h2 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin: 0 0 0.3em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Project title (h3) — high specificity */
+.project-card-link.fpa-card .project-card-content h3 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 0 0.5em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Description (p) */
+.fpa-card .project-card-content p {
+  color: rgba(255, 255, 255, 0.90) !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* CTA ("Open project →") */
+.fpa-card .project-card-cta {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.fpa-card:hover .project-card-cta {
+  color: #fff !important;
 }
 
 /* ── College Match Finder card ── */
