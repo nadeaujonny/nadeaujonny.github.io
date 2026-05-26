@@ -144,14 +144,14 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <div class="project-card-link fpa-card coming-soon-card" aria-label="Coming Soon: FP&A Financial Model — Skechers U.S.A.">
+    <a class="project-card-link fpa-card" href="/projects/skechers-fpa-model/" aria-label="Open Excel project: FP&A Financial Model — Skechers U.S.A.">
       <div class="project-card-content">
-        <span class="coming-soon-badge">Coming Soon</span>
         <h2>Excel</h2>
         <h3>FP&A Financial Model — Skechers U.S.A.</h3>
         <p>3-statement financial model built from SEC 10-K filings — 5 years of historical data with 3-year forward projections, segment-level revenue modeling, working capital forecasting via DSO/DIO/DPO, variance analysis, scenario planning with sensitivity tables, and a KPI dashboard with model integrity checks.</p>
+        <div class="project-card-cta">Open project →</div>
       </div>
-    </div>
+    </a>
   </div>
 
   <div class="col-6">
