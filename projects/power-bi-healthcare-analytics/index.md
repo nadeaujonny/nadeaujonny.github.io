@@ -1,14 +1,14 @@
 ---
 layout: default
-title: Power BI — CDC Chronic Disease Analytics
-description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicators — Power Query ETL, star schema dimensional modeling, 10 DAX measures, and interactive dashboards — to track U.S. health trends, rank states, and quantify demographic disparities across 9 chronic disease topics."
+title: Power BI – CDC Chronic Disease Analytics
+description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicators – Power Query ETL, star schema dimensional modeling, 10 DAX measures, and interactive dashboards – to track U.S. health trends, rank states, and quantify demographic disparities across 9 chronic disease topics."
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
-# Power BI — CDC Chronic Disease Analytics
+# Power BI – CDC Chronic Disease Analytics
 
-> An end-to-end Power BI project analyzing the CDC's U.S. Chronic Disease Indicators dataset to track health trends across 9 topics, rank state performance, and quantify demographic disparities — demonstrating Power Query ETL, star schema modeling, and DAX measure development.
+> An end-to-end Power BI project analyzing the CDC's U.S. Chronic Disease Indicators dataset to track health trends across 9 topics, rank state performance, and quantify demographic disparities – demonstrating Power Query ETL, star schema modeling, and DAX measure development.
 
 ---
 
@@ -59,7 +59,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h3>Source</h3>
   <p>
-    <strong>CDC Open Data — U.S. Chronic Disease Indicators (CDI)</strong><br>
+    <strong>CDC Open Data – U.S. Chronic Disease Indicators (CDI)</strong><br>
     <a href="https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725" target="_blank" rel="noopener">
       https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725
     </a>
@@ -67,7 +67,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h3>Format</h3>
   <ul>
-    <li><strong>File type:</strong> CSV in tidy/long format — one row per measurement observation</li>
+    <li><strong>File type:</strong> CSV in tidy/long format – one row per measurement observation</li>
     <li><strong>Granularity:</strong> Year × Location × Indicator × Stratification</li>
     <li><strong>Structure:</strong> Each row represents a single data point for a specific year, state, health indicator, and demographic group</li>
   </ul>
@@ -94,7 +94,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <p>
     These 9 topics represent major chronic disease categories that collectively account for the leading causes of death
     and disability in the United States. They include both direct disease outcomes (Cancer, Cardiovascular Disease, Diabetes)
-    and behavioral risk factors (Alcohol, Tobacco, Nutrition/Physical Activity) — enabling analysis of both upstream causes
+    and behavioral risk factors (Alcohol, Tobacco, Nutrition/Physical Activity) – enabling analysis of both upstream causes
     and downstream health impacts.
   </p>
 
@@ -107,7 +107,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <h4>7 Years</h4>
   <ul>
     <li>2015, 2016, 2018, 2019, 2020, 2021, 2022</li>
-    <li><strong>Note:</strong> 2017 is missing from the dataset — this is a gap in the source data, not a filtering decision</li>
+    <li><strong>Note:</strong> 2017 is missing from the dataset – this is a gap in the source data, not a filtering decision</li>
   </ul>
 
   <h4>Filtered Result</h4>
@@ -125,13 +125,13 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <p>
     Before building the data model and DAX measures, I transformed the raw CDC dataset using <strong>Power Query</strong>
     in Power BI Desktop. The goal was to convert a single wide CSV file into a normalized star schema with one fact table
-    and four dimension tables — each optimized for downstream analysis.
+    and four dimension tables – each optimized for downstream analysis.
   </p>
 
-  <h3>Step 1 — Import Raw Data</h3>
+  <h3>Step 1 – Import Raw Data</h3>
   <p>
     Imported the full CDI CSV file into Power BI and preserved it as <code>CDI_Raw</code>. This query serves as the
-    unmodified reference copy of the original data — no manual edits or transformations applied.
+    unmodified reference copy of the original data – no manual edits or transformations applied.
   </p>
 
   <figure style="margin: 0 0 18px 0;">
@@ -142,14 +142,14 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>CDI_Raw</code> — original imported dataset preserved as-is before any transformations.
+      <code>CDI_Raw</code> – original imported dataset preserved as-is before any transformations.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-cdi-raw.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
-  <h3>Step 2 — Filter &amp; Scope</h3>
+  <h3>Step 2 – Filter &amp; Scope</h3>
   <ul>
     <li>Filtered to 9 selected topics (Alcohol, Arthritis, Asthma, Cancer, Cardiovascular Disease, Chronic Kidney Disease, Diabetes, Nutrition/Physical Activity/Weight Status, Tobacco)</li>
     <li>Filtered to 52 locations (50 states + DC + national aggregate; territories excluded)</li>
@@ -157,7 +157,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
     <li>Set correct data types: <code>YearStart</code> → Whole Number, <code>DataValue</code> → Decimal, <code>LowConfidenceLimit</code> → Decimal, <code>HighConfidenceLimit</code> → Decimal, text fields → Text</li>
   </ul>
 
-  <h3>Step 3 — Create Dimension Tables</h3>
+  <h3>Step 3 – Create Dimension Tables</h3>
   <p>
     Used the <strong>duplicate-and-reduce method</strong>: duplicated the filtered base query, then removed all columns
     except the dimension attributes, and applied <em>Remove Duplicates</em> to produce clean lookup tables. This approach
@@ -173,7 +173,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>Dim_Location</code> — 52 unique locations with <code>LocationAbbr</code>, <code>LocationDesc</code>, <code>Geolocation</code>, and <code>LocationID</code>.
+      <code>Dim_Location</code> – 52 unique locations with <code>LocationAbbr</code>, <code>LocationDesc</code>, <code>Geolocation</code>, and <code>LocationID</code>.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-dim-location.png">Open full-size</a>
       </span>
@@ -189,7 +189,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>Dim_Indicator</code> — 9 unique health indicators with <code>Topic</code>, <code>TopicID</code>, <code>Question</code>, <code>QuestionID</code>, <code>DataValueType</code>, <code>DataValueTypeID</code>, and <code>DataValueUnit</code>.
+      <code>Dim_Indicator</code> – 9 unique health indicators with <code>Topic</code>, <code>TopicID</code>, <code>Question</code>, <code>QuestionID</code>, <code>DataValueType</code>, <code>DataValueTypeID</code>, and <code>DataValueUnit</code>.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-dim-indicator.png">Open full-size</a>
       </span>
@@ -214,7 +214,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>Dim_Stratification</code> — 5 unique demographic groups with <code>StratificationCategory1</code>, <code>Stratification1</code>, <code>StratificationCategoryID1</code>, and <code>StratificationID1</code>.
+      <code>Dim_Stratification</code> – 5 unique demographic groups with <code>StratificationCategory1</code>, <code>Stratification1</code>, <code>StratificationCategoryID1</code>, and <code>StratificationID1</code>.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-dim-stratification.png">Open full-size</a>
       </span>
@@ -225,7 +225,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
     The stratification dimension enables both executive-level views (Overall) and demographic disparity analysis:
   </p>
   <ul>
-    <li><strong>Overall</strong> — aggregate population values</li>
+    <li><strong>Overall</strong> – aggregate population values</li>
     <li><strong>Sex (Male)</strong></li>
     <li><strong>Race/Ethnicity (Hispanic)</strong></li>
     <li><strong>Age (Age >=65)</strong></li>
@@ -241,14 +241,14 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>Dim_Date</code> — 7 unique year records with <code>YearStart</code> and <code>YearEnd</code> covering 2015–2022 (2017 absent from source data).
+      <code>Dim_Date</code> – 7 unique year records with <code>YearStart</code> and <code>YearEnd</code> covering 2015–2022 (2017 absent from source data).
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-dim-date.png">Open full-size</a>
       </span>
     </figcaption>
   </figure>
 
-  <h3>Step 4 — Build Fact Table</h3>
+  <h3>Step 4 – Build Fact Table</h3>
   <p>
     Created <code>Fact_CDI</code> by selecting only the foreign key columns and metric columns from the filtered base
     query. This table contains the measurement data that connects to all four dimension tables through key relationships.
@@ -262,7 +262,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      <code>Fact_CDI</code> — 999+ rows with 7 columns: <code>YearStart</code>, <code>LocationID</code>, <code>QuestionID</code>, <code>StratificationID1</code>, <code>DataValue</code>, <code>LowConfidenceLimit</code>, <code>HighConfidenceLimit</code>.
+      <code>Fact_CDI</code> – 999+ rows with 7 columns: <code>YearStart</code>, <code>LocationID</code>, <code>QuestionID</code>, <code>StratificationID1</code>, <code>DataValue</code>, <code>LowConfidenceLimit</code>, <code>HighConfidenceLimit</code>.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-power-query-fact-cdi.png">Open full-size</a>
       </span>
@@ -310,7 +310,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h3>Fact Table</h3>
   <p>
-    <strong>Fact_CDI</strong> (999+ rows, 7 columns) — the central measurement table containing one row per observation.
+    <strong>Fact_CDI</strong> (999+ rows, 7 columns) – the central measurement table containing one row per observation.
   </p>
   <ul>
     <li><strong>Foreign keys:</strong> <code>YearStart</code>, <code>LocationID</code>, <code>QuestionID</code>, <code>StratificationID1</code></li>
@@ -361,7 +361,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
   <h3>Why This Structure Improves Performance and Analysis</h3>
   <ul>
     <li><strong>VertiPaq optimization:</strong> narrow dimension tables with low cardinality compress efficiently in Power BI's in-memory engine</li>
-    <li><strong>DAX clarity:</strong> measures reference dimension attributes for context and fact columns for calculations — the separation makes formulas easier to write and debug</li>
+    <li><strong>DAX clarity:</strong> measures reference dimension attributes for context and fact columns for calculations – the separation makes formulas easier to write and debug</li>
     <li><strong>Filter propagation:</strong> one-to-many relationships ensure that slicers and cross-filters work consistently across all report pages</li>
     <li><strong>Reduced redundancy:</strong> descriptive text (state names, indicator descriptions) is stored once in dimensions rather than repeated across 999+ fact rows</li>
   </ul>
@@ -374,7 +374,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h3>Measures Table</h3>
   <p>
-    All DAX measures are organized in a dedicated <code>_Measures</code> table — a best practice in Power BI that
+    All DAX measures are organized in a dedicated <code>_Measures</code> table – a best practice in Power BI that
     separates calculation logic from data tables. This keeps the model clean, makes measures easy to find in the
     Fields pane, and prevents accidental aggregation of measure columns alongside raw data.
   </p>
@@ -387,7 +387,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h3>Core Aggregations</h3>
   <p>
-    These foundational measures drive all primary visualizations — KPI cards, trend lines, bar charts, and map shading.
+    These foundational measures drive all primary visualizations – KPI cards, trend lines, bar charts, and map shading.
   </p>
 
   <h4>Total Value</h4>
@@ -396,7 +396,7 @@ description: "End-to-end Power BI project analyzing CDC Chronic Disease Indicato
 
   <h4>Average Value</h4>
   <pre><code class="language-dax">Average Value = AVERAGE(Fact_CDI[DataValue])</code></pre>
-  <p>Mean data value within the current filter context. This is the <strong>primary metric for analysis</strong> — most health indicators are rates or percentages where the average is more meaningful than the sum.</p>
+  <p>Mean data value within the current filter context. This is the <strong>primary metric for analysis</strong> – most health indicators are rates or percentages where the average is more meaningful than the sum.</p>
 
   <h4>National Average</h4>
   <pre><code class="language-dax">National Average =
@@ -406,7 +406,7 @@ CALCULATE(
 )</code></pre>
   <p>
     Calculates the national benchmark by removing all location filters from the <code>[Average Value]</code> calculation.
-    When a slicer selects a specific state, this measure still returns the all-states average — enabling state-vs-national
+    When a slicer selects a specific state, this measure still returns the all-states average – enabling state-vs-national
     comparison in KPI cards and reference lines.
   </p>
 
@@ -482,7 +482,7 @@ CALCULATE(
 )</code></pre>
   <p>
     Finds the highest data value among all demographic groups for a given location, indicator, and year combination.
-    <code>ALLEXCEPT</code> removes the stratification filter while preserving location, indicator, and date context —
+    <code>ALLEXCEPT</code> removes the stratification filter while preserving location, indicator, and date context –
     so the measure scans across all demographic groups within the current state and indicator.
   </p>
 
@@ -509,26 +509,26 @@ CALCULATE(
   <p>
     The relative inequality between demographic groups. A ratio of 2.0 means the highest-burden group's rate is 2x
     the lowest-burden group's rate. This measure is especially useful for comparing disparity severity across indicators
-    with different scales — a 5-point gap means something different for an indicator measured in percentages versus one
+    with different scales – a 5-point gap means something different for an indicator measured in percentages versus one
     measured in rates per 100,000.
   </p>
 
   <h3>Why These Measures Matter for Health Analytics</h3>
   <ul>
-    <li><strong>Core aggregations</strong> provide the foundation for every visualization — KPI cards, trend lines, maps, and ranking tables all depend on <code>[Average Value]</code>, <code>[National Average]</code>, and <code>[State Rank]</code></li>
-    <li><strong>Time intelligence</strong> enables trend detection — policymakers need to know not just current values but whether conditions are improving or deteriorating, and at what rate</li>
-    <li><strong>Disparity measures</strong> go beyond population averages to surface inequities — a state's overall rate may look acceptable while specific demographic groups face significantly higher burden, requiring targeted interventions</li>
+    <li><strong>Core aggregations</strong> provide the foundation for every visualization – KPI cards, trend lines, maps, and ranking tables all depend on <code>[Average Value]</code>, <code>[National Average]</code>, and <code>[State Rank]</code></li>
+    <li><strong>Time intelligence</strong> enables trend detection – policymakers need to know not just current values but whether conditions are improving or deteriorating, and at what rate</li>
+    <li><strong>Disparity measures</strong> go beyond population averages to surface inequities – a state's overall rate may look acceptable while specific demographic groups face significantly higher burden, requiring targeted interventions</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Dashboard Page 1 — Executive Overview</strong></summary>
+  <summary><strong>Dashboard Page 1 – Executive Overview</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <p>
     A high-level population health snapshot designed for quick assessment of chronic disease indicators across the
-    United States. This page provides at-a-glance KPIs, geographic comparisons, and trend context — enabling
+    United States. This page provides at-a-glance KPIs, geographic comparisons, and trend context – enabling
     analysts and decision-makers to identify which indicators are most pressing and where to focus deeper analysis.
   </p>
 
@@ -536,16 +536,16 @@ CALCULATE(
   <ul>
     <li>Which chronic disease indicators have the highest or lowest average values nationally?</li>
     <li>How do states compare against each other for a selected health topic?</li>
-    <li>What are the trends over time — are conditions improving or worsening year over year?</li>
+    <li>What are the trends over time – are conditions improving or worsening year over year?</li>
   </ul>
 
   <h4>Visuals on This Page</h4>
   <ul>
-    <li><strong>4 KPI Cards:</strong> Total Value, Average Value, National Average, and State Rank — providing immediate numeric context for the selected filters</li>
+    <li><strong>4 KPI Cards:</strong> Total Value, Average Value, National Average, and State Rank – providing immediate numeric context for the selected filters</li>
     <li><strong>Trend Line Chart:</strong> Average Value over time by year, showing directional movement across the 2015–2022 period</li>
     <li><strong>Top 10 Bar Chart:</strong> states ranked by Average Value, highlighting the highest-burden locations for the selected topic</li>
     <li><strong>Filled Map:</strong> geographic view with color-coded states based on Average Value, revealing regional patterns and clusters</li>
-    <li><strong>3 Interactive Slicers:</strong> Topic, Year, and Stratification — enabling dynamic filtering across all visuals on the page</li>
+    <li><strong>3 Interactive Slicers:</strong> Topic, Year, and Stratification – enabling dynamic filtering across all visuals on the page</li>
   </ul>
 
   <figure style="margin: 0 0 18px 0;">
@@ -556,7 +556,7 @@ CALCULATE(
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Executive Overview — national KPI snapshot with geographic comparison, trend analysis, and interactive filtering.
+      Executive Overview – national KPI snapshot with geographic comparison, trend analysis, and interactive filtering.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-dashboard-1.png">Open full-size</a>
       </span>
@@ -566,13 +566,13 @@ CALCULATE(
   <h4>Key Insights</h4>
   <ul>
     <li><strong>State rankings shift by topic:</strong> states that rank highest for one health indicator (e.g., Tobacco use) often differ from those ranking highest for another (e.g., Cardiovascular Disease), revealing that chronic disease burden is not uniformly distributed</li>
-    <li><strong>Trend patterns vary across indicators:</strong> some topics show steady year-over-year improvement while others plateau or worsen — the trend line makes it easy to distinguish improving conditions from stagnating ones</li>
+    <li><strong>Trend patterns vary across indicators:</strong> some topics show steady year-over-year improvement while others plateau or worsen – the trend line makes it easy to distinguish improving conditions from stagnating ones</li>
     <li><strong>Geographic clustering is visible:</strong> the filled map reveals regional patterns where neighboring states share similar indicator values, suggesting that shared environmental, economic, or policy factors may drive health outcomes in those areas</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Dashboard Page 2 — Trends &amp; Indicator Comparison</strong></summary>
+  <summary><strong>Dashboard Page 2 – Trends &amp; Indicator Comparison</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -587,17 +587,17 @@ CALCULATE(
   <ul>
     <li>Which chronic disease indicators are improving or worsening over the 2018–2022 period?</li>
     <li>How do year-over-year change rates compare across different health topics?</li>
-    <li>What is the longitudinal trend pattern for each indicator — steady improvement, plateau, or deterioration?</li>
-    <li>How do states perform across multiple indicators simultaneously — which locations excel or struggle across the board?</li>
+    <li>What is the longitudinal trend pattern for each indicator – steady improvement, plateau, or deterioration?</li>
+    <li>How do states perform across multiple indicators simultaneously – which locations excel or struggle across the board?</li>
   </ul>
 
   <h4>Visuals on This Page</h4>
   <ul>
-    <li><strong>Multi-Line Trend Chart:</strong> Average Value by YearStart and Topic — showing all 9 chronic disease topics simultaneously on a 2018–2022 timeline to reveal directional patterns and relative magnitude differences</li>
-    <li><strong>Indicator Performance Summary Table:</strong> matrix displaying Topic, Average Value, and YoY % Change — providing a sortable reference table that quantifies both current state and recent momentum for each indicator</li>
-    <li><strong>State Performance by Indicator Matrix:</strong> cross-tabulation showing each state's Average Value broken out by all topics — enabling quick identification of states with consistently high or low values across multiple health domains</li>
-    <li><strong>YoY % Change Bar Chart:</strong> horizontal bars color-coded by direction (red for worsening, green for improving) — making it immediately clear which topics gained or lost ground in the most recent year</li>
-    <li><strong>4 Interactive Slicers:</strong> Topic, LocationDesc (state), Stratification, and YearStart — supporting focused drill-downs into specific indicators, geographies, demographic groups, or time periods</li>
+    <li><strong>Multi-Line Trend Chart:</strong> Average Value by YearStart and Topic – showing all 9 chronic disease topics simultaneously on a 2018–2022 timeline to reveal directional patterns and relative magnitude differences</li>
+    <li><strong>Indicator Performance Summary Table:</strong> matrix displaying Topic, Average Value, and YoY % Change – providing a sortable reference table that quantifies both current state and recent momentum for each indicator</li>
+    <li><strong>State Performance by Indicator Matrix:</strong> cross-tabulation showing each state's Average Value broken out by all topics – enabling quick identification of states with consistently high or low values across multiple health domains</li>
+    <li><strong>YoY % Change Bar Chart:</strong> horizontal bars color-coded by direction (red for worsening, green for improving) – making it immediately clear which topics gained or lost ground in the most recent year</li>
+    <li><strong>4 Interactive Slicers:</strong> Topic, LocationDesc (state), Stratification, and YearStart – supporting focused drill-downs into specific indicators, geographies, demographic groups, or time periods</li>
   </ul>
 
   <figure style="margin: 0 0 18px 0;">
@@ -608,7 +608,7 @@ CALCULATE(
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Trends &amp; Indicator Comparison — longitudinal view tracking year-over-year changes and cross-indicator performance patterns from 2018–2022.
+      Trends &amp; Indicator Comparison – longitudinal view tracking year-over-year changes and cross-indicator performance patterns from 2018–2022.
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-dashboard-2.png">Open full-size</a>
       </span>
@@ -617,17 +617,17 @@ CALCULATE(
 
   <h4>Key Insights</h4>
   <ul>
-    <li><strong>Diabetes shows the most significant improvement:</strong> with a year-over-year decline of -12.57%, Diabetes indicators demonstrate the steepest downward trend — suggesting that public health interventions targeting diabetes management (screening programs, medication adherence, lifestyle modification support) may be yielding measurable population-level improvements</li>
-    <li><strong>Alcohol and Tobacco trends are moving in the wrong direction:</strong> both indicators show positive YoY % Change values (Alcohol +4.03%, Tobacco +3.74%), meaning prevalence or burden is increasing rather than decreasing — this signals that risk factor mitigation efforts for these behavioral health domains may be losing effectiveness or facing new barriers</li>
+    <li><strong>Diabetes shows the most significant improvement:</strong> with a year-over-year decline of -12.57%, Diabetes indicators demonstrate the steepest downward trend – suggesting that public health interventions targeting diabetes management (screening programs, medication adherence, lifestyle modification support) may be yielding measurable population-level improvements</li>
+    <li><strong>Alcohol and Tobacco trends are moving in the wrong direction:</strong> both indicators show positive YoY % Change values (Alcohol +4.03%, Tobacco +3.74%), meaning prevalence or burden is increasing rather than decreasing – this signals that risk factor mitigation efforts for these behavioral health domains may be losing effectiveness or facing new barriers</li>
     <li><strong>Asthma indicators also improving:</strong> the -4.38% YoY change for Asthma suggests recent reductions in prevalence or severity, potentially linked to environmental interventions (air quality improvements, allergen reduction) or better access to controller medications</li>
-    <li><strong>Cardiovascular Disease remains the highest-magnitude indicator:</strong> despite a modest -1.34% YoY improvement, Cardiovascular Disease maintains an average value of 68.44 — substantially higher than most other topics — highlighting that heart disease and stroke continue to represent the largest chronic disease burden in the dataset</li>
-    <li><strong>Cross-indicator variability reveals uneven progress:</strong> the multi-line chart shows that not all chronic diseases move in the same direction — some topics plateau while others improve or worsen — indicating that blanket public health strategies may not be sufficient and topic-specific interventions are required</li>
-    <li><strong>State-level heterogeneity is visible in the matrix:</strong> states do not perform uniformly across all indicators — a state ranking poorly for Alcohol may rank well for Diabetes, suggesting that local policy environments, healthcare infrastructure, and demographic compositions create indicator-specific outcomes rather than universal health system quality</li>
+    <li><strong>Cardiovascular Disease remains the highest-magnitude indicator:</strong> despite a modest -1.34% YoY improvement, Cardiovascular Disease maintains an average value of 68.44 – substantially higher than most other topics – highlighting that heart disease and stroke continue to represent the largest chronic disease burden in the dataset</li>
+    <li><strong>Cross-indicator variability reveals uneven progress:</strong> the multi-line chart shows that not all chronic diseases move in the same direction – some topics plateau while others improve or worsen – indicating that blanket public health strategies may not be sufficient and topic-specific interventions are required</li>
+    <li><strong>State-level heterogeneity is visible in the matrix:</strong> states do not perform uniformly across all indicators – a state ranking poorly for Alcohol may rank well for Diabetes, suggesting that local policy environments, healthcare infrastructure, and demographic compositions create indicator-specific outcomes rather than universal health system quality</li>
   </ul>
 
   <h4>Why This Dashboard Matters for Public Health Decision-Making</h4>
   <p>
-    Executive overviews provide snapshots, but trend analysis reveals <em>direction and momentum</em> — the difference
+    Executive overviews provide snapshots, but trend analysis reveals <em>direction and momentum</em> – the difference
     between a static problem and a worsening crisis. This dashboard enables public health agencies to:
   </p>
   <ul>
@@ -639,14 +639,14 @@ CALCULATE(
 
 </details>
 <details>
-  <summary><strong>Dashboard Page 3 — State Performance Analysis</strong></summary>
+  <summary><strong>Dashboard Page 3 – State Performance Analysis</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <p>
     A state-level deep dive dashboard designed to profile individual state performance across chronic disease indicators.
     This page enables analysts to select a specific state, assess how it compares to the national average across all
-    health topics, drill into topic-level and demographic breakdowns, and track indicator trends over time — providing
+    health topics, drill into topic-level and demographic breakdowns, and track indicator trends over time – providing
     the detailed context needed for state-specific policy evaluation and resource allocation decisions.
   </p>
 
@@ -661,12 +661,12 @@ CALCULATE(
 
   <h4>Visuals on This Page</h4>
   <ul>
-    <li><strong>4 KPI Cards:</strong> Average Value, National Average, State Rank, and YoY Change — providing immediate numeric context for the selected state across all filtered indicators</li>
-    <li><strong>Health Indicator Breakdown (Decomposition Tree):</strong> a hierarchical visual that starts with the state's overall Average Value and branches first by Topic (Arthritis, Alcohol, Tobacco), then by Stratification group (Male, Hispanic, Overall) — enabling interactive drill-down from aggregate performance to topic-level and demographic-level detail</li>
-    <li><strong>State Rankings Table:</strong> a summary matrix showing each Topic alongside its Average Value and State Rank — providing a compact view of where the state stands nationally across all indicators in a single sortable reference</li>
-    <li><strong>Average Value and National Average by Topic (Horizontal Bar Chart):</strong> side-by-side comparison of the selected state's Average Value against the National Average for each topic — making it immediately visible which indicators fall above or below the national benchmark</li>
-    <li><strong>Average Value by YearStart and Topic (Multi-Line Trend Chart):</strong> longitudinal view tracking each topic's Average Value from 2019–2022 — revealing whether specific indicators are improving, worsening, or holding steady over time for the selected state</li>
-    <li><strong>3 Interactive Slicers:</strong> LocationDesc (state dropdown selector), YearStart (multi-select checkboxes for 2015–2022), and Topic (multi-select checkboxes for all 9 chronic disease categories) — enabling flexible filtering to isolate specific states, time periods, or health topics</li>
+    <li><strong>4 KPI Cards:</strong> Average Value, National Average, State Rank, and YoY Change – providing immediate numeric context for the selected state across all filtered indicators</li>
+    <li><strong>Health Indicator Breakdown (Decomposition Tree):</strong> a hierarchical visual that starts with the state's overall Average Value and branches first by Topic (Arthritis, Alcohol, Tobacco), then by Stratification group (Male, Hispanic, Overall) – enabling interactive drill-down from aggregate performance to topic-level and demographic-level detail</li>
+    <li><strong>State Rankings Table:</strong> a summary matrix showing each Topic alongside its Average Value and State Rank – providing a compact view of where the state stands nationally across all indicators in a single sortable reference</li>
+    <li><strong>Average Value and National Average by Topic (Horizontal Bar Chart):</strong> side-by-side comparison of the selected state's Average Value against the National Average for each topic – making it immediately visible which indicators fall above or below the national benchmark</li>
+    <li><strong>Average Value by YearStart and Topic (Multi-Line Trend Chart):</strong> longitudinal view tracking each topic's Average Value from 2019–2022 – revealing whether specific indicators are improving, worsening, or holding steady over time for the selected state</li>
+    <li><strong>3 Interactive Slicers:</strong> LocationDesc (state dropdown selector), YearStart (multi-select checkboxes for 2015–2022), and Topic (multi-select checkboxes for all 9 chronic disease categories) – enabling flexible filtering to isolate specific states, time periods, or health topics</li>
   </ul>
 
   <figure style="margin: 0 0 18px 0;">
@@ -677,7 +677,7 @@ CALCULATE(
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      State Performance Analysis — state-level profile with indicator breakdown, national benchmarking, rankings, and trend tracking (California selected).
+      State Performance Analysis – state-level profile with indicator breakdown, national benchmarking, rankings, and trend tracking (California selected).
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-dashboard-3.png">Open full-size</a>
       </span>
@@ -688,29 +688,29 @@ CALCULATE(
   <ul>
     <li><strong>California's overall average (13.80) falls well below the national average (17.43):</strong> this positions California among the lowest-burden states in the dataset, suggesting that the state's public health infrastructure and policy environment contribute to better-than-average chronic disease outcomes across the board</li>
     <li><strong>Arthritis is California's highest-burden indicator (20.84) but still ranks 50th nationally:</strong> even California's weakest-performing topic places it near the bottom of the national rankings (where higher rank = higher burden), reinforcing the state's consistently strong relative performance</li>
-    <li><strong>The decomposition tree reveals demographic variation within indicators:</strong> for Arthritis, the Male subgroup (20.93) and Hispanic subgroup (17.98) both exceed the Overall population average (16.58) — highlighting that aggregate state values can mask meaningful demographic differences that warrant targeted public health attention</li>
-    <li><strong>Tobacco ranks 51st (10.46 average) — among the lowest nationally:</strong> this is consistent with California's historically aggressive tobacco control policies, including high cigarette excise taxes, comprehensive smoke-free workplace laws, and sustained public education campaigns through the California Tobacco Control Program</li>
-    <li><strong>The state-vs-national bar chart shows California consistently below the national average across all topics:</strong> Arthritis, Alcohol, Tobacco, and Asthma all show the state's light blue bars falling short of the darker national average bars — visually confirming that California outperforms the national benchmark in every displayed category</li>
-    <li><strong>Trend lines (2019–2022) show relatively stable indicator values:</strong> Arthritis holds steady around 20–21, while Alcohol, Asthma, and Tobacco remain flat in the 10–15 range — suggesting California's chronic disease indicators are neither significantly improving nor deteriorating, maintaining a stable baseline during a period that includes the COVID-19 pandemic disruption</li>
-    <li><strong>The rankings table provides actionable prioritization:</strong> with Alcohol ranking 36th (the highest/worst-performing rank among California's topics), it stands out as the indicator where California has the most room for improvement relative to other states — making it a candidate for additional investment or policy intervention</li>
+    <li><strong>The decomposition tree reveals demographic variation within indicators:</strong> for Arthritis, the Male subgroup (20.93) and Hispanic subgroup (17.98) both exceed the Overall population average (16.58) – highlighting that aggregate state values can mask meaningful demographic differences that warrant targeted public health attention</li>
+    <li><strong>Tobacco ranks 51st (10.46 average) – among the lowest nationally:</strong> this is consistent with California's historically aggressive tobacco control policies, including high cigarette excise taxes, comprehensive smoke-free workplace laws, and sustained public education campaigns through the California Tobacco Control Program</li>
+    <li><strong>The state-vs-national bar chart shows California consistently below the national average across all topics:</strong> Arthritis, Alcohol, Tobacco, and Asthma all show the state's light blue bars falling short of the darker national average bars – visually confirming that California outperforms the national benchmark in every displayed category</li>
+    <li><strong>Trend lines (2019–2022) show relatively stable indicator values:</strong> Arthritis holds steady around 20–21, while Alcohol, Asthma, and Tobacco remain flat in the 10–15 range – suggesting California's chronic disease indicators are neither significantly improving nor deteriorating, maintaining a stable baseline during a period that includes the COVID-19 pandemic disruption</li>
+    <li><strong>The rankings table provides actionable prioritization:</strong> with Alcohol ranking 36th (the highest/worst-performing rank among California's topics), it stands out as the indicator where California has the most room for improvement relative to other states – making it a candidate for additional investment or policy intervention</li>
   </ul>
 
   <h4>Why This Dashboard Matters for State-Level Decision-Making</h4>
   <p>
     National averages and aggregate rankings provide useful benchmarks, but public health decisions are ultimately made
-    at the state level — where budgets are allocated, programs are designed, and policies are enacted. This dashboard
+    at the state level – where budgets are allocated, programs are designed, and policies are enacted. This dashboard
     enables state-level stakeholders to:
   </p>
   <ul>
-    <li><strong>Identify relative strengths and weaknesses:</strong> the rankings table and bar chart make it clear which topics a state handles well versus where it lags — allowing health departments to allocate resources toward their highest-burden indicators rather than spreading effort uniformly</li>
-    <li><strong>Detect demographic disparities within state borders:</strong> the decomposition tree's stratification breakdowns reveal whether a state's strong overall performance masks inequities in specific demographic groups — a critical insight for health equity planning</li>
-    <li><strong>Track progress over time:</strong> the multi-line trend chart provides longitudinal accountability — if a state launches a new tobacco reduction program, this visual tracks whether indicator values actually decline in subsequent years</li>
+    <li><strong>Identify relative strengths and weaknesses:</strong> the rankings table and bar chart make it clear which topics a state handles well versus where it lags – allowing health departments to allocate resources toward their highest-burden indicators rather than spreading effort uniformly</li>
+    <li><strong>Detect demographic disparities within state borders:</strong> the decomposition tree's stratification breakdowns reveal whether a state's strong overall performance masks inequities in specific demographic groups – a critical insight for health equity planning</li>
+    <li><strong>Track progress over time:</strong> the multi-line trend chart provides longitudinal accountability – if a state launches a new tobacco reduction program, this visual tracks whether indicator values actually decline in subsequent years</li>
     <li><strong>Support evidence-based benchmarking:</strong> by comparing a state's values directly against the national average for each topic, decision-makers can quantify exactly how far above or below the benchmark they fall and set realistic improvement targets</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Dashboard Page 4 — Health Disparities</strong></summary>
+  <summary><strong>Dashboard Page 4 – Health Disparities</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -718,7 +718,7 @@ CALCULATE(
     A demographic disparity analysis dashboard designed to quantify and visualize health inequities across population
     subgroups within a selected state and chronic disease topic. This page leverages the Disparity Gap, Disparity Ratio,
     Group Max, and Group Min DAX measures to surface where demographic groups experience significantly different health
-    outcomes — enabling public health analysts to move beyond population-level averages and identify the specific groups
+    outcomes – enabling public health analysts to move beyond population-level averages and identify the specific groups
     bearing disproportionate disease burden.
   </p>
 
@@ -733,12 +733,12 @@ CALCULATE(
 
   <h4>Visuals on This Page</h4>
   <ul>
-    <li><strong>4 KPI Cards:</strong> Disparity Gap, Disparity Ratio, Group Max, and Group Min — quantifying both the absolute difference and relative inequality between the highest-burden and lowest-burden demographic groups for the selected state and topic</li>
-    <li><strong>Health Burden by Demographic Group (Horizontal Bar Chart):</strong> Average Value by Stratification1 — displaying each demographic group's burden side-by-side to reveal which subpopulations face the greatest and least disease impact for the selected topic</li>
-    <li><strong>Disparity Trend Over Time (Multi-Line Chart):</strong> Group Max, Group Min, and Disparity Gap plotted across 2019–2022 — tracking whether the inequality between demographic groups is widening, narrowing, or holding steady over the analysis period</li>
-    <li><strong>Demographic Disparity Matrix (Conditional Formatting Table):</strong> LocationDesc × Stratification cross-tabulation with color-coded cells — red for higher burden, green for lower burden — enabling quick visual pattern recognition across all demographic groups in a single compact reference</li>
-    <li><strong>Average Value, Group Min and Group Max (Gauge Chart):</strong> a gauge visual displaying the state's overall Average Value positioned between the Group Min and Group Max boundaries — providing intuitive context for where the population average falls within the full range of demographic outcomes</li>
-    <li><strong>3 Interactive Slicers:</strong> Topic (dropdown selector), LocationDesc (state dropdown selector), and YearStart (multi-select dropdown) — enabling focused analysis on specific state-topic-year combinations for targeted disparity investigation</li>
+    <li><strong>4 KPI Cards:</strong> Disparity Gap, Disparity Ratio, Group Max, and Group Min – quantifying both the absolute difference and relative inequality between the highest-burden and lowest-burden demographic groups for the selected state and topic</li>
+    <li><strong>Health Burden by Demographic Group (Horizontal Bar Chart):</strong> Average Value by Stratification1 – displaying each demographic group's burden side-by-side to reveal which subpopulations face the greatest and least disease impact for the selected topic</li>
+    <li><strong>Disparity Trend Over Time (Multi-Line Chart):</strong> Group Max, Group Min, and Disparity Gap plotted across 2019–2022 – tracking whether the inequality between demographic groups is widening, narrowing, or holding steady over the analysis period</li>
+    <li><strong>Demographic Disparity Matrix (Conditional Formatting Table):</strong> LocationDesc × Stratification cross-tabulation with color-coded cells – red for higher burden, green for lower burden – enabling quick visual pattern recognition across all demographic groups in a single compact reference</li>
+    <li><strong>Average Value, Group Min and Group Max (Gauge Chart):</strong> a gauge visual displaying the state's overall Average Value positioned between the Group Min and Group Max boundaries – providing intuitive context for where the population average falls within the full range of demographic outcomes</li>
+    <li><strong>3 Interactive Slicers:</strong> Topic (dropdown selector), LocationDesc (state dropdown selector), and YearStart (multi-select dropdown) – enabling focused analysis on specific state-topic-year combinations for targeted disparity investigation</li>
   </ul>
 
   <figure style="margin: 0 0 18px 0;">
@@ -749,7 +749,7 @@ CALCULATE(
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Health Disparities Analysis — demographic gap quantification with disparity trend tracking, group-level burden comparison, and conditional formatting matrix (New York, Alcohol selected).
+      Health Disparities Analysis – demographic gap quantification with disparity trend tracking, group-level burden comparison, and conditional formatting matrix (New York, Alcohol selected).
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-dashboard-4.png">Open full-size</a>
       </span>
@@ -758,46 +758,46 @@ CALCULATE(
 
   <h4>Key Insights</h4>
   <ul>
-    <li><strong>Male demographic group carries the highest alcohol-related burden (20.0):</strong> among all stratification groups in New York, males show the highest Average Value for Alcohol indicators — consistent with national epidemiological data showing higher rates of heavy drinking, binge drinking, and alcohol-related morbidity among men compared to other demographic groups</li>
-    <li><strong>Age >=65 group shows dramatically lower alcohol burden (5.3):</strong> the oldest demographic group's Average Value is less than one-third of the Male group's value, creating the floor of the disparity range — this likely reflects both lower alcohol consumption rates among older adults and survivorship effects where individuals with severe alcohol-related conditions may not reach age 65</li>
-    <li><strong>Disparity Ratio of 5.69 indicates severe demographic inequality:</strong> the highest-burden group's rate is nearly 6 times the lowest-burden group's rate — a ratio this large signals that population-level averages substantially understate the burden experienced by the most affected demographic groups and overstate the burden for the least affected, making targeted interventions essential</li>
-    <li><strong>Disparity Gap is widening over the 2019–2022 period:</strong> the multi-line trend chart shows the Group Max line trending upward while the Group Min line remains relatively flat — driving the Disparity Gap (orange line) from approximately 15 in 2019 to 23 by 2022, indicating that alcohol-related health inequities in New York are growing rather than narrowing over time</li>
-    <li><strong>New York's overall average (14.91) sits in the lower half of the demographic range:</strong> the gauge chart positions the state's overall Average Value closer to the Group Min (4.90) than the Group Max (27.90), indicating that the population-level average is pulled down by lower-burden groups — masking the substantially higher burden experienced by the Male and Overall stratification categories</li>
-    <li><strong>The conditional formatting matrix reveals at-a-glance disparity patterns:</strong> color-coded cells in the matrix table immediately highlight which demographic groups fall above (red) or below (green) average — for New York's Alcohol indicators, the Male group (19.98) and Overall group (16.20) show elevated values while Age >=65 (5.33) stands out as markedly lower, making the demographic disparity pattern visible without reading individual numbers</li>
+    <li><strong>Male demographic group carries the highest alcohol-related burden (20.0):</strong> among all stratification groups in New York, males show the highest Average Value for Alcohol indicators – consistent with national epidemiological data showing higher rates of heavy drinking, binge drinking, and alcohol-related morbidity among men compared to other demographic groups</li>
+    <li><strong>Age >=65 group shows dramatically lower alcohol burden (5.3):</strong> the oldest demographic group's Average Value is less than one-third of the Male group's value, creating the floor of the disparity range – this likely reflects both lower alcohol consumption rates among older adults and survivorship effects where individuals with severe alcohol-related conditions may not reach age 65</li>
+    <li><strong>Disparity Ratio of 5.69 indicates severe demographic inequality:</strong> the highest-burden group's rate is nearly 6 times the lowest-burden group's rate – a ratio this large signals that population-level averages substantially understate the burden experienced by the most affected demographic groups and overstate the burden for the least affected, making targeted interventions essential</li>
+    <li><strong>Disparity Gap is widening over the 2019–2022 period:</strong> the multi-line trend chart shows the Group Max line trending upward while the Group Min line remains relatively flat – driving the Disparity Gap (orange line) from approximately 15 in 2019 to 23 by 2022, indicating that alcohol-related health inequities in New York are growing rather than narrowing over time</li>
+    <li><strong>New York's overall average (14.91) sits in the lower half of the demographic range:</strong> the gauge chart positions the state's overall Average Value closer to the Group Min (4.90) than the Group Max (27.90), indicating that the population-level average is pulled down by lower-burden groups – masking the substantially higher burden experienced by the Male and Overall stratification categories</li>
+    <li><strong>The conditional formatting matrix reveals at-a-glance disparity patterns:</strong> color-coded cells in the matrix table immediately highlight which demographic groups fall above (red) or below (green) average – for New York's Alcohol indicators, the Male group (19.98) and Overall group (16.20) show elevated values while Age >=65 (5.33) stands out as markedly lower, making the demographic disparity pattern visible without reading individual numbers</li>
   </ul>
 
   <h4>Why This Dashboard Matters for Health Equity Analysis</h4>
   <p>
     Population-level averages are useful for benchmarking, but they can mask critical inequities between demographic
     groups. A state may appear to perform well on an aggregate metric while specific subpopulations experience
-    disproportionately high disease burden — making disparity analysis essential for equitable public health
+    disproportionately high disease burden – making disparity analysis essential for equitable public health
     decision-making. This dashboard enables health equity analysts to:
   </p>
   <ul>
-    <li><strong>Quantify the equity gap:</strong> the Disparity Gap and Disparity Ratio KPIs transform abstract concerns about inequality into concrete, measurable values that can be tracked over time and compared across states or topics — providing the numeric foundation for equity-focused goal-setting</li>
-    <li><strong>Identify which groups need targeted intervention:</strong> the horizontal bar chart and conditional formatting matrix make it immediately clear which demographic subpopulations face the highest burden — enabling health departments to design interventions tailored to specific groups rather than applying uniform strategies that may not reach those most affected</li>
-    <li><strong>Monitor whether disparities are improving or worsening:</strong> the Disparity Trend Over Time chart provides longitudinal accountability — if a state launches an equity-focused initiative, this visual tracks whether the gap between Group Max and Group Min actually narrows in subsequent years or continues to widen despite intervention</li>
-    <li><strong>Contextualize overall averages:</strong> the gauge chart and matrix together reveal how a state's overall average relates to the full range of demographic outcomes — preventing decision-makers from being misled by favorable aggregate statistics that obscure significant within-state inequities</li>
+    <li><strong>Quantify the equity gap:</strong> the Disparity Gap and Disparity Ratio KPIs transform abstract concerns about inequality into concrete, measurable values that can be tracked over time and compared across states or topics – providing the numeric foundation for equity-focused goal-setting</li>
+    <li><strong>Identify which groups need targeted intervention:</strong> the horizontal bar chart and conditional formatting matrix make it immediately clear which demographic subpopulations face the highest burden – enabling health departments to design interventions tailored to specific groups rather than applying uniform strategies that may not reach those most affected</li>
+    <li><strong>Monitor whether disparities are improving or worsening:</strong> the Disparity Trend Over Time chart provides longitudinal accountability – if a state launches an equity-focused initiative, this visual tracks whether the gap between Group Max and Group Min actually narrows in subsequent years or continues to widen despite intervention</li>
+    <li><strong>Contextualize overall averages:</strong> the gauge chart and matrix together reveal how a state's overall average relates to the full range of demographic outcomes – preventing decision-makers from being misled by favorable aggregate statistics that obscure significant within-state inequities</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Dashboard Page 5 — Action Prioritization</strong></summary>
+  <summary><strong>Dashboard Page 5 – Action Prioritization</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <p>
     An action-oriented prioritization dashboard designed to identify which states require the most urgent public health
     intervention based on a combination of disease burden (Average Value) and trend direction (YoY % Change). This page
-    uses a scatter plot priority matrix to classify states into quadrants — highlighting those with both high burden and
-    worsening trends as top candidates for resource allocation — while a ranked table and topic burden comparison provide
+    uses a scatter plot priority matrix to classify states into quadrants – highlighting those with both high burden and
+    worsening trends as top candidates for resource allocation – while a ranked table and topic burden comparison provide
     the supporting detail needed to justify intervention decisions.
   </p>
 
   <h4>Business Questions Answered</h4>
   <ul>
-    <li>Which states have both high chronic disease burden and worsening year-over-year trends — making them the highest priority for intervention?</li>
-    <li>How do states distribute across the burden-vs-trend priority matrix — are most states improving, worsening, or stagnating?</li>
+    <li>Which states have both high chronic disease burden and worsening year-over-year trends – making them the highest priority for intervention?</li>
+    <li>How do states distribute across the burden-vs-trend priority matrix – are most states improving, worsening, or stagnating?</li>
     <li>Which health topics contribute the most to overall chronic disease burden across the selected indicators?</li>
     <li>What are the top-ranked states by average value, and how fast are their conditions deteriorating?</li>
     <li>Where should public health agencies focus limited resources for maximum population health impact?</li>
@@ -805,10 +805,10 @@ CALCULATE(
 
   <h4>Visuals on This Page</h4>
   <ul>
-    <li><strong>State Priority Matrix — Burden vs. Trend (Scatter Plot):</strong> a quadrant-style scatter plot with YoY % Change on the x-axis and Average Value on the y-axis — each bubble represents a state color-coded by location, with dashed reference lines dividing the chart into four priority zones: upper-right (high burden + worsening) = highest priority, upper-left (high burden + improving) = monitor, lower-right (low burden + worsening) = watch, and lower-left (low burden + improving) = lowest priority — enabling immediate visual triage of all states simultaneously</li>
-    <li><strong>Health Topics Ranked by Burden (Horizontal Bar Chart):</strong> Average Value by Topic — ranking the selected health topics from highest to lowest burden to reveal which chronic disease categories contribute the most to overall population health impact across the filtered scope</li>
-    <li><strong>High-Priority States Table (High Burden + Worsening):</strong> a ranked table displaying LocationDesc, Average Value, YoY % Change, and State Rank — listing the top states that fall in the high-burden, worsening-trend zone of the priority matrix with detailed numeric context for each</li>
-    <li><strong>2 Interactive Slicers:</strong> Health Topic (multi-select checkboxes for all 9 chronic disease categories) and Year (multi-select checkboxes for 2015–2022) — enabling analysts to focus the prioritization analysis on specific health domains and time periods</li>
+    <li><strong>State Priority Matrix – Burden vs. Trend (Scatter Plot):</strong> a quadrant-style scatter plot with YoY % Change on the x-axis and Average Value on the y-axis – each bubble represents a state color-coded by location, with dashed reference lines dividing the chart into four priority zones: upper-right (high burden + worsening) = highest priority, upper-left (high burden + improving) = monitor, lower-right (low burden + worsening) = watch, and lower-left (low burden + improving) = lowest priority – enabling immediate visual triage of all states simultaneously</li>
+    <li><strong>Health Topics Ranked by Burden (Horizontal Bar Chart):</strong> Average Value by Topic – ranking the selected health topics from highest to lowest burden to reveal which chronic disease categories contribute the most to overall population health impact across the filtered scope</li>
+    <li><strong>High-Priority States Table (High Burden + Worsening):</strong> a ranked table displaying LocationDesc, Average Value, YoY % Change, and State Rank – listing the top states that fall in the high-burden, worsening-trend zone of the priority matrix with detailed numeric context for each</li>
+    <li><strong>2 Interactive Slicers:</strong> Health Topic (multi-select checkboxes for all 9 chronic disease categories) and Year (multi-select checkboxes for 2015–2022) – enabling analysts to focus the prioritization analysis on specific health domains and time periods</li>
   </ul>
 
   <figure style="margin: 0 0 18px 0;">
@@ -819,7 +819,7 @@ CALCULATE(
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
     <figcaption style="font-size: 0.95em; color: #555; margin-top: 6px;">
-      Action Prioritization — state-level triage using burden vs. trend priority matrix, topic burden ranking, and high-priority state identification (Alcohol, Diabetes, Nutrition/Physical Activity, and Tobacco selected; 2020).
+      Action Prioritization – state-level triage using burden vs. trend priority matrix, topic burden ranking, and high-priority state identification (Alcohol, Diabetes, Nutrition/Physical Activity, and Tobacco selected; 2020).
       <span style="display:block; margin-top:4px;">
         <a href="images/powerbi-dashboard-5.png">Open full-size</a>
       </span>
@@ -828,13 +828,13 @@ CALCULATE(
 
   <h4>Key Insights</h4>
   <ul>
-    <li><strong>The majority of states cluster in the lower-right quadrant (low burden + worsening):</strong> most state bubbles sit below the horizontal reference line with positive YoY % Change values, indicating that while absolute burden levels remain moderate for most states, the trend direction is unfavorable — conditions are getting worse rather than better across the selected health topics in 2020</li>
-    <li><strong>Diabetes dominates the topic burden ranking by a wide margin:</strong> the horizontal bar chart shows Diabetes with an Average Value roughly 4–5 times higher than the next-highest topics (Nutrition/Physical Activity, Tobacco, and Alcohol) — confirming that Diabetes-related indicators represent the single largest contributor to chronic disease burden among the selected topics and should be weighted heavily in any composite prioritization scoring</li>
-    <li><strong>Texas emerges as a high-priority state (Average Value: 60.82, YoY % Change: 16.64%):</strong> positioned well above the cluster of states in the scatter plot, Texas combines a substantially above-average burden with a double-digit worsening trend — placing it firmly in the upper-right priority quadrant and flagging it as a candidate for targeted intervention across the selected health topics</li>
-    <li><strong>California and Florida show alarming trend acceleration despite high burden:</strong> California (59.23 average, 37.54% YoY change) and Florida (38.09 average, 37.41% YoY change) both exhibit YoY % Change rates exceeding 37% — among the highest deterioration rates in the table — indicating that these large-population states are not only carrying significant disease burden but are experiencing rapid year-over-year worsening that demands immediate attention</li>
-    <li><strong>South Carolina and Georgia represent emerging high-priority states:</strong> both states show YoY % Change rates above 33% (South Carolina: 37.96%, Georgia: 33.68%) with Average Values around 28 — while their absolute burden is moderate, the steep upward trajectory suggests they could move into the high-burden zone within 1–2 years if current trends continue unchecked</li>
-    <li><strong>The national aggregate (United States) sits as a dramatic outlier at 432.62 Average Value:</strong> the gray bubble at the top of the scatter plot represents the summed national figure, which is not directly comparable to individual state values but serves as a reference point — its 29.59% YoY increase underscores that the worsening trend is not isolated to a few states but reflects a broad national pattern across the selected health topics in 2020</li>
-    <li><strong>Tennessee shows relatively stable trends compared to peers (1.75% YoY change):</strong> despite ranking 9th by Average Value (28.58), Tennessee's near-flat year-over-year change suggests its chronic disease burden is holding steady rather than accelerating — making it lower priority for immediate intervention compared to states with similar burden levels but steeper upward trends like South Carolina or Georgia</li>
+    <li><strong>The majority of states cluster in the lower-right quadrant (low burden + worsening):</strong> most state bubbles sit below the horizontal reference line with positive YoY % Change values, indicating that while absolute burden levels remain moderate for most states, the trend direction is unfavorable – conditions are getting worse rather than better across the selected health topics in 2020</li>
+    <li><strong>Diabetes dominates the topic burden ranking by a wide margin:</strong> the horizontal bar chart shows Diabetes with an Average Value roughly 4–5 times higher than the next-highest topics (Nutrition/Physical Activity, Tobacco, and Alcohol) – confirming that Diabetes-related indicators represent the single largest contributor to chronic disease burden among the selected topics and should be weighted heavily in any composite prioritization scoring</li>
+    <li><strong>Texas emerges as a high-priority state (Average Value: 60.82, YoY % Change: 16.64%):</strong> positioned well above the cluster of states in the scatter plot, Texas combines a substantially above-average burden with a double-digit worsening trend – placing it firmly in the upper-right priority quadrant and flagging it as a candidate for targeted intervention across the selected health topics</li>
+    <li><strong>California and Florida show alarming trend acceleration despite high burden:</strong> California (59.23 average, 37.54% YoY change) and Florida (38.09 average, 37.41% YoY change) both exhibit YoY % Change rates exceeding 37% – among the highest deterioration rates in the table – indicating that these large-population states are not only carrying significant disease burden but are experiencing rapid year-over-year worsening that demands immediate attention</li>
+    <li><strong>South Carolina and Georgia represent emerging high-priority states:</strong> both states show YoY % Change rates above 33% (South Carolina: 37.96%, Georgia: 33.68%) with Average Values around 28 – while their absolute burden is moderate, the steep upward trajectory suggests they could move into the high-burden zone within 1–2 years if current trends continue unchecked</li>
+    <li><strong>The national aggregate (United States) sits as a dramatic outlier at 432.62 Average Value:</strong> the gray bubble at the top of the scatter plot represents the summed national figure, which is not directly comparable to individual state values but serves as a reference point – its 29.59% YoY increase underscores that the worsening trend is not isolated to a few states but reflects a broad national pattern across the selected health topics in 2020</li>
+    <li><strong>Tennessee shows relatively stable trends compared to peers (1.75% YoY change):</strong> despite ranking 9th by Average Value (28.58), Tennessee's near-flat year-over-year change suggests its chronic disease burden is holding steady rather than accelerating – making it lower priority for immediate intervention compared to states with similar burden levels but steeper upward trends like South Carolina or Georgia</li>
   </ul>
 
   <h4>Why This Dashboard Matters for Public Health Resource Allocation</h4>
@@ -845,10 +845,10 @@ CALCULATE(
     where conditions are stable or improving. This dashboard enables public health decision-makers to:
   </p>
   <ul>
-    <li><strong>Triage states using two dimensions simultaneously:</strong> the scatter plot priority matrix combines burden level and trend direction into a single visual, allowing analysts to immediately identify which states fall into the critical upper-right quadrant (high burden + worsening) versus those in lower-priority zones — replacing subjective prioritization with a data-driven framework</li>
-    <li><strong>Allocate resources proportionally to disease burden by topic:</strong> the topic burden ranking reveals that Diabetes accounts for a disproportionate share of overall chronic disease impact — informing decisions about whether intervention budgets should be distributed equally across topics or weighted toward the highest-burden categories</li>
-    <li><strong>Build evidence-based justification for intervention targeting:</strong> the high-priority states table provides the specific numeric values (Average Value, YoY % Change, State Rank) needed to justify why particular states were selected for intervention — replacing anecdotal reasoning with quantifiable metrics that can withstand scrutiny from budget committees and oversight bodies</li>
-    <li><strong>Monitor intervention urgency over time:</strong> by changing the Year slicer, analysts can track whether high-priority states are responding to interventions (moving left in the scatter plot as YoY % Change decreases) or continuing to deteriorate — providing longitudinal accountability for resource allocation decisions</li>
+    <li><strong>Triage states using two dimensions simultaneously:</strong> the scatter plot priority matrix combines burden level and trend direction into a single visual, allowing analysts to immediately identify which states fall into the critical upper-right quadrant (high burden + worsening) versus those in lower-priority zones – replacing subjective prioritization with a data-driven framework</li>
+    <li><strong>Allocate resources proportionally to disease burden by topic:</strong> the topic burden ranking reveals that Diabetes accounts for a disproportionate share of overall chronic disease impact – informing decisions about whether intervention budgets should be distributed equally across topics or weighted toward the highest-burden categories</li>
+    <li><strong>Build evidence-based justification for intervention targeting:</strong> the high-priority states table provides the specific numeric values (Average Value, YoY % Change, State Rank) needed to justify why particular states were selected for intervention – replacing anecdotal reasoning with quantifiable metrics that can withstand scrutiny from budget committees and oversight bodies</li>
+    <li><strong>Monitor intervention urgency over time:</strong> by changing the Year slicer, analysts can track whether high-priority states are responding to interventions (moving left in the scatter plot as YoY % Change decreases) or continuing to deteriorate – providing longitudinal accountability for resource allocation decisions</li>
   </ul>
 
 </details>
@@ -860,21 +860,21 @@ CALCULATE(
   <p>
     This project demonstrates an end-to-end Power BI analytics workflow using real-world CDC chronic disease surveillance
     data. From raw CSV import through polished interactive dashboards, the analysis covers the full Power BI development
-    lifecycle: Power Query ETL, star schema data modeling, DAX measure authoring, and multi-page report design — applied
+    lifecycle: Power Query ETL, star schema data modeling, DAX measure authoring, and multi-page report design – applied
     to a dataset spanning 9 chronic disease topics, 52 locations, and 7 years of public health surveillance.
   </p>
 
   <h3>What the Data Revealed</h3>
   <p>
-    Across five dashboard pages, the analysis surfaced distinct patterns at every level — national trends, state-level
+    Across five dashboard pages, the analysis surfaced distinct patterns at every level – national trends, state-level
     performance, demographic disparities, and actionable prioritization signals:
   </p>
   <ul>
-    <li><strong>Uneven progress across health topics:</strong> Diabetes showed the strongest improvement (-12.57% YoY), while Alcohol (+4.03%) and Tobacco (+3.74%) moved in the wrong direction — confirming that blanket public health strategies are insufficient and topic-specific interventions are required</li>
+    <li><strong>Uneven progress across health topics:</strong> Diabetes showed the strongest improvement (-12.57% YoY), while Alcohol (+4.03%) and Tobacco (+3.74%) moved in the wrong direction – confirming that blanket public health strategies are insufficient and topic-specific interventions are required</li>
     <li><strong>Cardiovascular Disease dominates overall burden:</strong> with an average value of 68.44, Cardiovascular Disease remains substantially higher than all other topics in the dataset, reinforcing heart disease and stroke as the single largest chronic disease challenge nationally</li>
-    <li><strong>State performance varies by indicator:</strong> states that rank poorly for one topic often perform well on others — California ranks 50th for Arthritis but 36th for Alcohol — indicating that chronic disease outcomes are shaped by local policy environments and healthcare infrastructure rather than uniform system quality</li>
-    <li><strong>Demographic disparities are significant and widening:</strong> in New York, the Alcohol-related disparity ratio reached 5.69 (the highest-burden group's rate was nearly 6x the lowest), and the disparity gap widened from approximately 15 in 2019 to 23 by 2022 — showing that population-level averages mask growing inequities between demographic groups</li>
-    <li><strong>High-burden states with worsening trends require urgent attention:</strong> the priority matrix identified Texas (60.82 average, 16.64% YoY increase), California (59.23 average, 37.54% YoY increase), and Florida (38.09 average, 37.41% YoY increase) as states combining high disease burden with rapid deterioration — placing them in the highest-priority quadrant for intervention</li>
+    <li><strong>State performance varies by indicator:</strong> states that rank poorly for one topic often perform well on others – California ranks 50th for Arthritis but 36th for Alcohol – indicating that chronic disease outcomes are shaped by local policy environments and healthcare infrastructure rather than uniform system quality</li>
+    <li><strong>Demographic disparities are significant and widening:</strong> in New York, the Alcohol-related disparity ratio reached 5.69 (the highest-burden group's rate was nearly 6x the lowest), and the disparity gap widened from approximately 15 in 2019 to 23 by 2022 – showing that population-level averages mask growing inequities between demographic groups</li>
+    <li><strong>High-burden states with worsening trends require urgent attention:</strong> the priority matrix identified Texas (60.82 average, 16.64% YoY increase), California (59.23 average, 37.54% YoY increase), and Florida (38.09 average, 37.41% YoY increase) as states combining high disease burden with rapid deterioration – placing them in the highest-priority quadrant for intervention</li>
   </ul>
 
   <h3>Connecting the Analyses</h3>
@@ -891,7 +891,7 @@ CALCULATE(
     The technical implementation progressed from foundational Power Query transformations through normalized star schema
     design, 10 purpose-built DAX measures across three functional categories, and five interactive report pages with
     KPI cards, scatter plots, decomposition trees, conditional formatting matrices, gauge charts, and multi-line trend
-    analysis — demonstrating how increasing analytical complexity can be layered into a cohesive, decision-ready deliverable.
+    analysis – demonstrating how increasing analytical complexity can be layered into a cohesive, decision-ready deliverable.
   </p>
 
   <h3>Skills Demonstrated</h3>

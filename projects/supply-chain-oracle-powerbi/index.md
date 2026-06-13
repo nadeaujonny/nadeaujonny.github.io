@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Supply Chain Demand Forecasting, Inventory Optimization & MRP Simulation"
-description: "End-to-end automated supply chain analytics solution using Oracle SQL, Excel Power Query, and Power BI — featuring demand forecasting, ABC/XYZ classification, MRP net requirements simulation, and a six-page interactive dashboard with scheduled refresh."
+description: "End-to-end automated supply chain analytics solution using Oracle SQL, Excel Power Query, and Power BI – featuring demand forecasting, ABC/XYZ classification, MRP net requirements simulation, and a six-page interactive dashboard with scheduled refresh."
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>
@@ -117,7 +117,7 @@ description: "End-to-end automated supply chain analytics solution using Oracle 
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Phase 1 — Oracle SQL: Schema Design &amp; Data Loading</strong></summary>
+  <summary><strong>Phase 1 – Oracle SQL: Schema Design &amp; Data Loading</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -222,7 +222,7 @@ WHERE rn = 1;</code></pre>
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Phase 2 — Oracle SQL: Queries, Views &amp; Stored Procedures</strong></summary>
+  <summary><strong>Phase 2 – Oracle SQL: Queries, Views &amp; Stored Procedures</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -336,13 +336,13 @@ SELECT a.CATEGORY_NAME, a.ABC_CLASS, x.XYZ_CLASS,
     a.ABC_CLASS || '-' || x.XYZ_CLASS AS MATRIX_CELL,
     CASE
         WHEN a.ABC_CLASS = 'A' AND x.XYZ_CLASS = 'X'
-            THEN 'JIT/Kanban — low safety stock, frequent small orders'
+            THEN 'JIT/Kanban – low safety stock, frequent small orders'
         WHEN a.ABC_CLASS = 'A' AND x.XYZ_CLASS = 'Y'
-            THEN 'Moderate safety stock — demand-driven replenishment'
+            THEN 'Moderate safety stock – demand-driven replenishment'
         WHEN a.ABC_CLASS = 'B' AND x.XYZ_CLASS = 'X'
-            THEN 'Standard replenishment — EOQ with periodic review'
+            THEN 'Standard replenishment – EOQ with periodic review'
         WHEN a.ABC_CLASS = 'C' AND x.XYZ_CLASS = 'Z'
-            THEN 'Evaluate for discontinuation — high risk, low reward'
+            THEN 'Evaluate for discontinuation – high risk, low reward'
         ...
     END AS INVENTORY_POLICY
 FROM abc a
@@ -580,7 +580,7 @@ END;</code></pre>
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Phase 3 — Power Query ETL &amp; Custom Functions</strong></summary>
+  <summary><strong>Phase 3 – Power Query ETL &amp; Custom Functions</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -677,7 +677,7 @@ END;</code></pre>
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Phase 4 — Excel Analysis &amp; Optimization</strong></summary>
+  <summary><strong>Phase 4 – Excel Analysis &amp; Optimization</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -998,7 +998,7 @@ ORDER BY fp.CATEGORY_NAME, fp.FORECAST_PERIOD;</code></pre>
 </details>
 
 <details class="dropdown-section">
-  <summary><strong>Phase 5 — Power BI Dashboard</strong></summary>
+  <summary><strong>Phase 5 – Power BI Dashboard</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 

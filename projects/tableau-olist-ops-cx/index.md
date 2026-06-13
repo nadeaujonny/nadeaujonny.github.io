@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Tableau — Olist Ops & Customer Experience
+title: Tableau – Olist Ops & Customer Experience
 description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders covering fulfillment performance, delivery efficiency, revenue trends, and customer experience metrics."
 ---
 
@@ -126,7 +126,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
 </details>
 <details>
-  <summary><strong>Analysis 1 — Order Fulfillment Performance Metrics (Sep 2016 – Aug 2018)</strong></summary>
+  <summary><strong>Analysis 1 – Order Fulfillment Performance Metrics (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -146,7 +146,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li>Analyzed average delivery time by month to identify seasonal or operational patterns</li>
   </ul>
 
-  <h3>Results — KPI Summary Cards</h3>
+  <h3>Results – KPI Summary Cards</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -208,7 +208,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Trends & Distributions</h3>
+  <h3>Results – Trends & Distributions</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -285,7 +285,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Dashboard</h3>
+  <h3>Results – Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <div class="tableau-container" style="width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 1400/927; overflow: hidden;">
@@ -315,9 +315,9 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Investigate late delivery spikes:</strong> Drill into periods with elevated late delivery rates (10-20%) to identify root causes—carrier issues, regional bottlenecks, high-volume periods, or seller performance problems</li>
+    <li><strong>Investigate late delivery spikes:</strong> Drill into periods with elevated late delivery rates (10-20%) to identify root causes–carrier issues, regional bottlenecks, high-volume periods, or seller performance problems</li>
     <li><strong>Focus on the long tail:</strong> Analyze orders taking 45+ days to identify patterns (specific product categories, seller locations, or customer regions) and implement targeted interventions</li>
-    <li><strong>Set SLA targets by segment:</strong> Not all products require the same delivery speed—consider differentiated targets for product categories with different customer expectations</li>
+    <li><strong>Set SLA targets by segment:</strong> Not all products require the same delivery speed–consider differentiated targets for product categories with different customer expectations</li>
     <li><strong>Monitor completion rate proactively:</strong> 97% is strong but track this metric by region, seller, and product category to catch deterioration early</li>
     <li><strong>Celebrate and replicate improvement:</strong> Document the operational improvements that reduced average delivery time from 50+ to 12.5 days and apply these lessons to remaining problem areas</li>
     <li><strong>Operationalize delivery time monitoring:</strong> Create alerts for when weekly/monthly delivery times exceed thresholds to enable faster operational response</li>
@@ -325,7 +325,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
 </details>
 <details>
-  <summary><strong>Analysis 2 — Revenue & Sales Performance (Sep 2016 – Aug 2018)</strong></summary>
+  <summary><strong>Analysis 2 – Revenue & Sales Performance (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -344,7 +344,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li>Built a geographic map visualization showing revenue by Brazilian state</li>
   </ul>
 
-  <h3>Results — KPI Summary Cards</h3>
+  <h3>Results – KPI Summary Cards</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -406,7 +406,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Revenue Trends & Distributions</h3>
+  <h3>Results – Revenue Trends & Distributions</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -468,7 +468,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Dashboard</h3>
+  <h3>Results – Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <div class="tableau-container" style="width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 1400/927; overflow: hidden;">
@@ -509,7 +509,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
 </details>
 <details>
-  <summary><strong>Analysis 3 — Customer Experience & Review Quality (Sep 2016 – Aug 2018)</strong></summary>
+  <summary><strong>Analysis 3 – Customer Experience & Review Quality (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -530,7 +530,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li>Created a category performance scatterplot to compare review score vs review volume</li>
   </ul>
 
-  <h3>Results — KPI Summary Cards</h3>
+  <h3>Results – KPI Summary Cards</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -592,7 +592,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Review Score Distribution & Trends</h3>
+  <h3>Results – Review Score Distribution & Trends</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -624,7 +624,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Delivery Impact & Category Performance</h3>
+  <h3>Results – Delivery Impact & Category Performance</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <img
@@ -701,7 +701,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     </figcaption>
   </figure>
 
-  <h3>Results — Dashboard</h3>
+  <h3>Results – Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <div class="tableau-container" style="width: 100%; max-width: 1400px; margin: 0 auto; aspect-ratio: 1400/927; overflow: hidden;">
@@ -741,7 +741,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
 </details>
 <details>
-  <summary><strong>Analysis 4 — Marketplace Ecosystem: Products & Sellers (Sep 2016 – Aug 2018)</strong></summary>
+  <summary><strong>Analysis 4 – Marketplace Ecosystem: Products & Sellers (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -762,7 +762,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li>Built integrated analysis visualizations including category-seller matrix heatmaps and product weight vs price relationships</li>
   </ul>
 
-  <h3>Results — Section A: Product Performance</h3>
+  <h3>Results – Section A: Product Performance</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <div class="tableau-container" style="width: 100%; max-width: 1200px; margin: 0 auto; aspect-ratio: 1200/2627; overflow: hidden;">
@@ -783,17 +783,17 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <ul>
     <li><strong>32,216 Total Products Sold</strong> across the marketplace during the analysis period</li>
     <li><strong>71 Unique Product Categories</strong> available to customers</li>
-    <li><strong>1.142 Average Items per Order</strong> — suggests most orders are single-item purchases</li>
-    <li><strong>39.25% Revenue Concentration</strong> in Top 5 Categories — moderate concentration indicating diversified marketplace</li>
+    <li><strong>1.142 Average Items per Order</strong> – suggests most orders are single-item purchases</li>
+    <li><strong>39.25% Revenue Concentration</strong> in Top 5 Categories – moderate concentration indicating diversified marketplace</li>
   </ul>
 
   <h4>Category Revenue Leaders</h4>
   <ul>
-    <li><strong>Health & Beauty:</strong> $1.41M revenue — top-performing category</li>
-    <li><strong>Watches & Gifts:</strong> $1.26M revenue — second highest performer</li>
-    <li><strong>Bed Bath Table:</strong> $1.23M revenue — strong home goods category</li>
-    <li><strong>Sports Leisure:</strong> $1.12M revenue — active lifestyle category</li>
-    <li><strong>Computers Accessories:</strong> $1.03M revenue — technology segment</li>
+    <li><strong>Health & Beauty:</strong> $1.41M revenue – top-performing category</li>
+    <li><strong>Watches & Gifts:</strong> $1.26M revenue – second highest performer</li>
+    <li><strong>Bed Bath Table:</strong> $1.23M revenue – strong home goods category</li>
+    <li><strong>Sports Leisure:</strong> $1.12M revenue – active lifestyle category</li>
+    <li><strong>Computers Accessories:</strong> $1.03M revenue – technology segment</li>
   </ul>
 
   <h4>Product Performance Insights</h4>
@@ -807,13 +807,13 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li><strong>Improvement opportunity identified:</strong> Office Furniture shows lower review scores despite moderate revenue</li>
   </ul>
 
-  <h3>Results — Section B: Seller Performance</h3>
+  <h3>Results – Section B: Seller Performance</h3>
 
   <h4>Seller Ecosystem Metrics</h4>
   <ul>
     <li><strong>2,970 Active Sellers</strong> on the platform</li>
-    <li><strong>$5,323 Average Revenue per Seller</strong> — indicates a healthy mid-sized seller base</li>
-    <li><strong>12.93% Top 10 Seller Concentration</strong> — relatively low, suggesting a well-distributed marketplace not dominated by mega-sellers</li>
+    <li><strong>$5,323 Average Revenue per Seller</strong> – indicates a healthy mid-sized seller base</li>
+    <li><strong>12.93% Top 10 Seller Concentration</strong> – relatively low, suggesting a well-distributed marketplace not dominated by mega-sellers</li>
     <li><strong>22 States</strong> with seller representation across Brazil</li>
   </ul>
 
@@ -847,22 +847,22 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li><strong>Overall trajectory:</strong> The marketplace demonstrates healthy expansion with sustained new seller acquisition</li>
   </ul>
 
-  <h3>Results — Section C: Integrated Analysis</h3>
+  <h3>Results – Section C: Integrated Analysis</h3>
 
   <h4>Category-Seller Matrix (Heatmap) Insights</h4>
   <ul>
-    <li><strong>SP (São Paulo) dominance:</strong> Shows the darkest intensity across most categories — it's the undisputed seller hub</li>
+    <li><strong>SP (São Paulo) dominance:</strong> Shows the darkest intensity across most categories – it's the undisputed seller hub</li>
     <li><strong>Broad geographic coverage:</strong> Categories like Auto, Health & Beauty, Housewares, and Sports Leisure have seller presence across multiple states</li>
     <li><strong>Concentrated categories:</strong> Bed Bath Table, Computers Accessories, and Garden Tools show focused seller presence in specific states</li>
-    <li><strong>White space opportunities:</strong> Gaps indicate categories lacking seller representation in certain states — potential expansion targets</li>
+    <li><strong>White space opportunities:</strong> Gaps indicate categories lacking seller representation in certain states – potential expansion targets</li>
   </ul>
 
   <h4>Product Weight vs Price Scatter Plot Insights</h4>
   <ul>
     <li><strong>Product clustering:</strong> Most products fall in the 0-10K gram range with prices under $2,000</li>
     <li><strong>Heavy outliers exist:</strong> Products at 30K-40K grams are rare but present</li>
-    <li><strong>Marketplace optimization:</strong> Light, low-cost items dominate — likely easier to ship and more impulse-buy friendly</li>
-    <li><strong>No strong weight-price correlation:</strong> Some heavy items are cheap, some light items are expensive — diverse product mix</li>
+    <li><strong>Marketplace optimization:</strong> Light, low-cost items dominate – likely easier to ship and more impulse-buy friendly</li>
+    <li><strong>No strong weight-price correlation:</strong> Some heavy items are cheap, some light items are expensive – diverse product mix</li>
     <li><strong>Premium segment:</strong> A few premium products exist at $6-7K price points regardless of weight</li>
   </ul>
 
@@ -870,14 +870,14 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <ul>
     <li><strong>Healthy marketplace structure:</strong> Low seller concentration (12.93%) and broad seller base (2,970) indicate a competitive, democratized platform rather than oligopoly</li>
     <li><strong>Geographic advantage matters:</strong> São Paulo's dominance across the heatmap suggests logistics advantages and market proximity drive seller location decisions</li>
-    <li><strong>E-commerce-optimized product mix:</strong> The platform favors lightweight, affordable products — optimized for e-commerce shipping economics and lower barriers to purchase</li>
-    <li><strong>Quality standards effective:</strong> The seller quadrant shows most sellers maintain good reviews (4.0+) regardless of revenue level — platform quality standards appear to be working</li>
+    <li><strong>E-commerce-optimized product mix:</strong> The platform favors lightweight, affordable products – optimized for e-commerce shipping economics and lower barriers to purchase</li>
+    <li><strong>Quality standards effective:</strong> The seller quadrant shows most sellers maintain good reviews (4.0+) regardless of revenue level – platform quality standards appear to be working</li>
     <li><strong>Category-quality correlation:</strong> High-revenue categories like Health & Beauty and Sports Leisure also maintain above-average review scores, proving quality and scale can coexist</li>
     <li><strong>Improvement targets identified:</strong> Categories with high revenue but lower reviews (like Office Furniture) present clear improvement opportunities</li>
     <li><strong>Consistent marketplace expansion:</strong> Growth pattern shows 100-200 new sellers per month with strong Q1 2017 spike, suggesting successful marketplace expansion strategy</li>
-    <li><strong>Revenue diversification:</strong> While top 5 categories represent 39.25% of revenue, the remaining 60%+ is distributed across 66 other categories — good diversification</li>
+    <li><strong>Revenue diversification:</strong> While top 5 categories represent 39.25% of revenue, the remaining 60%+ is distributed across 66 other categories – good diversification</li>
     <li><strong>Seasonal demand patterns:</strong> May and August-September peaks suggest back-to-school and mid-year shopping events drive category performance</li>
-    <li><strong>Single-item order behavior:</strong> Average of 1.142 items per order indicates targeted shopping rather than basket-building — potential opportunity for cross-selling</li>
+    <li><strong>Single-item order behavior:</strong> Average of 1.142 items per order indicates targeted shopping rather than basket-building – potential opportunity for cross-selling</li>
   </ul>
 
   <h3>Business Recommendations</h3>
@@ -885,7 +885,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h4>Product Strategy</h4>
   <ul>
     <li><strong>Double down on proven winners:</strong> Invest in expanding Health & Beauty, Watches & Gifts, and Bed Bath Table categories through seller recruitment and marketing spend</li>
-    <li><strong>Fix Office Furniture quality issues:</strong> Investigate why this category shows lower review scores despite moderate revenue — likely product quality, delivery damage, or fulfillment issues</li>
+    <li><strong>Fix Office Furniture quality issues:</strong> Investigate why this category shows lower review scores despite moderate revenue – likely product quality, delivery damage, or fulfillment issues</li>
     <li><strong>Leverage seasonal patterns:</strong> Build promotional campaigns around May and August-September peaks to amplify natural demand cycles</li>
     <li><strong>Increase basket size:</strong> With only 1.142 items per order, implement "Frequently Bought Together" recommendations and cross-category bundles to increase AOV</li>
     <li><strong>Replicate quality practices:</strong> Document and share best practices from high-satisfaction categories (Home Comfort, Stationery, Perfumery) with lower-performing categories</li>
@@ -902,7 +902,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
   <h4>Integrated Ecosystem Optimization</h4>
   <ul>
-    <li><strong>Fill category-state gaps:</strong> Use the heatmap to target specific category expansions in states with no seller presence — prioritize high-demand categories first</li>
+    <li><strong>Fill category-state gaps:</strong> Use the heatmap to target specific category expansions in states with no seller presence – prioritize high-demand categories first</li>
     <li><strong>Optimize logistics for lightweight products:</strong> Since the platform naturally favors light items, negotiate volume shipping rates for 0-10K gram products to improve margins</li>
     <li><strong>Premium product strategy:</strong> Develop dedicated fulfillment and marketing for the $6K+ price segment to capture high-margin sales</li>
     <li><strong>Weight-based fee structure:</strong> Consider tiered shipping or commission structures that account for product weight to ensure heavy items remain profitable</li>
@@ -920,14 +920,14 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
 </details>
 <details>
-  <summary><strong>Analysis 5 — Executive Summary Dashboard (Sep 2016 – Aug 2018)</strong></summary>
+  <summary><strong>Analysis 5 – Executive Summary Dashboard (Sep 2016 – Aug 2018)</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <h3>Business Question</h3>
   <p>
     What is the overall health of the Olist marketplace across financial performance, operational efficiency,
-    customer satisfaction, and marketplace dynamics — and how can executives quickly assess business status
+    customer satisfaction, and marketplace dynamics – and how can executives quickly assess business status
     and identify areas requiring immediate attention?
   </p>
 
@@ -943,7 +943,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     <li>Created 17 calculated fields and 8 FIXED LOD expressions for period-over-period comparisons, trend indicators, and conditional formatting logic</li>
   </ul>
 
-  <h3>Results — Executive Summary Dashboard</h3>
+  <h3>Results – Executive Summary Dashboard</h3>
 
   <figure style="margin: 0 0 18px 0;">
     <div class="tableau-container" style="width: 100%; max-width: 1200px; margin: 0 auto; aspect-ratio: 1200/1027; overflow: hidden;">
@@ -967,10 +967,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     comparisons across different temporal aggregations.
   </p>
   <ul>
-    <li><strong>Total Revenue — $15.8M:</strong> MoM change of -5.2% (red downward arrow) — indicates a short-term revenue decline requiring monitoring</li>
-    <li><strong>Total Orders — 99,441:</strong> MoM change of +3.5% (green upward arrow) — order volume continues to grow despite revenue softness</li>
-    <li><strong>Average Review Score — 4.09:</strong> Trend indicator shows "Declining" — customer satisfaction is trending downward and warrants attention</li>
-    <li><strong>Average Delivery Time — 12.5 days:</strong> Trend indicator shows "Improving" — logistics performance is getting better over time</li>
+    <li><strong>Total Revenue – $15.8M:</strong> MoM change of -5.2% (red downward arrow) – indicates a short-term revenue decline requiring monitoring</li>
+    <li><strong>Total Orders – 99,441:</strong> MoM change of +3.5% (green upward arrow) – order volume continues to grow despite revenue softness</li>
+    <li><strong>Average Review Score – 4.09:</strong> Trend indicator shows "Declining" – customer satisfaction is trending downward and warrants attention</li>
+    <li><strong>Average Delivery Time – 12.5 days:</strong> Trend indicator shows "Improving" – logistics performance is getting better over time</li>
   </ul>
 
   <h4>Revenue Trend with Forecast (Middle Row)</h4>
@@ -989,15 +989,15 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <h4>Core Analytics Row</h4>
   <ul>
     <li><strong>Order Status Distribution:</strong> Horizontal bar chart showing 97.02% delivery completion rate, with shipped (0.63%), canceled (0.32%), and other statuses making up the remainder</li>
-    <li><strong>Top 5 Categories by Revenue:</strong> Health Beauty ($1.4M), Watches Gifts ($1.3M), Bed Bath Table ($1.2M), Sports Leisure ($1.2M), and Computers Accessories ($1.1M) — filtered dynamically using Top N sets</li>
+    <li><strong>Top 5 Categories by Revenue:</strong> Health Beauty ($1.4M), Watches Gifts ($1.3M), Bed Bath Table ($1.2M), Sports Leisure ($1.2M), and Computers Accessories ($1.1M) – filtered dynamically using Top N sets</li>
     <li><strong>Revenue by State Map:</strong> Filled choropleth map of Brazilian states revealing strong concentration in the Southeast region (São Paulo dominant), with click-to-filter interactivity enabling geographic drill-down across all dashboard components</li>
   </ul>
 
   <h4>Performance Indicators Row</h4>
   <ul>
-    <li><strong>Late Delivery Gauge — 6.8%:</strong> Color-coded KPI exceeding the 5% target threshold (yellow zone: 5-10%), signaling logistics improvements are needed to protect customer satisfaction</li>
-    <li><strong>Review Score Sparkline:</strong> Compact trend line (no axes) showing satisfaction trends over time — confirms the declining trajectory flagged in the KPI card</li>
-    <li><strong>Payment Methods:</strong> Credit Card dominates at 78.34%, followed by Boleto (17.92%), Voucher (2.37%), and Debit Card (1.36%) — reflecting Brazilian consumer payment preferences</li>
+    <li><strong>Late Delivery Gauge – 6.8%:</strong> Color-coded KPI exceeding the 5% target threshold (yellow zone: 5-10%), signaling logistics improvements are needed to protect customer satisfaction</li>
+    <li><strong>Review Score Sparkline:</strong> Compact trend line (no axes) showing satisfaction trends over time – confirms the declining trajectory flagged in the KPI card</li>
+    <li><strong>Payment Methods:</strong> Credit Card dominates at 78.34%, followed by Boleto (17.92%), Voucher (2.37%), and Debit Card (1.36%) – reflecting Brazilian consumer payment preferences</li>
     <li><strong>Key Insight Box:</strong> Parameter-driven dynamic text display that changes content based on user-selected metric focus area (Revenue, Orders, Satisfaction, Delivery)</li>
   </ul>
 
@@ -1041,9 +1041,9 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
   <h3>Key Findings</h3>
   <ul>
-    <li><strong>Delivery performance alert:</strong> 6.8% late delivery rate exceeds the 5% target threshold, indicating logistics improvements are needed to protect customer satisfaction — previous analysis showed a strong negative correlation (-0.65) between delivery time and review scores</li>
+    <li><strong>Delivery performance alert:</strong> 6.8% late delivery rate exceeds the 5% target threshold, indicating logistics improvements are needed to protect customer satisfaction – previous analysis showed a strong negative correlation (-0.65) between delivery time and review scores</li>
     <li><strong>Revenue trajectory suggests seasonal fluctuation:</strong> Despite -5.2% month-over-month decline, the 3-month forecast predicts recovery with an upward trend line, suggesting seasonal variation rather than a systemic downturn</li>
-    <li><strong>Divergence between orders and revenue:</strong> Orders grew +3.5% MoM while revenue declined -5.2%, indicating average order value compression — customers are ordering more but spending less per order</li>
+    <li><strong>Divergence between orders and revenue:</strong> Orders grew +3.5% MoM while revenue declined -5.2%, indicating average order value compression – customers are ordering more but spending less per order</li>
     <li><strong>Declining customer satisfaction:</strong> Average review score of 4.09 with a declining trend requires proactive intervention before it impacts repeat purchases and marketplace reputation</li>
     <li><strong>Category concentration risk:</strong> Top 5 categories represent significant revenue share, indicating opportunity for portfolio diversification to reduce dependency</li>
     <li><strong>Geographic concentration:</strong> Revenue map reveals strong concentration in southeastern states (São Paulo), suggesting expansion opportunities in underserved regions</li>
@@ -1053,11 +1053,11 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Logistics optimization priority:</strong> Invest in delivery infrastructure to reduce late delivery rate from 6.8% to below the 5% target — this is the single highest-leverage improvement given the strong correlation between delivery performance and customer satisfaction</li>
-    <li><strong>Address AOV compression:</strong> Investigate the divergence between growing order volume and declining revenue per order — consider cross-selling strategies, bundle promotions, and minimum order incentives to stabilize average order value</li>
+    <li><strong>Logistics optimization priority:</strong> Invest in delivery infrastructure to reduce late delivery rate from 6.8% to below the 5% target – this is the single highest-leverage improvement given the strong correlation between delivery performance and customer satisfaction</li>
+    <li><strong>Address AOV compression:</strong> Investigate the divergence between growing order volume and declining revenue per order – consider cross-selling strategies, bundle promotions, and minimum order incentives to stabilize average order value</li>
     <li><strong>Customer retention focus:</strong> Address the declining review score trend through improved delivery performance, proactive communication for delayed orders, and product quality initiatives before it impacts repeat purchase rates</li>
     <li><strong>Category diversification:</strong> Develop growth strategies for mid-tier categories while maintaining strength in top performers (Health Beauty, Watches Gifts) to reduce revenue concentration risk</li>
-    <li><strong>Geographic expansion:</strong> Prioritize marketing and seller recruitment in high-potential, underserved states identified through the revenue density map — target northern and central-western regions</li>
+    <li><strong>Geographic expansion:</strong> Prioritize marketing and seller recruitment in high-potential, underserved states identified through the revenue density map – target northern and central-western regions</li>
     <li><strong>Leverage payment infrastructure:</strong> Expand boleto accessibility and consider debit card incentives to capture more of the underbanked market segment while maintaining credit card partnership benefits</li>
     <li><strong>Implement executive monitoring cadence:</strong> Use this dashboard as the basis for weekly executive reviews, with drill-down to detailed analyses (1-4) when KPI thresholds are breached</li>
   </ul>
@@ -1069,7 +1069,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <div style="margin-top: 12px;"></div>
 
   <p>
-    This analysis examined 99,441 Olist e-commerce orders across five interconnected dashboards to evaluate the marketplace from four perspectives: operational performance, financial health, customer satisfaction, and ecosystem dynamics. The goal was to move beyond surface-level metrics and uncover the relationships between them — where delivery performance impacts satisfaction, where geographic concentration creates both revenue strength and strategic risk, and where marketplace growth introduces new operational pressure.
+    This analysis examined 99,441 Olist e-commerce orders across five interconnected dashboards to evaluate the marketplace from four perspectives: operational performance, financial health, customer satisfaction, and ecosystem dynamics. The goal was to move beyond surface-level metrics and uncover the relationships between them – where delivery performance impacts satisfaction, where geographic concentration creates both revenue strength and strategic risk, and where marketplace growth introduces new operational pressure.
   </p>
 
   <h3>What the Data Revealed</h3>
@@ -1077,10 +1077,10 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     Olist's core operations are strong. A 97% order completion rate, average delivery times that improved from 50+ days during early operations down to 12.5 days, and $15.8M in total revenue with 21% year-over-year growth all point to a marketplace that scaled effectively during this period. The seller base grew to 2,970 with low concentration (top 10 sellers account for just 12.93% of revenue), indicating a competitive and democratized platform.
   </p>
   <p>
-    However, the analysis also surfaced clear pressure points. The 6.8% late delivery rate exceeds the 5% operational target, and the data shows a direct relationship between delivery delays and declining review scores — on-time orders average significantly higher satisfaction than late ones. With an 11.6% 1-star review rate and a declining satisfaction trend, the connection between logistics performance and customer experience is the most actionable finding across all five analyses.
+    However, the analysis also surfaced clear pressure points. The 6.8% late delivery rate exceeds the 5% operational target, and the data shows a direct relationship between delivery delays and declining review scores – on-time orders average significantly higher satisfaction than late ones. With an 11.6% 1-star review rate and a declining satisfaction trend, the connection between logistics performance and customer experience is the most actionable finding across all five analyses.
   </p>
   <p>
-    Revenue and order concentration in São Paulo (37% of total revenue) and the Southeast region (60%+) represent both Olist's current strength and its most significant growth constraint. The category-seller heatmap revealed clear white-space opportunities in underserved states and product verticals, while the seller quadrant analysis confirmed that quality and scale can coexist — most sellers maintain 4.0+ review scores regardless of revenue level.
+    Revenue and order concentration in São Paulo (37% of total revenue) and the Southeast region (60%+) represent both Olist's current strength and its most significant growth constraint. The category-seller heatmap revealed clear white-space opportunities in underserved states and product verticals, while the seller quadrant analysis confirmed that quality and scale can coexist – most sellers maintain 4.0+ review scores regardless of revenue level.
   </p>
 
   <h3>Connecting the Analyses</h3>
@@ -1088,7 +1088,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
     Each dashboard was designed to answer a distinct business question, but the findings compound when viewed together. The fulfillment analysis (Analysis 1) identified delivery performance issues that the customer experience analysis (Analysis 3) directly linked to review score deterioration. The revenue analysis (Analysis 2) highlighted geographic concentration that the marketplace analysis (Analysis 4) explained through seller distribution patterns. The executive summary (Analysis 5) synthesized these threads into a single monitoring surface with KPI cards, forecasting, and interactive filters designed for ongoing operational use.
   </p>
   <p>
-    The technical implementation progressed from foundational calculated fields and KPI cards through advanced LOD expressions, parameter-driven interactivity, Top N sets, and Tableau's native forecasting engine — demonstrating how increasing analytical complexity can be layered into a cohesive, executive-facing deliverable.
+    The technical implementation progressed from foundational calculated fields and KPI cards through advanced LOD expressions, parameter-driven interactivity, Top N sets, and Tableau's native forecasting engine – demonstrating how increasing analytical complexity can be layered into a cohesive, executive-facing deliverable.
   </p>
 
 </details>
@@ -1100,7 +1100,7 @@ description: "Comprehensive Tableau analysis of 99,441 Olist e-commerce orders c
   <ul>
     <li><strong>Truncated boundary periods:</strong> August 2018 shows a sharp drop in order volume consistent with incomplete data collection, and August–November 2016 contains too few orders for reliable trend analysis. Insights drawn from these boundary months should be treated as directional rather than definitive.</li>
     <li><strong>No logistics provenance data:</strong> The dataset lacks carrier identity, warehouse locations, regional distribution infrastructure, and external event context (holidays, promotional campaigns, weather disruptions). This limits the ability to attribute delivery performance variation to specific operational causes.</li>
-    <li><strong>Geographic granularity ceiling:</strong> Customer and seller locations are available at the city and state level, but without postal code coordinates or distance calculations, the analysis cannot measure delivery distance as a variable — a likely confound in delivery time and late delivery rate patterns.</li>
+    <li><strong>Geographic granularity ceiling:</strong> Customer and seller locations are available at the city and state level, but without postal code coordinates or distance calculations, the analysis cannot measure delivery distance as a variable – a likely confound in delivery time and late delivery rate patterns.</li>
     <li><strong>Review-delivery linkage is correlational:</strong> While the analysis demonstrates a clear relationship between delivery time and review scores, the dataset does not isolate delivery experience from product quality, seller communication, or other factors that influence customer ratings. The observed correlation is strong but not causal attribution.</li>
     <li><strong>Single marketplace, single country:</strong> All findings are specific to Olist's Brazilian marketplace during 2016–2018. Consumer behavior, payment infrastructure (boleto prevalence), and logistics realities are particular to this market and time period.</li>
   </ul>

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Python Financial Analysis: Portfolio Performance & Risk (2015-2024)"
-description: "Portfolio performance and risk analysis of six diversified assets (2015-2024) using Python — time series analysis, risk metrics, correlation studies, and predictive modeling."
+description: "Portfolio performance and risk analysis of six diversified assets (2015-2024) using Python – time series analysis, risk metrics, correlation studies, and predictive modeling."
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>

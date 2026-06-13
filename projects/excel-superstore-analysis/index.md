@@ -149,7 +149,7 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
 </details>
 <details>
-  <summary><strong>Analysis 1 — Sales &amp; Profit Trends Over Time</strong></summary>
+  <summary><strong>Analysis 1 – Sales &amp; Profit Trends Over Time</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -229,7 +229,7 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
 </details>
 <details>
-  <summary><strong>Analysis 2 — Product &amp; Category Performance</strong></summary>
+  <summary><strong>Analysis 2 – Product &amp; Category Performance</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -356,18 +356,18 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
   <ul>
     <li><strong>Prioritize high-margin category inventory:</strong> Ensure 98%+ in-stock rates for Technology and Office Supplies to protect the profit core.</li>
     <li><strong>Fix Furniture profitability:</strong> Analyze Furniture by sub-category, discount level, and shipping method to find margin killers. Raise prices or reduce discounts.</li>
-    <li><strong>Limit discounts by category margin:</strong> Set maximum discounts based on category baseline—Technology/Office Supplies (25% max), Furniture (15% max).</li>
+    <li><strong>Limit discounts by category margin:</strong> Set maximum discounts based on category baseline–Technology/Office Supplies (25% max), Furniture (15% max).</li>
     <li><strong>Eliminate low-profit products:</strong> Review the bottom 20% of SKUs by profit and discontinue or consolidate overlapping low-margin items.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 3 — Regional Performance &amp; Market Efficiency</strong></summary>
+  <summary><strong>Analysis 3 – Regional Performance &amp; Market Efficiency</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
   <h3>Business Question</h3>
-  <p>Which regions are driving the most profit and where are we seeing efficiency gaps (low profit margin)? Which states and cities are the largest profit contributors—and which locations are consistently unprofitable?</p>
+  <p>Which regions are driving the most profit and where are we seeing efficiency gaps (low profit margin)? Which states and cities are the largest profit contributors–and which locations are consistently unprofitable?</p>
 
   <h3>Method</h3>
   <ul>
@@ -460,7 +460,7 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
 </details>
 <details>
-  <summary><strong>Analysis 4 — Customer Segment Analysis</strong></summary>
+  <summary><strong>Analysis 4 – Customer Segment Analysis</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -514,7 +514,7 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
   <h3>Key Insights</h3>
   <ul>
-    <li><strong>Consumer dominates volume but has lowest margin:</strong> Generates 50.6% of revenue ($1,161,013) but only 11.5% margin—every 1% improvement yields $11,600 profit.</li>
+    <li><strong>Consumer dominates volume but has lowest margin:</strong> Generates 50.6% of revenue ($1,161,013) but only 11.5% margin–every 1% improvement yields $11,600 profit.</li>
     <li><strong>Home Office is most efficient:</strong> Achieves 14.0% margin, 220 basis points above average, despite being only 18.7% of revenue.</li>
     <li><strong>Corporate balances scale and efficiency:</strong> Strong 13.0% margin with substantial $705,602 revenue represents the scalable profit sweet spot.</li>
     <li><strong>Segment strategies should differ:</strong> The 250 basis point margin spread means uniform discounting over-discounts high-margin segments while under-addressing Consumer issues.</li>
@@ -530,7 +530,7 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
 </details>
 <details>
-  <summary><strong>Analysis 5 — Returns Analysis &amp; Revenue Impact</strong></summary>
+  <summary><strong>Analysis 5 – Returns Analysis &amp; Revenue Impact</strong></summary>
   
   <div style="margin-top: 20px;"></div>
 
@@ -598,8 +598,8 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
   <h3>Key Insights</h3>
   <ul>
-    <li><strong>Returns erase one month of profit:</strong> $180,504 in returned sales (7.86%) and $23,232 in lost profit (8.12%)—effectively eliminating one month's earnings.</li>
-    <li><strong>Return rates vary by category:</strong> Copiers (12.84%), Furnishings (10.48%), Appliances (9.42%) vs Binders (4.91%)—a 2.6x spread suggesting product-specific issues.</li>
+    <li><strong>Returns erase one month of profit:</strong> $180,504 in returned sales (7.86%) and $23,232 in lost profit (8.12%)–effectively eliminating one month's earnings.</li>
+    <li><strong>Return rates vary by category:</strong> Copiers (12.84%), Furnishings (10.48%), Appliances (9.42%) vs Binders (4.91%)–a 2.6x spread suggesting product-specific issues.</li>
     <li><strong>Returns hit high-margin products harder:</strong> Returns destroy more profit (8.12%) than revenue (7.86%), indicating returned items tend to be higher-margin.</li>
     <li><strong>Impact is concentrated:</strong> Top 10 products drive disproportionate return impact, enabling targeted fixes rather than broad policy changes.</li>
   </ul>
@@ -620,12 +620,12 @@ description: "End-to-end Excel analytics project with Power Query ETL, KPI devel
 
   <h3>Workbook Structure</h3>
   <ul>
-    <li><strong>Raw_Orders</strong> — Original imported dataset (preserved; no manual edits)</li>
-    <li><strong>Clean_Orders</strong> — Power Query cleaned, analysis-ready table (single source of truth)</li>
-    <li><strong>Returns</strong> — Returned orders reference table</li>
-    <li><strong>People</strong> — Region/manager reference table</li>
-    <li><strong>Pivots</strong> — Pivot tables + pivot charts used for analysis and the dashboard</li>
-    <li><strong>Dashboard</strong> — Final profit-oriented, single-screen interactive dashboard</li>
+    <li><strong>Raw_Orders</strong> – Original imported dataset (preserved; no manual edits)</li>
+    <li><strong>Clean_Orders</strong> – Power Query cleaned, analysis-ready table (single source of truth)</li>
+    <li><strong>Returns</strong> – Returned orders reference table</li>
+    <li><strong>People</strong> – Region/manager reference table</li>
+    <li><strong>Pivots</strong> – Pivot tables + pivot charts used for analysis and the dashboard</li>
+    <li><strong>Dashboard</strong> – Final profit-oriented, single-screen interactive dashboard</li>
   </ul>
 
   <h3>Dashboard Features</h3>

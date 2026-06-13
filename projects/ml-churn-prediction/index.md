@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Machine Learning — Customer Churn Prediction"
+title: "Machine Learning – Customer Churn Prediction"
 description: "End-to-end ML pipeline: 5 classification models, hyperparameter tuning, SHAP explainability, and a Streamlit churn risk scoring app."
 ---
 
@@ -497,7 +497,7 @@ print(f"\nColumn dtypes:\n{df.dtypes}")
 # PaperlessBilling     object
 # PaymentMethod        object
 # MonthlyCharges      float64
-# TotalCharges         object   ← should be numeric — flagged for investigation
+# TotalCharges         object   ← should be numeric – flagged for investigation
 # Churn                object</code></pre>
 
   <h3>Step 2: Visual Inspection</h3>
@@ -553,7 +553,7 @@ print(f"\nUnique values per column:\n{df.nunique()}")
 # PaperlessBilling    0
 # PaymentMethod       0
 # MonthlyCharges      0
-# TotalCharges        0   ← 0 "missing" — but whitespace strings aren't caught by .isnull()
+# TotalCharges        0   ← 0 "missing" – but whitespace strings aren't caught by .isnull()
 # Churn               0
 #
 # Duplicate rows: 0
@@ -649,11 +649,11 @@ print(df[df['TotalCharges'].isna()][['customerID', 'tenure', 'MonthlyCharges', '
     target variable from Yes/No strings to 1/0 binary integers, and verify the final shape and class distribution.
   </p>
 
-  <pre><code class="language-python"># Drop the 11 rows with NaN TotalCharges (0.16% of data — negligible)
+  <pre><code class="language-python"># Drop the 11 rows with NaN TotalCharges (0.16% of data – negligible)
 # These are tenure=0 customers with no billing history
 df = df.dropna(subset=['TotalCharges'])
 
-# Drop customerID — not a predictive feature
+# Drop customerID – not a predictive feature
 df = df.drop('customerID', axis=1)
 
 # Encode target variable: Yes=1, No=0
@@ -866,7 +866,7 @@ plt.show()</code></pre>
     strategy.
   </p>
 
-  <pre><code class="language-python"># Churn rate by contract type — the single most impactful EDA chart
+  <pre><code class="language-python"># Churn rate by contract type – the single most impactful EDA chart
 contract_churn = df.groupby('Contract')['Churn'].mean().sort_values(ascending=False)
 
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -908,7 +908,7 @@ plt.show()</code></pre>
     features in Phase 3.
   </p>
 
-  <pre><code class="language-python"># Tenure distribution by churn status — overlapping histograms
+  <pre><code class="language-python"># Tenure distribution by churn status – overlapping histograms
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.hist(df[df['Churn'] == 0]['tenure'], bins=40, alpha=0.6,
         label='No Churn', color='#2ecc71', edgecolor='black', linewidth=0.3)
@@ -926,7 +926,7 @@ plt.show()</code></pre>
   <figure style="margin: 20px 0;">
     <img
       src="./outputs/figures/tenure_by_churn.png"
-      alt="Overlapping histograms showing tenure distribution by churn status — churners concentrated in first 12 months"
+      alt="Overlapping histograms showing tenure distribution by churn status – churners concentrated in first 12 months"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
@@ -961,7 +961,7 @@ plt.show()</code></pre>
   <figure style="margin: 20px 0;">
     <img
       src="./outputs/figures/monthly_charges_by_churn.png"
-      alt="Overlapping histograms showing monthly charges by churn — churners skew toward higher charges"
+      alt="Overlapping histograms showing monthly charges by churn – churners skew toward higher charges"
       loading="lazy"
       style="max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 6px;"
     >
@@ -978,7 +978,7 @@ plt.show()</code></pre>
     OnlineSecurity, TechSupport, PaymentMethod) versus those with little or no signal (gender, PhoneService).
   </p>
 
-  <pre><code class="language-python"># Churn rate by ALL categorical features — 4×4 grid
+  <pre><code class="language-python"># Churn rate by ALL categorical features – 4×4 grid
 cat_cols = ['gender', 'SeniorCitizen', 'Partner', 'Dependents',
             'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
             'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV',
@@ -1040,7 +1040,7 @@ fig, ax = plt.subplots(figsize=(8, 6))
 sns.heatmap(corr_matrix, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
             square=True, linewidths=0.5, ax=ax,
             vmin=-1, vmax=1, cbar_kws={'shrink': 0.8})
-ax.set_title('Correlation Heatmap — Numeric Features + Churn', fontsize=14, fontweight='bold')
+ax.set_title('Correlation Heatmap – Numeric Features + Churn', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.savefig('../outputs/figures/correlation_heatmap.png', dpi=150, bbox_inches='tight')
 plt.show()</code></pre>
@@ -1979,7 +1979,7 @@ print(results_df.to_string(index=False))</code></pre>
 
   <h3>Key Code: Model Comparison Bar Chart</h3>
 
-  <pre><code class="language-python"># Model comparison bar chart — AUC, Recall, F1 for all 5 models
+  <pre><code class="language-python"># Model comparison bar chart – AUC, Recall, F1 for all 5 models
 metrics_to_plot = ['AUC', 'Recall', 'F1']
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
@@ -1992,7 +1992,7 @@ for i, metric in enumerate(metrics_to_plot):
     for j, (val, name) in enumerate(zip(values[metric], values['Model'])):
         axes[i].text(val + 0.01, j, f'{val:.4f}', va='center', fontsize=10)
 
-plt.suptitle('Model Comparison — Key Metrics', fontsize=16, fontweight='bold')
+plt.suptitle('Model Comparison – Key Metrics', fontsize=16, fontweight='bold')
 plt.tight_layout()
 plt.savefig('../outputs/figures/model_comparison.png', dpi=150, bbox_inches='tight')
 plt.show()</code></pre>
@@ -2013,7 +2013,7 @@ plt.show()</code></pre>
 
   <h3>Key Code: ROC Curves Overlay</h3>
 
-  <pre><code class="language-python"># ROC curves — all 5 models on the same plot
+  <pre><code class="language-python"># ROC curves – all 5 models on the same plot
 fig, ax = plt.subplots(figsize=(8, 6))
 
 for name, model in fitted_models.items():
@@ -2022,7 +2022,7 @@ for name, model in fitted_models.items():
 
 # Add random baseline
 ax.plot([0, 1], [0, 1], 'k--', label='Random (AUC = 0.50)', alpha=0.5)
-ax.set_title('ROC Curves — All 5 Models', fontsize=14, fontweight='bold')
+ax.set_title('ROC Curves – All 5 Models', fontsize=14, fontweight='bold')
 ax.legend(loc='lower right')
 plt.tight_layout()
 plt.savefig('../outputs/figures/roc_curves.png', dpi=150, bbox_inches='tight')
@@ -2044,7 +2044,7 @@ plt.show()</code></pre>
 
   <h3>Key Code: Confusion Matrices</h3>
 
-  <pre><code class="language-python"># Confusion matrices — all 5 models side by side
+  <pre><code class="language-python"># Confusion matrices – all 5 models side by side
 fig, axes = plt.subplots(1, 5, figsize=(25, 4))
 
 for i, (name, model) in enumerate(fitted_models.items()):
@@ -2057,7 +2057,7 @@ for i, (name, model) in enumerate(fitted_models.items()):
     axes[i].set_ylabel('Actual' if i == 0 else '')
     axes[i].set_xlabel('Predicted')
 
-plt.suptitle('Confusion Matrices — All 5 Models', fontsize=14, fontweight='bold')
+plt.suptitle('Confusion Matrices – All 5 Models', fontsize=14, fontweight='bold')
 plt.tight_layout()
 plt.savefig('../outputs/figures/confusion_matrix.png', dpi=150, bbox_inches='tight')
 plt.show()</code></pre>
@@ -2619,7 +2619,7 @@ print(f"Base value (expected value): {explainer.expected_value:.4f}")
     (global importance):
   </p>
 
-  <pre><code class="language-python"># SHAP Summary Plot (Beeswarm) — global feature importance + direction
+  <pre><code class="language-python"># SHAP Summary Plot (Beeswarm) – global feature importance + direction
 plt.figure(figsize=(10, 8))
 shap.summary_plot(shap_values, X_test_processed,
                   feature_names=all_feature_names,
@@ -2648,7 +2648,7 @@ plt.show()</code></pre>
     value per feature without the directional detail of the beeswarm:
   </p>
 
-  <pre><code class="language-python"># SHAP Bar Plot — mean absolute SHAP values (simpler global importance)
+  <pre><code class="language-python"># SHAP Bar Plot – mean absolute SHAP values (simpler global importance)
 plt.figure(figsize=(10, 8))
 shap.summary_plot(shap_values, X_test_processed,
                   feature_names=all_feature_names,
@@ -2870,7 +2870,7 @@ plt.show()</code></pre>
     the input, predicts the churn probability, and then runs SHAP to explain that specific prediction:
   </p>
 
-  <pre><code class="language-python"># From app/app.py — real-time SHAP explanation in the Streamlit app
+  <pre><code class="language-python"># From app/app.py – real-time SHAP explanation in the Streamlit app
 
 # After preprocessing and prediction...
 churn_prob = model.predict_proba(input_processed)[0][1]
@@ -3138,11 +3138,11 @@ with col3:
 
   <pre><code class="language-python">    # Display color-coded risk level
     if churn_prob >= 0.5:
-        st.error(f"⚠️ HIGH RISK — Churn Probability: {churn_prob:.1%}")
+        st.error(f"⚠️ HIGH RISK – Churn Probability: {churn_prob:.1%}")
     elif churn_prob >= 0.3:
-        st.warning(f"⚡ MEDIUM RISK — Churn Probability: {churn_prob:.1%}")
+        st.warning(f"⚡ MEDIUM RISK – Churn Probability: {churn_prob:.1%}")
     else:
-        st.success(f"✅ LOW RISK — Churn Probability: {churn_prob:.1%}")
+        st.success(f"✅ LOW RISK – Churn Probability: {churn_prob:.1%}")
 
     # Generate per-customer SHAP explanation
     st.subheader("Why this prediction?")
@@ -3196,7 +3196,7 @@ st.write("Comparison of 5 classification models trained on the "
 comparison_df = pd.read_csv(os.path.join(APP_DIR, 'model_comparison.csv'))
 st.dataframe(comparison_df, use_container_width=True)
 
-st.info("**Best Model: Logistic Regression** — Highest AUC (0.834) "
+st.info("**Best Model: Logistic Regression** – Highest AUC (0.834) "
         "and Recall (0.789). Recall is our priority metric: it's "
         "cheaper to send a retention offer to a loyal customer "
         "than to miss a churner.")
@@ -3244,21 +3244,21 @@ st.subheader("SHAP Feature Importance")
 st.write("SHAP values show how each feature contributes to the "
          "model's churn predictions.")
 st.image(os.path.join(APP_DIR, 'figures/shap_summary.png'),
-         caption='SHAP Summary — Top 15 Features Driving Churn',
+         caption='SHAP Summary – Top 15 Features Driving Churn',
          use_container_width=True)
 
 # Business recommendations
 st.subheader("Business Recommendations")
 st.markdown("""
-1. **Incentivize annual contracts** — Month-to-month customers
+1. **Incentivize annual contracts** – Month-to-month customers
    churn at 42.7% vs 2.8% for two-year contracts
-2. **Focus retention on new customers** — Most churn happens
+2. **Focus retention on new customers** – Most churn happens
    in the first few months
-3. **Bundle support add-ons** — Customers with OnlineSecurity
+3. **Bundle support add-ons** – Customers with OnlineSecurity
    and TechSupport churn significantly less
-4. **Address fiber optic experience** — Fiber customers churn
+4. **Address fiber optic experience** – Fiber customers churn
    more despite paying more (potential service quality issue)
-5. **Migrate electronic check users** — This payment method
+5. **Migrate electronic check users** – This payment method
    correlates with higher churn
 """)</code></pre>
 

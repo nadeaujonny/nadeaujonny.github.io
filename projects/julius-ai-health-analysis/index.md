@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Julius AI — U.S. Chronic Disease Indicators Analysis"
-description: "AI-powered analysis of the CDC's U.S. Chronic Disease Indicators dataset using Julius AI — exploring diabetes trends, asthma disparities, cardiovascular correlations, mental health gaps, tobacco use, and obesity patterns through natural language prompts."
+title: "Julius AI – U.S. Chronic Disease Indicators Analysis"
+description: "AI-powered analysis of the CDC's U.S. Chronic Disease Indicators dataset using Julius AI – exploring diabetes trends, asthma disparities, cardiovascular correlations, mental health gaps, tobacco use, and obesity patterns through natural language prompts."
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>

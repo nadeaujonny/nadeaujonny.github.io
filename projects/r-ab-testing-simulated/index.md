@@ -7,7 +7,7 @@ title: A/B Testing & Experimentation Analysis (R)
 
 # A/B Testing & Experimentation Analysis (R)
 
-> A complete A/B testing pipeline in R — from data generation and randomization QC through hypothesis testing, bootstrap/permutation inference, regression adjustment, and power analysis — built on simulated SaaS onboarding experiment data with 10,000 users.
+> A complete A/B testing pipeline in R – from data generation and randomization QC through hypothesis testing, bootstrap/permutation inference, regression adjustment, and power analysis – built on simulated SaaS onboarding experiment data with 10,000 users.
 
 ---
 
@@ -18,7 +18,7 @@ title: A/B Testing & Experimentation Analysis (R)
 
   <h3>Overview</h3>
   <p>
-    This project builds a 7-script experimentation pipeline in R simulating a SaaS A/B test comparing a new onboarding flow (treatment) against the current experience (control) across 10,000 users. The pipeline covers every stage of a rigorous experiment analysis — from data generation through power assessment.
+    This project builds a 7-script experimentation pipeline in R simulating a SaaS A/B test comparing a new onboarding flow (treatment) against the current experience (control) across 10,000 users. The pipeline covers every stage of a rigorous experiment analysis – from data generation through power assessment.
   </p>
   <p>
     The analysis follows industry methodology used at companies like Microsoft, Booking.com, and Netflix: verify randomization integrity (SRM) first, then analyze the primary metric, check guardrail metrics, validate with distribution-free inference (bootstrap/permutation), refine estimates with covariate adjustment, and assess statistical power for future experiment design.
@@ -96,10 +96,10 @@ title: A/B Testing & Experimentation Analysis (R)
 
   <h3>Approach</h3>
   <p>
-    Using simulated data with a known ground truth is the most rigorous way to validate an analysis pipeline. If the analysis recovers the planted 1.5pp conversion lift and 0.5-minute time reduction, the methodology is confirmed to work correctly. This is standard practice in experimentation platform development — teams at Microsoft and Netflix use simulation to verify their analysis code before deploying it on real experiments.
+    Using simulated data with a known ground truth is the most rigorous way to validate an analysis pipeline. If the analysis recovers the planted 1.5pp conversion lift and 0.5-minute time reduction, the methodology is confirmed to work correctly. This is standard practice in experimentation platform development – teams at Microsoft and Netflix use simulation to verify their analysis code before deploying it on real experiments.
   </p>
   <p>
-    The simulation generates 10,000 users with 50/50 random assignment to control or treatment. Control baseline conversion is 10%, treatment adds a 1.5 percentage-point lift (11.5% true rate). Time-to-complete is normally distributed — control centered at 8.0 minutes, treatment at 7.5 minutes (0.5 min faster), both with SD=3. A pre-experiment covariate (<code>pre_sessions_7d</code>, Poisson &lambda;=3) is included to enable regression adjustment (CUPED) in later scripts.
+    The simulation generates 10,000 users with 50/50 random assignment to control or treatment. Control baseline conversion is 10%, treatment adds a 1.5 percentage-point lift (11.5% true rate). Time-to-complete is normally distributed – control centered at 8.0 minutes, treatment at 7.5 minutes (0.5 min faster), both with SD=3. A pre-experiment covariate (<code>pre_sessions_7d</code>, Poisson &lambda;=3) is included to enable regression adjustment (CUPED) in later scripts.
   </p>
 
   <h3>Key Code</h3>
@@ -126,7 +126,7 @@ df &lt;- tibble(
 
   <h3>Key Points</h3>
   <ul>
-    <li>Reproducible via <code>set.seed(123)</code> — every run produces identical data</li>
+    <li>Reproducible via <code>set.seed(123)</code> – every run produces identical data</li>
     <li>Ground truth is known: +1.5pp conversion lift, &minus;0.5 min time-to-complete</li>
     <li>Pre-experiment covariate (<code>pre_sessions_7d</code>) included for regression adjustment</li>
     <li>Clean CSV output (<code>data/ab_test_data.csv</code>) feeds all downstream scripts</li>
@@ -140,10 +140,10 @@ df &lt;- tibble(
 
   <h3>Approach</h3>
   <p>
-    Before analyzing any experiment results, the first step is verifying randomization integrity. Sample Ratio Mismatch (SRM) is the single most critical quality check — if the observed 50/50 split deviates significantly from expectation, something is wrong with assignment, logging, or data processing. SRM detection is standard practice at Microsoft, Booking.com, and other companies running experiments at scale.
+    Before analyzing any experiment results, the first step is verifying randomization integrity. Sample Ratio Mismatch (SRM) is the single most critical quality check – if the observed 50/50 split deviates significantly from expectation, something is wrong with assignment, logging, or data processing. SRM detection is standard practice at Microsoft, Booking.com, and other companies running experiments at scale.
   </p>
   <p>
-    The pipeline applies a chi-square goodness-of-fit test against the expected 50/50 proportions and a Welch two-sample t-test to verify that the pre-experiment covariate (<code>pre_sessions_7d</code>) is balanced across variants. If SRM is detected (p &lt; 0.01), the pipeline halts — analyzing results from a compromised randomization is worse than analyzing no results at all.
+    The pipeline applies a chi-square goodness-of-fit test against the expected 50/50 proportions and a Welch two-sample t-test to verify that the pre-experiment covariate (<code>pre_sessions_7d</code>) is balanced across variants. If SRM is detected (p &lt; 0.01), the pipeline halts – analyzing results from a compromised randomization is worse than analyzing no results at all.
   </p>
 
   <h3>Key Code</h3>
@@ -157,7 +157,7 @@ tt &lt;- t.test(pre_sessions_7d ~ variant, data = df)
 
 # Fail loudly if SRM detected
 if (chisq$p.value &lt; 0.01) {
-  stop("SRM detected — investigate randomization before proceeding.")
+  stop("SRM detected – investigate randomization before proceeding.")
 }</code></pre>
 
   <h3>Results</h3>
@@ -197,21 +197,21 @@ if (chisq$p.value &lt; 0.01) {
 
   <h3>Key Findings</h3>
   <ul>
-    <li>No SRM detected (chi-square p = 0.734, well above the 0.01 threshold) — randomization is intact</li>
-    <li>Baseline covariate <code>pre_sessions_7d</code> is balanced across variants (t-test p = 0.188) — no pre-existing group differences</li>
+    <li>No SRM detected (chi-square p = 0.734, well above the 0.01 threshold) – randomization is intact</li>
+    <li>Baseline covariate <code>pre_sessions_7d</code> is balanced across variants (t-test p = 0.188) – no pre-existing group differences</li>
     <li>Pipeline cleared to proceed with primary and guardrail metric analysis</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Always run SRM before analyzing any experiment — it is the single most important integrity check</li>
+    <li>Always run SRM before analyzing any experiment – it is the single most important integrity check</li>
     <li>Automate SRM checks into experiment platforms to catch issues before analysts examine results</li>
-    <li>If SRM is detected, do NOT analyze results — investigate the root cause (logging bugs, bot traffic, assignment errors) first</li>
+    <li>If SRM is detected, do NOT analyze results – investigate the root cause (logging bugs, bot traffic, assignment errors) first</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Primary Metric — Conversion Rate</strong></summary>
+  <summary><strong>Primary Metric – Conversion Rate</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -220,7 +220,7 @@ if (chisq$p.value &lt; 0.01) {
     Conversion rate is the primary decision metric for this experiment. The analysis uses a two-proportion z-test (<code>prop.test</code>) comparing control vs. treatment conversion rates. This is the standard frequentist approach for binary outcome experiments.
   </p>
   <p>
-    The analysis reports absolute lift (percentage points), relative lift (%), a 95% confidence interval for the difference, and Cohen's h as a standardized effect size. The distinction between statistical significance and practical significance matters — the width of the confidence interval tells us about the range of plausible effects, which is more informative than a binary p-value threshold.
+    The analysis reports absolute lift (percentage points), relative lift (%), a 95% confidence interval for the difference, and Cohen's h as a standardized effect size. The distinction between statistical significance and practical significance matters – the width of the confidence interval tells us about the range of plausible effects, which is more informative than a binary p-value threshold.
   </p>
 
   <h3>Key Code</h3>
@@ -264,28 +264,28 @@ rel_lift &lt;- (p_treat / p_control) - 1</code></pre>
 
   <h3>Key Findings</h3>
   <ul>
-    <li>Treatment conversion rate (11.52%) is 1.33pp higher than control (10.19%) — close to the planted 1.5pp effect</li>
+    <li>Treatment conversion rate (11.52%) is 1.33pp higher than control (10.19%) – close to the planted 1.5pp effect</li>
     <li>The 95% confidence interval [0.11pp, 2.55pp] excludes zero, confirming statistical significance at &alpha;=0.05</li>
-    <li>Relative lift of 13.1% over a 10% baseline — a meaningful improvement for SaaS onboarding</li>
+    <li>Relative lift of 13.1% over a 10% baseline – a meaningful improvement for SaaS onboarding</li>
     <li>Cohen's h = 0.043 indicates a small but real effect size, consistent with typical product A/B tests</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>A 1.33pp lift on a 10% baseline represents a ~13% relative improvement — meaningful for SaaS onboarding funnels where even small gains compound across thousands of users</li>
-    <li>Always report confidence intervals alongside p-values — the range of plausible effects (0.11pp to 2.55pp) is more useful than binary significance</li>
+    <li>A 1.33pp lift on a 10% baseline represents a ~13% relative improvement – meaningful for SaaS onboarding funnels where even small gains compound across thousands of users</li>
+    <li>Always report confidence intervals alongside p-values – the range of plausible effects (0.11pp to 2.55pp) is more useful than binary significance</li>
     <li>Estimate business impact: at 100K annual signups, a 1.33pp lift translates to ~1,330 additional conversions per year</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Secondary Metric — Time-to-Complete Guardrail</strong></summary>
+  <summary><strong>Secondary Metric – Time-to-Complete Guardrail</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <h3>Approach</h3>
   <p>
-    Guardrail metrics ensure the treatment does not cause unintended harm. Even if conversion improves, if the onboarding process takes significantly longer, the user experience may suffer — leading to downstream churn or support costs that offset the conversion gain.
+    Guardrail metrics ensure the treatment does not cause unintended harm. Even if conversion improves, if the onboarding process takes significantly longer, the user experience may suffer – leading to downstream churn or support costs that offset the conversion gain.
   </p>
   <p>
     The analysis compares time-to-complete using three complementary methods: a Welch t-test (parametric), Wilcoxon rank-sum test (non-parametric), and bootstrap CI (distribution-free). Using multiple approaches validates robustness, especially when the underlying distribution may be skewed or heavy-tailed.
@@ -337,17 +337,17 @@ boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
 
   <h3>Key Findings</h3>
   <ul>
-    <li>Treatment group completed onboarding 0.34 minutes faster on average — consistent with the planted 0.5-min effect (sampling variability accounts for the difference)</li>
+    <li>Treatment group completed onboarding 0.34 minutes faster on average – consistent with the planted 0.5-min effect (sampling variability accounts for the difference)</li>
     <li>All three testing approaches (t-test, Wilcoxon, bootstrap) agree: the difference is highly significant (p &lt; 0.001)</li>
-    <li>Bootstrap CI [&minus;0.46, &minus;0.22] is entirely below zero — the guardrail metric shows improvement, not regression</li>
+    <li>Bootstrap CI [&minus;0.46, &minus;0.22] is entirely below zero – the guardrail metric shows improvement, not regression</li>
     <li>The guardrail is clear: the new onboarding flow is both more effective (higher conversion) and faster (lower time-to-complete)</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Even a 0.34-minute reduction compounds across thousands of users — calculate total time saved per month to quantify UX improvement</li>
-    <li>Use multiple testing approaches when the metric distribution may be non-normal — agreement across methods strengthens confidence</li>
-    <li>Always check guardrail metrics before shipping — a conversion lift that degrades the user experience may not be worth it</li>
+    <li>Even a 0.34-minute reduction compounds across thousands of users – calculate total time saved per month to quantify UX improvement</li>
+    <li>Use multiple testing approaches when the metric distribution may be non-normal – agreement across methods strengthens confidence</li>
+    <li>Always check guardrail metrics before shipping – a conversion lift that degrades the user experience may not be worth it</li>
   </ul>
 
 </details>
@@ -361,7 +361,7 @@ boot_ci &lt;- quantile(boot_diffs, probs = c(0.025, 0.975))</code></pre>
     This section validates the primary conversion results using computation-based inference that does not rely on distributional assumptions. These methods are increasingly preferred in industry experimentation because they provide intuitive uncertainty quantification without requiring normality or large-sample approximations.
   </p>
   <p>
-    Bootstrap confidence intervals (B=4,000 resamples) resample within each group to build a distribution of the observed lift. This is the gold standard for uncertainty quantification in modern experimentation platforms — it directly answers "what range of lifts is consistent with the data?"
+    Bootstrap confidence intervals (B=4,000 resamples) resample within each group to build a distribution of the observed lift. This is the gold standard for uncertainty quantification in modern experimentation platforms – it directly answers "what range of lifts is consistent with the data?"
   </p>
   <p>
     The permutation test (B=4,000 shuffles) breaks the variant-outcome relationship by randomly shuffling labels, building a null distribution. The p-value is the proportion of permuted differences as extreme as the observed difference. The analysis also demonstrates the <code>infer</code> package for a cleaner tidy workflow.
@@ -426,16 +426,16 @@ perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
 
   <h3>Key Findings</h3>
   <ul>
-    <li>Bootstrap CI [+0.12pp, +2.57pp] closely aligns with the analytical CI from prop.test [+0.11pp, +2.55pp] — the methods converge</li>
-    <li>All three p-values (0.032, 0.036, 0.033) are consistent and significant at &alpha;=0.05 — strong evidence the result is not due to chance</li>
-    <li>The bootstrap distribution provides a direct visual of lift uncertainty — more intuitive for stakeholders than a p-value alone</li>
+    <li>Bootstrap CI [+0.12pp, +2.57pp] closely aligns with the analytical CI from prop.test [+0.11pp, +2.55pp] – the methods converge</li>
+    <li>All three p-values (0.032, 0.036, 0.033) are consistent and significant at &alpha;=0.05 – strong evidence the result is not due to chance</li>
+    <li>The bootstrap distribution provides a direct visual of lift uncertainty – more intuitive for stakeholders than a p-value alone</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Bootstrap CIs are increasingly preferred in industry — they are intuitive, assumption-free, and work well with any metric distribution</li>
+    <li>Bootstrap CIs are increasingly preferred in industry – they are intuitive, assumption-free, and work well with any metric distribution</li>
     <li>Use the bootstrap distribution as a stakeholder visual: "here is what the lift looks like across 4,000 resamples of the data"</li>
-    <li>Permutation tests directly answer "could this result be due to chance?" — a compelling framing for non-technical decision-makers</li>
+    <li>Permutation tests directly answer "could this result be due to chance?" – a compelling framing for non-technical decision-makers</li>
   </ul>
 
 </details>
@@ -446,7 +446,7 @@ perm_p_value &lt;- mean(abs(perm_diffs) &gt;= abs(obs_diff))</code></pre>
 
   <h3>Approach</h3>
   <p>
-    Regression adjustment — known as CUPED (Controlled-experiment Using Pre-Experiment Data) in industry — uses pre-experiment covariates to reduce residual variance, producing tighter confidence intervals without requiring additional sample size. This is standard practice at Microsoft, Netflix, and Uber for improving experiment sensitivity.
+    Regression adjustment – known as CUPED (Controlled-experiment Using Pre-Experiment Data) in industry – uses pre-experiment covariates to reduce residual variance, producing tighter confidence intervals without requiring additional sample size. This is standard practice at Microsoft, Netflix, and Uber for improving experiment sensitivity.
   </p>
   <p>
     For the primary metric (conversion), the analysis fits a logistic regression with variant and <code>log1p(pre_sessions_7d)</code> as predictors, then computes an adjusted risk difference via marginal means (G-computation). HC3 robust standard errors from the <code>sandwich</code> package protect against heteroskedasticity. A bootstrap CI (B=1,000) provides distribution-free uncertainty for the adjusted risk difference.
@@ -513,17 +513,17 @@ vc_time &lt;- sandwich::vcovHC(m_time, type = "HC3")</code></pre>
 
   <h3>Key Findings</h3>
   <ul>
-    <li>Adjusted conversion lift (+1.33pp) matches the unadjusted estimate closely — the covariate adjustment confirms rather than changes the conclusion</li>
+    <li>Adjusted conversion lift (+1.33pp) matches the unadjusted estimate closely – the covariate adjustment confirms rather than changes the conclusion</li>
     <li>The adjusted bootstrap CI [+0.25pp, +2.57pp] is slightly tighter than the unadjusted CI, demonstrating the variance-reduction benefit of CUPED</li>
-    <li>The pre-experiment covariate (<code>pre_sessions_7d</code>) is not a significant predictor of either outcome (p &gt; 0.38) — expected in a well-randomized simulation, but the adjustment still provides marginal precision gains</li>
+    <li>The pre-experiment covariate (<code>pre_sessions_7d</code>) is not a significant predictor of either outcome (p &gt; 0.38) – expected in a well-randomized simulation, but the adjustment still provides marginal precision gains</li>
     <li>Adjusted time-to-complete difference (&minus;0.341 min) is consistent with the unadjusted estimate, with robust standard errors protecting against heteroskedasticity</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Regression adjustment should be standard practice — it provides free precision (tighter CIs) without requiring more users or longer experiments</li>
-    <li>Always use robust standard errors (HC3) for experiment analysis — they protect against model misspecification and heteroskedasticity</li>
-    <li>Report the adjusted risk difference in percentage points — stakeholders understand "1.33pp lift" better than "odds ratio of 1.148"</li>
+    <li>Regression adjustment should be standard practice – it provides free precision (tighter CIs) without requiring more users or longer experiments</li>
+    <li>Always use robust standard errors (HC3) for experiment analysis – they protect against model misspecification and heteroskedasticity</li>
+    <li>Report the adjusted risk difference in percentage points – stakeholders understand "1.33pp lift" better than "odds ratio of 1.148"</li>
   </ul>
 
 </details>
@@ -592,15 +592,15 @@ power_curve &lt;- tibble(
 
   <h3>Key Findings</h3>
   <ul>
-    <li>With ~5,000 users per group and a 10.19% baseline, the MDE at 80% power is 1.77pp — the experiment is slightly underpowered for the observed 1.33pp lift (power ~55% at that effect size)</li>
+    <li>With ~5,000 users per group and a 10.19% baseline, the MDE at 80% power is 1.77pp – the experiment is slightly underpowered for the observed 1.33pp lift (power ~55% at that effect size)</li>
     <li>The planted 1.5pp effect falls just below the MDE threshold, which explains why the observed p-value (0.032) is significant but not overwhelmingly so</li>
-    <li>Detecting a 0.5pp lift would require ~58,700 per group (roughly 12x the current sample) — small effects demand large experiments</li>
+    <li>Detecting a 0.5pp lift would require ~58,700 per group (roughly 12x the current sample) – small effects demand large experiments</li>
     <li>The power curve shows diminishing returns: moving from 80% to 95% power roughly doubles the required sample size</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li>Always calculate MDE before launching an experiment — if the MDE is larger than the expected effect, the experiment is underpowered and likely to waste resources</li>
+    <li>Always calculate MDE before launching an experiment – if the MDE is larger than the expected effect, the experiment is underpowered and likely to waste resources</li>
     <li>Use power analysis to negotiate experiment duration: "we need X weeks at current traffic to detect a Y% lift with 80% power"</li>
     <li>For small expected effects, use CUPED/regression adjustment to lower the effective MDE without increasing sample size</li>
   </ul>
@@ -652,7 +652,7 @@ power_curve &lt;- tibble(
 
   <h3>Programming Practices</h3>
   <p>
-    The pipeline follows a modular architecture: each of the 7 scripts (00&ndash;06) reads from <code>data/</code>, writes results to <code>tables/</code> and visualizations to <code>figures/</code>. Defensive coding is used throughout — <code>stopifnot()</code> for column checks, explicit factor levels, and SRM-based early termination. All results are reproducible via <code>set.seed(123)</code>, and the code follows a consistent tidyverse style with clear variable naming.
+    The pipeline follows a modular architecture: each of the 7 scripts (00&ndash;06) reads from <code>data/</code>, writes results to <code>tables/</code> and visualizations to <code>figures/</code>. Defensive coding is used throughout – <code>stopifnot()</code> for column checks, explicit factor levels, and SRM-based early termination. All results are reproducible via <code>set.seed(123)</code>, and the code follows a consistent tidyverse style with clear variable naming.
   </p>
 
 </details>
@@ -668,8 +668,8 @@ power_curve &lt;- tibble(
 
   <h3>Key Takeaways</h3>
   <ul>
-    <li>Treatment increased conversion by +1.33pp (absolute) — a ~13% relative lift over the 10.19% baseline</li>
-    <li>Guardrail metric (time-to-complete) improved by 0.34 minutes — no regressions detected</li>
+    <li>Treatment increased conversion by +1.33pp (absolute) – a ~13% relative lift over the 10.19% baseline</li>
+    <li>Guardrail metric (time-to-complete) improved by 0.34 minutes – no regressions detected</li>
     <li>All inference methods (prop.test, bootstrap, permutation) produced consistent results (p-values: 0.032, 0.036, 0.033)</li>
     <li>Regression adjustment confirmed the unadjusted estimate and tightened the confidence interval</li>
     <li>The experiment was slightly underpowered (MDE = 1.77pp vs. observed 1.33pp) but still detected a significant effect</li>
@@ -678,7 +678,7 @@ power_curve &lt;- tibble(
 
   <h3>Limitations</h3>
   <p>
-    The data is simulated — real experiments involve messier realities including non-compliance, network effects, and novelty/primacy bias. The analysis focuses on a single binary primary metric; real experiments often track multiple correlated metrics requiring multiple comparison correction (e.g., Bonferroni, Benjamini-Hochberg). Future enhancements could include sequential testing for early stopping, Bayesian analysis with informative priors, and heterogeneous treatment effect estimation (CATE) to identify which user segments benefit most.
+    The data is simulated – real experiments involve messier realities including non-compliance, network effects, and novelty/primacy bias. The analysis focuses on a single binary primary metric; real experiments often track multiple correlated metrics requiring multiple comparison correction (e.g., Bonferroni, Benjamini-Hochberg). Future enhancements could include sequential testing for early stopping, Bayesian analysis with informative priors, and heterogeneous treatment effect estimation (CATE) to identify which user segments benefit most.
   </p>
 
 </details>

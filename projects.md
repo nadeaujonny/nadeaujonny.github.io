@@ -16,7 +16,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>SQL</h2>
         <h3>E-commerce Business Optimization Analysis</h3>
-        <p>Multi-dimensional SQL analysis of 181K+ e-commerce orders in BigQuery — examining revenue, profit, margins, returns, and lost revenue across products, brands, categories, customers, trends, and distribution centers.</p>
+        <p>Multi-dimensional SQL analysis of 181K+ e-commerce orders in BigQuery – examining revenue, profit, margins, returns, and lost revenue across products, brands, categories, customers, trends, and distribution centers.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -27,7 +27,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>SQL</h2>
         <h3>Nashville Housing Data Cleaning & Transformation</h3>
-        <p>End-to-end data cleaning in MySQL — DDL, DML, string functions, type conversions, deduplication, views, indexes, and stored procedures on 56,000+ property records.</p>
+        <p>End-to-end data cleaning in MySQL – DDL, DML, string functions, type conversions, deduplication, views, indexes, and stored procedures on 56,000+ property records.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -93,7 +93,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Looker Studio</h2>
         <h3>Cohort Retention Analysis</h3>
-        <p>End-to-end cohort retention analysis using BigQuery SQL and an interactive Looker Studio dashboard — covering retention matrices, revenue retention, acquisition channels, lifecycle segmentation, and cumulative LTV.</p>
+        <p>End-to-end cohort retention analysis using BigQuery SQL and an interactive Looker Studio dashboard – covering retention matrices, revenue retention, acquisition channels, lifecycle segmentation, and cumulative LTV.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -104,7 +104,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Julius AI</h2>
         <h3>Health Data Analysis</h3>
-        <p>AI-powered analysis of the CDC's U.S. Chronic Disease Indicators dataset using Julius AI — exploring diabetes trends, asthma disparities, cardiovascular correlations, and more through natural language prompts.</p>
+        <p>AI-powered analysis of the CDC's U.S. Chronic Disease Indicators dataset using Julius AI – exploring diabetes trends, asthma disparities, cardiovascular correlations, and more through natural language prompts.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -126,7 +126,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Oracle SQL · Excel · Power BI</h2>
         <h3>Supply Chain Demand Forecasting, Inventory Optimization & MRP Simulation</h3>
-        <p>End-to-end automated supply chain analytics — Oracle stored procedures, MRP net requirements simulation, ABC/XYZ classification, demand forecasting, and a six-page Power BI dashboard with scheduled refresh and data alerts.</p>
+        <p>End-to-end automated supply chain analytics – Oracle stored procedures, MRP net requirements simulation, ABC/XYZ classification, demand forecasting, and a six-page Power BI dashboard with scheduled refresh and data alerts.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -137,18 +137,18 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Machine Learning</h2>
         <h3>Customer Churn Prediction</h3>
-        <p>End-to-end ML pipeline — 5 classification models compared head-to-head, SHAP explainability, hyperparameter tuning, and an interactive Streamlit app for real-time churn risk scoring with 0.83 AUC and 79% recall.</p>
+        <p>End-to-end ML pipeline – 5 classification models compared head-to-head, SHAP explainability, hyperparameter tuning, and an interactive Streamlit app for real-time churn risk scoring with 0.83 AUC and 79% recall.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
   </div>
 
   <div class="col-6">
-    <a class="project-card-link fpa-card" href="/projects/skechers-fpa-model/" aria-label="Open Excel project: FP&A Financial Model — Skechers U.S.A.">
+    <a class="project-card-link fpa-card" href="/projects/skechers-fpa-model/" aria-label="Open Excel project: FP&A Financial Model – Skechers U.S.A.">
       <div class="project-card-content">
         <h2>Excel</h2>
-        <h3>FP&A Financial Model — Skechers U.S.A.</h3>
-        <p>3-statement financial model built from SEC 10-K filings — 5 years of historical data with 3-year forward projections, segment-level revenue modeling, working capital forecasting via DSO/DIO/DPO, variance analysis, scenario planning with sensitivity tables, and a KPI dashboard with model integrity checks.</p>
+        <h3>FP&A Financial Model – Skechers U.S.A.</h3>
+        <p>3-statement financial model built from SEC 10-K filings – 5 years of historical data with 3-year forward projections, segment-level revenue modeling, working capital forecasting via DSO/DIO/DPO, variance analysis, scenario planning with sensitivity tables, and a KPI dashboard with model integrity checks.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
@@ -159,7 +159,7 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
       <div class="project-card-content">
         <h2>Python · Streamlit</h2>
         <h3>College Match Finder</h3>
-        <p>Interactive Streamlit app using U.S. Department of Education College Scorecard data — weighted multi-criteria scoring, distance filtering, acceptance likelihood badges, side-by-side comparison, and exportable reports.</p>
+        <p>Interactive Streamlit app using U.S. Department of Education College Scorecard data – weighted multi-criteria scoring, distance filtering, acceptance likelihood badges, side-by-side comparison, and exportable reports.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Cohort Retention Analysis – Looker Studio"
-description: "Analyzing customer retention patterns using BigQuery cohort analysis and an interactive Looker Studio dashboard — covering retention matrices, revenue retention, acquisition channel performance, lifecycle segmentation, and cumulative LTV."
+description: "Analyzing customer retention patterns using BigQuery cohort analysis and an interactive Looker Studio dashboard – covering retention matrices, revenue retention, acquisition channel performance, lifecycle segmentation, and cumulative LTV."
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>
@@ -19,7 +19,7 @@ description: "Analyzing customer retention patterns using BigQuery cohort analys
 
   <h3>Overview</h3>
   <p>
-    This project demonstrates end-to-end cohort retention analysis — from writing SQL queries in BigQuery to
+    This project demonstrates end-to-end cohort retention analysis – from writing SQL queries in BigQuery to
     building a self-service Looker Studio dashboard. The goal is to transform raw transactional data into
     retention insights that support marketing, product, and growth decisions.
   </p>
@@ -53,9 +53,9 @@ description: "Analyzing customer retention patterns using BigQuery cohort analys
 
   <h4>Core Tables Used</h4>
   <ul>
-    <li><code>orders</code> — one row per order (timestamps, status, user_id)</li>
-    <li><code>order_items</code> — one row per item purchased (sale_price, product_id, order_id)</li>
-    <li><code>users</code> — customer attributes (traffic_source, demographics)</li>
+    <li><code>orders</code> – one row per order (timestamps, status, user_id)</li>
+    <li><code>order_items</code> – one row per item purchased (sale_price, product_id, order_id)</li>
+    <li><code>users</code> – customer attributes (traffic_source, demographics)</li>
   </ul>
 
   <h3>SQL Techniques Demonstrated</h3>
@@ -70,12 +70,12 @@ description: "Analyzing customer retention patterns using BigQuery cohort analys
 
   <h3>KPI Definitions</h3>
   <ul>
-    <li><strong>Cohort Month</strong> — the month of a customer's first completed order</li>
-    <li><strong>Period Number</strong> — months elapsed since cohort month (0 = first month)</li>
-    <li><strong>Retention %</strong> — <code>active_users / cohort_size &times; 100</code></li>
-    <li><strong>Revenue Retention %</strong> — <code>period_revenue / baseline_revenue &times; 100</code></li>
-    <li><strong>Customer Status</strong> — Active (&le;90 days since last order), At-Risk (91–180 days), Churned (&gt;180 days)</li>
-    <li><strong>Cumulative Revenue per Customer</strong> — running total of revenue divided by cohort size</li>
+    <li><strong>Cohort Month</strong> – the month of a customer's first completed order</li>
+    <li><strong>Period Number</strong> – months elapsed since cohort month (0 = first month)</li>
+    <li><strong>Retention %</strong> – <code>active_users / cohort_size &times; 100</code></li>
+    <li><strong>Revenue Retention %</strong> – <code>period_revenue / baseline_revenue &times; 100</code></li>
+    <li><strong>Customer Status</strong> – Active (&le;90 days since last order), At-Risk (91–180 days), Churned (&gt;180 days)</li>
+    <li><strong>Cumulative Revenue per Customer</strong> – running total of revenue divided by cohort size</li>
   </ul>
 
   <h3>Tools Used</h3>
@@ -88,7 +88,7 @@ description: "Analyzing customer retention patterns using BigQuery cohort analys
 
 </details>
 <details>
-  <summary><strong>Analysis 1 — Cohort Sizing</strong></summary>
+  <summary><strong>Analysis 1 – Cohort Sizing</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -98,7 +98,7 @@ description: "Analyzing customer retention patterns using BigQuery cohort analys
   <h3>Method</h3>
   <p>
     Each customer is assigned to a cohort based on the month of their first completed order. This query counts
-    distinct customers per cohort month to establish baseline cohort sizes — the foundation for all downstream
+    distinct customers per cohort month to establish baseline cohort sizes – the foundation for all downstream
     retention analysis.
   </p>
 
@@ -154,21 +154,21 @@ ORDER BY cohort_month</code></pre>
 
   <h3>Insights</h3>
   <ul>
-    <li>Acquisition grew from 2 customers in January 2019 to 550 in December 2024 — a 275x increase reflecting strong, sustained business growth.</li>
-    <li>Year-over-year acceleration is clear: 2019 averaged ~26 new customers/month, while 2024 averaged ~458 — with no signs of plateauing.</li>
+    <li>Acquisition grew from 2 customers in January 2019 to 550 in December 2024 – a 275x increase reflecting strong, sustained business growth.</li>
+    <li>Year-over-year acceleration is clear: 2019 averaged ~26 new customers/month, while 2024 averaged ~458 – with no signs of plateauing.</li>
     <li>December consistently produces the largest cohorts each year (47 → 107 → 168 → 301 → 430 → 550), suggesting seasonal acquisition spikes worth leveraging.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Monitor acquisition trends:</strong> the current trajectory shows healthy acceleration — track cohort sizes monthly to detect any growth slowdowns early.</li>
+    <li><strong>Monitor acquisition trends:</strong> the current trajectory shows healthy acceleration – track cohort sizes monthly to detect any growth slowdowns early.</li>
     <li><strong>Correlate with spend:</strong> overlay acquisition costs per cohort to understand whether the 275x growth in volume is cost-efficient.</li>
-    <li><strong>Capitalize on seasonality:</strong> December cohorts are consistently the largest — consider aligning campaigns to amplify this pattern.</li>
+    <li><strong>Capitalize on seasonality:</strong> December cohorts are consistently the largest – consider aligning campaigns to amplify this pattern.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 2 — Customer Retention Matrix</strong></summary>
+  <summary><strong>Analysis 2 – Customer Retention Matrix</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -242,7 +242,7 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <h3>Results</h3>
   <p>
     The query produced <strong>937 cohort-period pairs</strong> across 72 monthly cohorts. The sample
-    below shows the July 2024 cohort (464 customers) — one of the largest cohorts with enough elapsed
+    below shows the July 2024 cohort (464 customers) – one of the largest cohorts with enough elapsed
     time to observe early retention patterns.
   </p>
 
@@ -272,7 +272,7 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
 
   <h3>Insights</h3>
   <ul>
-    <li>Retention drops dramatically after Period 0 — the July 2024 cohort falls from 100% to just 1.29% at Period 1, and this pattern is consistent across all cohorts.</li>
+    <li>Retention drops dramatically after Period 0 – the July 2024 cohort falls from 100% to just 1.29% at Period 1, and this pattern is consistent across all cohorts.</li>
     <li>The retention matrix is sparse: most customers make a single purchase and do not return in consecutive months. When they do return, it's often months or years later.</li>
     <li>Larger recent cohorts (2024) show slightly higher absolute return counts but retention percentages remain consistently below 2%, confirming this is a product-wide pattern rather than a cohort-specific issue.</li>
   </ul>
@@ -281,12 +281,12 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <ul>
     <li><strong>Focus on Month 1 activation:</strong> with Period 1 retention below 2% across all cohorts, post-purchase engagement (emails, incentives, reminders) is the highest-leverage investment.</li>
     <li><strong>Benchmark cohorts:</strong> set retention targets per period and flag cohorts that underperform for root-cause investigation.</li>
-    <li><strong>Track improvement over time:</strong> newer cohorts retaining better than older ones would signal that product or CX investments are working — the current data shows this remains a challenge.</li>
+    <li><strong>Track improvement over time:</strong> newer cohorts retaining better than older ones would signal that product or CX investments are working – the current data shows this remains a challenge.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 3 — Revenue Retention by Cohort</strong></summary>
+  <summary><strong>Analysis 3 – Revenue Retention by Cohort</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -358,7 +358,7 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <h3>Results</h3>
   <p>
     The query produced <strong>918 cohort-period pairs</strong> with revenue retention metrics. Baseline
-    revenue scales with cohort size — from $83 (January 2019) to $47,454 (December 2024). The sample
+    revenue scales with cohort size – from $83 (January 2019) to $47,454 (December 2024). The sample
     below shows the July 2024 cohort.
   </p>
 
@@ -388,21 +388,21 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
 
   <h3>Insights</h3>
   <ul>
-    <li>Period 1 revenue retention typically ranges from 2–6% — slightly higher than customer retention (~1–2%), suggesting that returning customers tend to place moderately larger orders.</li>
+    <li>Period 1 revenue retention typically ranges from 2–6% – slightly higher than customer retention (~1–2%), suggesting that returning customers tend to place moderately larger orders.</li>
     <li>Some cohorts show sporadic high-revenue returns in later periods (e.g., September 2020's Period 51 at 8.41%), indicating occasional large purchases by long-dormant customers.</li>
     <li>Baseline revenue grew from $83 (January 2019) to $47,454 (December 2024), reflecting both larger cohorts and higher average order values over time.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Separate volume from value:</strong> revenue retention consistently outpaces customer retention, meaning retained customers are disproportionately valuable — track both metrics side by side.</li>
+    <li><strong>Separate volume from value:</strong> revenue retention consistently outpaces customer retention, meaning retained customers are disproportionately valuable – track both metrics side by side.</li>
     <li><strong>Invest in retained customers:</strong> since returning customers spend more than average, loyalty programs and personalized recommendations should generate outsized returns.</li>
-    <li><strong>Identify revenue decay:</strong> cohorts where revenue drops faster than headcount may signal pricing pressure or reduced engagement — flag these for investigation.</li>
+    <li><strong>Identify revenue decay:</strong> cohorts where revenue drops faster than headcount may signal pricing pressure or reduced engagement – flag these for investigation.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 4 — Retention by Acquisition Channel</strong></summary>
+  <summary><strong>Analysis 4 – Retention by Acquisition Channel</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -413,7 +413,7 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <p>
     This query joins the <code>users</code> table to bring in <code>traffic_source</code> as the acquisition
     channel dimension. Instead of grouping by cohort month, retention is calculated per channel across all
-    cohorts — revealing which channels produce customers with the best long-term retention.
+    cohorts – revealing which channels produce customers with the best long-term retention.
   </p>
 
   <h3>SQL Query</h3>
@@ -491,7 +491,7 @@ ORDER BY r.traffic_source, r.period_number</code></pre>
     <tbody>
       <tr><td style="padding: 6px 12px;">Search</td><td style="padding: 6px 12px; text-align: right;">10,523</td><td style="padding: 6px 12px; text-align: right;">0.50</td><td style="padding: 6px 12px; text-align: right;">0.59</td><td style="padding: 6px 12px; text-align: right;">0.34</td><td style="padding: 6px 12px; text-align: right;">0.26</td></tr>
       <tr><td style="padding: 6px 12px;">Organic</td><td style="padding: 6px 12px; text-align: right;">2,258</td><td style="padding: 6px 12px; text-align: right;">0.44</td><td style="padding: 6px 12px; text-align: right;">0.58</td><td style="padding: 6px 12px; text-align: right;">0.35</td><td style="padding: 6px 12px; text-align: right;">0.18</td></tr>
-      <tr><td style="padding: 6px 12px;">Facebook</td><td style="padding: 6px 12px; text-align: right;">860</td><td style="padding: 6px 12px; text-align: right;">0.70</td><td style="padding: 6px 12px; text-align: right;">0.58</td><td style="padding: 6px 12px; text-align: right;">0.23</td><td style="padding: 6px 12px; text-align: right;">—</td></tr>
+      <tr><td style="padding: 6px 12px;">Facebook</td><td style="padding: 6px 12px; text-align: right;">860</td><td style="padding: 6px 12px; text-align: right;">0.70</td><td style="padding: 6px 12px; text-align: right;">0.58</td><td style="padding: 6px 12px; text-align: right;">0.23</td><td style="padding: 6px 12px; text-align: right;">–</td></tr>
       <tr><td style="padding: 6px 12px;">Email</td><td style="padding: 6px 12px; text-align: right;">751</td><td style="padding: 6px 12px; text-align: right;">0.27</td><td style="padding: 6px 12px; text-align: right;">0.67</td><td style="padding: 6px 12px; text-align: right;">0.13</td><td style="padding: 6px 12px; text-align: right;">0.40</td></tr>
       <tr><td style="padding: 6px 12px;">Display</td><td style="padding: 6px 12px; text-align: right;">605</td><td style="padding: 6px 12px; text-align: right;">0.17</td><td style="padding: 6px 12px; text-align: right;">0.33</td><td style="padding: 6px 12px; text-align: right;">0.33</td><td style="padding: 6px 12px; text-align: right;">0.99</td></tr>
     </tbody>
@@ -505,34 +505,34 @@ ORDER BY r.traffic_source, r.period_number</code></pre>
   <ul>
     <li>Search dominates acquisition with 10,523 customers (70% of total), followed by Organic (2,258), Facebook (860), Email (751), and Display (605).</li>
     <li>Facebook shows the highest Period 1 retention (0.70%) despite smaller volume, suggesting these customers may have higher initial engagement.</li>
-    <li>All channels show very low post-acquisition retention (&lt;1%), indicating that churn is a product-wide challenge rather than channel-specific — no single channel materially outperforms the others.</li>
+    <li>All channels show very low post-acquisition retention (&lt;1%), indicating that churn is a product-wide challenge rather than channel-specific – no single channel materially outperforms the others.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Shift budget toward durable channels:</strong> factor retention-adjusted LTV into CAC calculations — Facebook's higher early retention may justify higher acquisition costs despite smaller volume.</li>
+    <li><strong>Shift budget toward durable channels:</strong> factor retention-adjusted LTV into CAC calculations – Facebook's higher early retention may justify higher acquisition costs despite smaller volume.</li>
     <li><strong>Improve onboarding across all channels:</strong> since no channel exceeds 1% retention at Period 1, post-purchase engagement is a universal opportunity rather than a channel-specific one.</li>
     <li><strong>Set channel-specific targets:</strong> benchmark each channel's retention curve and flag underperformance relative to its baseline.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 5 — Customer Lifecycle Segmentation</strong></summary>
+  <summary><strong>Analysis 5 – Customer Lifecycle Segmentation</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
   <h3>Business Question</h3>
-  <p>What proportion of customers are currently Active, At-Risk, or Churned — and how many have reactivated after a long gap?</p>
+  <p>What proportion of customers are currently Active, At-Risk, or Churned – and how many have reactivated after a long gap?</p>
 
   <h3>Method</h3>
   <p>
     This analysis takes a snapshot approach. Using recency (days since last order as of 2024-12-31), each
     customer is classified into a lifecycle segment: <strong>Active</strong> (&le;90 days), <strong>At-Risk</strong>
-    (91–180 days), or <strong>Churned</strong> (&gt;180 days). A separate CTE detects reactivations — customers
+    (91–180 days), or <strong>Churned</strong> (&gt;180 days). A separate CTE detects reactivations – customers
     who returned after a gap of 90+ days between consecutive orders.
   </p>
 
-  <h3>SQL Query — Lifecycle Segments</h3>
+  <h3>SQL Query – Lifecycle Segments</h3>
   <pre><code class="language-sql">WITH customer_activity AS (
   SELECT
     user_id,
@@ -599,7 +599,7 @@ FROM customer_segments
 GROUP BY customer_status
 ORDER BY customer_count DESC</code></pre>
 
-  <h3>SQL Query — Reactivated Customers</h3>
+  <h3>SQL Query – Reactivated Customers</h3>
   <pre><code class="language-sql">SELECT
   COUNT(DISTINCT user_id) AS reactivated_customers
 FROM (
@@ -642,7 +642,7 @@ WHERE days_between_orders > 90</code></pre>
 
   <h4>Reactivated Customers</h4>
   <p>
-    <strong>1,015 customers</strong> reactivated after a gap of 90+ days between orders — approximately
+    <strong>1,015 customers</strong> reactivated after a gap of 90+ days between orders – approximately
     <strong>6.8% of the total customer base</strong>.
   </p>
 
@@ -654,21 +654,21 @@ WHERE days_between_orders > 90</code></pre>
 
   <h3>Insights</h3>
   <ul>
-    <li>78% of customers are Churned (11,697) with an average of 755 days since their last order and only 1.08 average orders — the vast majority never return after their first purchase.</li>
+    <li>78% of customers are Churned (11,697) with an average of 755 days since their last order and only 1.08 average orders – the vast majority never return after their first purchase.</li>
     <li>11.81% are Active (1,771 customers) with an average of 44 days since their last order, representing the current engaged base that drives ongoing revenue.</li>
-    <li>1,015 customers (6.8%) reactivated after a 90+ day gap, proving that churn is not always permanent — win-back campaigns have a proven, viable audience.</li>
+    <li>1,015 customers (6.8%) reactivated after a 90+ day gap, proving that churn is not always permanent – win-back campaigns have a proven, viable audience.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
-    <li><strong>Prioritize the 1,529 At-Risk customers:</strong> with an average of 134 days since last order, these customers are still recoverable — deploy targeted re-engagement campaigns before they cross into Churned.</li>
-    <li><strong>Build win-back flows:</strong> 1,015 customers already reactivated organically — structured campaigns should significantly improve this rate.</li>
+    <li><strong>Prioritize the 1,529 At-Risk customers:</strong> with an average of 134 days since last order, these customers are still recoverable – deploy targeted re-engagement campaigns before they cross into Churned.</li>
+    <li><strong>Build win-back flows:</strong> 1,015 customers already reactivated organically – structured campaigns should significantly improve this rate.</li>
     <li><strong>Track segment movement:</strong> monitor shifts between Active, At-Risk, and Churned monthly to detect systemic changes in retention health.</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Analysis 6 — Cumulative Revenue & Customer LTV</strong></summary>
+  <summary><strong>Analysis 6 – Cumulative Revenue & Customer LTV</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -679,7 +679,7 @@ WHERE days_between_orders > 90</code></pre>
   <p>
     This query calculates period-level revenue per cohort, then uses a window function (<code>SUM() OVER</code>)
     to compute a running cumulative total. Dividing cumulative revenue by cohort size produces
-    <strong>cumulative revenue per customer</strong> — a proxy for lifetime value (LTV) at each period.
+    <strong>cumulative revenue per customer</strong> – a proxy for lifetime value (LTV) at each period.
   </p>
 
   <h3>SQL Query</h3>
@@ -773,14 +773,14 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <h3>Insights</h3>
   <ul>
     <li>Cumulative revenue per customer starts between $77–$95 at Period 0 for most cohorts, with the bulk of lifetime value captured in the first purchase.</li>
-    <li>The LTV curve is shallow — mature cohorts (e.g., March 2022) reach ~$105 per customer over 30 periods, suggesting a long-term LTV ceiling around $100–$110 for this dataset.</li>
+    <li>The LTV curve is shallow – mature cohorts (e.g., March 2022) reach ~$105 per customer over 30 periods, suggesting a long-term LTV ceiling around $100–$110 for this dataset.</li>
     <li>Newer cohorts start with higher Period 0 revenue per customer ($80–$90 in 2024 vs. $40–$70 in 2019), reflecting either higher AOV or a shift in product mix over time.</li>
   </ul>
 
   <h3>Business Recommendations</h3>
   <ul>
     <li><strong>Set CAC limits from LTV:</strong> with LTV plateauing around $100–$110, acquisition costs should stay well below this threshold to maintain unit economics.</li>
-    <li><strong>Compare cohort trajectories:</strong> newer cohorts tracking below older ones at the same period would indicate a retention or monetization problem — monitor this quarterly.</li>
+    <li><strong>Compare cohort trajectories:</strong> newer cohorts tracking below older ones at the same period would indicate a retention or monetization problem – monitor this quarterly.</li>
     <li><strong>Forecast revenue:</strong> use the mature cohort LTV curve shape to project revenue from recent, larger cohorts and inform growth planning.</li>
   </ul>
 
@@ -812,16 +812,16 @@ ORDER BY r.cohort_month, r.period_number</code></pre>
   <div style="margin-top: 12px;"></div>
 
   <p>
-    This project demonstrates a complete cohort retention analysis pipeline — from SQL query design in BigQuery
+    This project demonstrates a complete cohort retention analysis pipeline – from SQL query design in BigQuery
     to an interactive Looker Studio dashboard. Across six analyses, I built retention matrices, measured revenue
     retention, compared acquisition channels, segmented customer lifecycles, and tracked cumulative lifetime value.
   </p>
 
   <h3>Key Takeaways</h3>
   <ul>
-    <li><strong>Early churn is the biggest lever:</strong> across all 72 cohorts and 14,997 customers, Period 1 retention consistently falls below 2% — onboarding and first-repeat activation deserve the most investment.</li>
+    <li><strong>Early churn is the biggest lever:</strong> across all 72 cohorts and 14,997 customers, Period 1 retention consistently falls below 2% – onboarding and first-repeat activation deserve the most investment.</li>
     <li><strong>Revenue retention tells a different story than headcount:</strong> Period 1 revenue retention (2–6%) consistently outpaces customer retention (~1–2%), meaning returning customers spend more and customer retention alone understates the value of loyalty.</li>
-    <li><strong>Channel quality varies but churn is universal:</strong> Search drives 70% of acquisition (10,523 customers), but no channel exceeds 1% retention at Period 1 — improving post-purchase engagement is a product-wide opportunity.</li>
+    <li><strong>Channel quality varies but churn is universal:</strong> Search drives 70% of acquisition (10,523 customers), but no channel exceeds 1% retention at Period 1 – improving post-purchase engagement is a product-wide opportunity.</li>
     <li><strong>Lifecycle segmentation is actionable:</strong> 78% of customers are Churned, but 1,529 At-Risk customers and 1,015 proven reactivations demonstrate clear opportunities for targeted win-back campaigns.</li>
     <li><strong>LTV curves drive strategy:</strong> cumulative revenue per customer plateaus around $100–$110 for mature cohorts, providing a clear ceiling for acquisition cost planning.</li>
   </ul>

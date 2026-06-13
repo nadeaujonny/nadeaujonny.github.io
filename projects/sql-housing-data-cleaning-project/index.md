@@ -1,14 +1,14 @@
 ---
 layout: default
 title: Nashville Housing Data Cleaning & Transformation (MySQL)
-description: "End-to-end SQL data cleaning project using MySQL — demonstrating DDL, DML, string functions, type conversions, and transformation techniques on 56,000+ Nashville property records."
+description: "End-to-end SQL data cleaning project using MySQL – demonstrating DDL, DML, string functions, type conversions, and transformation techniques on 56,000+ Nashville property records."
 ---
 
 <a href="/projects/" class="back-to-projects btn">← Back to Projects</a>
 
 # Nashville Housing Data Cleaning & Transformation (MySQL)
 
-> This project demonstrates the DDL/DML side of SQL by cleaning and transforming 56,000+ Nashville housing records in MySQL — covering database creation, staging table patterns, data type conversions, self-join updates, deduplication, whitespace cleaning, views, indexes, and stored procedures.
+> This project demonstrates the DDL/DML side of SQL by cleaning and transforming 56,000+ Nashville housing records in MySQL – covering database creation, staging table patterns, data type conversions, self-join updates, deduplication, whitespace cleaning, views, indexes, and stored procedures.
 
 <p><span style="display:inline-block; background:#00758f; color:#fff; padding:4px 12px; border-radius:4px; font-size:0.85em; font-weight:600;">MySQL</span></p>
 
@@ -28,7 +28,7 @@ description: "End-to-end SQL data cleaning project using MySQL — demonstrating
 
   <h3>Business Context</h3>
   <p>
-    Data cleaning is a foundational skill in any analytics role — real-world datasets rarely arrive analysis-ready.
+    Data cleaning is a foundational skill in any analytics role – real-world datasets rarely arrive analysis-ready.
     This project exists in the portfolio to fill the DDL/DML gap left by the
     <a href="/projects/sql-ecommerce-analysis/">BigQuery e-commerce analysis project</a>, which focuses on
     SELECT-side analytics (CTEs, window functions, joins, aggregations). Together, the two SQL projects cover
@@ -166,7 +166,7 @@ FROM housing_staging;</code></pre>
 FROM housing_staging
 GROUP BY `Sold As Vacant`
 ORDER BY count;
--- Result: Yes (4,895) and No (51,741) — already clean, no Y/N inconsistency</code></pre>
+-- Result: Yes (4,895) and No (51,741) – already clean, no Y/N inconsistency</code></pre>
 
   <h3>Duplicate Count</h3>
   <pre><code class="language-sql">SELECT COUNT(*) AS duplicate_count
@@ -183,17 +183,17 @@ WHERE row_num > 1;
 
   <h3>Summary of Data Quality Issues</h3>
   <ul>
-    <li><strong>159 blank Property Addresses</strong> — fixable via Parcel ID self-join</li>
-    <li><strong>104 duplicate rows</strong> — to be removed</li>
-    <li><strong>Sold As Vacant already clean</strong> — only Yes/No values, no Y/N inconsistency</li>
-    <li><strong>Sale Date stored as TEXT</strong> — needs DATE type conversion</li>
-    <li><strong>~30,000–32,000 rows missing Owner/Acreage/YearBuilt/Bedrooms</strong> — these are condo entries and are not fixable from within the dataset</li>
-    <li><strong>Whitespace issues</strong> — leading/trailing spaces in multiple text columns</li>
+    <li><strong>159 blank Property Addresses</strong> – fixable via Parcel ID self-join</li>
+    <li><strong>104 duplicate rows</strong> – to be removed</li>
+    <li><strong>Sold As Vacant already clean</strong> – only Yes/No values, no Y/N inconsistency</li>
+    <li><strong>Sale Date stored as TEXT</strong> – needs DATE type conversion</li>
+    <li><strong>~30,000–32,000 rows missing Owner/Acreage/YearBuilt/Bedrooms</strong> – these are condo entries and are not fixable from within the dataset</li>
+    <li><strong>Whitespace issues</strong> – leading/trailing spaces in multiple text columns</li>
   </ul>
 
 </details>
 <details>
-  <summary><strong>Step 1 — Standardize Date Format</strong></summary>
+  <summary><strong>Step 1 – Standardize Date Format</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -221,13 +221,13 @@ WHERE TABLE_SCHEMA = 'nashville_housing'
 
   <p>
     <strong>Why does DATE type matter?</strong> Proper DATE typing enables date comparisons, date arithmetic
-    (e.g., calculating days between sales), YEAR/MONTH extraction, and efficient indexing — none of which work
+    (e.g., calculating days between sales), YEAR/MONTH extraction, and efficient indexing – none of which work
     reliably on TEXT columns.
   </p>
 
 </details>
 <details>
-  <summary><strong>Step 2 — Populate Missing Property Addresses</strong></summary>
+  <summary><strong>Step 2 – Populate Missing Property Addresses</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -263,13 +263,13 @@ FROM housing_staging;
   <p>
     Only 16 rows were fixed because those were the only blank-address rows whose Parcel ID matched another row
     with a populated address. The remaining 143 rows had Parcel IDs that did not appear elsewhere in the dataset
-    with a valid address — so there was nothing to pull from. In a production setting, these could be resolved
+    with a valid address – so there was nothing to pull from. In a production setting, these could be resolved
     through external data sources, geocoding lookups, or manual research.
   </p>
 
 </details>
 <details>
-  <summary><strong>Step 3 — Clean Text Fields</strong></summary>
+  <summary><strong>Step 3 – Clean Text Fields</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -289,11 +289,11 @@ SET
     Grade = TRIM(Grade),
     `Exterior Wall` = TRIM(`Exterior Wall`),
     `Foundation Type` = TRIM(`Foundation Type`);
--- Result: 24,172 rows changed — nearly half the dataset had whitespace issues</code></pre>
+-- Result: 24,172 rows changed – nearly half the dataset had whitespace issues</code></pre>
 
 </details>
 <details>
-  <summary><strong>Step 4 — Remove Duplicate Rows</strong></summary>
+  <summary><strong>Step 4 – Remove Duplicate Rows</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -332,7 +332,7 @@ SELECT COUNT(*) AS rows_after_dedup FROM housing_staging;
 
 </details>
 <details>
-  <summary><strong>Step 5 — Drop Unused Columns</strong></summary>
+  <summary><strong>Step 5 – Drop Unused Columns</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -348,7 +348,7 @@ DROP COLUMN row_id;         -- only needed for deduplication</code></pre>
 
 </details>
 <details>
-  <summary><strong>Final Output — View &amp; Indexes</strong></summary>
+  <summary><strong>Final Output – View &amp; Indexes</strong></summary>
 
   <div style="margin-top: 12px;"></div>
 
@@ -418,7 +418,7 @@ CREATE INDEX idx_property_city ON housing_staging(`Property City`(100));</code><
       <tr><td>Duplicate Rows</td><td>104</td><td>0</td></tr>
       <tr><td>Blank Property Addresses</td><td>159</td><td>143</td></tr>
       <tr><td>Sale Date Data Type</td><td>TEXT</td><td>DATE</td></tr>
-      <tr><td>Columns Dropped</td><td>—</td><td>4</td></tr>
+      <tr><td>Columns Dropped</td><td>–</td><td>4</td></tr>
       <tr><td>Rows with Whitespace Cleaned</td><td>24,172</td><td>0</td></tr>
     </tbody>
   </table>
@@ -443,16 +443,16 @@ AND SaleDateClean BETWEEN '2014-01-01' AND '2014-12-31';</code></pre>
     Key results from the EXPLAIN output:
   </p>
   <ul>
-    <li><strong>type: ref</strong> — MySQL is using an index to find matching rows (not scanning the full table)</li>
-    <li><strong>key: idx_property_city</strong> — confirms the Property City index is being used</li>
-    <li><strong>rows: ~28,488</strong> — roughly half the table is scanned instead of all 56,532 rows</li>
+    <li><strong>type: ref</strong> – MySQL is using an index to find matching rows (not scanning the full table)</li>
+    <li><strong>key: idx_property_city</strong> – confirms the Property City index is being used</li>
+    <li><strong>rows: ~28,488</strong> – roughly half the table is scanned instead of all 56,532 rows</li>
   </ul>
 
   <h3>Transaction Control</h3>
   <p>
     The <code>BEGIN</code> / <code>COMMIT</code> / <code>ROLLBACK</code> pattern wraps destructive operations
     (like DELETE) in a safety net. Between <code>BEGIN</code> and <code>COMMIT</code>, nothing is saved
-    permanently — if something goes wrong, <code>ROLLBACK</code> undoes the changes. This is especially
+    permanently – if something goes wrong, <code>ROLLBACK</code> undoes the changes. This is especially
     important for DELETE operations, which are hard to recover from if performed incorrectly.
   </p>
 
@@ -490,10 +490,10 @@ AND SaleDateClean BETWEEN '2014-01-01' AND '2014-12-31';</code></pre>
       </tr>
     </thead>
     <tbody>
-      <tr><td>CREATE DATABASE</td><td>Phase 1 — Setup</td></tr>
+      <tr><td>CREATE DATABASE</td><td>Phase 1 – Setup</td></tr>
       <tr><td>CREATE TABLE</td><td>Raw table import, staging copy</td></tr>
-      <tr><td>ALTER TABLE — ADD COLUMN</td><td>SaleDateClean, row_id</td></tr>
-      <tr><td>ALTER TABLE — DROP COLUMN</td><td>Removing unused columns</td></tr>
+      <tr><td>ALTER TABLE – ADD COLUMN</td><td>SaleDateClean, row_id</td></tr>
+      <tr><td>ALTER TABLE – DROP COLUMN</td><td>Removing unused columns</td></tr>
       <tr><td>UPDATE...SET</td><td>Date conversion, whitespace trimming</td></tr>
       <tr><td>UPDATE...JOIN (self-join)</td><td>Populating missing addresses</td></tr>
       <tr><td>DELETE</td><td>Removing duplicate rows</td></tr>
@@ -518,7 +518,7 @@ AND SaleDateClean BETWEEN '2014-01-01' AND '2014-12-31';</code></pre>
 
   <p>
     This project cleaned and transformed 56,000+ Nashville housing records from a raw CSV import into a
-    structured, deduplicated, and indexed MySQL dataset — ready for downstream analysis or reporting.
+    structured, deduplicated, and indexed MySQL dataset – ready for downstream analysis or reporting.
   </p>
 
   <p>
@@ -530,7 +530,7 @@ AND SaleDateClean BETWEEN '2014-01-01' AND '2014-12-31';</code></pre>
 
   <p>
     <strong>How this complements the BigQuery e-commerce project:</strong> The
-    <a href="/projects/sql-ecommerce-analysis/">e-commerce analysis</a> focuses on SELECT-side analytics —
+    <a href="/projects/sql-ecommerce-analysis/">e-commerce analysis</a> focuses on SELECT-side analytics –
     CTEs, window functions, aggregations, and business KPIs. This project covers the other half of SQL:
     DDL/DML operations that create, alter, update, and delete data. Together, the two projects demonstrate
     the full spectrum of practical SQL skills.

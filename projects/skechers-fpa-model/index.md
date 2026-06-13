@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "FP&A Financial Model — Skechers U.S.A. (SKX)"
-description: "A fully-integrated 3-statement financial model for Skechers U.S.A. built from SEC 10-K filings — 5 years of historicals plus a 3-year forecast, segment-level revenue modeling, working-capital forecasting, scenario analysis with sensitivity tables, and a KPI dashboard with live model-integrity checks. Audited to balance across Bear, Base, and Bull scenarios."
+title: "FP&A Financial Model – Skechers U.S.A. (SKX)"
+description: "A fully-integrated 3-statement financial model for Skechers U.S.A. built from SEC 10-K filings – 5 years of historicals plus a 3-year forecast, segment-level revenue modeling, working-capital forecasting, scenario analysis with sensitivity tables, and a KPI dashboard with live model-integrity checks. Audited to balance across Bear, Base, and Bull scenarios."
 ---
 
 <a href="/projects/" class="back-to-projects btn">&larr; Back to Projects</a>
 
-# FP&amp;A Financial Model — Skechers U.S.A. (SKX)
+# FP&amp;A Financial Model – Skechers U.S.A. (SKX)
 
 > A fully-integrated, three-statement financial model for Skechers U.S.A., Inc. &mdash; five years of historical actuals (FY2020&ndash;FY2024) plus a three-year forecast (FY2025&ndash;FY2027), built entirely from public SEC 10-K filings. Segment-level revenue, working-capital forecasting via DSO/DIO/DPO, scenario analysis with live sensitivity tables, and a KPI dashboard with self-checking model-integrity gates. The balance sheet ties to zero across all three scenarios.
 
