@@ -38,7 +38,7 @@ I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, 
 
 ### University of California, Santa Barbara (September 2018 – March 2023)
 - Computer Engineering (September 2018 – March 2021)
-  - CMPSC 16, 24, 32, 40 (C++); ECE (Circuit Analysis)
+  - CMPSC 16, 24, 32, 40 (C++); ECE courses (Circuit Analysis)
   - Linear Algebra; Differential Equations; Chemistry; Physics
 - Mathematics, Minor in Secondary Math and Science Education (March 2021 – March 2023)
   - PSTAT, Pure Math, Pedagogy
