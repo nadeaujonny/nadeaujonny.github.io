@@ -265,7 +265,7 @@ pre{
 }
 
 /* ---------- Separators / header/footer muted ---------- */
-hr{ border:none; height:1px; background:rgba(255,255,255,.10); margin:22px 0; }
+hr{ border:none; height:1px; background:var(--border); margin:22px 0; }
 header,footer{ color:rgba(255,255,255,.70); }
 
 /* =========================================================
