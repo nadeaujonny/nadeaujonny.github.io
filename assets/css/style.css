@@ -500,6 +500,14 @@ main .wrapper h1 {
 main .wrapper h2 {
   font-size: clamp(1.25rem, 2.2vw, 1.5rem) !important;
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Project card tool-name badges (e.g. "SQL", "Excel") are also <h2> —
+   exclude them from the section-title underline */
+.project-card-content h2 {
+  text-decoration: none !important;
 }
 
 .page-content .wrapper h3,
