@@ -22,7 +22,7 @@ I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, 
 
 ---
 
-## Timeline
+## My Timeline
 
 ### South Torrance High School (September 2014 – June 2018)
 - 4.4 weighted GPA
