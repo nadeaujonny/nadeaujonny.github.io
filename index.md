@@ -20,6 +20,65 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 ## About Me
 I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, where my coursework ran from pure theory through a full programming sequence (CS16 through CS40 in C++), building a foundation in both rigorous analysis and writing real code. After graduating, I spent several years in education, tutoring and teaching across multiple organizations while completing teaching credential coursework at CSULB with a 4.0 GPA, which taught me how to take a complex idea and make it land clearly for any audience. I also worked as a lab technician handling defense and telecom electronics, where precision and process mattered on every task. What drew me to analytics over education was the chance to tackle real, impactful problems directly, where analytical rigor drives the decision rather than just informing a lesson. I have since built a portfolio spanning SQL, Excel, Power BI, Tableau, Looker Studio, Python, and R, grounded in real-world datasets and end-to-end workflows from data cleaning through dashboarding and modeling, and I am focused on using every tool available to turn messy data into answers a business can act on. Fun fact: I hack squat 355 pounds.
 
+### My Timeline
+South Torrance High School (September 2014 – June 2018): 
+- 4.4 weighted GPA
+- 5 on AP Chem; 5 on AP Calc BC; 4 on AP Comp Sci A; 4 on AP Physics Mech
+- 1440 on SAT
+- 800 on SAT Subject Test Mathematics level 2
+- 790 on SAT Subject Test Chemistry
+- Premier Club Soccer
+ - Ranked #2 in Southern California
+- Varsity High School Soccer
+ - CIF Finalists
+- Connect Club Ambassador
+- CSF School Club Tutor + Private Clients
+ - Subjects: Math; Spanish; English; Chemistry 
+- Lab Technician at Escape Communications (Summers of 2017 and 2018)
+
+→
+
+University of California, Santa Barbara (September 2018 – March 2023):
+- Computer Engineering (September 2018 – March 2021)
+ - CMPSC 16, 24, 32, 40 (C++); ECE (Circuit Analysis)
+ - Linear Algebra; Differential Equations; Chemistry; Physics
+- Mathematics + Minor in Secondary Math and Science Education (March 2021 – March 2023)
+ - PSTAT, Pure Math, Pedagogy
+ - Tutor at Kumon (Summer of 2022)
+ - UCSB Pre-Professional High School Algebra Tutoring (130 hours)
+ - Major GPA = 3.5
+ - 4x Dean’s Honors
++
+Lab Technician at Escape Communications (Summers of 2019, 2020, 2021, 2022, 2023)
+
+→
+
+Mr. J’s Academy Private School Teaching Assistant (September 2023 – June 2025)
++
+Blue Train College Prep Mathematics Tutor and SAT Prep Specialist (June 2023 – February 2025)
++
+Torrance Unified School District Substitute Teacher (January 2024 – June 2024)
++
+Wyzant Mathematics Tutor (February 2024 – May 2025)
++
+California State University, Long Beach Single Subject Teaching Credential in Mathematics Coursework (August 2024 – May 2025)
++
+Lab Technician at Escape Communications (Summer of 2025)
+
+→
+
+Student Teaching for Single Subject Teaching Credential in Mathematics at South Torrance High School (August 2025 – October 2025)
+
+→
+
+Google Data Analytics Professional Certificate (October 2025 – January 2026)
++
+Building GitHub Pages Analytics Portfolio (January 2026 – Present)
++
+Applying and Interviewing for jobs (January 2026 – Present)
++
+UCLA Extension Data Science Certificate (June 2026 – December 2026)
+
 ---
 
 ## Tools Used
