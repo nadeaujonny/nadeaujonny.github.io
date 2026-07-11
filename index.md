@@ -81,6 +81,49 @@ UCLA Extension Data Science Certificate (June 2026 – December 2026)
 
 ---
 
+## Timeline
+
+### South Torrance High School (September 2014 – June 2018)
+- 4.4 weighted GPA
+- AP scores: 5 AP Chemistry, 5 AP Calculus BC, 4 AP Computer Science A, 4 AP Physics Mechanics
+- 1440 SAT
+- 800 SAT Subject Test: Mathematics Level 2
+- 790 SAT Subject Test: Chemistry
+- Premier Club Soccer – ranked #2 in Southern California
+- Varsity High School Soccer – CIF Finalists
+- Connect Club Ambassador
+- CSF School Club Tutor + private clients (Math, Spanish, English, Chemistry)
+- Lab Technician at Escape Communications (Summers 2017, 2018)
+
+### University of California, Santa Barbara (September 2018 – March 2023)
+- Computer Engineering (September 2018 – March 2021)
+  - CMPSC 16, 24, 32, 40 (C++); ECE (Circuit Analysis)
+  - Linear Algebra; Differential Equations; Chemistry; Physics
+- Mathematics, Minor in Secondary Math and Science Education (March 2021 – March 2023)
+  - PSTAT, Pure Math, Pedagogy
+  - Tutor at Kumon (Summer 2022)
+  - UCSB Pre-Professional High School Algebra Tutoring (130 hours)
+  - Major GPA: 3.5
+  - 4x Dean's Honors
+- Lab Technician at Escape Communications (Summers 2019–2023)
+
+### Teaching and Credentialing (September 2023 – October 2025)
+- Mr. J's Academy Private School Teaching Assistant (September 2023 – June 2025)
+- Blue Train College Prep Mathematics Tutor and SAT Prep Specialist (June 2023 – February 2025)
+- Torrance Unified School District Substitute Teacher (January 2024 – June 2024)
+- Wyzant Mathematics Tutor (February 2024 – May 2025)
+- CSULB Single Subject Teaching Credential in Mathematics Coursework (August 2024 – May 2025)
+- Lab Technician at Escape Communications (Summer 2025)
+- Student Teaching, Single Subject Credential in Mathematics, South Torrance High School (August 2025 – October 2025)
+
+### Transition to Data Analytics (October 2025 – Present)
+- Google Data Analytics Professional Certificate (October 2025 – January 2026)
+- Building GitHub Pages Analytics Portfolio (January 2026 – Present)
+- Applying and Interviewing for Analyst Roles (January 2026 – Present)
+- UCLA Extension Data Science Certificate (June 2026 – December 2026)
+
+---
+
 ## Tools Used
 - **SQL & Databases:** BigQuery, MySQL, Oracle SQL, Joins, CTEs, Window Functions, DDL/DML
 - **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query, Data Analysis Toolpak
