@@ -61,7 +61,7 @@ I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, 
 - Google Data Analytics Professional Certificate (October 2025 – January 2026)
 - Building GitHub Pages Analytics Portfolio (January 2026 – Present)
 - UCLA Extension Data Science Certificate (June 2026 – December 2026)
-- Data & Internal Tools Intern at Escape Communications (July 2026 - Present)
+- Data Analyst Intern at Escape Communications (July 2026 - Present)
 
 ---
 
