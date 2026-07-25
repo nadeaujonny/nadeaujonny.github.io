@@ -57,7 +57,7 @@ I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, 
 - Lab Technician at Escape Communications (Summer 2025)
 - Student Teaching, Single Subject Credential in Mathematics, South Torrance High School (August 2025 – October 2025)
 
-### Transition to Data Analytics (October 2025 – Present)
+### Data Analytics (October 2025 – Present)
 - Google Data Analytics Professional Certificate (October 2025 – January 2026)
 - Building GitHub Pages Analytics Portfolio (January 2026 – Present)
 - UCLA Extension Data Science Certificate (June 2026 – December 2026)
