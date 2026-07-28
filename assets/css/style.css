@@ -302,7 +302,7 @@ header.site-header *{
 /* ---------- Nav strip (covers .site-nav, .nav-tabs, .topbar-nav) ---------- */
 .site-nav,.nav-tabs,.topbar-nav{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(5,minmax(0,1fr));
   width:100%;
   border:1px solid var(--border);
   border-radius:12px;
