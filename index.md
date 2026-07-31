@@ -17,8 +17,8 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 
 ---
 
-## About Me
-I grew up in Torrance, California, and studied Mathematics at UC Santa Barbara, where my coursework ran from pure theory through a full programming sequence (CS16 through CS40 in C++), building a foundation in both rigorous analysis and writing real code. After graduating, I spent several years in education, tutoring and teaching across multiple organizations while completing teaching credential coursework at CSULB with a 4.0 GPA, which taught me how to take a complex idea and make it land clearly for any audience. I also worked as a lab technician handling defense and telecom electronics, where precision and process mattered on every task. What drew me to analytics over education was the chance to tackle real, impactful problems directly, where analytical rigor drives the decision rather than just informing a lesson. I have since built a portfolio spanning SQL, Excel, Power BI, Tableau, Looker Studio, Python, and R, grounded in real-world datasets and end-to-end workflows from data cleaning through dashboarding and modeling, and I am focused on using every tool available to turn messy data into answers a business can act on. Fun fact: I hack squat 355 pounds.
+## Portfolio Overview
+Across my portfolio I've worked with retail and sales transaction data (Superstore, Olist e-commerce orders), healthcare records, Nashville property records, ten years of daily market and asset price data, A/B test experiment data, telecom customer churn data, health and wellness data, federal labor-market and education data, federal jobs listings, car listings, cohort and user retention data, retail FP&A financials, and supply chain and procurement data, using tools including Excel (Power Query, pivot tables, dashboards), Power BI, Tableau, SQL (BigQuery, MySQL), Python (pandas, NumPy, statsmodels, scikit-learn, yfinance, SHAP, Streamlit), R, Looker Studio, and Oracle.
 
 ---
 
