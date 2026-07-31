@@ -65,32 +65,12 @@ Across my portfolio I've worked with retail and sales transaction data (Supersto
 
 ---
 
-## Tools Used
-- **SQL & Databases:** BigQuery, MySQL, Oracle SQL, Joins, CTEs, Window Functions, DDL/DML
-- **Spreadsheets:** Excel, Google Sheets, Pivot Tables, Lookups, Power Query, Data Analysis Toolpak
-- **Visualization & BI:** Tableau, Power BI, Looker Studio, Excel Dashboards
-- **Programming:** Python, R, Jupyter Notebooks, VS Code, RStudio
-- **AI:** Claude, Claude Code, ChatGPT, Codex, Gemini, Perplexity
-- **Version Control:** Git, GitHub
-
----
-
-## AI Tools in My Workflow
-I use AI as a force multiplier across every stage of my work. Here's how these tools fit into my process:
-- **Claude, ChatGPT, Gemini:** Brainstorming project ideas, drafting outlines, researching job descriptions, and studying technical concepts through quizzing and conversation.
-- **Claude:** Generating and debugging code (SQL, Python, R), Excel analysis, configuring cloud services, navigating BI tools, analyzing datasets for key findings and actionable insights, and drafting resume templates.
-- **Claude + Claude Code, ChatGPT Codex:** Building and editing this portfolio website, building and editing Excel workbooks, building and editing apps and websites -- with Claude Chat generating structured instructions for Claude Code to execute.
-- **Julius AI:** Analyzing CSV files and creating targeted visualizations.
-
----
-
 ## Education & Certifications
 - **Bachelor's Degree in Mathematics** -- UCSB  
-- **Minor: Secondary Mathematics & Science Education** -- UCSB  
+- **Minor: Secondary Mathematics & Science Education** -- UCSB
+- **Single Subject Teaching Credential Coursework (Mathematics)** -- CSULB (4.0 GPA)
 - **Google Data Analytics Professional Certificate** -- Coursera (100% across all nine courses)
 - **Data Science Certificate** -- UCLA Extension (In-Progress)
-- **Single Subject Teaching Credential Coursework (Mathematics)** -- CSULB (4.0 GPA)
-- **South High School** -- 4.4 GPA
 
 ---
 
