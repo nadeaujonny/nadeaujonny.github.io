@@ -78,5 +78,5 @@ Across my portfolio I've worked with retail and sales transaction data (Supersto
 - **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)  
 - **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)  
 - **GitHub:** [github.com/nadeaujonny](https://github.com/nadeaujonny)
-- **Resume:** [Download Resume](/assets/Nadeau_Jonathan_Resume_Data_Analyst.pdf)
-- **Cover Letter:** [Download Cover Letter](/assets/Nadeau_Jonathan_CoverLetter_Data_Analyst.pdf)
+- **Resume:** [Download Resume](/assets/Nadeau_Jonathan_Resume.pdf)
+- **Cover Letter:** [Download Cover Letter](/assets/Nadeau_Jonathan_CoverLetter.pdf)
