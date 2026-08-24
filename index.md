@@ -18,23 +18,50 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 ---
 
 ## Portfolio Overview
-Across my portfolio I've worked with retail and sales transaction data (Superstore, Olist e-commerce orders), healthcare records, Nashville property records, ten years of daily market and asset price data, A/B test experiment data, telecom customer churn data, health and wellness data, federal labor-market and education data, federal jobs listings, car listings, cohort and user retention data, retail FP&A financials, and supply chain and procurement data, using tools including Excel (Power Query, pivot tables, dashboards), Power BI, Tableau, SQL (BigQuery, MySQL), Python (pandas, NumPy, statsmodels, scikit-learn, yfinance, SHAP, Streamlit), R, Looker Studio, and Oracle.
+
+**Data I've worked with**
+- Retail and sales transaction data (Superstore, Olist e-commerce orders)
+- Healthcare records
+- Nashville property records
+- Ten years of daily market and asset price data
+- A/B test experiment data
+- Telecom customer churn data
+- Health and wellness data
+- Federal labor-market and education data
+- Federal jobs listings
+- Car listings
+- Cohort and user retention data
+- Retail FP&A financials
+- Supply chain and procurement data
+
+**Tools I've used**
+- Excel (Power Query, pivot tables, dashboards)
+- Power BI
+- Tableau
+- SQL (BigQuery, MySQL)
+- Python (pandas, NumPy, statsmodels, scikit-learn, yfinance, SHAP, Streamlit)
+- R
+- Looker Studio
+- Oracle
 
 ---
 
 ## My Timeline
 
-### South Torrance High School (September 2014 – June 2018)
-- 4.4 weighted GPA
-- AP scores: 5 AP Chemistry, 5 AP Calculus BC, 4 AP Computer Science A, 4 AP Physics Mechanics
-- 1440 SAT
-- 800 SAT Subject Test: Mathematics Level 2
-- 790 SAT Subject Test: Chemistry
-- Premier Club Soccer – ranked #2 in Southern California
-- Varsity High School Soccer – CIF Finalists
-- Connect Club Ambassador
-- CSF School Club Tutor + private clients (Math, Spanish, English, Chemistry)
-- Lab Technician at Escape Communications (Summers 2017, 2018)
+### Data Analytics (October 2025 – Present)
+- Google Data Analytics Professional Certificate (October 2025 – January 2026)
+- Building GitHub Pages Analytics Portfolio (January 2026 – Present)
+- UCLA Extension Data Science Certificate (June 2026 – December 2026)
+- Data Analyst Intern at Escape Communications (July 2026 - Present)
+
+### Teaching and Credentialing (September 2023 – October 2025)
+- Mr. J's Academy Private School Teaching Assistant (September 2023 – June 2025)
+- Blue Train College Prep Mathematics Tutor and SAT Prep Specialist (June 2023 – February 2025)
+- Torrance Unified School District Substitute Teacher (January 2024 – June 2024)
+- Wyzant Mathematics Tutor (February 2024 – May 2025)
+- CSULB Single Subject Teaching Credential in Mathematics Coursework (August 2024 – May 2025)
+- Lab Technician at Escape Communications (Summer 2025)
+- Student Teaching, Single Subject Credential in Mathematics, South Torrance High School (August 2025 – October 2025)
 
 ### University of California, Santa Barbara (September 2018 – March 2023)
 - Computer Engineering (September 2018 – March 2021)
@@ -48,20 +75,17 @@ Across my portfolio I've worked with retail and sales transaction data (Supersto
   - 4x Dean's Honors
 - Lab Technician at Escape Communications (Summers 2019–2023)
 
-### Teaching and Credentialing (September 2023 – October 2025)
-- Mr. J's Academy Private School Teaching Assistant (September 2023 – June 2025)
-- Blue Train College Prep Mathematics Tutor and SAT Prep Specialist (June 2023 – February 2025)
-- Torrance Unified School District Substitute Teacher (January 2024 – June 2024)
-- Wyzant Mathematics Tutor (February 2024 – May 2025)
-- CSULB Single Subject Teaching Credential in Mathematics Coursework (August 2024 – May 2025)
-- Lab Technician at Escape Communications (Summer 2025)
-- Student Teaching, Single Subject Credential in Mathematics, South Torrance High School (August 2025 – October 2025)
-
-### Data Analytics (October 2025 – Present)
-- Google Data Analytics Professional Certificate (October 2025 – January 2026)
-- Building GitHub Pages Analytics Portfolio (January 2026 – Present)
-- UCLA Extension Data Science Certificate (June 2026 – December 2026)
-- Data Analyst Intern at Escape Communications (July 2026 - Present)
+### South Torrance High School (September 2014 – June 2018)
+- 4.4 weighted GPA
+- AP scores: 5 AP Chemistry, 5 AP Calculus BC, 4 AP Computer Science A, 4 AP Physics Mechanics
+- 1440 SAT
+- 800 SAT Subject Test: Mathematics Level 2
+- 790 SAT Subject Test: Chemistry
+- Premier Club Soccer – ranked #2 in Southern California
+- Varsity High School Soccer – CIF Finalists
+- Connect Club Ambassador
+- CSF School Club Tutor + private clients (Math, Spanish, English, Chemistry)
+- Lab Technician at Escape Communications (Summers 2017, 2018)
 
 ---
 
