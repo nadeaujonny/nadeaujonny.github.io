@@ -43,6 +43,9 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 - R
 - Looker Studio
 - Oracle
+- Claude + Claude Code + Claude Cowork
+- ChatGPT + Codex
+- Julius AI
 
 ---
 
