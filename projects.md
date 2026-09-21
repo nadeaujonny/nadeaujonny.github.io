@@ -24,6 +24,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
+  <div class="col-6">
+    <a class="project-card-link system-card newsbot-card" href="/projects/newsbot/" aria-label="Open Automated Systems project: Newsbot – Self-Hosted News-Intelligence Pipeline">
+      <div class="project-card-content">
+        <h2>Python · SQLite · Ubuntu</h2>
+        <h3>Newsbot – Self-Hosted News-Intelligence Pipeline</h3>
+        <p>What's the biggest story today, measured by how many outlets cover it rather than by one editor's choice? Collects 59 RSS feeds from 42 outlets every 15 minutes into SQLite, with deduplication, feed-health monitoring, and verified backups. Ranking in development.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
 </div>
 
 <h2 class="projects-section-heading">Analytics Projects</h2>
