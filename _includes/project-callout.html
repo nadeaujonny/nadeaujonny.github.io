@@ -1,0 +1,9 @@
+{% comment %}
+  Disclosure / notice box for project pages.
+  Usage: include project-callout.html text="..." label="..."
+  label is optional; text may contain inline HTML.
+{% endcomment %}
+<aside class="project-callout" role="note">
+  {% if include.label %}<strong class="project-callout-label">{{ include.label }}</strong>{% endif %}
+  <span>{{ include.text }}</span>
+</aside>

@@ -4,3 +4,6 @@
 **/.Rproj.user/
 **/.DS_Store
 **/.Rhistory
+
+# Private working notes - never commit
+_notes/

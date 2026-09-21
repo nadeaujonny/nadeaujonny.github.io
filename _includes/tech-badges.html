@@ -1,0 +1,11 @@
+{% comment %}
+  Tech badges row.
+  Usage: include tech-badges.html                  (reads page.stack)
+         include tech-badges.html items=some_list  (explicit list)
+{% endcomment %}
+{% assign badge_items = include.items | default: page.stack %}
+{% if badge_items %}
+<ul class="tech-badges" aria-label="Tech stack">
+  {% for item in badge_items %}<li>{{ item }}</li>{% endfor %}
+</ul>
+{% endif %}

@@ -1822,3 +1822,231 @@ details[open] > :not(summary) > h3:first-child {
     color: #fff !important;
   }
 }
+
+/* =========================================================
+   AUTOMATED SYSTEMS — reusable components
+   Used by Bot Bought and the upcoming news / weather pipeline
+   pages. Includes: _includes/tech-badges.html,
+   _includes/pipeline-diagram.html, _includes/project-callout.html
+   ========================================================= */
+
+/* Section heading on the Projects page */
+.page-content .wrapper h2.projects-section-heading,
+main .wrapper h2.projects-section-heading {
+  margin: 8px 0 4px;
+}
+
+/* Space between one section's grid and the next section's heading */
+.page-content .wrapper .grid + h2.projects-section-heading,
+main .wrapper .grid + h2.projects-section-heading {
+  margin-top: 36px;
+}
+
+/* A lone card in a section keeps the normal half-width size */
+.grid > .col-6:only-child {
+  flex-grow: 0;
+}
+
+/* ---- Card: gradient background, no image ----
+   Add a color modifier per project, e.g.
+   .newsbot-card { --system-card-gradient: linear-gradient(...); } */
+.botbought-card {
+  --system-card-gradient: linear-gradient(135deg, #0b1a2b 0%, #0f3b4a 50%, #13706b 100%);
+}
+
+.project-card-link.system-card,
+.project-card-link.system-card:hover {
+  background-image: var(--system-card-gradient, linear-gradient(135deg, #0b1a2b 0%, #1e3a5f 100%)) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  min-height: 280px;
+}
+
+.project-card-link.system-card:hover {
+  filter: brightness(1.1);
+}
+
+.project-card-link.system-card .project-card-content h2 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 800;
+  font-size: 1.1rem !important;
+  margin: 0 0 0.3em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.project-card-link.system-card .project-card-content h3 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 700;
+  font-size: 1.25rem !important;
+  margin: 0 0 0.5em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.project-card-link.system-card .project-card-content p {
+  color: rgba(255, 255, 255, 0.90) !important;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.project-card-link.system-card .project-card-cta,
+.project-card-link.system-card:hover .project-card-cta {
+  color: #fff !important;
+}
+
+/* ---- Tech badges ---- */
+.page-content .wrapper ul.tech-badges,
+main .wrapper ul.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 4px 0 16px;
+  padding: 0;
+}
+
+.tech-badges li {
+  margin: 0;
+  padding: 4px 12px;
+  border: 1px solid rgba(15, 15, 18, 0.15);
+  border-radius: 999px;
+  background: #f2f4f7;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ---- Callout ---- */
+.project-callout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: baseline;
+  margin: 0 0 22px;
+  padding: 12px 16px;
+  border: 1px solid rgba(180, 120, 0, 0.35);
+  border-left: 4px solid #b47800;
+  border-radius: 8px;
+  background: #fff8e6;
+  color: rgba(15, 15, 18, 0.92);
+  font-weight: 600;
+}
+
+/* ---- Pipeline diagram ---- */
+.pipeline-flow {
+  margin: 16px 0 8px;
+}
+
+.pipeline-flow ol {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+
+.pipeline-flow li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--divider);
+  border-top: 3px solid #13706b;
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+/* Arrow between stages (points right on wide screens) */
+.pipeline-flow li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 800;
+  color: #13706b;
+}
+
+.pipeline-step {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.pipeline-detail {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  opacity: 0.85;
+}
+
+.pipeline-flow figcaption {
+  margin-top: 16px;
+  font-size: 0.92rem;
+  opacity: 0.85;
+}
+
+/* No arrow off the end of a row (4 stages per row) */
+.pipeline-flow li:nth-child(4n)::after {
+  content: none;
+}
+
+/* Stack vertically on narrow screens; arrows point down */
+@media (max-width: 760px) {
+  .pipeline-flow ol {
+    grid-template-columns: 1fr;
+  }
+  .pipeline-flow li:not(:last-child)::after {
+    content: "↓";
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -20px;
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Results tables: right-align numbers ---- */
+.results-table td:not(:first-child),
+.results-table th:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.results-table td[colspan] {
+  text-align: center;
+  white-space: normal;
+}
+
+/* Let numeric cells wrap on phones */
+@media (max-width: 760px) {
+  .results-table td:not(:first-child),
+  .results-table th:not(:first-child) {
+    white-space: normal;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .tech-badges li {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .project-callout {
+    background: rgba(180, 120, 0, 0.15);
+    border-color: rgba(255, 196, 64, 0.35);
+    border-left-color: #e0a000;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .pipeline-flow li {
+    border-top-color: #2fb5a6;
+  }
+  .pipeline-flow li:not(:last-child)::after {
+    color: #2fb5a6;
+  }
+}

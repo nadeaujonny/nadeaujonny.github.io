@@ -9,6 +9,25 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
 
 <h1 style="text-align: center;">Projects</h1>
 
+<h2 class="projects-section-heading">Automated Systems</h2>
+
+<div class="grid">
+
+  <div class="col-6">
+    <a class="project-card-link system-card botbought-card" href="/projects/bot-bought/" aria-label="Open Automated Systems project: Bot Bought – Automated Paper-Trading System">
+      <div class="project-card-content">
+        <h2>Python · SQL · FinBERT</h2>
+        <h3>Bot Bought – Automated Paper-Trading System</h3>
+        <p>Tested whether a dip-buying rule can beat the S&P 500 using a Monte Carlo null baseline, an A/B test of a news-sentiment filter, and a power analysis. Paper trading only.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<h2 class="projects-section-heading">Analytics Projects</h2>
+
 <div class="grid">
 
   <div class="col-6">

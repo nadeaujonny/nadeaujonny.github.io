@@ -1,0 +1,22 @@
+{% comment %}
+  Pipeline flow diagram (HTML/CSS, no images).
+  Usage: include pipeline-diagram.html                  (reads page.pipeline)
+         include pipeline-diagram.html items=some_list  (explicit list)
+  Each item: { label: "Signal", detail: "Short description" }
+  Optional: caption="..." renders a note under the flow.
+{% endcomment %}
+{% assign stages = include.items | default: page.pipeline %}
+{% if stages %}
+<figure class="pipeline-flow">
+  <ol>
+    {% for stage in stages %}
+    <li>
+      <span class="pipeline-step">{{ forloop.index }}</span>
+      <strong>{{ stage.label }}</strong>
+      {% if stage.detail %}<span class="pipeline-detail">{{ stage.detail }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>
+{% endif %}
