@@ -35,6 +35,17 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
     </a>
   </div>
 
+  <div class="col-6">
+    <a class="project-card-link system-card wxbot-card" href="/projects/wxbot/" aria-label="Open Automated Systems project: wxbot – Automated Weather Data Pipeline">
+      <div class="project-card-content">
+        <h2>Python · SQLite · NWS API</h2>
+        <h3>wxbot – Automated Weather Data Pipeline</h3>
+        <p>Where is the weather actually unusual today, not just hot? Designed to compare live station reports against 1991–2020 normals, with a data-quality layer and an NWS forecast-accuracy scorecard. In development.</p>
+        <div class="project-card-cta">Open project →</div>
+      </div>
+    </a>
+  </div>
+
 </div>
 
 <h2 class="projects-section-heading">Analytics Projects</h2>

@@ -1842,9 +1842,15 @@ main .wrapper .grid + h2.projects-section-heading {
   margin-top: 36px;
 }
 
-/* A lone card in a section keeps the normal half-width size */
-.grid > .col-6:only-child {
+/* A lone last card in a row (odd card count) keeps the normal half width
+   instead of stretching across the grid. Also covers a single-card grid. */
+.grid > .col-6:last-child:nth-child(odd) {
   flex-grow: 0;
+  flex-basis: calc(50% - 8px); /* same width as a paired card (half minus half the 16px gap) */
+}
+
+@media (max-width: 760px){
+  .grid > .col-6:last-child:nth-child(odd) { flex-basis: 100%; }
 }
 
 /* ---- Card: gradient background, no image ----
@@ -1854,6 +1860,7 @@ main .wrapper .grid + h2.projects-section-heading {
   --system-card-gradient: linear-gradient(135deg, #0b1a2b 0%, #0f3b4a 50%, #13706b 100%);
 }
 .newsbot-card { --system-card-gradient: linear-gradient(135deg, #1f0b12 0%, #4a1522 50%, #8a2b2b 100%); }
+.wxbot-card { --system-card-gradient: linear-gradient(135deg, #0b1530 0%, #1d3b7a 50%, #3b6fb6 100%); }
 
 .project-card-link.system-card,
 .project-card-link.system-card:hover {
