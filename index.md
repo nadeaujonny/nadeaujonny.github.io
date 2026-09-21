@@ -105,5 +105,5 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
 - **Email:** [nadeau.jonny@gmail.com](mailto:nadeau.jonny@gmail.com)  
 - **LinkedIn:** [linkedin.com/in/nadeau-jonathan](https://www.linkedin.com/in/nadeau-jonathan)  
 - **GitHub:** [github.com/nadeaujonny](https://github.com/nadeaujonny)
-- **Resume:** [Download Resume](/assets/Nadeau_Jonathan_Resume.pdf)
-- **Cover Letter:** [Download Cover Letter](/assets/Nadeau_Jonathan_CoverLetter.pdf)
+- **Resume:** [Download Resume](/assets/Jonathan_Nadeau_Resume.pdf)
+- **Cover Letter:** [Download Cover Letter](/assets/Jonathan_Nadeau_Cover_Letter.pdf)
