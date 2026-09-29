@@ -110,7 +110,7 @@ pipeline:
   <h3>Small effect, unreliable rule, so nothing was built</h3>
   <p><strong>Method:</strong> fixed before any result was read. Two items from different outlets in one story are copies if their headline word sets overlap by 90% or more, or their summaries are identical. Outlets linked by copies collapse into one "source".</p>
   <p><strong>Result:</strong> 23 of 331 stories with three or more outlets contain copied text, and the outlet total across them falls from 1,555 to 1,526 (−1.9%). Ranking by sources instead of outlets changes 4 of the week's 70 top-10 lines.</p>
-  <p><strong>The rule's errors are as large as its effect.</strong> All 30 stories with a matched pair were read and labelled (one reader's labels): 17 looked like shared copy, 7 like independent outlets writing near-identical short headlines, and 6 were unclear. No threshold separates the two:</p>
+  <p><strong>The rule's errors are as large as its effect.</strong> All 30 stories with a matched pair were labelled: 17 looked like shared copy, 7 like independent outlets writing near-identical short headlines, and 6 were unclear. These labels were judgement calls made by the AI assistant during the analysis, are listed in full in the project's reports, and were not reviewed by a human expert. No threshold separates the two:</p>
 
   <div style="overflow-x: auto;">
   <table class="results-table">
@@ -140,7 +140,7 @@ pipeline:
 
   <h3>A fix for split stories quietly suppressed a different story</h3>
   <p><strong>The problem:</strong> the 0.3 cut-off sometimes splits one story in two. The week had 19 such pairs among the mornings' top 20 stories.</p>
-  <p><strong>Choosing a rule:</strong> of five join rules tried, the one chosen (join two top-20 stories whose average similarity is at least 0.25) was fixed before any result was seen. Its 7 merges were labelled 6 same story, 1 unclear, 0 different (one reader's labels). A rival rule was rejected because its one wrong merge joined two different Supreme Court rulings.</p>
+  <p><strong>Choosing a rule:</strong> of five join rules tried, the one chosen (join two top-20 stories whose average similarity is at least 0.25) was fixed before any result was seen. Its 7 merges were labelled 6 same story, 1 unclear, 0 different. These labels were judgement calls made by the AI assistant during the analysis, are listed in full in the project's reports, and were not reviewed by a human expert. A rival rule was rejected because its one wrong merge joined two different Supreme Court rulings.</p>
   <p><strong>Switched on:</strong> the rule was built behind a switch that defaults to off, and "off" was proven to leave the digest byte-identical. Switched on for a re-run of 27 September, it made two merges. One worked: the lead story grew from 11 to 13 outlets. The other joined a US–China tariffs story to "White House: Trump, Xi agree on 'super intelligence' dialogue" at 0.251, just over the bar. Both covered one summit, but the merged story now counted as a Trump story, and the digest's one-Trump-story-a-day cap held it back. A rule meant to fix duplicate lines had, through an unrelated rule, suppressed a trade story. That morning's top 10 did not change, but this was exactly the interaction the analysis had warned about.</p>
   <p><strong>Response:</strong> the merge is not applied. A log-only mode, built and still switched off, will record what each merge would do, including whether it creates a Trump story, without changing the message.</p>
 
