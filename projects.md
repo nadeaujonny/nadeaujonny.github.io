@@ -25,11 +25,11 @@ description: "Portfolio of data analysis projects including SQL query analysis, 
   </div>
 
   <div class="col-6">
-    <a class="project-card-link system-card newsbot-card" href="/projects/newsbot/" aria-label="Open Automated Systems project: Newsbot – Self-Hosted News-Intelligence Pipeline">
+    <a class="project-card-link system-card newsbot-card" href="/projects/newsbot/" aria-label="Open Automated Systems project: Newsbot – Ranking the News by Outlet Count">
       <div class="project-card-content">
-        <h2>Python · SQLite · Ubuntu</h2>
-        <h3>Newsbot – Self-Hosted News-Intelligence Pipeline</h3>
-        <p>What's the biggest story today, measured by how many outlets cover it rather than by one editor's choice? Collects 59 RSS feeds from 42 outlets every 15 minutes into SQLite, with deduplication, feed-health monitoring, and verified backups. Ranking in development.</p>
+        <h2>Python · SQLite · TF-IDF</h2>
+        <h3>Newsbot – Ranking the News by Outlet Count</h3>
+        <p>Ranks each morning's news by how many of 54 outlets carried a story. A one-week case study tests that count: a shuffle test on who breaks stories first, why copied wire text barely moves it, and a merge rule caught backfiring before it shipped.</p>
         <div class="project-card-cta">Open project →</div>
       </div>
     </a>
