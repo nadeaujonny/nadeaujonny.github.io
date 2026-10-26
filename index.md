@@ -3,17 +3,21 @@ layout: default
 description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Tableau, and Power BI. Portfolio of end-to-end data analysis projects with actionable business insights."
 ---
 
-# Jonathan Nadeau
-
-<img src="assets/profile-pic.jpeg"
-     alt="Jonathan Nadeau profile photo"
-     style="display:block; margin:12px auto 18px; max-width:600px; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:50%;">
-
-<p style="text-align:center;">Leveraging powerful tools to efficiently produce quality deliverables.</p>
-
-<p style="text-align:center; margin:28px 0 10px;">
-  <a href="projects" class="btn btn-primary" style="font-size:1.05rem; padding:10px 28px;">View My Projects</a>
-</p>
+<section class="home-hero">
+  <img class="home-hero-photo"
+       src="assets/profile-headshot.jpg"
+       alt="Jonathan Nadeau profile photo"
+       width="180" height="180">
+  <div class="home-hero-text">
+    <h1>Jonathan Nadeau</h1>
+    <p class="home-hero-role">Data Analyst</p>
+    <p class="home-hero-tagline">Leveraging powerful tools to efficiently produce quality deliverables.</p>
+    <div class="home-hero-actions">
+      <a href="projects" class="btn btn-primary">View My Projects</a>
+      <a href="#contact" class="btn">Contact Me</a>
+    </div>
+  </div>
+</section>
 
 ---
 
