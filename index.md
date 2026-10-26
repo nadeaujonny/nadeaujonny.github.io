@@ -10,7 +10,7 @@ description: "Jonathan Nadeau — Data analyst specializing in SQL, Excel, Table
        width="180" height="180">
   <div class="home-hero-text">
     <h1>Jonathan Nadeau</h1>
-    <p class="home-hero-role">Data Analyst</p>
+    <p class="home-hero-role">Data Analyst and Application Developer</p>
     <p class="home-hero-tagline">Leveraging powerful tools to efficiently produce quality deliverables.</p>
     <div class="home-hero-actions">
       <a href="projects" class="btn btn-primary">View My Projects</a>
